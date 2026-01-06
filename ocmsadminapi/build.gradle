@@ -1,0 +1,185 @@
+plugins {
+	id 'org.sonarqube' version "4.4.1.3373"
+    id 'org.springframework.boot' version '3.5.+' // Updated to newer version with + notation
+    id 'io.spring.dependency-management' version '1.1.4' // Updated to newer version
+    id 'java'
+    id 'war'
+}
+
+group = 'com.ocms'
+version = '0.0.1-SNAPSHOT'
+description = 'Spring Boot API Service'
+
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
+
+sonarqube {
+	properties {
+		property "sonar.projectKey", "ocmsadminapi"
+		property "sonar.sourceEncoding", "UTF-8"
+		property 'sonar.coverage.jacoco.xmlReportPaths', "build/reports/jacoco/test/jacocoTestReport.xml"
+        property "sonar.gradle.skipCompile", "true"
+    }
+}
+
+repositories {
+    mavenCentral()
+    // Add Azure Maven Feed repository which contains azure-json 1.2.1
+    maven {
+        url "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-java/maven/v1"
+        name "Azure SDK for Java"
+    }
+}
+
+// Define versions in one place for consistency
+ext {
+    springVersion = '6.2.11'  // Updated to address security vulnerabilities
+    nettyVersion = '4.2.5.Final'  // Updated to latest non-vulnerable version
+    bouncyCastleVersion = '1.79'  // Updated from mixed versions
+    tomcatVersion = '10.1.42'  // Updated from 10.1.39
+    log4jVersion = '2.24.3'  // Current version
+    nimbusJwtVersion = '10.4.2'  // Updated from 9.37.3 to fix URA-Security-Medium vulnerability
+    commonsLang3Version = '3.18.0'  // Updated to latest version to fix Security-Medium vulnerability
+    // Fixed versions for Azure components to ensure compatibility
+    azureIdentityVersion = '1.13.0' // Updated to fix Security-Medium vulnerability
+    azureKeyvaultVersion = '4.7.0' // Fixed version known to work
+    azureStorageBlobVersion = '12.23.0' // Fixed version known to work
+    azureJsonVersion = '1.5.0' // Updated to fix Security-High vulnerability
+    apachePoiVersion = '5.2.5' // Apache POI for Excel generation
+}
+
+dependencies {
+    // EXCLUDE default logging completely
+    configurations {
+        all {
+            exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+            exclude group: 'ch.qos.logback', module: 'logback-classic'
+            exclude group: 'ch.qos.logback', module: 'logback-core'
+            exclude group: 'org.slf4j', module: 'slf4j-simple'
+            
+            // Force specific versions for components with vulnerabilities
+            resolutionStrategy {
+                force "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
+                force "org.apache.tomcat.embed:tomcat-embed-el:${tomcatVersion}"
+                force "org.apache.tomcat.embed:tomcat-embed-websocket:${tomcatVersion}"
+                force "org.springframework:spring-core:${springVersion}"
+                force "org.springframework:spring-web:${springVersion}"
+                force "org.springframework:spring-context:${springVersion}"
+                force "io.netty:netty-codec-http2:${nettyVersion}"
+                force "io.netty:netty-handler:${nettyVersion}"
+                force "io.netty:netty-codec-http:${nettyVersion}"
+                force "io.netty:netty-common:${nettyVersion}"
+                force "io.netty:netty-buffer:${nettyVersion}"
+                force "io.netty:netty-transport:${nettyVersion}"
+                force "io.netty:netty-codec:${nettyVersion}"  // Added to fix Security-Medium issue
+                force "io.netty:netty-codec-compression:${nettyVersion}"  // Added to fix Security-Medium issue
+                force "io.netty:netty-resolver:${nettyVersion}"  // Added for consistency
+                force "io.netty:netty-handler-proxy:${nettyVersion}"  // Added for consistency with Azure SDK
+                force "com.nimbusds:nimbus-jose-jwt:${nimbusJwtVersion}"
+                force "io.projectreactor.netty:reactor-netty-http:1.2.9"  // Updated from 1.2.5 to fix CVE-2025-22227
+                force "com.azure:azure-json:${azureJsonVersion}"  // Updated from 1.2.0 to fix CVE-2025-52999
+            }
+        }
+    }
+    
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    
+    // Log4j2 dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    // Add Log4j2 annotation processor for plugin registration
+    annotationProcessor "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+
+    // Jakarta Persistence API
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'  // Add this line
+    implementation 'jakarta.transaction:jakarta.transaction-api:2.0.1'  // Add this line
+
+    // Lombok - Required for @Slf4j and @RequiredArgsConstructor annotations
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+     // Spring JDBC
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    
+    // SQL Server driver if needed
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:12.10.2.jre11'  // Updated from 12.4.1.jre11
+
+    // Azure Storage SDK for Blob Storage
+    implementation "com.azure:azure-storage-blob:${azureStorageBlobVersion}"  // Fixed version 12.23.0
+    implementation "com.azure:azure-security-keyvault-secrets:${azureKeyvaultVersion}"  // Fixed version 4.7.0
+    implementation "com.azure:azure-security-keyvault-keys:${azureKeyvaultVersion}"  // Fixed version 4.7.0
+    implementation "com.azure:azure-identity:${azureIdentityVersion}"  // Fixed version 1.11.1
+
+    implementation "com.azure:azure-json:${azureJsonVersion}"  // Added to fix Security-High vulnerability
+
+    implementation "org.apache.httpcomponents:httpclient:4.5.14"  // Updated from 4.5.13
+    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"  // Updated from 3.12.0
+
+    // Add Jakarta Bean Validation
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+
+    // Spring Retry
+    implementation 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    // ShedLock
+    implementation 'net.javacrumbs.shedlock:shedlock-spring:5.7.0'  // Updated from 4.42.0
+    implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.7.0'  // Updated from 4.42.0
+
+    // Explicitly define Netty components to ensure consistent versions
+    implementation "io.netty:netty-codec-http2:${nettyVersion}"
+    implementation "io.netty:netty-handler:${nettyVersion}"
+    implementation "io.netty:netty-codec-http:${nettyVersion}"
+    implementation "io.netty:netty-common:${nettyVersion}"
+    implementation "io.netty:netty-buffer:${nettyVersion}"
+    implementation "io.netty:netty-transport:${nettyVersion}"
+    implementation "io.netty:netty-codec:${nettyVersion}"  // Added to fix Security-Medium issue
+    implementation "io.netty:netty-codec-compression:${nettyVersion}"  // Added to fix Security-Medium issue
+    implementation "io.netty:netty-resolver:${nettyVersion}"  // Added for consistency
+    implementation "io.netty:netty-handler-proxy:${nettyVersion}"  // Added for consistency with Azure SDK
+
+    // OAuth2 and JWT dependencies with secure versions
+    implementation "com.nimbusds:nimbus-jose-jwt:${nimbusJwtVersion}"  // Explicitly define to fix CVE-2023-52428
+    implementation 'com.nimbusds:oauth2-oidc-sdk:10.7.1'  // Latest version
+
+    implementation "org.springframework:spring-core:${springVersion}"
+
+    // PDF Generation - OpenHTML2PDF (LGPL license, commercial-friendly)
+    implementation 'com.openhtmltopdf:openhtmltopdf-pdfbox:1.0.10'
+    implementation 'com.openhtmltopdf:openhtmltopdf-slf4j:1.0.10'
+    implementation 'com.openhtmltopdf:openhtmltopdf-svg-support:1.0.10'
+
+    // HTML parsing for PDF generation
+    implementation 'org.jsoup:jsoup:1.17.2'
+
+    // Apache POI for Excel generation (OCMS 10 Ad-Hoc ANS Report)
+    implementation "org.apache.poi:poi:${apachePoiVersion}"
+    implementation "org.apache.poi:poi-ooxml:${apachePoiVersion}"
+
+    // LTA Vehicle Number Validation Library v5.0
+    // Official library from LTA for Singapore vehicle number checksum validation
+    // Handles all vehicle types including special prefixes (SAG, SPF, SBS, etc.)
+    implementation files('libs/validateGenerateVehicleNo.jar')
+}
+
+test {
+    useJUnitPlatform()
+}
+
+war { 
+    archiveFileName = "ocms.war" 
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+}
+
+bootWar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+bootJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

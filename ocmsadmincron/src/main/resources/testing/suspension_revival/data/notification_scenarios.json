@@ -1,0 +1,32 @@
+[
+  {
+    "scenario": "TS-HST: Hard send notification triggers suspension",
+    "noticeNo": "TEST-HST-001",
+    "vehicleNo": "SBD1111A",
+    "nric": "S1234567H",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "HST",
+    "expected_result": "success",
+    "description": "Test TS-HST suspension during notification send"
+  },
+  {
+    "scenario": "TS-HST: SMS notification failure creates suspension",
+    "noticeNo": "TEST-HST-002",
+    "vehicleNo": "SBD2222B",
+    "nric": "S2345678I",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "HST",
+    "expected_result": "success",
+    "description": "Test suspension on notification failure"
+  },
+  {
+    "scenario": "TS-HST: Email notification hard send",
+    "noticeNo": "TEST-HST-003",
+    "vehicleNo": "SBD3333C",
+    "nric": "S3456789J",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "HST",
+    "expected_result": "success",
+    "description": "Test email hard send suspension"
+  }
+]

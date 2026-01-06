@@ -1,0 +1,242 @@
+plugins {
+    id 'org.sonarqube' version "4.4.1.3373"
+    id 'org.springframework.boot' version '3.5.+' // Updated to newer version with + notation
+    id 'io.spring.dependency-management' version '1.1.4' // Updated to newer version
+    id 'java'
+    id 'war'
+}
+
+group = 'com.ocms'
+version = '0.0.1-SNAPSHOT'
+description = 'Spring Boot Cron Service'
+
+java {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "ocmsadmincron"
+        property "sonar.sourceEncoding", "UTF-8"
+        property 'sonar.coverage.jacoco.xmlReportPaths', "build/reports/jacoco/test/jacocoTestReport.xml"
+        property "sonar.gradle.skipCompile", "true"
+    }
+}
+
+repositories {
+    mavenCentral()
+    // Add Azure Maven Feed repository which contains azure-json 1.2.1
+    maven {
+        url "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-java/maven/v1"
+        name "Azure SDK for Java"
+    }
+    // Add Apache Maven repository for commons-email2-jakarta
+    maven {
+        url "https://repository.apache.org/content/repositories/releases/"
+        name "Apache Repository"
+    }
+}
+
+// Define versions in one place for consistency
+ext {
+    springVersion = '6.2.11'  // Updated to address security vulnerabilities
+    nettyVersion = '4.2.8.Final'  // Updated to latest non-vulnerable version
+    tomcatVersion = '10.1.42'  // Updated from 10.1.39
+    log4jVersion = '2.25.3'  // Updated from 2.24.3
+    nimbusJwtVersion = '10.4.2'  // Updated from 9.37.3 to fix URA-Security-Medium vulnerability
+    commonsLang3Version = '3.18.0'  // Updated to latest version to fix Security-Medium vulnerability
+    // Fixed versions for Azure components to ensure compatibility
+    azureIdentityVersion = '1.13.0' // Updated to fix Security-Medium vulnerability
+    azureKeyvaultVersion = '4.7.0' // Fixed version known to work
+    azureStorageBlobVersion = '12.23.0' // Fixed version known to work
+    azureJsonVersion = '1.5.0' // Updated to fix Security-High vulnerability
+    // Apache POI version for Excel generation
+    apachePoiVersion = '5.4.+' // Latest stable version
+    // Commons Compress version - explicitly defined to fix security vulnerabilities
+    commonsCompressVersion = '1.26.2' // Updated from 1.25.0 to fix URA-Security-Medium vulnerability
+}
+
+// FIXED: Exclude default logging completely
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+        exclude group: 'ch.qos.logback', module: 'logback-core'
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+
+        // Force specific versions for components with vulnerabilities
+        resolutionStrategy {
+            force "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}"
+            force "org.apache.tomcat.embed:tomcat-embed-el:${tomcatVersion}"
+            force "org.apache.tomcat.embed:tomcat-embed-websocket:${tomcatVersion}"
+            force "org.springframework:spring-core:${springVersion}"
+            force "org.springframework:spring-web:${springVersion}"
+            force "org.springframework:spring-context:${springVersion}"
+            force "io.netty:netty-codec-http2:${nettyVersion}"
+            force "io.netty:netty-handler:${nettyVersion}"
+            force "io.netty:netty-codec-http:${nettyVersion}"
+            force "io.netty:netty-common:${nettyVersion}"
+            force "io.netty:netty-buffer:${nettyVersion}"
+            force "io.netty:netty-transport:${nettyVersion}"
+            force "io.netty:netty-codec:${nettyVersion}"  // Added to fix Security-Medium issue
+            force "io.netty:netty-codec-compression:${nettyVersion}"  // Added to fix Security-Medium issue
+            force "io.netty:netty-resolver:${nettyVersion}"  // Added for consistency
+            force "io.netty:netty-handler-proxy:${nettyVersion}"  // Added for consistency with Azure SDK
+
+            force "com.nimbusds:nimbus-jose-jwt:${nimbusJwtVersion}"
+            force "io.projectreactor.netty:reactor-netty-http:1.2.9"  // Updated from 1.2.5 to fix CVE-2025-22227
+            force "com.azure:azure-json:${azureJsonVersion}"
+            force "org.apache.commons:commons-lang3:${commonsLang3Version}"  // Updated to 3.18.0 to fix Security-Medium vulnerability
+            force "com.azure:azure-core:1.54.0"  // Updated to be compatible with azure-core-http-okhttp 1.12.2
+            force "com.azure:azure-identity:${azureIdentityVersion}"
+            force "com.microsoft.azure:msal4j:1.16.0"  // Added to fix Security-Medium vulnerability
+            force "org.apache.commons:commons-compress:${commonsCompressVersion}"  // Added to fix URA-Security-Medium vulnerability
+            // Force log4j version to override Spring Boot's managed version
+            force "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+            force "org.apache.logging.log4j:log4j-api:${log4jVersion}"
+            force "org.apache.logging.log4j:log4j-slf4j2-impl:${log4jVersion}"
+            force "org.apache.logging.log4j:log4j-jul:${log4jVersion}"
+        }
+    }
+}
+
+dependencies {
+    // Use individual Azure dependencies instead of BOM to avoid version conflicts
+    // This approach gives us more control over the specific versions
+
+    // Spring Boot starters
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // AspectJ weaver - explicitly added to fix NoSuchFileException
+    implementation 'org.aspectj:aspectjweaver:1.9.23'
+
+    // Log4j2 dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    annotationProcessor "org.apache.logging.log4j:log4j-core:${log4jVersion}"
+
+    // Apache Commons Lang3 for StringUtils
+    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"  // Updated to 3.18.0 to fix Security-Medium vulnerability
+
+    // Spring Integration - Required for SFTP functionality
+    implementation 'org.springframework.integration:spring-integration-sftp'
+    implementation 'org.springframework.integration:spring-integration-core'
+    implementation 'org.springframework.integration:spring-integration-file'
+
+    // JSCH for SFTP
+    implementation 'com.jcraft:jsch:0.1.55'
+
+    // Azure dependencies - using fixed versions that are known to be compatible
+    implementation "com.azure:azure-storage-blob:${azureStorageBlobVersion}"  // Fixed version 12.23.0
+    implementation "com.azure:azure-security-keyvault-secrets:${azureKeyvaultVersion}"  // Fixed version 4.7.0
+    implementation "com.azure:azure-security-keyvault-keys:${azureKeyvaultVersion}"  // Fixed version 4.7.0
+    implementation "com.azure:azure-identity:${azureIdentityVersion}"  // Updated to fix Security-Medium vulnerability
+    // Explicitly include core Azure libraries to ensure compatibility
+    // Using azure-core 1.54.0+ to be compatible with azure-core-http-okhttp 1.12.2
+    implementation "com.azure:azure-core:1.54.0"
+    implementation "com.azure:azure-json:${azureJsonVersion}"  // Added to fix Security-High vulnerability
+    // Use OkHttp instead of Netty for Azure HTTP client to avoid URI encoding issues with Netty 4.2.x
+    implementation "com.azure:azure-core-http-okhttp:1.12.2"  // OkHttp doesn't have strict URI validation like Netty 4.2.x
+
+    // Spring JDBC
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+    // SQL Server driver
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:12.10.2.jre11'  // Updated from 12.4.1.jre11
+
+    // Jakarta Persistence API
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+    implementation 'jakarta.transaction:jakarta.transaction-api:2.0.1'
+
+    // Jakarta Validation API
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+
+    // Jakarta Annotation API - License documentation to address URA-License-Copyleft concern
+    // License: Dual licensed under EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+    // We are using this library under the EPL-2.0 license which is business-friendly and
+    // doesn't have strong copyleft requirements. This is compatible with our project requirements.
+    // See: https://projects.eclipse.org/projects/ee4j.ca
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // ShedLock for distributed scheduling
+    implementation 'net.javacrumbs.shedlock:shedlock-spring:5.7.0'  // Updated from 5.5.0
+    implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.7.0'  // Updated from 5.5.0
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // Fix for Netty DNS native library warning on macOS ARM64
+    implementation "io.netty:netty-resolver-dns-native-macos:${nettyVersion}:osx-aarch_64"  // Updated from 4.1.100.Final
+
+    // For Jakarta Mail API - Using Apache Commons Email2 Jakarta instead of vulnerable Angus Jakarta Mail
+    implementation 'jakarta.mail:jakarta.mail-api:2.1.3'  // API specification
+    implementation 'org.apache.commons:commons-email2-jakarta:2.0.0-M1'  // Secure alternative to org.eclipse.angus:jakarta.mail
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    // OAuth2 and JWT dependencies with secure versions
+    implementation "com.nimbusds:nimbus-jose-jwt:${nimbusJwtVersion}"  // Explicitly define to fix CVE-2023-52428
+    implementation 'com.nimbusds:oauth2-oidc-sdk:11.21.1'  // Updated from 10.7.1 to ensure compatibility with nimbus-jose-jwt 10.4.2
+
+    // Mustache for email templates
+    implementation 'org.springframework.boot:spring-boot-starter-mustache:3.4.4'  // Updated from 3.0.0
+    implementation 'com.samskivert:jmustache:1.15'
+
+    // Explicitly define Netty components to ensure consistent versions
+    implementation "io.netty:netty-codec-http2:${nettyVersion}"
+    implementation "io.netty:netty-handler:${nettyVersion}"
+    implementation "io.netty:netty-codec-http:${nettyVersion}"
+    implementation "io.netty:netty-common:${nettyVersion}"
+    implementation "io.netty:netty-buffer:${nettyVersion}"
+    implementation "io.netty:netty-transport:${nettyVersion}"
+    implementation "io.netty:netty-codec:${nettyVersion}"  // Added to fix Security-Medium issue
+    implementation "io.netty:netty-codec-compression:${nettyVersion}"  // Added to fix Security-Medium issue
+    implementation "io.netty:netty-resolver:${nettyVersion}"  // Added for consistency
+    implementation "io.netty:netty-handler-proxy:${nettyVersion}"  // Added for consistency with Azure SDK
+
+
+    // Add reactive-streams with license documentation to address URA-License-Threat issue
+    // License: MIT License (business-friendly, permissive license)
+    // See: https://www.reactive-streams.org/
+    implementation 'org.reactivestreams:reactive-streams:1.0.4'
+
+    // JNA dependency with license documentation to address URA-License-None issue
+    // License: Apache License 2.0 and LGPL 2.1 (dual-licensed)
+    // We are using this library under the Apache License 2.0 which is business-friendly
+    // See: https://github.com/java-native-access/jna
+    // implementation 'net.java.dev.jna:jna:6.1.6'
+
+    implementation "org.springframework:spring-core:${springVersion}"
+
+    // Apache POI for Excel generation
+    implementation "org.apache.poi:poi:${apachePoiVersion}"
+    implementation "org.apache.poi:poi-ooxml:${apachePoiVersion}"
+
+    // Explicitly add commons-compress with secure version to fix URA-Security-Medium vulnerability
+    implementation "org.apache.commons:commons-compress:${commonsCompressVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+war {
+    archiveFileName = "ocms.war"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+}
+
+bootWar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+bootJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

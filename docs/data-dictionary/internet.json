@@ -1,0 +1,670 @@
+{
+  "eocms_web_txn_detail": {
+    "description": "The table stores detailed records of electronic payment transactions processed through the web interface. It captures both payment metadata and operational tracking data related to receipt generation, offence linking, and audit trail (e.g., creation and update history).",
+    "columns": [
+      {
+        "name": "receipt_no",
+        "type": "varchar(16)",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "Receipt number for the transaction (same as transaction id)",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "type_of_receipt",
+        "type": "varchar(2)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Type code of the receipt",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "remarks",
+        "type": "varchar(200)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Additional remarks or comments",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "transaction_date_and_time",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Date of the transaction",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "payment_date_and_time",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Date when URAPG conduct the payment",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "offence_notice_no",
+        "type": "varchar(10)",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "Reference to offence notice number",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "vehicle_no",
+        "type": "varchar(14)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Vehicle registration number",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "atoms_flag",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Indicator flag for payable parking fines under court submission. (Yes – Not Payable, No - Payable)",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "payment_mode",
+        "type": "varchar(6)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "The method used for payment (JX (Debit), eNETS (credit card), PayNow)",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "payment_amount",
+        "type": "decimal(19,2)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Amount paid in the transaction",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "total_amount",
+        "type": "decimal(19,2)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Total amount payable in one transaction receipt number based on notice number",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "sender",
+        "type": "varchar(10)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "ID of the sender system or user",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "status",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Status of the transaction (S = success/E = error/I = Incomplete",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "error_remarks",
+        "type": "varchar(250)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Error message if any issue during processing",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "is_sync",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": false,
+        "default": "N",
+        "description": "Indicator for sync internet to intranet",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "cre_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Creation date of the record",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "cre_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "ID of user who created the record",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "upd_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Last updated date",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      },
+      {
+        "name": "upd_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "ID of user who last updated the record",
+        "epic": "OCMS43, OCMS44, OCMS 50"
+      }
+    ]
+  },
+  "eocms_valid_offence_notice": {
+    "description": "The table is a core table in the OCMS system that stores information about valid offence notices. It maintains detailed records of parking offences, including vehicle information, processing stages, payment details, and suspension information.",
+    "columns": [
+      {
+        "name": "notice_no",
+        "type": "varchar(10)",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "Primary key, notice number",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "vehicle_no",
+        "type": "varchar(14)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Vehicle number",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "an_flag",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "AN flag indicator",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "notice_date_and_time",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Date and time of notice",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "amount_payable",
+        "type": "decimal(19,2)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Total payable amount",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "amount_paid",
+        "type": "decimal(19,2)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Amount paid",
+        "epic": ""
+      },
+      {
+        "name": "pp_code",
+        "type": "varchar(5)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "PP code",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "pp_name",
+        "type": "varchar(100)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Car Park Name",
+        "epic": ""
+      },
+      {
+        "name": "payment_acceptance_allowed",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Indicates if payment is accepted",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "payment_status",
+        "type": "varchar(2)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Payment status",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "last_processing_stage",
+        "type": "varchar(3)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Last processing stage",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "next_processing_stage",
+        "type": "varchar(3)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Next processing stage",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "vehicle_registration_type",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Vehicle registration type",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "suspension_type",
+        "type": "varchar(2)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Suspension type",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "crs_reason_of_suspension",
+        "type": "varchar(3)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "CRS suspension reason (FP/PRA/null)",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "crs_date_of_suspension",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "CRS suspension date",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "epr_reason_of_suspension",
+        "type": "varchar(3)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "EPR suspension reason",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "epr_date_of_suspension",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "EPR suspension date",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "offence_notice_type",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Type of offence notice (O/E/U)",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "cre_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Creation date of the record",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "cre_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "ID of user who created the record",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "upd_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Last updated date",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "upd_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "ID of user who last updated the record",
+        "epic": "OCMS 43. OCMS 44, OCMS 45, OCMS 50"
+      },
+      {
+        "name": "eservice_message_code",
+        "type": "varchar(3)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "The unique identifier for representing a specific user-level error.",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "is_sync",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": false,
+        "default": "N",
+        "description": "Indicator for sync intranet to intranet",
+        "epic": "OCMS 43"
+      }
+    ]
+  },
+  "eocms_template_store": {
+    "description": "This table stores template information. It is designed to hold binary template data along with relevant metadata such as type, creation, and update details.",
+    "columns": [
+      {
+        "name": "template_name",
+        "type": "varchar(64)",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "The name of the template. Must be unique and descriptive enough to distinguish templates.",
+        "epic": "OCMS 50"
+      },
+      {
+        "name": "remarks",
+        "type": "varchar(200)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Optional remarks or notes associated with the template.",
+        "epic": "OCMS 50"
+      },
+      {
+        "name": "template_type",
+        "type": "varchar(32)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Indicates the type or category of the template",
+        "epic": "OCMS 50"
+      },
+      {
+        "name": "cre_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Creation date of the record",
+        "epic": "OCMS 50"
+      },
+      {
+        "name": "cre_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "ID of user who created the record",
+        "epic": "OCMS 50"
+      },
+      {
+        "name": "upd_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Last updated date",
+        "epic": "OCMS 50"
+      },
+      {
+        "name": "upd_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "ID of user who last updated the record",
+        "epic": "OCMS 50"
+      }
+    ]
+  },
+  "eocms_user_message": {
+    "description": "This table stores standardized error definitions for user-related operations.",
+    "columns": [
+      {
+        "name": "eservice_message_code",
+        "type": "varchar(3)",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "The unique identifier for representing a specific user-level error.",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "eservice_message",
+        "type": "varchar(255)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "A clear message for user about the error happen",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "cre_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Creation date of the record",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "cre_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "ID of user who created the record",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "upd_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Last updated date",
+        "epic": "OCMS 43, OCMS 50"
+      },
+      {
+        "name": "upd_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "ID of user who last updated the record",
+        "epic": "OCMS 43, OCMS 50"
+      }
+    ]
+  },
+  "eocms_web_txn_audit": {
+    "description": "This table stores audit trail of all web transactions exchanged between OCMS and external systems (e.g., REPCCS), including payload details and status.",
+    "columns": [
+      {
+        "name": "web_txn_id",
+        "type": "varchar(30)",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "Unique identifier for the web transaction.",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "cre_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Record creation date.",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "cre_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "ID of the user or system that created the record.",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "msg_error",
+        "type": "varchar(250)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Error message received (if any).",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "record_counter",
+        "type": "integer",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Number of records sent in the transaction.",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "send_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Date when the transaction was sent.",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "send_time",
+        "type": "time(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Time when the transaction was sent.",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "sender",
+        "type": "varchar(5)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Identifier of the sending system (e.g., REPCCS).",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "status_num",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Status indicator for the transaction.",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "target_receiver",
+        "type": "varchar(5)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Target system receiving the transaction.",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "service_code",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Type of dataset exchange (e.g. NOPO)",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "txn_detail",
+        "type": "varchar(4000)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Full transaction payload (usually JSON format).",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "upd_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Date the record was last updated.",
+        "epic": "OCMS 3"
+      },
+      {
+        "name": "upd_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "ID of the user or system who updated the record.",
+        "epic": "OCMS 3"
+      }
+    ]
+  },
+  "sequence table": {
+    "description": "for generate txn ref number in eocms_web_txn_detail",
+    "columns": []
+  }
+}

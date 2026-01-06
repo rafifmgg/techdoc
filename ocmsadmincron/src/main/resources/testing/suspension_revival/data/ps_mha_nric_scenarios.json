@@ -1,0 +1,62 @@
+[
+  {
+    "scenario": "PS-RIP: Death before offence date - permanent suspension",
+    "noticeNo": "TEST-RIP-001",
+    "vehicleNo": "SBA1111A",
+    "nric": "S1111111A",
+    "suspensionType": "PS",
+    "reasonOfSuspension": "RIP",
+    "expected_result": "success",
+    "description": "Test PS-RIP suspension for deceased person (DOD < offence date)"
+  },
+  {
+    "scenario": "PS-RP2: Death after offence date - permanent suspension",
+    "noticeNo": "TEST-RP2-001",
+    "vehicleNo": "SBA2222B",
+    "nric": "S2222222B",
+    "suspensionType": "PS",
+    "reasonOfSuspension": "RP2",
+    "expected_result": "success",
+    "description": "Test PS-RP2 suspension for deceased person (DOD > offence date)"
+  },
+  {
+    "scenario": "TS-NRO: Invalid address from MHA - temporary suspension",
+    "noticeNo": "TEST-NRO-001",
+    "vehicleNo": "SBA3333C",
+    "nric": "S3333333C",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "NRO",
+    "expected_result": "success",
+    "description": "Test TS-NRO suspension for invalid NRIC address"
+  },
+  {
+    "scenario": "TS-OLD: Old/outdated address - temporary suspension",
+    "noticeNo": "TEST-OLD-001",
+    "vehicleNo": "SBA4444D",
+    "nric": "S4444444D",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "OLD",
+    "expected_result": "success",
+    "description": "Test TS-OLD suspension for outdated address information"
+  },
+  {
+    "scenario": "PS-RIP: Multiple notices for same deceased person",
+    "noticeNo": "TEST-RIP-002",
+    "vehicleNo": "SBA5555E",
+    "nric": "S1111111A",
+    "suspensionType": "PS",
+    "reasonOfSuspension": "RIP",
+    "expected_result": "success",
+    "description": "Test batch processing for same NRIC"
+  },
+  {
+    "scenario": "TS-NRO: Exception handling for invalid MHA data",
+    "noticeNo": "TEST-NRO-002",
+    "vehicleNo": "SBA6666F",
+    "nric": "S6666666F",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "NRO",
+    "expected_result": "success",
+    "description": "Test error handling and exception flow"
+  }
+]

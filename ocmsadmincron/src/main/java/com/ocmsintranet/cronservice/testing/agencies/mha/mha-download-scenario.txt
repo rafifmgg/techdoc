@@ -1,0 +1,225 @@
+# MHA NRIC Download – Test Scenarios (Data Update Focus)
+
+This document lists test scenarios to verify the data update flows of the MHA NRIC Download process (not connection/permission tests). Scenarios are based on [MhaNricDownloadJob](cci:2://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/jobs/MhaNricDownloadJob.java:45:0-971:1) and [MhaNricDownloadHelper](cci:2://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:27:0-815:1).
+
+General notes:
+- Each `ocms_valid_offence_notice` (VON) MUST have exactly one paired row in `ocns_offence_notice_detail` (1:1).
+- Primary verification includes updates to:
+  - `ocms_offence_notice_owner_driver`
+  - `ocms_valid_offence_notice`
+  - `ocms_suspended_notice`
+  - Address entity (`typeOfAddress = "mha_reg"`) via `offenceNoticeAddressService`
+- Relevant code:
+  - `MhaNricDownloadJob.processFileGroup()`
+  - `MhaNricDownloadHelper.applyStatusUpdates()`
+  - `MhaNricDownloadHelper.processExceptionsReport()`
+  - `MhaNricDownloadHelper.updateMhaRegistrationAddress(...)`
+  - `MhaNricDownloadJob.queryDataHiveForProcessedRecords()`
+
+## Global Pre-setup
+- Seed `ocms_suspension_reason` for TS/NRO (e.g., `no_of_days_for_revival = 14`) if required by the scenario.
+- For every VON `noticeNo`, create exactly one paired row in `ocns_offence_notice_detail` with the same `noticeNo` (1:1).
+- Prepare UIN → noticeNo mappings in `ocms_offence_notice_owner_driver` (idType='N') as needed.
+
+---
+
+## 1) Identity Update (Alive, no suspension)
+- Input:
+  - VON: `N-001` (suspensionType IS NULL) + 1 detail row.
+  - Owner/Driver: [(idType='N', idNo='S1234567A')](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/jobs/MhaNricDownloadJob.java:172:4-176:5) → `N-001`.
+  - Main record: `name`, `lifeStatus='A'`, `dateOfBirth`, `dateOfDeath=null`, full address.
+- Logic:
+  - [processResponseFile()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:43:4-115:5) → [applyStatusUpdates()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:208:4-661:5).
+  - Patch `ocms_offence_notice_owner_driver` by `idNo='S1234567A'` & `idType='N'`.
+  - [updateMhaRegistrationAddress('N-001','O',record)](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:697:4-764:5).
+- Output:
+  - Owner/Driver: `name`, `lifeStatus='A'`, `dateOfBirth`, `dateOfDeath=null`, `mhaProcessingDateTime=now`.
+  - Address (`mha_reg`): inserted/updated with address fields, `processingDateTime=now`, `effectiveDate` from `lastChangeAddressDate` if present.
+  - VON & Suspended: unchanged.
+
+## 2) Exceptions TS-NRO (with dateOfRevival calculation)
+- Input:
+  - VON: `N-101`, `N-102` (both `suspensionType IS NULL`) + 1 detail each.
+  - Owner/Driver: UIN `S2233445Z` → `N-101`, `N-102`.
+  - `ocms_nro_temp`: contains `N-102` (excluded).
+  - `ocms_suspension_reason`: TS/NRO with `no_of_days_for_revival=14`.
+  - EXP: `idNumber='S2233445Z'` for NRO.
+- Logic:
+  - [processExceptionsReport()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:153:4-206:5) → [applyStatusUpdates()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:208:4-661:5):
+    - Join via owner_driver → exclude `ocms_nro_temp` → intersect VON (`suspensionType IS NULL`) → result `N-101`.
+    - VON `N-101`: `suspensionType='TS'`, `eprReasonOfSuspension='NRO'`, `eprDateOfSuspension=now`.
+    - Insert `ocms_suspended_notice` for `N-101` with `dateOfRevival=now+14`.
+- Output:
+  - VON: `N-101` updated TS/NRO; `N-102` unchanged.
+  - Suspended: one row for `N-101` (check `sr_no` increment).
+
+## 3) Exceptions TS-NRO (without TS/NRO master in suspension_reason)
+- Input: same as Scenario 2, but no `ocms_suspension_reason` for TS/NRO.
+- Logic: same as Scenario 2.
+- Output:
+  - VON: `N-101` updated TS/NRO.
+  - Suspended: `dateOfRevival=null` (no revival days configured).
+
+## 4) PS-RIP (lifeStatus='D', DoD ≥ offenceDate)
+- Input:
+  - VON: `N-201` (offenceDate = 2025-01-01) + 1 detail.
+  - Owner/Driver: UIN `S3344556K` → `N-201`.
+  - Main: `lifeStatus='D'`, `dateOfDeath='2025-08-01'` (≥ offence).
+- Logic:
+  - [applyStatusUpdates()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:208:4-661:5) → classify PS-RIP.
+  - VON: `suspensionType='PS'`, `eprReasonOfSuspension='RIP'`, `eprDateOfSuspension=now`.
+  - Insert `ocms_suspended_notice` (no `dateOfRevival`).
+  - Upsert address via [updateMhaRegistrationAddress()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:697:4-764:5).
+- Output:
+  - VON `N-201`: PS/RIP set.
+  - Suspended: one row (check `sr_no`).
+  - Address: `mha_reg` inserted/updated.
+
+## 5) PS-RP2 (lifeStatus='D', DoD < offenceDate)
+- Input:
+  - VON: `N-301` (offenceDate = 2024-02-01) + 1 detail.
+  - Owner/Driver: UIN `S4455667M` → `N-301`.
+  - Main: `lifeStatus='D'`, `dateOfDeath='2024-01-01'` (< offence).
+- Logic:
+  - [applyStatusUpdates()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:208:4-661:5) → classify PS-RP2.
+  - VON: `suspensionType='PS'`, `eprReasonOfSuspension='RP2'`, `eprDateOfSuspension=now`.
+  - Insert `ocms_suspended_notice` (no `dateOfRevival`).
+- Output:
+  - VON `N-301`: PS/RP2 set.
+  - Suspended: one row.
+
+## 6) Multiple notices for one UIN (fan-out update)
+- Input:
+  - VON: `N-401`, `N-402`, `N-403` (all `suspensionType IS NULL`) + 1 detail each.
+  - Owner/Driver: UIN `S5566778P` → all three notices.
+  - Main: `lifeStatus='D'`, `dateOfDeath='2025-03-02'`.
+  - VON offenceDates vary (to trigger RIP/RP2 split).
+- Logic:
+  - [applyStatusUpdates()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:208:4-661:5) processes all notices for this UIN.
+- Output:
+  - VON: all updated (PS-RIP/RP2 per notice).
+  - Suspended: three rows (`sr_no` correct per notice).
+  - Address: upsert per notice/indicator as looped.
+
+## 7) Address upsert: create vs update
+- Input:
+  - Case A (create): VON `N-501` + 1 detail; no `mha_reg` for (`N-501`, 'O').
+  - Case B (update): VON `N-502` + 1 detail; there is an existing `mha_reg` for (`N-502`, 'D').
+  - Main: full address + `lastChangeAddressDate`.
+- Logic:
+  - [updateMhaRegistrationAddress(noticeNo, ownerDriverIndicator, record)](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:697:4-764:5):
+    - A: insert new row (`creDate/creUserId`), set `processingDateTime`, `effectiveDate`.
+    - B: update existing row (`updDate/updUserId`), update all address fields, `processingDateTime`, `effectiveDate`.
+- Output:
+  - A: one new address row for `N-501` 'O'.
+  - B: existing address row for `N-502` 'D' updated.
+
+## 8) Skip update when VON already suspended
+- Input:
+  - VON: `N-601` (already `suspensionType='TS'` or 'PS') + 1 detail.
+  - EXP targets UIN resolving to `N-601`.
+- Logic:
+  - [processExceptionsReport()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:153:4-206:5) → intersect VON (`suspensionType IS NULL`) → `N-601` filtered out.
+- Output:
+  - VON `N-601`: unchanged.
+  - Suspended: no new rows.
+
+## 9) DataHive trigger after processing (verify calls only)
+- Input:
+  - One NRIC and one FIN UIN processed (each has VON + 1 detail).
+- Logic:
+  - After successful group → [queryDataHiveForProcessedRecords()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/jobs/MhaNricDownloadJob.java:692:4-725:5):
+    - Calls `DataHiveNRICService.retrieveNRICData(...)` for NRIC.
+    - Calls `DataHiveFINService.retrieveFINData(...)` for FIN.
+- Output:
+  - Verify via mocks: both services are called with correct `idNo` and `noticeNo`.
+  - Do not test external connectivity.
+
+## 10) Owner/Driver Indicator coverage (O and D)
+- Input:
+  - VON: `N-701` (O) and `N-702` (D) + 1 detail each.
+  - Owner/Driver: same UIN maps to both notices.
+  - Main: full address.
+- Logic:
+  - Loop `existingRecords` → [updateMhaRegistrationAddress(noticeNo, ownerDriverIndicator, record)](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:697:4-764:5) for 'O' and 'D'.
+- Output:
+  - Address `mha_reg`: two distinct rows for (`N-701`, 'O') and (`N-702`, 'D').
+
+---
+
+## Mandatory Post-conditions
+- 1:1 integrity:
+  - Count of `ocns_offence_notice_detail` rows == number of VON rows seeded for the scenario.
+  - Each VON `noticeNo` has exactly one matching detail row.
+- Key fields:
+  - Owner/Driver: `name`, `lifeStatus`, `dateOfBirth`, `dateOfDeath`, `mhaProcessingDateTime`.
+  - VON (TS/PS): `suspensionType`, `eprReasonOfSuspension` (NRO/RIP/RP2), `eprDateOfSuspension`.
+  - Suspended: `sr_no` (next), `dateOfRevival` (TS/NRO only), metadata (source/reason/officer/remarks).
+  - Address (mha_reg): address columns, `processingDateTime`, `effectiveDate`, audit (`cre*`/`upd*`).
+
+## Test Implementation Notes
+- Use repositories/`TableQueryService`/SQL as per your test infra for seeding and assertions.
+- Mock external systems (SFTP/SLIFT/Azure Blob/DataHive) to focus on data updates.
+- For EXP/TOT, use the parser or construct record maps per `MhaFileFormatConstants` so [applyStatusUpdates()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:208:4-661:5) follows the natural path.
+
+## 11) PS Feature Flag OFF (gating)
+- Input:
+  - VON: `N-FLAG1` (suspensionType IS NULL) + 1 detail (1:1).
+  - Owner/Driver: UIN `S9988776Z` → `N-FLAG1`.
+  - Main: `lifeStatus='D'`, `dateOfDeath` ada, alamat terisi.
+  - Config: `mha.download.enablePsRip=false` (feature flag OFF).
+- Logic (Input → Logic → Output):
+  - Input: main parsed dengan DoD.
+  - Logic: [applyStatusUpdates()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:208:4-661:5) mendeteksi DoD namun men-skipping PS karena flag OFF.
+  - Output: 
+    - VON `N-FLAG1`: tetap `suspensionType IS NULL` (tidak PS-RIP/RP2).
+    - `ocms_suspended_notice`: tidak ada row baru.
+    - Address: tetap di-upsert via [updateMhaRegistrationAddress(...)](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:697:4-764:5) bila data alamat ada.
+- Assertions:
+  - Integritas 1:1: `ocns_offence_notice_detail` tepat 1 row untuk `N-FLAG1`.
+  - VON tidak berubah pada kolom PS; address ter-update sesuai record.
+
+## 12) DataHive Coverage: UEN dan NRIC mapping 'S'/'T'
+- Input:
+  - Dua VON + detail (1:1):
+    - `N-NRICS1` untuk UIN bertipe 'S' (NRIC mapping).
+    - `N-UEN1` untuk UEN bertipe 'U'.
+  - Owner/Driver:
+    - [(noticeNo='N-NRICS1', idType='S', idNo='S7777777A')](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/jobs/MhaNricDownloadJob.java:172:4-176:5)
+    - [(noticeNo='N-UEN1', idType='U', idNo='201234567A')](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/jobs/MhaNricDownloadJob.java:172:4-176:5)
+  - Main: data minimal agar kedua UIN dihitung sebagai `processedRecords`.
+- Logic (Input → Logic → Output):
+  - Input: processedRecords mencakup idNo di atas.
+  - Logic:
+    - [queryDataHiveForProcessedRecords()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/jobs/MhaNricDownloadJob.java:692:4-725:5) → [getProcessedRecordsByType()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/jobs/MhaNricDownloadJob.java:727:4-783:5):
+      - 'S'/'T'/'N' → NRIC group.
+      - 'U' → UEN group.
+    - Call services:
+      - `DataHiveNRICService.retrieveNRICData("S7777777A", noticeNo...)`
+      - `DataHiveUENService.retrieveUENData("201234567A", noticeNo...)`
+  - Output:
+    - Verifikasi via mock: kedua method dipanggil dengan parameter benar.
+- Assertions:
+  - Integritas 1:1 untuk `N-NRICS1` dan `N-UEN1`.
+  - Tidak menguji koneksi eksternal, hanya verifikasi pemanggilan.
+
+## 13) Suspended sr_no Increment saat sudah ada riwayat
+- Input:
+  - VON: `N-INC1` (suspensionType IS NULL) + 1 detail (1:1).
+  - Owner/Driver: UIN `S6655443J` → `N-INC1`.
+  - Pre-seed `ocms_suspended_notice`: 1 row existing untuk `N-INC1` dengan `sr_no=1`.
+  - Pilih pemicu:
+    - Opsi A: Exceptions TS-NRO:
+      - `ocms_suspension_reason` untuk TS/NRO (`no_of_days_for_revival=14`).
+      - EXP target UIN `S6655443J` (exclude `ocms_nro_temp` agar eligible).
+    - Opsi B: PS (RIP/RP2) via DoD di main.
+- Logic (Input → Logic → Output):
+  - Input: trigger suspension untuk `N-INC1`.
+  - Logic:
+    - [applyStatusUpdates()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:208:4-661:5) → sebelum insert, hitung next `sr_no` via [getNextSrNo()](cci:1://file:///Users/mggmalang/gitlab/ocms-new/ocmsadmincron/src/main/java/com/ocmsintranet/cronservice/framework/workflows/agencies/mha/download/helpers/MhaNricDownloadHelper.java:663:4-695:5) (max+1).
+  - Output:
+    - `ocms_suspended_notice`: row baru untuk `N-INC1` dengan `sr_no=2`.
+    - Jika TS-NRO: `dateOfRevival=now+14`; jika PS: `dateOfRevival=null`.
+- Assertions:
+  - Integritas 1:1: detail untuk `N-INC1` tetap ada tepat 1 row.
+  - VON berubah sesuai tipe suspension; suspended memiliki `sr_no=2`.

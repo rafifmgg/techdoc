@@ -1,0 +1,42 @@
+[
+  {
+    "scenario": "TS-PTS: Print to send status - temporary suspension",
+    "noticeNo": "TEST-PTS-001",
+    "vehicleNo": "SBA7777A",
+    "nric": "S7777777A",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "PTS",
+    "expected_result": "success",
+    "description": "Test TS-PTS suspension during Toppan upload"
+  },
+  {
+    "scenario": "TS-PPT: Pending print status - temporary suspension",
+    "noticeNo": "TEST-PPT-001",
+    "vehicleNo": "SBA8888B",
+    "nric": "S8888888B",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "PPT",
+    "expected_result": "success",
+    "description": "Test TS-PPT suspension for pending print"
+  },
+  {
+    "scenario": "TS-PTS: Multiple notices in single Toppan batch",
+    "noticeNo": "TEST-PTS-002",
+    "vehicleNo": "SBA9999C",
+    "nric": "S9999999C",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "PTS",
+    "expected_result": "success",
+    "description": "Test batch processing"
+  },
+  {
+    "scenario": "TS-PPT: Verify days_to_revive calculated correctly",
+    "noticeNo": "TEST-PPT-002",
+    "vehicleNo": "SBC0000D",
+    "nric": "S0000000D",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "PPT",
+    "expected_result": "success",
+    "description": "Test due_date_of_revival calculation"
+  }
+]

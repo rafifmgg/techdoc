@@ -1,0 +1,46 @@
+[
+  {
+    "scenario": "TS-ACR: ACRA mismatch detected - temporary suspension",
+    "noticeNo": "TEST-ACR-001",
+    "vehicleNo": "SBC1111A",
+    "nric": null,
+    "uen": "201234567A",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "ACR",
+    "expected_result": "success",
+    "description": "Test TS-ACR suspension for ACRA data mismatch (single call)"
+  },
+  {
+    "scenario": "TS-SYS: System error during DataHive query - temporary suspension",
+    "noticeNo": "TEST-SYS-001",
+    "vehicleNo": "SBC2222B",
+    "nric": null,
+    "uen": "202345678B",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "SYS",
+    "expected_result": "success",
+    "description": "Test TS-SYS suspension for system error (single call)"
+  },
+  {
+    "scenario": "TS-ACR: UEN validation failure",
+    "noticeNo": "TEST-ACR-002",
+    "vehicleNo": "SBC3333C",
+    "nric": null,
+    "uen": "203456789C",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "ACR",
+    "expected_result": "success",
+    "description": "Test ACRA validation error handling"
+  },
+  {
+    "scenario": "TS-SYS: DataHive timeout handling",
+    "noticeNo": "TEST-SYS-002",
+    "vehicleNo": "SBC4444D",
+    "nric": null,
+    "uen": "204567890D",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "SYS",
+    "expected_result": "success",
+    "description": "Test timeout and retry mechanism"
+  }
+]

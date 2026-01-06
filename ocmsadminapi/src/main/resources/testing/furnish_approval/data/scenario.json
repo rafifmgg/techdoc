@@ -1,0 +1,165 @@
+[
+  {
+    "scenario": "approval_with_email_sms",
+    "description": "Officer approves pending application - Email to owner, email+SMS to furnished person",
+    "noticeNo": "APPR001",
+    "txnNo": "TXN_APPR001",
+    "setupData": {
+      "createPendingApplication": true,
+      "createTsPdpSuspension": true,
+      "applicationStatus": "P",
+      "ownerEmail": "owner.appr001@test.com",
+      "furnishedEmail": "furnished.appr001@test.com",
+      "furnishedMobile": "91234567"
+    },
+    "approvalRequest": {
+      "txnNo": "TXN_APPR001",
+      "officerId": "OFFICER01",
+      "sendEmailToOwner": true,
+      "sendEmailToFurnished": true,
+      "sendSmsToFurnished": true,
+      "customEmailSubject": null,
+      "customEmailBody": null,
+      "customSmsBody": null,
+      "remarks": "Application approved - all checks passed"
+    },
+    "expectedResult": {
+      "applicationStatus": "A",
+      "emailToOwnerSent": true,
+      "emailToFurnishedSent": true,
+      "smsToFurnishedSent": true,
+      "tsPdpSuspensionRevived": true
+    }
+  },
+  {
+    "scenario": "approval_email_only",
+    "description": "Officer approves - Only email to owner and furnished person, no SMS",
+    "noticeNo": "APPR002",
+    "txnNo": "TXN_APPR002",
+    "setupData": {
+      "createPendingApplication": true,
+      "createTsPdpSuspension": true,
+      "applicationStatus": "P",
+      "ownerEmail": "owner.appr002@test.com",
+      "furnishedEmail": "furnished.appr002@test.com",
+      "furnishedMobile": "92345678"
+    },
+    "approvalRequest": {
+      "txnNo": "TXN_APPR002",
+      "officerId": "OFFICER02",
+      "sendEmailToOwner": true,
+      "sendEmailToFurnished": true,
+      "sendSmsToFurnished": false,
+      "customEmailSubject": null,
+      "customEmailBody": null,
+      "customSmsBody": null,
+      "remarks": "Application approved - email only"
+    },
+    "expectedResult": {
+      "applicationStatus": "A",
+      "emailToOwnerSent": true,
+      "emailToFurnishedSent": true,
+      "smsToFurnishedSent": false,
+      "tsPdpSuspensionRevived": true
+    }
+  },
+  {
+    "scenario": "approval_no_notifications",
+    "description": "Officer approves - No email or SMS notifications sent",
+    "noticeNo": "APPR003",
+    "txnNo": "TXN_APPR003",
+    "setupData": {
+      "createPendingApplication": true,
+      "createTsPdpSuspension": true,
+      "applicationStatus": "P",
+      "ownerEmail": "owner.appr003@test.com",
+      "furnishedEmail": "furnished.appr003@test.com",
+      "furnishedMobile": "93456789"
+    },
+    "approvalRequest": {
+      "txnNo": "TXN_APPR003",
+      "officerId": "OFFICER03",
+      "sendEmailToOwner": false,
+      "sendEmailToFurnished": false,
+      "sendSmsToFurnished": false,
+      "customEmailSubject": null,
+      "customEmailBody": null,
+      "customSmsBody": null,
+      "remarks": "Application approved - no notifications"
+    },
+    "expectedResult": {
+      "applicationStatus": "A",
+      "emailToOwnerSent": false,
+      "emailToFurnishedSent": false,
+      "smsToFurnishedSent": false,
+      "tsPdpSuspensionRevived": true
+    }
+  },
+  {
+    "scenario": "approval_custom_templates",
+    "description": "Officer approves with custom email subject/body and SMS body",
+    "noticeNo": "APPR004",
+    "txnNo": "TXN_APPR004",
+    "setupData": {
+      "createPendingApplication": true,
+      "createTsPdpSuspension": true,
+      "applicationStatus": "P",
+      "ownerEmail": "owner.appr004@test.com",
+      "furnishedEmail": "furnished.appr004@test.com",
+      "furnishedMobile": "94567890"
+    },
+    "approvalRequest": {
+      "txnNo": "TXN_APPR004",
+      "officerId": "OFFICER04",
+      "sendEmailToOwner": true,
+      "sendEmailToFurnished": true,
+      "sendSmsToFurnished": true,
+      "customEmailSubject": "Custom Subject - URA Parking Offence Notice APPR004",
+      "customEmailBody": "<html><body>Custom email body for testing purposes.</body></html>",
+      "customSmsBody": "Custom SMS body for testing purposes.",
+      "remarks": "Application approved - custom templates"
+    },
+    "expectedResult": {
+      "applicationStatus": "A",
+      "emailToOwnerSent": true,
+      "emailToFurnishedSent": true,
+      "smsToFurnishedSent": true,
+      "tsPdpSuspensionRevived": true
+    }
+  },
+  {
+    "scenario": "approval_blocked_by_ps_suspension",
+    "description": "Approval blocked - Existing PS suspension prevents approval",
+    "noticeNo": "APPR005",
+    "txnNo": "TXN_APPR005",
+    "setupData": {
+      "createPendingApplication": true,
+      "createTsPdpSuspension": true,
+      "createPsSuspension": true,
+      "applicationStatus": "P",
+      "ownerEmail": "owner.appr005@test.com",
+      "furnishedEmail": "furnished.appr005@test.com",
+      "furnishedMobile": "95678901"
+    },
+    "approvalRequest": {
+      "txnNo": "TXN_APPR005",
+      "officerId": "OFFICER05",
+      "sendEmailToOwner": true,
+      "sendEmailToFurnished": true,
+      "sendSmsToFurnished": true,
+      "customEmailSubject": null,
+      "customEmailBody": null,
+      "customSmsBody": null,
+      "remarks": "Attempting to approve - should be blocked by PS"
+    },
+    "expectedResult": {
+      "applicationStatus": "P",
+      "approvalBlocked": true,
+      "blockReason": "PS suspension exists",
+      "emailToOwnerSent": false,
+      "emailToFurnishedSent": false,
+      "smsToFurnishedSent": false,
+      "tsPdpSuspensionRevived": false
+    }
+  }
+]

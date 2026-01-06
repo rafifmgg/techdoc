@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="com.ocmseservice.apiservice">
+
+    <Properties>
+        <Property name="azure.log.prefix1">ocmseservice</Property> 
+        <Property name="azure.log.prefix2">ApplicationLog</Property> 
+        <Property name="azure.log.endpoint">https://uraproject.blob.core.windows.net/ocmsiz-applog-test</Property> 
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d [%p] [%c{10}] [%T] - %m%n" />
+        </Console>
+
+        <AzureBlobAppender name="AzureBlobAppender" 
+                           prefix1="${azure.log.prefix1}" 
+                           prefix2="${azure.log.prefix2}" 
+                           endpoint="${azure.log.endpoint}">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+            <SizeBasedTriggeringPolicy size="7168KB"/>
+        </AzureBlobAppender>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.azure.core" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.azure.identity" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.azure.storage" level="WARN" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="org.springframework.security" level="${env:APPLOGLEVEL:-info}"/>
+        <Logger name="com.ocmseservice.apiservice" level="${env:APPLOGLEVEL:-info}"/>
+
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="AzureBlobAppender"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

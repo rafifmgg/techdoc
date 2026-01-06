@@ -1,0 +1,62 @@
+[
+  {
+    "scenario": "Retry: API call retries on connection failure",
+    "noticeNo": "TEST-RETRY-001",
+    "vehicleNo": "SBE4444A",
+    "nric": "S4567890U",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "ROV",
+    "simulateFailure": "CONNECTION_TIMEOUT",
+    "expectedRetries": 3,
+    "expected_result": "success",
+    "description": "Test retry mechanism on connection failure"
+  },
+  {
+    "scenario": "Retry: Exponential backoff applied correctly",
+    "noticeNo": "TEST-RETRY-002",
+    "vehicleNo": "SBE5555B",
+    "nric": "S5678901V",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "ACR",
+    "simulateFailure": "TEMPORARY_ERROR",
+    "expectedBackoff": "2s, 4s, 8s",
+    "expected_result": "success",
+    "description": "Test exponential backoff timing"
+  },
+  {
+    "scenario": "Retry: Jitter added to retry delays",
+    "noticeNo": "TEST-RETRY-003",
+    "vehicleNo": "SBE6666C",
+    "nric": "S6789012W",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "SYS",
+    "simulateFailure": "RATE_LIMIT",
+    "expectedJitter": true,
+    "expected_result": "success",
+    "description": "Test jitter variance in retries"
+  },
+  {
+    "scenario": "Retry: Max retry attempts respected",
+    "noticeNo": "TEST-RETRY-004",
+    "vehicleNo": "SBE7777D",
+    "nric": "S7890123X",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "NRO",
+    "simulateFailure": "PERSISTENT_ERROR",
+    "expectedRetries": 3,
+    "expected_result": "failure_after_retries",
+    "description": "Test max retry limit enforcement"
+  },
+  {
+    "scenario": "Retry: Success on 2nd retry",
+    "noticeNo": "TEST-RETRY-005",
+    "vehicleNo": "SBE8888E",
+    "nric": "S8901234Y",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "PPT",
+    "simulateFailure": "TRANSIENT_ERROR",
+    "successOnAttempt": 2,
+    "expected_result": "success",
+    "description": "Test recovery after first failure"
+  }
+]

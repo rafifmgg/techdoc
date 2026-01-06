@@ -1,0 +1,46 @@
+[
+  {
+    "scenario": "TS-ACR: Batch ACRA mismatch - multiple UENs",
+    "noticeNo": "TEST-ACR-BATCH-001",
+    "vehicleNo": "SBC5555A",
+    "nric": null,
+    "uen": "205678901A",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "ACR",
+    "expected_result": "success",
+    "description": "Test TS-ACR batch suspension (UEN/FIN batch processing)"
+  },
+  {
+    "scenario": "TS-ACR: Batch processing with 10+ records",
+    "noticeNo": "TEST-ACR-BATCH-002",
+    "vehicleNo": "SBC6666B",
+    "nric": null,
+    "uen": "206789012B",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "ACR",
+    "expected_result": "success",
+    "description": "Test batch performance"
+  },
+  {
+    "scenario": "TS-SYS: Batch system error handling",
+    "noticeNo": "TEST-SYS-BATCH-001",
+    "vehicleNo": "SBC7777C",
+    "nric": null,
+    "uen": "207890123C",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "SYS",
+    "expected_result": "success",
+    "description": "Test TS-SYS batch suspension with errors"
+  },
+  {
+    "scenario": "TS-SYS: Partial batch failure - continue processing",
+    "noticeNo": "TEST-SYS-BATCH-002",
+    "vehicleNo": "SBC8888D",
+    "nric": null,
+    "uen": "208901234D",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "SYS",
+    "expected_result": "success",
+    "description": "Test resilience with partial failures"
+  }
+]

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="OFF" packages="com.ocmsintranet.cronservice.utilities.logging">
+    <Properties>
+        <!-- Azure Blob Logging properties -->
+        <Property name="azure.log.prefix1">ocmsadmincron</Property>
+        <Property name="azure.log.prefix2">ApplicationLogSIT</Property>
+        <Property name="azure.log.endpoint">https://uraproject.blob.core.windows.net/ocmsiz-applog-test</Property>
+        <Property name="app.log.level">debug</Property>
+    </Properties>
+    
+    <Appenders>
+        <Console name="Console">
+            <PatternLayout pattern="[%level] %d{HH:mm:ss} %logger{36} - %msg%n"/>
+        </Console>
+        
+        <RollingFile name="FileAppender" 
+                     fileName="logs/ocmsadmincron.log" 
+                     filePattern="logs/ocmsadmincron-%i.log">
+            <PatternLayout pattern="[%level] %d{yyyy-MM-dd HH:mm:ss} %logger{36} - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+        
+        <!-- Azure Blob Storage Appender -->
+        <AzureBlobAppender name="AzureBlobAppender"
+                          prefix1="${azure.log.prefix1}"
+                          prefix2="${azure.log.prefix2}"
+                          endpoint="${azure.log.endpoint}">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+            <SizeBasedTriggeringPolicy size="7168KB"/>
+        </AzureBlobAppender>
+    </Appenders>
+    
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+            <AppenderRef ref="AzureBlobAppender"/>
+        </Root>
+        
+        <Logger name="com.ocmsintranet" level="${app.log.level}" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+            <AppenderRef ref="AzureBlobAppender"/>
+        </Logger>
+        
+        <!-- Suppress noisy logs -->
+        <Logger name="org.springframework" level="warn"/>
+        <Logger name="org.hibernate" level="error"/>
+        <Logger name="com.azure" level="error"/>
+        <Logger name="net.javacrumbs.shedlock" level="error"/>
+        <Logger name="io.netty" level="error"/>
+        <Logger name="com.zaxxer.hikari" level="error"/>
+        <Logger name="org.apache" level="error"/>
+    </Loggers>
+</Configuration>

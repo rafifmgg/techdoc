@@ -1,0 +1,123 @@
+[
+  {
+    "scenario": "Auto-Revival: TS suspension due TODAY - should be revived",
+    "noticeNo": "TEST-REVIVAL-001",
+    "vehicleNo": "SBD4444A",
+    "nric": "S4567890K",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "ROV",
+    "dueDateOfRevival": "TODAY",
+    "shouldBeRevived": true,
+    "expected_result": "success",
+    "description": "Test auto-revival for suspension due today"
+  },
+  {
+    "scenario": "Auto-Revival: TS suspension due YESTERDAY - should be revived",
+    "noticeNo": "TEST-REVIVAL-002",
+    "vehicleNo": "SBD5555B",
+    "nric": "S5678901L",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "PTS",
+    "dueDateOfRevival": "YESTERDAY",
+    "shouldBeRevived": true,
+    "expected_result": "success",
+    "description": "Test auto-revival for overdue suspension"
+  },
+  {
+    "scenario": "Auto-Revival: TS suspension due TOMORROW - should NOT be revived",
+    "noticeNo": "TEST-REVIVAL-003",
+    "vehicleNo": "SBD6666C",
+    "nric": "S6789012M",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "ACR",
+    "dueDateOfRevival": "TOMORROW",
+    "shouldBeRevived": false,
+    "expected_result": "success",
+    "description": "Test that future suspensions are not revived"
+  },
+  {
+    "scenario": "Auto-Revival: Already revived suspension - should be skipped",
+    "noticeNo": "TEST-REVIVAL-004",
+    "vehicleNo": "SBD7777D",
+    "nric": "S7890123N",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "NRO",
+    "dueDateOfRevival": "TODAY",
+    "alreadyRevived": true,
+    "shouldBeRevived": false,
+    "expected_result": "success",
+    "description": "Test that already revived suspensions are skipped"
+  },
+  {
+    "scenario": "Auto-Revival: PS suspension - should be skipped (no auto-revival for PS)",
+    "noticeNo": "TEST-REVIVAL-005",
+    "vehicleNo": "SBD8888E",
+    "nric": "S8901234O",
+    "suspensionType": "PS",
+    "reasonOfSuspension": "RIP",
+    "dueDateOfRevival": null,
+    "shouldBeRevived": false,
+    "expected_result": "success",
+    "description": "Test that PS suspensions are not auto-revived"
+  },
+  {
+    "scenario": "Auto-Revival: Batch processing - 10 suspensions due today",
+    "noticeNo": "TEST-REVIVAL-006",
+    "vehicleNo": "SBD9999F",
+    "nric": "S9012345P",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "SYS",
+    "dueDateOfRevival": "TODAY",
+    "shouldBeRevived": true,
+    "expected_result": "success",
+    "description": "Test batch revival processing"
+  },
+  {
+    "scenario": "Auto-Revival: Individual failure - continue processing others",
+    "noticeNo": "TEST-REVIVAL-007",
+    "vehicleNo": "SBE0000G",
+    "nric": "S0123456Q",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "OLD",
+    "dueDateOfRevival": "TODAY",
+    "shouldBeRevived": true,
+    "expected_result": "success",
+    "description": "Test resilience with individual failures"
+  },
+  {
+    "scenario": "Auto-Revival: Job history tracking",
+    "noticeNo": "TEST-REVIVAL-008",
+    "vehicleNo": "SBE1111H",
+    "nric": "S1234567R",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "PPT",
+    "dueDateOfRevival": "TODAY",
+    "shouldBeRevived": true,
+    "expected_result": "success",
+    "description": "Test job execution history recording"
+  },
+  {
+    "scenario": "Auto-Revival: Manual trigger endpoint",
+    "noticeNo": "TEST-REVIVAL-009",
+    "vehicleNo": "SBE2222I",
+    "nric": "S2345678S",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "HST",
+    "dueDateOfRevival": "TODAY",
+    "shouldBeRevived": true,
+    "expected_result": "success",
+    "description": "Test manual trigger via API"
+  },
+  {
+    "scenario": "Auto-Revival: ShedLock prevents concurrent execution",
+    "noticeNo": "TEST-REVIVAL-010",
+    "vehicleNo": "SBE3333J",
+    "nric": "S3456789T",
+    "suspensionType": "TS",
+    "reasonOfSuspension": "ROV",
+    "dueDateOfRevival": "TODAY",
+    "shouldBeRevived": true,
+    "expected_result": "success",
+    "description": "Test concurrency control"
+  }
+]
