@@ -1,0 +1,6 @@
+# Exclude ocms folders
+ocms*/
+
+# Exclude file types
+*.docx
+*.zip
