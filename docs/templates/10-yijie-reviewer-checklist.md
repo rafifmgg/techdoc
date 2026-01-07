@@ -10,7 +10,7 @@ Use this to verify compliance with project standards.
 ## API Design Review
 
 ### HTTP & Security
-- [ ] All APIs use **POST** method
+- [ ] **ALL APIs use POST method** (No GET, PUT, PATCH, DELETE allowed)
 - [ ] No sensitive data exposed in URL
 
 ### Response Format
@@ -152,7 +152,7 @@ Use this to verify compliance with project standards.
 
 | Issue | Check For |
 |-------|-----------|
-| Wrong HTTP method | GET instead of POST |
+| **Wrong HTTP method** | **GET/PUT/PATCH/DELETE instead of POST - ALL APIs must use POST** |
 | Excessive response data | All fields returned instead of required |
 | Hardcoded values | Magic numbers/strings in code |
 | Missing retry | No retry on external API failure |

@@ -366,7 +366,11 @@ Validation Rules:
 
 # Section 1 – [COPY Section 2 Title from FD]
 ## 1.1 Use Case
-[COPY Use Case content from FD Section 2]
+1. [First point from FD Use Case]
+
+2. [Second point with sub-items if any]:<br>a. [Sub-item a]<br>b. [Sub-item b]
+
+3. [Third point]
 
 ## 1.2 Process Flow
 ![Flow Diagram](./images/section1-flow.png)
@@ -387,7 +391,9 @@ Validation Rules:
 
 # Section 2 – [COPY Section 3 Title from FD]
 ## 2.1 Use Case
-[COPY Use Case content from FD Section 3]
+1. [First point from FD Use Case]
+
+2. [Second point with sub-items if any]:<br>a. [Sub-item a]<br>b. [Sub-item b]
 
 ## 2.2 Process Flow
 ## 2.3 Data Mapping
@@ -410,7 +416,7 @@ Each section MUST have these elements:
 
 | Element | Format | Required |
 |---------|--------|----------|
-| **Use Case** | Bullet points from FD | ✅ Yes |
+| **Use Case** | Numbered list (1, 2, 3) with sub-items (a, b, c) | ✅ Yes |
 | **Process Flow** | Diagram + Step table (Step \| Description \| Brief Description) | ✅ Yes |
 | **API Specification** | API table (Name, URL, Method, Payload, Response) | ⚠️ If applicable |
 | **Data Mapping** | Zone \| Database Table \| Field Name | ✅ Yes |
@@ -431,7 +437,7 @@ Each section MUST have these elements:
 | API Name | [api_name] |
 | URL | UAT: https://[domain]/ocms/v1/[endpoint] <br> PRD: https://[domain]/ocms/v1/[endpoint] |
 | Description | [API description] |
-| Method | [GET/POST] |
+| Method | POST |
 | Header | `{ "Authorization": "Bearer [token]", "Content-Type": "application/json" }` |
 | Payload | `{ "field": "value" }` |
 | Response | `{ "totalProcessed": 1, "successCount": 1, "errorCount": 0, "results": [{ "noticeNo": "500500303J", "appCode": "OCMS-2000", "message": "Success" }] }` |
@@ -439,7 +445,8 @@ Each section MUST have these elements:
 | Response Failure | `{ "totalProcessed": 1, "successCount": 0, "errorCount": 1, "results": [{ "noticeNo": "500500303J", "appCode": "OCMS-4000", "message": "Error message" }] }` |
 ```
 
-**IMPORTANT - Response Format:**
+**IMPORTANT - API Rules:**
+- **ALL APIs must use POST method** - No GET, PUT, PATCH, DELETE allowed
 - Use `appCode` and `message`, NOT `status`
 - For batch operations: use `totalProcessed`, `successCount`, `errorCount`, `results[]`
 - For single/list queries: use `appCode`, `message`, `data`
@@ -567,9 +574,9 @@ For report or filter features that need user dropdown lists, document the API:
 | API Name | userlist |
 | URL | UAT: https://[domain]/ocms/v1/userlist <br> PRD: https://[domain]/ocms/v1/userlist |
 | Description | Retrieve list of users for dropdown filter |
-| Method | GET |
+| Method | POST |
 | Header | `{ "Authorization": "Bearer [token]", "Content-Type": "application/json" }` |
-| Payload | N/A |
+| Payload | `{ "status": "A" }` |
 | Response | `{ "appCode": "OCMS-2000", "message": "Success", "data": [{ "userId": "JOHNLEE", "firstName": "John", "lastName": "Lee" }] }` |
 | Response (Empty) | `{ "appCode": "OCMS-2000", "message": "Success", "data": [] }` |
 | Response Failure | `{ "appCode": "OCMS-5000", "message": "Error message" }` |
@@ -603,6 +610,7 @@ Use `docs/templates/10-yijie-reviewer-checklist.md` to review:
 - [ ] Insert order documented (Parent first, Child after)
 - [ ] Validation flows documented (if flowchart has UI/Backend validation tabs)
 - [ ] User list API documented (if report/filter needs user dropdown)
+- [ ] **ALL APIs use POST method** (no GET, PUT, PATCH, DELETE)
 - [ ] Response format uses appCode/message (NOT status)
 - [ ] Empty response uses empty array `[]` in data field
 
@@ -662,6 +670,7 @@ pip install python-docx
 - [ ] Insert order documented
 - [ ] Validation flows documented (if flowchart has UI/Backend validation)
 - [ ] User list API documented (if report/filter needs user dropdown)
+- [ ] **ALL APIs use POST method** (no GET)
 - [ ] Response format correct (appCode/message, NOT status)
 
 ### Final Review

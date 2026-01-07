@@ -60,7 +60,23 @@ Example:
 
 ## Use Case
 
-[Copy paste from Functional Document - describe the business purpose and what this section accomplishes]
+<!--
+FORMAT: Use numbered list (1, 2, 3) for main points.
+For sub-items, use a, b, c with <br> tag.
+
+Example:
+1. Main point one.
+
+2. Main point two with sub-items:<br>a. Sub-item first<br>b. Sub-item second<br>c. Sub-item third
+
+3. Main point three.
+-->
+
+1. [Copy paste main point 1 from Functional Document]
+
+2. [Main point 2 with sub-items if any]:<br>a. [Sub-item a]<br>b. [Sub-item b]
+
+3. [Main point 3]
 
 ## [Flow 1 Name]
 
@@ -179,7 +195,11 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ## Use Case
 
-[Copy paste from Functional Document]
+1. [Copy paste main point 1 from Functional Document]
+
+2. [Main point 2 with sub-items if any]:<br>a. [Sub-item a]<br>b. [Sub-item b]
+
+3. [Main point 3]
 
 ## High Level Flow
 
@@ -221,7 +241,11 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ## Use Case
 
-[Copy paste from Functional Document]
+1. [Copy paste main point 1 from Functional Document]
+
+2. [Main point 2 with sub-items if any]:<br>a. [Sub-item a]<br>b. [Sub-item b]
+
+3. [Main point 3]
 
 ## Diagram Flow Image
 

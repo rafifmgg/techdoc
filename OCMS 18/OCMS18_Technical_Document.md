@@ -16,51 +16,51 @@ MGG SOFTWARE
 
 ## Table of Contents
 
-| Section | Content |
-| --- | --- |
-| 1 | Function: Permanent Suspension |
-| 1.1 | Use Case |
-| 1.2 | High-Level Processing Flow |
-| 1.3 | Permanent Suspension Data |
-| 1.4 | Permanent Suspension Rules |
-| 1.5 | Validating PS Requests |
-| 1.5.1 | UI-Side Validation Flow |
-| 1.5.2 | Backend-Side Validation Flow |
-| 1.6 | Data Mapping |
-| 1.7 | Success Outcome |
-| 1.8 | Error Handling |
-| 2 | OCMS Staff Portal Manual PS |
-| 2.1 | Use Case |
-| 2.2 | Process Flow |
-| 2.3 | API Specification |
-| 2.4 | Data Mapping |
-| 2.5 | Success Outcome |
-| 2.6 | Error Handling |
-| 2.7 | Suspension Codes Used by OCMS Staff Portal |
-| 3 | Auto Permanent Suspensions in OCMS |
-| 3.1 | Use Case |
-| 3.2 | Process Flow |
-| 3.3 | Data Mapping |
-| 3.4 | Success Outcome |
-| 3.5 | Error Handling |
-| 3.6 | Scenarios that Auto-Trigger PS |
-| 4 | Permanent Suspension initiated by PLUS |
-| 4.1 | Use Case |
-| 4.2 | Process Flow |
-| 4.3 | API Specification |
-| 4.4 | Data Mapping |
-| 4.5 | Success Outcome |
-| 4.6 | Error Handling |
-| 4.7 | Suspension Codes used by PLUS |
-| 5 | Permanent Suspension Report |
-| 5.1 | Use Case |
-| 5.2 | Process Flow |
-| 5.3 | API Specification |
-| 5.4 | Data Mapping |
-| 5.5 | Success Outcome |
-| 5.6 | Error Handling |
-| 5.7 | Search Parameters |
-| 5.8 | Retrieval Behavior |
+| Section | Content | Pages |
+| --- | --- | --- |
+| 1 | Function: Permanent Suspension |  |
+| 1.1 | Use Case |  |
+| 1.2 | High-Level Processing Flow |  |
+| 1.3 | Permanent Suspension Data |  |
+| 1.4 | Permanent Suspension Rules |  |
+| 1.5 | Validating PS Requests |  |
+| 1.5.1 | UI-Side Validation Flow |  |
+| 1.5.2 | Backend-Side Validation Flow |  |
+| 1.6 | Data Mapping |  |
+| 1.7 | Success Outcome |  |
+| 1.8 | Error Handling |  |
+| 2 | OCMS Staff Portal Manual PS |  |
+| 2.1 | Use Case |  |
+| 2.2 | Process Flow |  |
+| 2.3 | API Specification |  |
+| 2.4 | Data Mapping |  |
+| 2.5 | Success Outcome |  |
+| 2.6 | Error Handling |  |
+| 2.7 | Suspension Codes Used by OCMS Staff Portal |  |
+| 3 | Auto Permanent Suspensions in OCMS |  |
+| 3.1 | Use Case |  |
+| 3.2 | Process Flow |  |
+| 3.3 | Data Mapping |  |
+| 3.4 | Success Outcome |  |
+| 3.5 | Error Handling |  |
+| 3.6 | Scenarios that Auto-Trigger PS |  |
+| 4 | Permanent Suspension initiated by PLUS |  |
+| 4.1 | Use Case |  |
+| 4.2 | Process Flow |  |
+| 4.3 | API Specification |  |
+| 4.4 | Data Mapping |  |
+| 4.5 | Success Outcome |  |
+| 4.6 | Error Handling |  |
+| 4.7 | Suspension Codes used by PLUS |  |
+| 5 | Permanent Suspension Report |  |
+| 5.1 | Use Case |  |
+| 5.2 | Process Flow |  |
+| 5.3 | API Specification |  |
+| 5.4 | Data Mapping |  |
+| 5.5 | Success Outcome |  |
+| 5.6 | Error Handling |  |
+| 5.7 | Search Parameters |  |
+| 5.8 | Retrieval Behavior |  |
 
 ---
 
@@ -68,20 +68,15 @@ MGG SOFTWARE
 
 ## 1.1 Use Case
 
-- Permanent Suspension (PS) may be applied to Notices as they progress through the standard Notice Processing Workflow.
+1. Permanent Suspension (PS) may be applied to Notices as they progress through the standard Notice Processing Workflow.
 
-- A PS is applied when a Notice no longer requires further processing within the Notice Processing Workflow. Examples of scenarios include notices which has been fully paid and notices waived by the Appeal Processing Officer during appeal processing.
+2. A PS is applied when a Notice no longer requires further processing within the Notice Processing Workflow. Examples of scenarios include notices which has been fully paid and notices waived by the Appeal Processing Officer during appeal processing.
 
-- When PS is applied, a suspension code will be used to indicate the reason of suspension.
+3. When PS is applied, a suspension code will be used to indicate the reason of suspension.
 
-- Notices can be permanently suspended through the following modes:
-  - Manual suspension by EPU OICs via the OCMS Staff Portal
-  - Automatic suspension by the OCMS backend when pre-defined scenarios occur during batch processing, for example Notices issued to military vehicles are suspended with PS-MID if they are still outstanding at the end of the second reminder stage to prevent the Notices from escalating to the Court stage
-  - Manual suspension by PLU Officers via the PLUS Staff Portal
+4. Notices can be permanently suspended through the following modes:<br>a. Manual suspension by EPU OICs via the OCMS Staff Portal<br>b. Automatic suspension by the OCMS backend when pre-defined scenarios occur during batch processing, for example Notices issued to military vehicles are suspended with PS-MID if they are still outstanding at the end of the second reminder stage to prevent the Notices from escalating to the Court stage<br>c. Manual suspension by PLU Officers via the PLUS Staff Portal
 
-- When a PS is applied to an Offence Notice:
-  - The Notice remains at the last processing stage it is currently at.
-  - The Notice will not advance to the next stage when the Next Processing Date is reached.
+5. When a PS is applied to an Offence Notice:<br>a. The Notice remains at the last processing stage it is currently at.<br>b. The Notice will not advance to the next stage when the Next Processing Date is reached.
 
 ---
 
@@ -149,6 +144,8 @@ NOTE: Due to page size limit, the full-sized image is appended.
 ### 1.4.2 Suspension Code Rules
 
 - The OCMS backend maintains a set of rules governing the application of PS to Notices and whether Notice processing operations such as Update Hirer/Driver are allowed.
+
+- **PS codes are stored in a parameter table** (not hardcoded in application). This allows administrators to manage suspension codes without code changes.
 
 - The rules will include:
   - Which codes can be applied by PLUS System Users
@@ -280,23 +277,17 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ## 2.1 Use Case
 
-- The manual PS function in the OCMS Staff Portal allows authorised OICs to permanently suspend Notices.
+1. The manual PS function in the OCMS Staff Portal allows authorised OICs to permanently suspend Notices.
 
-- Authorised users can search for the notices using the Staff Portal's Search Notice function by:
-  - Entering search parameters to retrieve one or more Notices
-  - Uploading a spreadsheet containing a list of notice numbers to retrieve the Notices
+2. Authorised users can search for the notices using the Staff Portal's Search Notice function by:<br>a. Entering search parameters to retrieve one or more Notices<br>b. Uploading a spreadsheet containing a list of notice numbers to retrieve the Notices
 
-- From the search results, Users can apply PS using one of two ways:
-  - Select one or more Notices in the Search Result interface and trigger the PS operation from the drop-down list to initiate a batch PS
-  - Click on a Notice to view the details and apply the PS from the View Notice Details interface
+3. From the search results, Users can apply PS using one of two ways:<br>a. Select one or more Notices in the Search Result interface and trigger the PS operation from the drop-down list to initiate a batch PS<br>b. Click on a Notice to view the details and apply the PS from the View Notice Details interface
 
-- When the PS is initiated from the Staff Portal, the Staff Portal validates the suspension eligibility of each Notice before redirecting Users to the Suspension Detail Page to:
-  - Select the PS Suspension Code
-  - Input Suspension Remarks, if any
+4. When the PS is initiated from the Staff Portal, the Staff Portal validates the suspension eligibility of each Notice before redirecting Users to the Suspension Detail Page to:<br>a. Select the PS Suspension Code<br>b. Input Suspension Remarks, if any
 
-- After the Suspension Details are submitted, OCMS sends the suspension details to the OCMS backend for processing.
+5. After the Suspension Details are submitted, OCMS sends the suspension details to the OCMS backend for processing.
 
-- If PS is successful, Users will be presented with a success message on screen; an error message will be displayed if the suspension is not successful.
+6. If PS is successful, Users will be presented with a success message on screen; an error message will be displayed if the suspension is not successful.
 
 ---
 
@@ -444,11 +435,11 @@ Refer to Section 1.8 for complete backend error handling scenarios.
 
 ## 3.1 Use Case
 
-- The OCMS system will automatically trigger Permanent Suspensions to Notices when pre-defined scenarios occur.
+1. The OCMS system will automatically trigger Permanent Suspensions to Notices when pre-defined scenarios occur.
 
-- The scenarios are pre-defined in the Notice Processing Workflow at various Processing Stages.
+2. The scenarios are pre-defined in the Notice Processing Workflow at various Processing Stages.
 
-- When the conditions of the scenarios are met OCMS will automatically Suspend the Notices with pre-defined Suspension Codes and alert OICs about the exceptions.
+3. When the conditions of the scenarios are met OCMS will automatically Suspend the Notices with pre-defined Suspension Codes and alert OICs about the exceptions.
 
 ---
 
@@ -533,17 +524,15 @@ Refer to Section 1.8 for complete backend error handling scenarios.
 
 ## 4.1 Use Case
 
-- PLUS can apply PS via an API provided by OCMS.
+1. PLUS can apply PS via an API provided by OCMS.
 
-- The PLUS system and PLUS Users will initiate PS under the following circumstances:
-  - Appeal Processing Officers (PLMs) suspend a notice when the Appeal is accepted.
-  - Appeal Processing Officers (PLMs) suspend a notice due to specific reasons, for example the Notice was wrongly issued by the Parking Warden, or the Appellant has a valid season parking ticket.
+2. The PLUS system and PLUS Users will initiate PS under the following circumstances:<br>a. Appeal Processing Officers (PLMs) suspend a notice when the Appeal is accepted.<br>b. Appeal Processing Officers (PLMs) suspend a notice due to specific reasons, for example the Notice was wrongly issued by the Parking Warden, or the Appellant has a valid season parking ticket.
 
-- When a suspension is initiated through the PLUS Staff Portal or backend, the PLUS system shall provide the suspension details, which will be logged in OCMS in the Suspended Notices database table.
+3. When a suspension is initiated through the PLUS Staff Portal or backend, the PLUS system shall provide the suspension details, which will be logged in OCMS in the Suspended Notices database table.
 
-- Upon receiving the request, OCMS validates the submitted suspension data before proceeding with the PS.
+4. Upon receiving the request, OCMS validates the submitted suspension data before proceeding with the PS.
 
-- PLUS can apply PS to multiple Notices simultaneously.
+5. PLUS can apply PS to multiple Notices simultaneously.
 
 ---
 
@@ -672,11 +661,9 @@ Refer to Section 1.8 for complete backend error handling scenarios.
 
 ## 5.1 Use Case
 
-- The OCMS Staff Portal's Report module allows users to export a report to review Notices which were permanently suspended based on retrieval criteria.
+1. The OCMS Staff Portal's Report module allows users to export a report to review Notices which were permanently suspended based on retrieval criteria.
 
-- The report consists of 2 sections:
-  - List of PS applied by the various sub-systems (e.g., OCMS Staff Portal, PLUS, OCMS Backend)
-  - List of PS applied by OICs
+2. The report consists of 2 sections:<br>a. List of PS applied by the various sub-systems (e.g., OCMS Staff Portal, PLUS, OCMS Backend)<br>b. List of PS applied by OICs
 
 ---
 
@@ -710,9 +697,9 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | API Name | userlist |
 | URL | UAT: https://parking2.ura.gov.sg/ocms/v1/userlist <br> PRD: https://parking.ura.gov.sg/ocms/v1/userlist |
 | Description | Get list of active users for dropdown filters |
-| Method | GET |
+| Method | POST |
 | Header | `{ "Content-Type": "application/json", "Authorization": "Bearer <JWT_TOKEN>" }` |
-| Payload | N/A |
+| Payload | `{ "status": "A" }` |
 | Response | `{ "appCode": "OCMS-2000", "message": "Success", "data": [{ "userId": "JOHNLEE", "firstName": "John", "lastName": "Lee" }, { "userId": "MARYTAN", "firstName": "Mary", "lastName": "Tan" }] }` |
 | Response (Empty) | `{ "appCode": "OCMS-2000", "message": "Success", "data": [] }` |
 | Response Failure | `{ "appCode": "OCMS-5000", "message": "Unable to retrieve officer list" }` |

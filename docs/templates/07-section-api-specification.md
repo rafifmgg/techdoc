@@ -28,7 +28,7 @@ Use this section for APIs that the backend provides to the frontend (eService, S
 | API Name | [API name, e.g., parkingfines] |
 | URL | UAT: https://[uat-domain]/ocms/v1/[endpoint] <br> PRD: https://[prd-domain]/ocms/v1/[endpoint] |
 | Description | [Brief description of what the API does] |
-| Method | [GET/POST/PUT/PATCH/DELETE] |
+| Method | POST |
 | Header | `{ "Authorization": "Bearer [token]", "Content-Type": "application/json" }` |
 | Payload | `{ "field1": "value1", "field2": "value2" }` |
 | Response | `{ "appCode": "OCMS-2000", "message": "Success", "data": { ... } }` |
@@ -36,7 +36,8 @@ Use this section for APIs that the backend provides to the frontend (eService, S
 | Response Failure | `{ "appCode": "OCMS-5000", "message": "Error message" }` |
 
 <!--
-IMPORTANT - Response Format:
+IMPORTANT - API Rules:
+- **ALL APIs must use POST method** - No GET, PUT, PATCH, DELETE allowed
 - Use `appCode` and `message`, NOT `status`
 - For batch operations: use `totalProcessed`, `successCount`, `errorCount`, `results[]`
 - For single/list queries: use `appCode`, `message`, `data`
@@ -58,7 +59,7 @@ Use this section for APIs that the system provides to external systems (AXS, PLU
 | API Name | [API name] |
 | URL | UAT: https://[uat-domain]/ocms/[service]/v1/[endpoint] <br> PRD: https://[prd-domain]/ocms/[service]/v1/[endpoint] |
 | Description | [Brief description] |
-| Method | [GET/POST] |
+| Method | POST |
 | Header | `{ "Content-Type": "application/json", "Ocp-Apim-Subscription-Key": "[APIM secret value]" }` |
 | Payload | `{ "sender": "[SENDER]", "targetReceiver": "URA", ... }` |
 | Response | `{ "status": "0", "data": [ ... ] }` |
@@ -79,7 +80,7 @@ Use this section for APIs that the system consumes from external systems (URA PG
 | API Name | [External API name] |
 | URL | UAT: https://[external-uat-domain]/api/v1/[endpoint] <br> PRD: https://[external-prd-domain]/api/v1/[endpoint] |
 | Description | [Brief description] |
-| Method | [GET/POST] |
+| Method | POST |
 | Header | `{ "Content-Type": "application/json", "Authorization": "[auth method]" }` |
 | Payload | `{ ... }` |
 | Response | `{ ... }` |
@@ -163,11 +164,9 @@ Use this format for simple database field mapping (no UI).
 
 | Method | Use Case |
 | --- | --- |
-| GET | Retrieve data |
-| POST | Create new resource / Submit data |
-| PUT | Replace entire resource |
-| PATCH | Partial update |
-| DELETE | Remove resource |
+| POST | **ALL APIs must use POST** - Retrieve data, Create, Update, Delete |
+
+> **IMPORTANT:** All OCMS APIs must use POST method. Do not use GET, PUT, PATCH, or DELETE.
 
 ### Common Headers
 
