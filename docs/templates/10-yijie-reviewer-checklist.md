@@ -150,6 +150,22 @@ Use this to verify compliance with project standards.
 - [ ] Validation rules refer to FD (if detailed in FD)
 - [ ] Error codes refer to FD (if documented in FD)
 
+### Developer Usability
+- [ ] Documentation **helps developers** understand implementation
+- [ ] **Technical specs** sufficient for coding (data types, constraints)
+- [ ] **Integration points** clearly identified (APIs, tables)
+- [ ] **Error handling** approach documented
+- [ ] **Edge cases** and boundary conditions addressed
+- [ ] Developer can read this and know **what to build**
+
+### Data Source Attribution
+- [ ] **Every data field** has source explained
+- [ ] Database fields show **table.column** source
+- [ ] Calculated fields show **formula/logic**
+- [ ] API response fields show **source table/API**
+- [ ] Dropdown values reference **source table**
+- [ ] No data shown **without source attribution**
+
 ---
 
 ## Common Issues to Check
@@ -176,6 +192,8 @@ Use this to verify compliance with project standards.
 | Scattered info | Validation/logic spread across multiple places |
 | **Wrong audit user** | Using "SYSTEM" instead of db user |
 | **Duplicated content** | Copying FD content instead of referring |
+| **Not developer-friendly** | Doc doesn't help developers implement |
+| **Missing data source** | Data shown without source attribution |
 
 ---
 
@@ -197,6 +215,8 @@ When reviewing, ask these questions if documentation is unclear:
 | **Actions** | "All the actions in the box should be update and insert, not just insert right?" |
 | **Consistency** | "Diagram vs table vs FD not in sync - which is correct?" |
 | **Eligibility** | "Missing key design for different eligible scenarios per source" |
+| **Developer Usability** | "Can this tech doc help developer? Is the implementation guidance clear?" |
+| **Data Source** | "Where does this data come from? What is the source of this field?" |
 
 ---
 

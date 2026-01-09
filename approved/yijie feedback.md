@@ -79,6 +79,10 @@
 
 26. Do not use `SELECT *` in SQL queries. Always specify only the fields that are actually needed for the operation or response.
 
+27. Technical documentation must be developer-friendly. Check if the documentation can help developers understand and implement the feature. Include clear implementation guidance, code patterns, and technical specifications.
+
+28. If there is data in the documentation, always explain the source. Specify where the data comes from (e.g., database table, API response, user input, calculated field). Never leave data without source attribution.
+
 ---
 
 ## Part 2: Review Comments (Questions/Clarifications)
