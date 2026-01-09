@@ -118,8 +118,20 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | cre_user_id | Name of OIC or system that triggered the record creation | JOHNLEE |
 | upd_date | Date and time the record was updated | |
 | upd_user_id | Name of OIC or system that updated the record | |
+| process_indicator | Indicator for report to identify suspension origin - whether from manual operation or cron process | manual |
 
 *Denotes mandatory fields
+
+**process_indicator values:**
+| Value | Description |
+| --- | --- |
+| manual | Suspension applied manually via Staff Portal or PLUS |
+| fetch_datahive_uen_fin | Auto suspension triggered by DataHive UEN/FIN sync cron (RIP - death records) |
+| process_lta_rov_files | Auto suspension triggered by LTA ROV file processing cron (FOR - foreign vehicles) |
+| process_mha_files | Auto suspension triggered by MHA file processing cron |
+| generate_toppan_letters | Auto suspension triggered by Toppan letter generation cron (DIP, MID at RD2/DN2 stage) |
+| apply_admin_fee | Auto suspension triggered by admin fee application cron (FP, PRA - payment related) |
+| suspension_auto_revival | Auto suspension/revival triggered by auto revival cron |
 
 ---
 
@@ -223,6 +235,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_suspended_notice | suspension_remarks |
 | Intranet | ocms_suspended_notice | cre_date |
 | Intranet | ocms_suspended_notice | cre_user_id |
+| Intranet | ocms_suspended_notice | process_indicator |
 
 **Note:**
 - Audit user fields (cre_user_id, upd_user_id) use database connection user:
@@ -317,6 +330,83 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ### API for eService
 
+#### API Get Valid Offence Notice List
+
+| Field | Value |
+| --- | --- |
+| API Name | validoffencenoticelist |
+| URL | UAT: https://parking2.ura.gov.sg/ocms/v1/validoffencenoticelist <br> PRD: https://parking.ura.gov.sg/ocms/v1/validoffencenoticelist |
+| Description | Search and retrieve valid offence notices for PS operation |
+| Method | POST |
+| Header | `{ "Content-Type": "application/json", "Authorization": "Bearer <JWT_TOKEN>" }` |
+| Payload | `{ "$skip": 0, "$limit": 10, "$field": "noticeNo, vehicleNo, lastProcessingStage, suspensionType, eprReasonOfSuspension, noticeType" }` |
+| Response | `{ "appCode": "OCMS-2000", "message": "Success", "data": [{ "noticeNo": "500500303J", "vehicleNo": "SBA1234A", "lastProcessingStage": "RD1", "suspensionType": null, "eprReasonOfSuspension": null, "noticeType": "PN" }], "pagination": { "skip": 0, "limit": 10, "totalRecords": 1 } }` |
+| Response (Empty) | `{ "appCode": "OCMS-2000", "message": "Success", "data": [], "pagination": { "skip": 0, "limit": 10, "totalRecords": 0 } }` |
+| Response Failure | `{ "appCode": "OCMS-4000", "message": "Invalid search parameters" }` |
+
+**Request Parameter Data (validoffencenoticelist):**
+
+| Field Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| $skip | Integer | No | Number of records to skip (default: 0) |
+| $limit | Integer | No | Number of records to return (default: 10, max: 100) |
+| $field | String | No | Comma-separated list of fields to return |
+| noticeNo | String | No | Filter by notice number |
+| vehicleNo | String | No | Filter by vehicle number |
+| lastProcessingStage | String | No | Filter by last processing stage |
+| suspensionType | String | No | Filter by suspension type (PS, TS) |
+
+**Data Source:**
+
+| Zone | Database Table | Field Name | Description |
+| --- | --- | --- | --- |
+| Intranet | ocms_valid_offence_notice | notice_no | Notice Number |
+| Intranet | ocms_valid_offence_notice | vehicle_no | Vehicle Number |
+| Intranet | ocms_valid_offence_notice | last_processing_stage | Last Processing Stage |
+| Intranet | ocms_valid_offence_notice | suspension_type | Suspension Type (PS, TS, null) |
+| Intranet | ocms_valid_offence_notice | epr_reason_of_suspension | EPR Reason of Suspension Code |
+| Intranet | ocms_valid_offence_notice | offence_notice_type | Notice Type (PN, AN, etc.) |
+
+---
+
+#### API Get Suspension Reason List
+
+| Field | Value |
+| --- | --- |
+| API Name | suspensionreasonlist |
+| URL | UAT: https://parking2.ura.gov.sg/ocms/v1/suspensionreasonlist <br> PRD: https://parking.ura.gov.sg/ocms/v1/suspensionreasonlist |
+| Description | Get list of suspension reason codes for dropdown selection |
+| Method | POST |
+| Header | `{ "Content-Type": "application/json", "Authorization": "Bearer <JWT_TOKEN>" }` |
+| Payload | `{ "suspensionType": "PS", "status": "A" }` |
+| Response | `{ "appCode": "OCMS-2000", "message": "Success", "data": [{ "code": "APP", "description": "Appeal accepted" }, { "code": "CFA", "description": "Cancelled - wrong issuance" }, { "code": "CAN", "description": "AN cancelled" }] }` |
+| Response (Empty) | `{ "appCode": "OCMS-2000", "message": "Success", "data": [] }` |
+| Response Failure | `{ "appCode": "OCMS-5000", "message": "Unable to retrieve suspension reason list" }` |
+
+**Request Parameter Data (suspensionreasonlist):**
+
+| Field Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| suspensionType | String | Yes | Type of suspension: "PS" or "TS" |
+| status | String | No | Status filter: "A" (Active), "I" (Inactive). Default: "A" |
+
+**Data Source:**
+
+| Zone | Database Table | Field Name | Description |
+| --- | --- | --- | --- |
+| Intranet | ocms_suspension_reason | code | Suspension Reason Code (VARCHAR2 3) |
+| Intranet | ocms_suspension_reason | description | Description of the suspension reason |
+| Intranet | ocms_suspension_reason | suspension_type | Suspension Type (PS, TS) |
+| Intranet | ocms_suspension_reason | status | Status - A (Active), I (Inactive) |
+
+**Query Condition:**
+- Filter by `suspension_type` matching the request parameter
+- Only return records where `status = 'A'` (Active) unless otherwise specified
+
+**Note:** If no matching suspension reasons are found, the API will return empty array `[]`. The UI should handle this by displaying "No suspension codes available" or disabling the dropdown.
+
+---
+
 #### API Apply Suspension (Staff Portal)
 
 | Field | Value |
@@ -330,7 +420,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Response | `{ "totalProcessed": 1, "successCount": 1, "errorCount": 0, "results": [{ "noticeNo": "500500303J", "srNo": "1234", "appCode": "OCMS-2000", "message": "PS Success" }] }` |
 | Response Failure | `{ "totalProcessed": 1, "successCount": 0, "errorCount": 1, "results": [{ "noticeNo": "500500303J", "appCode": "OCMS-4002", "message": "PS Code cannot be applied due to Last Processing Stage" }] }` |
 
-### Request Parameter Data
+### Request Parameter Data (staff-apply-suspension)
 
 | Field Name | Type | Required | Max Length | Description |
 | --- | --- | --- | --- | --- |
@@ -359,6 +449,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_suspended_notice | suspension_remarks |
 | Intranet | ocms_suspended_notice | cre_date |
 | Intranet | ocms_suspended_notice | cre_user_id |
+| Intranet | ocms_suspended_notice | process_indicator |
 
 **Note:** Audit user fields (cre_user_id, upd_user_id) use database connection user: **ocmsiz_app_conn** (Intranet)
 
@@ -476,6 +567,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_suspended_notice | epr_reason_of_suspension |
 | Intranet | ocms_suspended_notice | cre_date |
 | Intranet | ocms_suspended_notice | cre_user_id |
+| Intranet | ocms_suspended_notice | process_indicator |
 
 **Note:** Audit user fields (cre_user_id, upd_user_id) use database connection user: **ocmsiz_app_conn** (Intranet - Backend)
 
@@ -603,6 +695,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Internet | ocms_suspended_notice | suspension_remarks |
 | Internet | ocms_suspended_notice | cre_date |
 | Internet | ocms_suspended_notice | cre_user_id |
+| Internet | ocms_suspended_notice | process_indicator |
 
 **Note:** Audit user fields (cre_user_id, upd_user_id) use database connection user: **ocmsez_app_conn** (Internet)
 
@@ -775,7 +868,8 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_suspended_notice | suspension_source |
 | Intranet | ocms_suspended_notice | date_of_suspension |
 | Intranet | ocms_suspended_notice | reason_of_suspension |
-| Intranet | New DB table for notices to be refunded | refund_identified_date |
+| Intranet | ocms_suspended_notice | process_indicator |
+| Intranet | ocms_refund_notice | cre_date |
 
 ### 5.4.2 Report Data Mapping for PS by Officer
 
@@ -794,7 +888,8 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_suspended_notice | date_of_suspension |
 | Intranet | ocms_suspended_notice | reason_of_suspension |
 | Intranet | ocms_suspended_notice | suspension_remarks |
-| Intranet | New DB table for notices to be refunded | refund_identified_date |
+| Intranet | ocms_suspended_notice | process_indicator |
+| Intranet | ocms_refund_notice | cre_date |
 
 ---
 

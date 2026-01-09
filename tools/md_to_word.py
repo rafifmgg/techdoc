@@ -455,6 +455,10 @@ def convert_markdown_to_word(input_path: str, output_path: str = None) -> str:
     # Create Word document
     doc = Document()
 
+    # Set document properties (author, comments)
+    doc.core_properties.author = "Ahmad Rafif"
+    doc.core_properties.comments = "OCMS Technical Document"
+
     # Setup document styles
     setup_document_styles(doc)
 

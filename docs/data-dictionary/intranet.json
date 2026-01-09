@@ -6642,7 +6642,7 @@
     ]
   },
   "ocms_template_store": {
-    "description": "This table stores template information. It is designed to hold binary template data along with relevant metadata such as type, creation, and update details.",
+    "description": "This table stores template information. It is designed to hold template metadata, versioning and human-readable content to support template change control and selection of the live version.",
     "columns": [
       {
         "name": "template_name",
@@ -6670,6 +6670,33 @@
         "default": null,
         "description": "Indicates the type or category of the template",
         "epic": "OCMS 44"
+      },
+      {
+        "name": "version",
+        "type": "integer",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Supports template change control and history.",
+        "epic": "OCMS 9"
+      },
+      {
+        "name": "template_content",
+        "type": "nvarchar(max)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Human-readable description of what the template is for (and optionally what changed)",
+        "epic": "OCMS 9"
+      },
+      {
+        "name": "is_active",
+        "type": "bit",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Marks which version is currently \u201clive\u201d and should be used by the system.",
+        "epic": "OCMS 9"
       },
       {
         "name": "cre_date",

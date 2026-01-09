@@ -77,6 +77,10 @@ Follow these standards when writing your tech doc to pass review.
   - Intranet: **`ocmsiz_app_conn`**
   - Internet: **`ocmsez_app_conn`**
 
+### 2.7 SQL Query Best Practice
+- **Do not use `SELECT *`** in SQL queries
+- Always specify **only the fields that are needed** for the operation or response
+
 ---
 
 ## 3. File Handling
@@ -214,6 +218,7 @@ Upload → Temporary Folder → (After success) → Permanent Folder
 | Templates | ocms_template_store |
 | Audit User (Intranet) | ocmsiz_app_conn (not SYSTEM) |
 | Audit User (Internet) | ocmsez_app_conn (not SYSTEM) |
+| SQL Query | No SELECT *, specify needed fields only |
 | File Upload | Temp folder → Permanent |
 | Excel Template | Blob storage |
 | Validation | FE + BE |

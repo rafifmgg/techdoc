@@ -77,6 +77,8 @@
 
 25. If reference/content already exists in Functional Document (FD), refer to FD instead of duplicating in Technical Document. Use references like "Refer to FD Section X.X for detailed validation rules".
 
+26. Do not use `SELECT *` in SQL queries. Always specify only the fields that are actually needed for the operation or response.
+
 ---
 
 ## Part 2: Review Comments (Questions/Clarifications)

@@ -58,6 +58,10 @@ Use this to verify compliance with project standards.
 - [ ] Intranet uses **`ocmsiz_app_conn`**
 - [ ] Internet uses **`ocmsez_app_conn`**
 
+### SQL Query
+- [ ] **No `SELECT *`** used in queries
+- [ ] Only **required fields** specified in SELECT statements
+
 ---
 
 ## File Handling Review
@@ -154,6 +158,7 @@ Use this to verify compliance with project standards.
 |-------|-----------|
 | **Wrong HTTP method** | **GET/PUT/PATCH/DELETE instead of POST - ALL APIs must use POST** |
 | Excessive response data | All fields returned instead of required |
+| **SELECT * in queries** | Using SELECT * instead of specific fields |
 | Hardcoded values | Magic numbers/strings in code |
 | Missing retry | No retry on external API failure |
 | Token stops processing | System stops when token expires |
