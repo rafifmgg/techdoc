@@ -546,7 +546,16 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Type of suspension (e.g., temporary, permanent).",
+        "description": "Type of suspension (e.g., temporary, permanent, revival).",
+        "epic": "OCMS 39"
+      },
+      {
+        "name": "reason_source",
+        "type": "varchar(8)",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "Indicator reason for which system (PLUS, OCMS_FE, OCMS_BE).",
         "epic": "OCMS 39"
       },
       {

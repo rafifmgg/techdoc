@@ -62,6 +62,15 @@ Use this to verify compliance with project standards.
 - [ ] **No `SELECT *`** used in queries
 - [ ] Only **required fields** specified in SELECT statements
 
+### Data Dictionary Compliance
+- [ ] Table names match **data dictionary** (`docs/data-dictionary/`)
+- [ ] Column names match **data dictionary** exactly
+- [ ] Data types match **data dictionary** (varchar length, numeric precision)
+- [ ] Primary keys match **data dictionary** definition
+- [ ] Nullable fields match **data dictionary** (NULL vs NOT NULL)
+- [ ] Default values match **data dictionary** if specified
+- [ ] New tables/columns are **documented in data dictionary**
+
 ---
 
 ## File Handling Review
@@ -194,6 +203,8 @@ Use this to verify compliance with project standards.
 | **Duplicated content** | Copying FD content instead of referring |
 | **Not developer-friendly** | Doc doesn't help developers implement |
 | **Missing data source** | Data shown without source attribution |
+| **Data dictionary mismatch** | Table/column names don't match data dictionary |
+| **Missing in data dictionary** | New tables/columns not documented in data dictionary |
 
 ---
 
@@ -217,6 +228,7 @@ When reviewing, ask these questions if documentation is unclear:
 | **Eligibility** | "Missing key design for different eligible scenarios per source" |
 | **Developer Usability** | "Can this tech doc help developer? Is the implementation guidance clear?" |
 | **Data Source** | "Where does this data come from? What is the source of this field?" |
+| **Data Dictionary** | "Does this table/column exist in the data dictionary? Is the data type correct?" |
 
 ---
 
