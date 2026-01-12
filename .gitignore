@@ -1,5 +1,5 @@
-# Exclude ocms folders
-ocms*/
+# Exclude code folders
+code*/
 
 # Exclude file types
 *.docx
