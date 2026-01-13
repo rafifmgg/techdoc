@@ -1,0 +1,293 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.0" pages="2">
+  <diagram id="tab1" name="Section_1_Notice_Creation_High_Level">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7000" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 1 - Notice Creation with Vehicle Type Detection (High Level)" vertex="1">
+          <mxGeometry height="30" width="600" x="40" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="swim1" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;startSize=40;" value="OCMS Admin API (Intranet)" vertex="1">
+          <mxGeometry height="800" width="1760" x="40" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="start1" parent="swim1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Receive Notice Data" vertex="1">
+          <mxGeometry height="60" width="140" x="50" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="proc1" parent="swim1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;" value="Validate Mandatory Fields&#xa;&#xa;NoticeValidationHelper.&#xa;validateMandatoryFieldsForBatch()" vertex="1">
+          <mxGeometry height="100" width="140" x="270" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="dec1" parent="swim1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Valid?" vertex="1">
+          <mxGeometry height="100" width="100" x="490" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="proc2" parent="swim1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Detect Vehicle Type&#xa;(Step 4)&#xa;&#xa;SpecialVehUtils.&#xa;checkVehregistration()" vertex="1">
+          <mxGeometry height="100" width="140" x="680" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="proc3" parent="swim1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;" value="Create Notice Record&#xa;&#xa;INSERT INTO&#xa;OCMS_VALID_&#xa;OFFENCE_NOTICE" vertex="1">
+          <mxGeometry height="100" width="140" x="900" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="dec2" parent="swim1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Foreign or&#xa;VIP?" vertex="1">
+          <mxGeometry height="100" width="100" x="1120" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="proc4" parent="swim1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;" value="Create Suspension&#xa;&#xa;INSERT INTO&#xa;SUSPENDED_NOTICE&#xa;PS-FOR / TS-OLD" vertex="1">
+          <mxGeometry height="100" width="140" x="1320" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="proc5" parent="swim1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;" value="Return Success Response&#xa;&#xa;appCode: OCMS-2000&#xa;message: Success&#xa;noticeNo: [generated]" vertex="1">
+          <mxGeometry height="100" width="160" x="1310" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="proc6" parent="swim1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;" value="Return Error Response&#xa;&#xa;appCode: OCMS-4000&#xa;message: Error details" vertex="1">
+          <mxGeometry height="100" width="140" x="470" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="end1" parent="swim1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="1540" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="end2" parent="swim1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="490" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="conn1" edge="1" parent="swim1" source="start1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="proc1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn2" edge="1" parent="swim1" source="proc1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn3" edge="1" parent="swim1" source="dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="proc2" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn4" edge="1" parent="swim1" source="dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="proc6" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn5" edge="1" parent="swim1" source="proc2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="proc3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn6" edge="1" parent="swim1" source="proc3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn7" edge="1" parent="swim1" source="dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="proc4" value="yes&#xa;(F or V)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn8" edge="1" parent="swim1" source="dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="proc5" value="no&#xa;(S,D,I,X)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1170" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn9" edge="1" parent="swim1" source="proc4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="proc5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn10" edge="1" parent="swim1" source="proc5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn11" edge="1" parent="swim1" source="proc6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="info1" parent="swim1" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" value="Vehicle Type Detection executes&#xa;9-step algorithm (see detailed tab)&#xa;Returns: F, S, D, I, V, or X" vertex="1">
+          <mxGeometry height="80" width="140" x="680" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="legend1" parent="swim1" style="text;html=1;whiteSpace=wrap;strokeColor=#666666;fillColor=#f5f5f5;align=left;verticalAlign=top;rounded=0;" value="Vehicle Registration Type Codes:&lt;br&gt;F = Foreign Vehicle&lt;br&gt;X = UPL Dummy Vehicle&lt;br&gt;S = Local Vehicle (Singapore)&lt;br&gt;D = Diplomatic Vehicle&lt;br&gt;I = Military Vehicle (MINDEF)&lt;br&gt;V = VIP Vehicle&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="250" x="1440" y="460" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab2" name="Section_1.1_Vehicle_Type_Detection_Detail">
+    <mxGraphModel dx="1584" dy="997" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="9000" pageHeight="2500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 1.1 - Vehicle Registration Type Detection Flow (Detailed)" vertex="1">
+          <mxGeometry height="30" width="700" x="40" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="swim2" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;startSize=40;" value="Detection Algorithm (Intranet Backend)" vertex="1">
+          <mxGeometry height="650" width="2720" x="40" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="start2" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start&lt;div&gt;Check Veh Reg Type&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="50" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dec21" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Source Type&#xa;= &quot;F&quot;?" vertex="1">
+          <mxGeometry height="100" width="100" x="270" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ret1" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Return &quot;F&quot;&#xa;Foreign Vehicle" vertex="1">
+          <mxGeometry height="80" width="100" x="270" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="dec22" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Vehicle No&#xa;blank/null?" vertex="1">
+          <mxGeometry height="100" width="100" x="450" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="dec23" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Offence&#xa;Type = U?" vertex="1">
+          <mxGeometry height="100" width="100" x="630" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ret2" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Return &quot;X&quot;&#xa;UPL Dummy Vehicle" vertex="1">
+          <mxGeometry height="80" width="100" x="630" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="soQPzchGgm4vSQZXwD4u-2" edge="1" parent="swim2" source="err1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="soQPzchGgm4vSQZXwD4u-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="err1" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#f8cecc;strokeColor=#b85450;" value="Return Error&#xa;OCMS-4000&#xa;Missing vehicle number" vertex="1">
+          <mxGeometry height="80" width="120" x="440" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="proc21" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;" value="Call LTA API&#xa;&#xa;ValidateRegistrationNo.&#xa;validate(vehNo)" vertex="1">
+          <mxGeometry height="100" width="140" x="810" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="dec24" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Return&#xa;Code = 1?" vertex="1">
+          <mxGeometry height="100" width="100" x="1030" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ret3" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Return &quot;S&quot;&#xa;Local Vehicle&#xa;(LTA valid)" vertex="1">
+          <mxGeometry height="80" width="100" x="1030" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="dec25" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Diplomatic&#xa;Pattern?" vertex="1">
+          <mxGeometry height="100" width="100" x="1210" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ret4" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Return &quot;D&quot;&#xa;Diplomatic Vehicle" vertex="1">
+          <mxGeometry height="80" width="100" x="1210" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="dec26" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Military&#xa;Pattern?" vertex="1">
+          <mxGeometry height="100" width="100" x="1390" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ret5" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Return &quot;I&quot;&#xa;Military Vehicle" vertex="1">
+          <mxGeometry height="80" width="100" x="1390" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="proc22" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;" value="Query CAS VIP DB&#xa;&#xa;VipVehicleService.&#xa;isVipVehicle(vehNo)" vertex="1">
+          <mxGeometry height="100" width="140" x="1570" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="dec27" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="VIP&#xa;Found?" vertex="1">
+          <mxGeometry height="100" width="100" x="1790" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="dec28" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Status&#xa;= &quot;A&quot;?" vertex="1">
+          <mxGeometry height="100" width="100" x="1970" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ret6" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Return &quot;V&quot;&#xa;VIP Vehicle" vertex="1">
+          <mxGeometry height="80" width="100" x="1970" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="dec29" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Last char&#xa;alphabet?" vertex="1">
+          <mxGeometry height="100" width="100" x="2150" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ret7" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Return &quot;S&quot;&#xa;Local Vehicle&#xa;(edge case)" vertex="1">
+          <mxGeometry height="80" width="100" x="2150" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="ret8" parent="swim2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" value="Return &quot;F&quot;&#xa;Foreign Vehicle&#xa;(default)" vertex="1">
+          <mxGeometry height="100" width="100" x="2330" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="end3" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="2550" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="conn21" edge="1" parent="swim2" source="start2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn22" edge="1" parent="swim2" source="dec21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ret1" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn23" edge="1" parent="swim2" source="dec21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec22" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn24" edge="1" parent="swim2" source="dec22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec23" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn25" edge="1" parent="swim2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="proc21" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="130" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn26" edge="1" parent="swim2" source="dec23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ret2" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn27" edge="1" parent="swim2" source="dec22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="err1" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn28" edge="1" parent="swim2" source="proc21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn29" edge="1" parent="swim2" source="dec24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ret3" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn30" edge="1" parent="swim2" source="dec24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec25" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn31" edge="1" parent="swim2" source="dec25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ret4" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn32" edge="1" parent="swim2" source="dec25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec26" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn33" edge="1" parent="swim2" source="dec26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ret5" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn34" edge="1" parent="swim2" source="dec26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="proc22" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn35" edge="1" parent="swim2" source="proc22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn36" edge="1" parent="swim2" source="dec27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec28" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn37" edge="1" parent="swim2" source="dec27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec29" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn38" edge="1" parent="swim2" source="dec28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ret6" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn39" edge="1" parent="swim2" source="dec28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="dec29" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn40" edge="1" parent="swim2" source="dec29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ret7" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn41" edge="1" parent="swim2" source="dec29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ret8" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn42" edge="1" parent="swim2" source="ret8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn43" edge="1" parent="swim2" source="ret1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="end3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn44" edge="1" parent="swim2" source="ret2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="end3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2547" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn45" edge="1" parent="swim2" source="ret3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="end3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn46" edge="1" parent="swim2" source="ret4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="end3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn47" edge="1" parent="swim2" source="ret5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="end3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn48" edge="1" parent="swim2" source="ret6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="end3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn49" edge="1" parent="swim2" source="ret7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="end3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="info2" parent="swim2" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;rounded=0;" value="Diplomatic Vehicle Pattern:&lt;br&gt;ALL conditions must be met:&lt;br&gt;✓ Prefix = &quot;S&quot;&lt;br&gt;✓ Suffix in [&quot;CC&quot;,&quot;CD&quot;,&quot;TC&quot;,&quot;TE&quot;]&lt;br&gt;&lt;br&gt;Regex: ^S.*CC$ OR ^S.*CD$&lt;br&gt;       ^S.*TC$ OR ^S.*TE$&lt;br&gt;&lt;br&gt;Examples:&lt;br&gt;✓ SXX1234CC → Diplomatic&lt;br&gt;✓ S5678CD → Diplomatic&lt;br&gt;✗ SBA1234A → Not diplomatic&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="230" width="190" x="1165" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="info3" parent="swim2" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;rounded=0;" value="Military Vehicle Pattern:&lt;br&gt;ANY ONE condition must be met:&lt;br&gt;✓ Prefix in [&quot;MID&quot;, &quot;MINDEF&quot;]&lt;br&gt;✓ Suffix in [&quot;MID&quot;, &quot;MINDEF&quot;]&lt;br&gt;&lt;br&gt;Logic: startsWith(&quot;MID&quot;) OR&lt;br&gt;       endsWith(&quot;MID&quot;) OR&lt;br&gt;       startsWith(&quot;MINDEF&quot;) OR&lt;br&gt;       endsWith(&quot;MINDEF&quot;)&lt;br&gt;&lt;br&gt;Examples:&lt;br&gt;✓ MID1234 → Military&lt;br&gt;✓ 1234MID → Military&lt;br&gt;✓ MINDEF123 → Military&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="230" width="190" x="1380" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="soQPzchGgm4vSQZXwD4u-1" parent="swim2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="450" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="swim3" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;startSize=40;" value="External System (LTA)" vertex="1">
+          <mxGeometry height="250" width="2720" x="40" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="api1" parent="swim3" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="LTA Checksum Utility&lt;br&gt;&lt;br&gt;Method: ValidateRegistrationNo.validate(vehNo)&lt;br&gt;&lt;br&gt;Input: vehicleNo (String, uppercase, trimmed)&lt;br&gt;&lt;br&gt;Output:&lt;br&gt;  - returnCode = 1 → Valid local vehicle&lt;br&gt;  - returnCode ≠ 1 → Invalid format&lt;br&gt;&lt;br&gt;Exception: VehicleNoException (logged, returns false)&lt;br&gt;Fail-Safe: Continue to next check on error" vertex="1">
+          <mxGeometry height="190" width="400" x="680" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="conn51" edge="1" parent="1" source="proc21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="api1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="swim4" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;startSize=40;" value="Database (CAS)" vertex="1">
+          <mxGeometry height="350" width="2720" x="40" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="db1" parent="swim4" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="CAS VIP_VEHICLE Query&lt;br&gt;&lt;br&gt;Database: CAS&lt;br&gt;Table: VIP_VEHICLE&lt;br&gt;&lt;br&gt;Query: SELECT v FROM VipVehicle v&lt;br&gt;       WHERE v.vehicleNo = :vehicleNo&lt;br&gt;       AND v.status = &#39;A&#39;&lt;br&gt;&lt;br&gt;Input: vehicleNo (String, uppercase)&lt;br&gt;&lt;br&gt;Output:&lt;br&gt;  - VIP found with status &#39;A&#39; → true&lt;br&gt;  - Not found or status &#39;D&#39; → false&lt;br&gt;&lt;br&gt;Fail-Safe: Exception → return false (non-VIP)&lt;br&gt;Allows processing to continue if CAS unavailable&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="270" width="400" x="1440" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="conn52" edge="1" parent="1" source="proc22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="db1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
