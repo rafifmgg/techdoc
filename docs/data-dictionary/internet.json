@@ -229,8 +229,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Amount paid",
-        "epic": ""
+        "description": "Amount paid"
       },
       {
         "name": "pp_code",
@@ -247,8 +246,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Car Park Name",
-        "epic": ""
+        "description": "Car Park Name"
       },
       {
         "name": "payment_acceptance_allowed",
@@ -434,6 +432,14 @@
         "default": null,
         "description": "Indicates the type or category of the template",
         "epic": "OCMS 50"
+      },
+      {
+        "name": "template_content",
+        "type": "NVARCHAR(MAX)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Human-readable description of what the template is for (and optionally what changed)"
       },
       {
         "name": "cre_date",

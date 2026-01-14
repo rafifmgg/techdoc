@@ -555,8 +555,8 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Indicator reason for which system (PLUS, OCMS_FE, OCMS_BE).",
-        "epic": "OCMS 39"
+        "description": "Indicator reason for which system (PLUS, OCMS_FE, OCMS_BE)",
+        "epic": "OCMS 18"
       },
       {
         "name": "cre_date",
@@ -786,8 +786,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Advice surcharge amount",
-        "epic": ""
+        "description": "Advice surcharge amount"
       },
       {
         "name": "amount_paid",
@@ -822,8 +821,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date assigned",
-        "epic": ""
+        "description": "Date assigned"
       },
       {
         "name": "assign_officer",
@@ -831,8 +829,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Assigned officer",
-        "epic": ""
+        "description": "Assigned officer"
       },
       {
         "name": "pp_name",
@@ -903,8 +900,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Decision status",
-        "epic": ""
+        "description": "Decision status"
       },
       {
         "name": "decision_date",
@@ -912,8 +908,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date of decision",
-        "epic": ""
+        "description": "Date of decision"
       },
       {
         "name": "decision_officer",
@@ -921,8 +916,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Officer making decision",
-        "epic": ""
+        "description": "Officer making decision"
       },
       {
         "name": "decision_remark",
@@ -930,8 +924,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Remarks on decision",
-        "epic": ""
+        "description": "Remarks on decision"
       },
       {
         "name": "due_date_of_revival",
@@ -984,8 +977,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Last RDP DN date",
-        "epic": ""
+        "description": "Last RDP DN date"
       },
       {
         "name": "last_rdp_dn_stage",
@@ -993,8 +985,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Last RDP DN stage",
-        "epic": ""
+        "description": "Last RDP DN stage"
       },
       {
         "name": "next_processing_date",
@@ -1047,8 +1038,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Parking fee",
-        "epic": ""
+        "description": "Parking fee"
       },
       {
         "name": "parking_lot_no",
@@ -1119,8 +1109,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Rule-related remarks",
-        "epic": ""
+        "description": "Rule-related remarks"
       },
       {
         "name": "surcharge",
@@ -1128,8 +1117,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Surcharge amount",
-        "epic": ""
+        "description": "Surcharge amount"
       },
       {
         "name": "suspension_type",
@@ -1227,8 +1215,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "created date from REPCCS",
-        "epic": ""
+        "description": "created date from REPCCS"
       },
       {
         "name": "eservice_message_code",
@@ -1268,8 +1255,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date the offense batch was processed.",
-        "epic": ""
+        "description": "Date the offense batch was processed."
       },
       {
         "name": "batch_no",
@@ -1277,8 +1263,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Batch number grouping multiple notices.",
-        "epic": ""
+        "description": "Batch number grouping multiple notices."
       },
       {
         "name": "chasis_no",
@@ -1286,8 +1271,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Chassis number of the vehicle involved in the offense.",
-        "epic": ""
+        "description": "Chassis number of the vehicle involved in the offense."
       },
       {
         "name": "color_of_vehicle",
@@ -1340,8 +1324,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Alias for the creator of the record.",
-        "epic": ""
+        "description": "Alias for the creator of the record."
       },
       {
         "name": "created_dt",
@@ -1385,8 +1368,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "ID related to electronic handling of the ticket.",
-        "epic": ""
+        "description": "ID related to electronic handling of the ticket."
       },
       {
         "name": "end_date",
@@ -1394,8 +1376,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "End date of the parking period under scrutiny.",
-        "epic": ""
+        "description": "End date of the parking period under scrutiny."
       },
       {
         "name": "end_time",
@@ -1403,8 +1384,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "End time of the parking violation.",
-        "epic": ""
+        "description": "End time of the parking violation."
       },
       {
         "name": "expired_coupon_1_denom",
@@ -1412,8 +1392,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Denomination of the first expired coupon.",
-        "epic": ""
+        "description": "Denomination of the first expired coupon."
       },
       {
         "name": "expired_coupon_1_no",
@@ -1421,8 +1400,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Number of the first expired coupon.",
-        "epic": ""
+        "description": "Number of the first expired coupon."
       },
       {
         "name": "expired_coupon_1_subtype",
@@ -1430,8 +1408,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Subtype of the first expired coupon.",
-        "epic": ""
+        "description": "Subtype of the first expired coupon."
       },
       {
         "name": "expired_coupon_2_denom",
@@ -1439,8 +1416,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Denomination of the second expired coupon.",
-        "epic": ""
+        "description": "Denomination of the second expired coupon."
       },
       {
         "name": "expired_coupon_2_no",
@@ -1448,8 +1424,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Number of the second expired coupon.",
-        "epic": ""
+        "description": "Number of the second expired coupon."
       },
       {
         "name": "expired_coupon_2_subtype",
@@ -1457,8 +1432,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Subtype of the second expired coupon.",
-        "epic": ""
+        "description": "Subtype of the second expired coupon."
       },
       {
         "name": "expiry_time",
@@ -1475,8 +1449,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Time the first coupon was used on the given date.",
-        "epic": ""
+        "description": "Time the first coupon was used on the given date."
       },
       {
         "name": "handicap_first_hit_dt",
@@ -1484,8 +1457,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date and time when a violation involving a handicapped area was first noted.",
-        "epic": ""
+        "description": "Date and time when a violation involving a handicapped area was first noted."
       },
       {
         "name": "image_id",
@@ -1502,8 +1474,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Condition detail of the first invalid coupon's creased tab.",
-        "epic": ""
+        "description": "Condition detail of the first invalid coupon's creased tab."
       },
       {
         "name": "invalid_coupon_1_subtype",
@@ -1511,8 +1482,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Subtype of the first invalid coupon.",
-        "epic": ""
+        "description": "Subtype of the first invalid coupon."
       },
       {
         "name": "invalid_coupon_2_creased_tab",
@@ -1520,8 +1490,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Condition detail of the second invalid coupon's creased tab.",
-        "epic": ""
+        "description": "Condition detail of the second invalid coupon's creased tab."
       },
       {
         "name": "invalid_coupon_2_subtype",
@@ -1529,8 +1498,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Subtype of the second invalid coupon.",
-        "epic": ""
+        "description": "Subtype of the second invalid coupon."
       },
       {
         "name": "condition_invalid_coupon_3",
@@ -1547,8 +1515,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Condition detail of the third invalid coupon's creased tab.",
-        "epic": ""
+        "description": "Condition detail of the third invalid coupon's creased tab."
       },
       {
         "name": "denom_invalid_coupon_3",
@@ -1574,8 +1541,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Subtype of the third invalid coupon.",
-        "epic": ""
+        "description": "Subtype of the third invalid coupon."
       },
       {
         "name": "invalid_coupon_no_1",
@@ -1610,8 +1576,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Tag type used for labeling the record.",
-        "epic": ""
+        "description": "Tag type used for labeling the record."
       },
       {
         "name": "last_modified_by",
@@ -1619,8 +1584,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID of the last person who modified the record.",
-        "epic": ""
+        "description": "User ID of the last person who modified the record."
       },
       {
         "name": "last_modified_dt",
@@ -1628,8 +1592,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date and time the record was last modified.",
-        "epic": ""
+        "description": "Date and time the record was last modified."
       },
       {
         "name": "last_valid_coupon_denom",
@@ -1637,8 +1600,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Denomination of the last valid coupon used before the offense.",
-        "epic": ""
+        "description": "Denomination of the last valid coupon used before the offense."
       },
       {
         "name": "last_valid_coupon_expired_date",
@@ -1646,8 +1608,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Expiry date of the last valid coupon.",
-        "epic": ""
+        "description": "Expiry date of the last valid coupon."
       },
       {
         "name": "last_valid_coupon_expired_time",
@@ -1655,8 +1616,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Expiry time of the last valid coupon.",
-        "epic": ""
+        "description": "Expiry time of the last valid coupon."
       },
       {
         "name": "last_valid_coupon_no",
@@ -1673,8 +1633,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Subtype of the last valid coupon used.",
-        "epic": ""
+        "description": "Subtype of the last valid coupon used."
       },
       {
         "name": "logical_delete_ind",
@@ -1682,8 +1641,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Indicator for records logically deleted but not physically removed.",
-        "epic": ""
+        "description": "Indicator for records logically deleted but not physically removed."
       },
       {
         "name": "lots_available_ind",
@@ -1691,8 +1649,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Indicator if parking lots were available at the time of the offense.",
-        "epic": ""
+        "description": "Indicator if parking lots were available at the time of the offense."
       },
       {
         "name": "lta_chassis_number",
@@ -1799,8 +1756,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Model of the vehicle involved in the offense.",
-        "epic": ""
+        "description": "Model of the vehicle involved in the offense."
       },
       {
         "name": "rep_obu_latitude",
@@ -1871,8 +1827,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Photo number associated with the offense for evidence.",
-        "epic": ""
+        "description": "Photo number associated with the offense for evidence."
       },
       {
         "name": "printed_ind",
@@ -1880,8 +1835,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Indicator if the notice was printed.",
-        "epic": ""
+        "description": "Indicator if the notice was printed."
       },
       {
         "name": "review_edit_flag",
@@ -1889,8 +1843,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Flag indicating if the record was reviewed or edited.",
-        "epic": ""
+        "description": "Flag indicating if the record was reviewed or edited."
       },
       {
         "name": "review_edit_flag_remarks",
@@ -1898,8 +1851,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Remarks associated with the review or edit of the record.",
-        "epic": ""
+        "description": "Remarks associated with the review or edit of the record."
       },
       {
         "name": "road_tax_expiry_date",
@@ -1916,8 +1868,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Time associated with a specific rule violation involving a coupon.",
-        "epic": ""
+        "description": "Time associated with a specific rule violation involving a coupon."
       },
       {
         "name": "rule_desc",
@@ -1961,8 +1912,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Shift ID during which the offense was recorded.",
-        "epic": ""
+        "description": "Shift ID during which the offense was recorded."
       },
       {
         "name": "start_date",
@@ -1970,8 +1920,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Start date of the parking period under scrutiny.",
-        "epic": ""
+        "description": "Start date of the parking period under scrutiny."
       },
       {
         "name": "start_time",
@@ -1979,8 +1928,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Start time of the parking period during which the offense occurred.",
-        "epic": ""
+        "description": "Start time of the parking period during which the offense occurred."
       },
       {
         "name": "sys_non_printed_comment",
@@ -2015,8 +1963,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Type of parking lot involved in the offense.",
-        "epic": ""
+        "description": "Type of parking lot involved in the offense."
       },
       {
         "name": "upd_date",
@@ -2042,8 +1989,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date the data was uploaded to the CAMS system.",
-        "epic": ""
+        "description": "Date the data was uploaded to the CAMS system."
       },
       {
         "name": "upload_to_eht_host_dt",
@@ -2051,8 +1997,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date the data was uploaded to the EHT host system.",
-        "epic": ""
+        "description": "Date the data was uploaded to the EHT host system."
       },
       {
         "name": "user_non_printed_comment",
@@ -2078,8 +2023,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Version number of the record format.",
-        "epic": ""
+        "description": "Version number of the record format."
       },
       {
         "name": "video_id",
@@ -2105,8 +2049,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Amount of unpaid parking charges.",
-        "epic": ""
+        "description": "Amount of unpaid parking charges."
       },
       {
         "name": "person_report_name",
@@ -2114,8 +2057,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Name of the person reporting the notice",
-        "epic": ""
+        "description": "Name of the person reporting the notice"
       },
       {
         "name": "report_date",
@@ -2123,8 +2065,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date when the report was filed.",
-        "epic": ""
+        "description": "Date when the report was filed."
       },
       {
         "name": "service_provider_name",
@@ -2132,8 +2073,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Name of the service provider related to the notice.",
-        "epic": ""
+        "description": "Name of the service provider related to the notice."
       }
     ]
   },
@@ -2291,15 +2231,6 @@
         "nullable": false,
         "default": null,
         "description": "Current processing stage of the request.",
-        "epic": "OCMS 11"
-      },
-      {
-        "name": "reminder_flag",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Flag indicating if a reminder has been issued.",
         "epic": "OCMS 11"
       },
       {
@@ -2927,12 +2858,20 @@
       },
       {
         "name": "is_sync",
-        "type": "is_sync",
+        "type": "varchar(1)",
         "primary_key": false,
         "nullable": false,
         "default": "N",
         "description": "Indicator for sync intranet to intranet",
         "epic": "OCMS 43"
+      },
+      {
+        "name": "mha_dh_check_allow",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": false,
+        "default": "Y",
+        "description": "Indicator for bypass MHA and DH check"
       }
     ]
   },
@@ -2945,8 +2884,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Unique identifier for the work item.",
-        "epic": ""
+        "description": "Unique identifier for the work item."
       },
       {
         "name": "cre_date",
@@ -2954,8 +2892,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The date and time when the work item was created.",
-        "epic": ""
+        "description": "The date and time when the work item was created."
       },
       {
         "name": "cre_user_id",
@@ -2963,8 +2900,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The ID of the user who created the work item.",
-        "epic": ""
+        "description": "The ID of the user who created the work item."
       },
       {
         "name": "is_read",
@@ -2972,8 +2908,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Indicates whether the work item has been read.",
-        "epic": ""
+        "description": "Indicates whether the work item has been read."
       },
       {
         "name": "process_type",
@@ -2981,8 +2916,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The type of process associated with the work item.",
-        "epic": ""
+        "description": "The type of process associated with the work item."
       },
       {
         "name": "status",
@@ -2990,8 +2924,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The status of the work item (e.g., A, N, etc).",
-        "epic": ""
+        "description": "The status of the work item (e.g., A, N, etc)."
       },
       {
         "name": "upd_date",
@@ -2999,8 +2932,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "The date and time when the work item was last updated.",
-        "epic": ""
+        "description": "The date and time when the work item was last updated."
       },
       {
         "name": "upd_user_id",
@@ -3008,8 +2940,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "The ID of the user who last updated the work item.",
-        "epic": ""
+        "description": "The ID of the user who last updated the work item."
       },
       {
         "name": "work_item_title",
@@ -3017,8 +2948,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "The title or description of the work item.",
-        "epic": ""
+        "description": "The title or description of the work item."
       }
     ]
   },
@@ -3031,8 +2961,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Unique identifier for the notice.",
-        "epic": ""
+        "description": "Unique identifier for the notice."
       },
       {
         "name": "work_item_id",
@@ -3040,8 +2969,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Foreign key referencing ocms_work_item.work_item_id.",
-        "epic": ""
+        "description": "Foreign key referencing ocms_work_item.work_item_id."
       },
       {
         "name": "cre_date",
@@ -3049,8 +2977,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The date and time when the notice entry was created.",
-        "epic": ""
+        "description": "The date and time when the notice entry was created."
       },
       {
         "name": "cre_user_id",
@@ -3058,8 +2985,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The ID of the user who created the notice entry.",
-        "epic": ""
+        "description": "The ID of the user who created the notice entry."
       },
       {
         "name": "upd_date",
@@ -3067,8 +2993,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "The date and time when the notice was last updated.",
-        "epic": ""
+        "description": "The date and time when the notice was last updated."
       },
       {
         "name": "upd_user_id",
@@ -3076,8 +3001,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "The ID of the user who last updated the notice entry.",
-        "epic": ""
+        "description": "The ID of the user who last updated the notice entry."
       },
       {
         "name": "issue_type",
@@ -3085,8 +3009,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "The type of issue associated with the notice.",
-        "epic": ""
+        "description": "The type of issue associated with the notice."
       }
     ]
   },
@@ -3099,8 +3022,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Unique identifier for the user assigned to the work item.",
-        "epic": ""
+        "description": "Unique identifier for the user assigned to the work item."
       },
       {
         "name": "work_item_id",
@@ -3108,8 +3030,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Foreign key referencing ocms_work_item.work_item_id.",
-        "epic": ""
+        "description": "Foreign key referencing ocms_work_item.work_item_id."
       },
       {
         "name": "cre_date",
@@ -3117,8 +3038,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The date and time when the allocation entry was created.",
-        "epic": ""
+        "description": "The date and time when the allocation entry was created."
       },
       {
         "name": "cre_user_id",
@@ -3126,8 +3046,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The ID of the user who created the allocation entry.",
-        "epic": ""
+        "description": "The ID of the user who created the allocation entry."
       },
       {
         "name": "upd_date",
@@ -3135,8 +3054,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "The date and time when the allocation was last updated.",
-        "epic": ""
+        "description": "The date and time when the allocation was last updated."
       },
       {
         "name": "upd_user_id",
@@ -3144,8 +3062,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "The ID of the user who last updated the allocation entry.",
-        "epic": ""
+        "description": "The ID of the user who last updated the allocation entry."
       }
     ]
   },
@@ -3185,7 +3102,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Source of the suspension data. Length restricted to 4 characters.",
+        "description": "Source of the suspension data. Length restricted to 8 characters.",
         "epic": "OCMS 17"
       },
       {
@@ -3207,7 +3124,7 @@
         "epic": "OCMS 17"
       },
       {
-        "name": " officer_authorising_suspension ",
+        "name": "officer_authorising_suspension",
         "type": "varchar(50)",
         "primary_key": false,
         "nullable": false,
@@ -3230,7 +3147,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Remarks related to the suspension. Length restricted to 50 characters.",
+        "description": "Remarks related to the suspension. Length restricted to 200 characters.",
         "epic": "OCMS 17"
       },
       {
@@ -3266,7 +3183,16 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Remarks related to the revival of the suspension. Length restricted to 50 characters.",
+        "description": "Remarks related to the revival of the suspension. Length restricted to 200 characters.",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "process_indicator",
+        "type": "varchar(64)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "indicator for report to know this suspension coming from manual / cron process (e.g. manual/fetch_datahive_uen_fin/process_lta_rov_files)",
         "epic": "OCMS 18"
       },
       {
@@ -3414,7 +3340,7 @@
         "type": "varchar(1)",
         "primary_key": false,
         "nullable": true,
-        "default": "\n\nN/A",
+        "default": null,
         "description": "Indicators the address type : “L” - Local, “B” - Business, “O” - Overseas, Blank or null",
         "epic": "OCMS 20"
       },
@@ -3465,8 +3391,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Unique identifier for the offence notice.",
-        "epic": ""
+        "description": "Unique identifier for the offence notice."
       },
       {
         "name": "company_block_no",
@@ -3474,8 +3399,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Block number of the company's address.",
-        "epic": ""
+        "description": "Block number of the company's address."
       },
       {
         "name": "company_building_name",
@@ -3483,8 +3407,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Name of the company's building.",
-        "epic": ""
+        "description": "Name of the company's building."
       },
       {
         "name": "company_email",
@@ -3492,8 +3415,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Email address of the company.",
-        "epic": ""
+        "description": "Email address of the company."
       },
       {
         "name": "company_floor",
@@ -3501,8 +3423,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Floor number of the company.",
-        "epic": ""
+        "description": "Floor number of the company."
       },
       {
         "name": "company_name",
@@ -3510,8 +3431,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Name of the company involved.",
-        "epic": ""
+        "description": "Name of the company involved."
       },
       {
         "name": "company_postal_code",
@@ -3519,8 +3439,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Postal code of the company's address.",
-        "epic": ""
+        "description": "Postal code of the company's address."
       },
       {
         "name": "company_reg_no",
@@ -3528,8 +3447,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Registration number of the company.",
-        "epic": ""
+        "description": "Registration number of the company."
       },
       {
         "name": "company_street_name",
@@ -3537,8 +3455,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Street name of the company's address.",
-        "epic": ""
+        "description": "Street name of the company's address."
       },
       {
         "name": "company_tel_no",
@@ -3546,8 +3463,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Telephone number of the company.",
-        "epic": ""
+        "description": "Telephone number of the company."
       },
       {
         "name": "company_unit_no",
@@ -3555,8 +3471,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Unit number of the company.",
-        "epic": ""
+        "description": "Unit number of the company."
       },
       {
         "name": "cre_date",
@@ -3564,8 +3479,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Date and time when the record was created.",
-        "epic": ""
+        "description": "Date and time when the record was created."
       },
       {
         "name": "cre_user_id",
@@ -3573,8 +3487,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "User ID of the person who created the record.",
-        "epic": ""
+        "description": "User ID of the person who created the record."
       },
       {
         "name": "description_of_use",
@@ -3582,8 +3495,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Description of how the parking lot was unauthorisedly used.",
-        "epic": ""
+        "description": "Description of how the parking lot was unauthorisedly used."
       },
       {
         "name": "detected_po_id",
@@ -3591,8 +3503,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "ID of the officer who detected the unauthorised parking.",
-        "epic": ""
+        "description": "ID of the officer who detected the unauthorised parking."
       },
       {
         "name": "eht_cre_date",
@@ -3600,8 +3511,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Creation date for EHT (Electronic Handling Transaction).",
-        "epic": ""
+        "description": "Creation date for EHT (Electronic Handling Transaction)."
       },
       {
         "name": "eht_cre_user_id",
@@ -3609,8 +3519,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "User ID who created the EHT record.",
-        "epic": ""
+        "description": "User ID who created the EHT record."
       },
       {
         "name": "eht_upd_date",
@@ -3618,8 +3527,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Last update date for EHT.",
-        "epic": ""
+        "description": "Last update date for EHT."
       },
       {
         "name": "eht_upd_user_id",
@@ -3627,8 +3535,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "User ID who last updated the EHT record.",
-        "epic": ""
+        "description": "User ID who last updated the EHT record."
       },
       {
         "name": "id_type",
@@ -3636,8 +3543,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Type of identification used.",
-        "epic": ""
+        "description": "Type of identification used."
       },
       {
         "name": "issued_po_id",
@@ -3645,8 +3551,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "ID of the officer who issued the offence.",
-        "epic": ""
+        "description": "ID of the officer who issued the offence."
       },
       {
         "name": "non_printed_comments",
@@ -3654,8 +3559,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Additional comments not printed on notices.",
-        "epic": ""
+        "description": "Additional comments not printed on notices."
       },
       {
         "name": "number_of_dor",
@@ -3663,8 +3567,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Number of DOR (Declaration of Responsibility) records associated.",
-        "epic": ""
+        "description": "Number of DOR (Declaration of Responsibility) records associated."
       },
       {
         "name": "number_of_photos",
@@ -3672,8 +3575,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Number of photos related to this record.",
-        "epic": ""
+        "description": "Number of photos related to this record."
       },
       {
         "name": "person_block_no",
@@ -3681,8 +3583,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Block number of the person's address.",
-        "epic": ""
+        "description": "Block number of the person's address."
       },
       {
         "name": "person_building_name",
@@ -3690,8 +3591,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Building name of the person's address.",
-        "epic": ""
+        "description": "Building name of the person's address."
       },
       {
         "name": "person_email",
@@ -3699,8 +3599,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Email address of the person involved.",
-        "epic": ""
+        "description": "Email address of the person involved."
       },
       {
         "name": "person_floor",
@@ -3708,8 +3607,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Floor number of the person's address.",
-        "epic": ""
+        "description": "Floor number of the person's address."
       },
       {
         "name": "person_id",
@@ -3717,8 +3615,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Identification number of the person.",
-        "epic": ""
+        "description": "Identification number of the person."
       },
       {
         "name": "person_name",
@@ -3726,8 +3623,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Full name of the person involved.",
-        "epic": ""
+        "description": "Full name of the person involved."
       },
       {
         "name": "person_postal_code",
@@ -3735,8 +3631,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Postal code of the person's address.",
-        "epic": ""
+        "description": "Postal code of the person's address."
       },
       {
         "name": "person_street_name",
@@ -3744,8 +3639,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Street name of the person's address.",
-        "epic": ""
+        "description": "Street name of the person's address."
       },
       {
         "name": "person_tel_no",
@@ -3753,8 +3647,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Telephone number of the person.",
-        "epic": ""
+        "description": "Telephone number of the person."
       },
       {
         "name": "person_unit_no",
@@ -3762,8 +3655,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Unit number of the person's address.",
-        "epic": ""
+        "description": "Unit number of the person's address."
       },
       {
         "name": "reminder_flag",
@@ -3771,8 +3663,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Flag indicating whether a reminder has been issued.",
-        "epic": ""
+        "description": "Flag indicating whether a reminder has been issued."
       },
       {
         "name": "reminder_mode",
@@ -3780,8 +3671,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Mode of reminder (email, SMS, etc.).",
-        "epic": ""
+        "description": "Mode of reminder (email, SMS, etc.)."
       },
       {
         "name": "reporting_centre",
@@ -3789,8 +3679,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Reporting centre responsible for handling the notice.",
-        "epic": ""
+        "description": "Reporting centre responsible for handling the notice."
       },
       {
         "name": "upd_date",
@@ -3798,8 +3687,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date and time of the last update.",
-        "epic": ""
+        "description": "Date and time of the last update."
       },
       {
         "name": "upd_user_id",
@@ -3807,8 +3695,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID of the person who last updated the record.",
-        "epic": ""
+        "description": "User ID of the person who last updated the record."
       },
       {
         "name": "upl_parking_lot_no",
@@ -3816,8 +3703,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Parking lot number where the UPL offence occurred.",
-        "epic": ""
+        "description": "Parking lot number where the UPL offence occurred."
       },
       {
         "name": "vehicle_no",
@@ -3825,8 +3711,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Vehicle number related to the offence.",
-        "epic": ""
+        "description": "Vehicle number related to the offence."
       },
       {
         "name": "witness_po_id",
@@ -3834,8 +3719,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "ID of the officer who witnessed the offence.",
-        "epic": ""
+        "description": "ID of the officer who witnessed the offence."
       },
       {
         "name": "object_description",
@@ -3843,8 +3727,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "description for the object",
-        "epic": ""
+        "description": "description for the object"
       }
     ]
   },
@@ -3857,8 +3740,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Unique identifier for the Daily Occurrence Report (DOR) record.",
-        "epic": ""
+        "description": "Unique identifier for the Daily Occurrence Report (DOR) record."
       },
       {
         "name": "cre_date",
@@ -3866,8 +3748,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Date and time when the record was created.",
-        "epic": ""
+        "description": "Date and time when the record was created."
       },
       {
         "name": "cre_user_id",
@@ -3875,8 +3756,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "User ID of the person who created the record.",
-        "epic": ""
+        "description": "User ID of the person who created the record."
       },
       {
         "name": "dor_type",
@@ -3884,8 +3764,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Type of DOR issued.",
-        "epic": ""
+        "description": "Type of DOR issued."
       },
       {
         "name": "eht_cre_date",
@@ -3893,8 +3772,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Creation date for EHT.",
-        "epic": ""
+        "description": "Creation date for EHT."
       },
       {
         "name": "eht_cre_user_id",
@@ -3902,8 +3780,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID who created the EHT record.",
-        "epic": ""
+        "description": "User ID who created the EHT record."
       },
       {
         "name": "eht_upd_date",
@@ -3911,8 +3788,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Last update date for EHT.",
-        "epic": ""
+        "description": "Last update date for EHT."
       },
       {
         "name": "eht_upd_user_id",
@@ -3920,8 +3796,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID who last updated the EHT record.",
-        "epic": ""
+        "description": "User ID who last updated the EHT record."
       },
       {
         "name": "issued_po_id",
@@ -3929,8 +3804,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "ID of the officer who issued the DOR.",
-        "epic": ""
+        "description": "ID of the officer who issued the DOR."
       },
       {
         "name": "notice_no",
@@ -3938,8 +3812,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Unique identifier for the offence notice.",
-        "epic": ""
+        "description": "Unique identifier for the offence notice."
       },
       {
         "name": "offence_date_time",
@@ -3947,8 +3820,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Date and time when the offence occurred.",
-        "epic": ""
+        "description": "Date and time when the offence occurred."
       },
       {
         "name": "po_comments",
@@ -3956,8 +3828,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Comments from the police officer about the offence.",
-        "epic": ""
+        "description": "Comments from the police officer about the offence."
       },
       {
         "name": "pp_code",
@@ -3965,8 +3836,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Processing point code for the offence.",
-        "epic": ""
+        "description": "Processing point code for the offence."
       },
       {
         "name": "reporting_centre",
@@ -3974,8 +3844,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Reporting centre responsible for handling the case.",
-        "epic": ""
+        "description": "Reporting centre responsible for handling the case."
       },
       {
         "name": "shift_id",
@@ -3983,8 +3852,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Identifier for the shift during which the offence was recorded.",
-        "epic": ""
+        "description": "Identifier for the shift during which the offence was recorded."
       },
       {
         "name": "source",
@@ -3992,8 +3860,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Source of the DOR data.",
-        "epic": ""
+        "description": "Source of the DOR data."
       },
       {
         "name": "total_coupons_displayed",
@@ -4001,8 +3868,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Number of parking coupons displayed.",
-        "epic": ""
+        "description": "Number of parking coupons displayed."
       },
       {
         "name": "upd_date",
@@ -4010,8 +3876,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date and time of the last update.",
-        "epic": ""
+        "description": "Date and time of the last update."
       },
       {
         "name": "upd_user_id",
@@ -4019,8 +3884,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID of the person who last updated the record.",
-        "epic": ""
+        "description": "User ID of the person who last updated the record."
       },
       {
         "name": "vehicle_no",
@@ -4028,8 +3892,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Vehicle number associated with the offence.",
-        "epic": ""
+        "description": "Vehicle number associated with the offence."
       },
       {
         "name": "vetted_date_time",
@@ -4037,8 +3900,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Date and time when the DOR was vetted.",
-        "epic": ""
+        "description": "Date and time when the DOR was vetted."
       },
       {
         "name": "vetted_id",
@@ -4046,8 +3908,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "ID of the person who vetted the DOR.",
-        "epic": ""
+        "description": "ID of the person who vetted the DOR."
       },
       {
         "name": "vetted_reporting_center",
@@ -4055,8 +3916,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Reporting centre responsible for vetting the DOR.",
-        "epic": ""
+        "description": "Reporting centre responsible for vetting the DOR."
       },
       {
         "name": "witness_po_id",
@@ -4064,8 +3924,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "ID of the police officer who witnessed the offence.",
-        "epic": ""
+        "description": "ID of the police officer who witnessed the offence."
       }
     ]
   },
@@ -4078,8 +3937,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Unique identifier for the comment.",
-        "epic": ""
+        "description": "Unique identifier for the comment."
       },
       {
         "name": "cre_date",
@@ -4087,8 +3945,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Date and time when the comment was created.",
-        "epic": ""
+        "description": "Date and time when the comment was created."
       },
       {
         "name": "cre_user_id",
@@ -4096,8 +3953,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "User ID of the person who created the comment.",
-        "epic": ""
+        "description": "User ID of the person who created the comment."
       },
       {
         "name": "dor_number",
@@ -4105,8 +3961,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The DOR (Daily Occurrence Report) number this comment is linked to.",
-        "epic": ""
+        "description": "The DOR (Daily Occurrence Report) number this comment is linked to."
       },
       {
         "name": "label",
@@ -4114,8 +3969,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Label or category of the comment.",
-        "epic": ""
+        "description": "Label or category of the comment."
       },
       {
         "name": "upd_date",
@@ -4123,8 +3977,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date and time of the last update.",
-        "epic": ""
+        "description": "Date and time of the last update."
       },
       {
         "name": "upd_user_id",
@@ -4132,8 +3985,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID of the person who last updated the comment.",
-        "epic": ""
+        "description": "User ID of the person who last updated the comment."
       },
       {
         "name": "value",
@@ -4141,8 +3993,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The actual content or value of the comment.",
-        "epic": ""
+        "description": "The actual content or value of the comment."
       }
     ]
   },
@@ -4241,8 +4092,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Unique identifier for the subcomment.",
-        "epic": ""
+        "description": "Unique identifier for the subcomment."
       },
       {
         "name": "comment_id",
@@ -4250,8 +4100,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The comment ID this subcomment is linked to.",
-        "epic": ""
+        "description": "The comment ID this subcomment is linked to."
       },
       {
         "name": "cre_date",
@@ -4259,8 +4108,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Date and time when the subcomment was created.",
-        "epic": ""
+        "description": "Date and time when the subcomment was created."
       },
       {
         "name": "cre_user_id",
@@ -4268,8 +4116,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "User ID of the person who created the subcomment.",
-        "epic": ""
+        "description": "User ID of the person who created the subcomment."
       },
       {
         "name": "label",
@@ -4277,8 +4124,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Label or category of the subcomment.",
-        "epic": ""
+        "description": "Label or category of the subcomment."
       },
       {
         "name": "upd_date",
@@ -4286,8 +4132,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Date and time of the last update.",
-        "epic": ""
+        "description": "Date and time of the last update."
       },
       {
         "name": "upd_user_id",
@@ -4295,8 +4140,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID of the person who last updated the subcomment.",
-        "epic": ""
+        "description": "User ID of the person who last updated the subcomment."
       },
       {
         "name": "value",
@@ -4304,8 +4148,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The actual content or value of the subcomment.",
-        "epic": ""
+        "description": "The actual content or value of the subcomment."
       }
     ]
   },
@@ -4445,7 +4288,7 @@
       }
     ]
   },
-  "ocms_temp_nro_queue": {
+  "ocms_nro_temp": {
     "description": "This table stores temporary records after sending enquiry to MHA and DataHive",
     "columns": [
       {
@@ -4897,8 +4740,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Type of post (LA, NON, REGISTER).",
-        "epic": ""
+        "description": "Type of post (LA, NON, REGISTER)."
       },
       {
         "name": "register_post_file",
@@ -4906,8 +4748,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Name of the register post file.",
-        "epic": ""
+        "description": "Name of the register post file."
       },
       {
         "name": "report_file_name",
@@ -4915,8 +4756,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Name of the report file.",
-        "epic": ""
+        "description": "Name of the report file."
       },
       {
         "name": "report_date",
@@ -4924,8 +4764,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Date of the report.",
-        "epic": ""
+        "description": "Date of the report."
       },
       {
         "name": "error_report_file",
@@ -4933,8 +4772,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "File name containing error reports.",
-        "epic": ""
+        "description": "File name containing error reports."
       },
       {
         "name": "invalid_oversea_file",
@@ -4942,8 +4780,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "File name containing invalid/overseas address reports.",
-        "epic": ""
+        "description": "File name containing invalid/overseas address reports."
       },
       {
         "name": "ura_la1_nc",
@@ -4951,8 +4788,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-LA1-NC.",
-        "epic": ""
+        "description": "Count of letters printed for URA-LA1-NC."
       },
       {
         "name": "ura_la2_nc",
@@ -4960,8 +4796,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-LA2-NC.",
-        "epic": ""
+        "description": "Count of letters printed for URA-LA2-NC."
       },
       {
         "name": "ura_tamp_rr3",
@@ -4969,8 +4804,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-TAMP-RR3.",
-        "epic": ""
+        "description": "Count of letters printed for URA-TAMP-RR3."
       },
       {
         "name": "ura_tamp_rd1",
@@ -4978,8 +4812,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-TAMP-RD1.",
-        "epic": ""
+        "description": "Count of letters printed for URA-TAMP-RD1."
       },
       {
         "name": "ura_tamp_dr3",
@@ -4987,8 +4820,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-TAMP-DR3.",
-        "epic": ""
+        "description": "Count of letters printed for URA-TAMP-DR3."
       },
       {
         "name": "ura_upl_dr3",
@@ -4996,8 +4828,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-UPL-DR3.",
-        "epic": ""
+        "description": "Count of letters printed for URA-UPL-DR3."
       },
       {
         "name": "ura_tamp_dn1",
@@ -5005,8 +4836,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-TAMP-DN1.",
-        "epic": ""
+        "description": "Count of letters printed for URA-TAMP-DN1."
       },
       {
         "name": "ura_upl_dn1",
@@ -5014,8 +4844,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-UPL-DN1.",
-        "epic": ""
+        "description": "Count of letters printed for URA-UPL-DN1."
       },
       {
         "name": "ura_upl_rr3",
@@ -5023,8 +4852,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-UPL-RR3.",
-        "epic": ""
+        "description": "Count of letters printed for URA-UPL-RR3."
       },
       {
         "name": "ura_upl_rd1",
@@ -5032,8 +4860,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-UPL-RD1.",
-        "epic": ""
+        "description": "Count of letters printed for URA-UPL-RD1."
       },
       {
         "name": "ura_upl_cpc",
@@ -5041,8 +4868,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-UPL-CPC.",
-        "epic": ""
+        "description": "Count of letters printed for URA-UPL-CPC."
       },
       {
         "name": "ura_tamp_rd2",
@@ -5050,8 +4876,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-TAMP-RD2.",
-        "epic": ""
+        "description": "Count of letters printed for URA-TAMP-RD2."
       },
       {
         "name": "ura_tamp_dn2",
@@ -5059,8 +4884,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-TAMP-DN2.",
-        "epic": ""
+        "description": "Count of letters printed for URA-TAMP-DN2."
       },
       {
         "name": "ura_upl_dn2",
@@ -5068,8 +4892,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-UPL-DN2.",
-        "epic": ""
+        "description": "Count of letters printed for URA-UPL-DN2."
       },
       {
         "name": "ura_upl_rd2",
@@ -5077,8 +4900,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Count of letters printed for URA-UPL-RD2.",
-        "epic": ""
+        "description": "Count of letters printed for URA-UPL-RD2."
       },
       {
         "name": "status",
@@ -5086,8 +4908,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Status of the processing (e.g., \"Successfully Processed\", \"NIL\").",
-        "epic": ""
+        "description": "Status of the processing (e.g., \"Successfully Processed\", \"NIL\")."
       },
       {
         "name": "cre_date",
@@ -5095,8 +4916,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Timestamp when the record was created.",
-        "epic": ""
+        "description": "Timestamp when the record was created."
       },
       {
         "name": "cre_user_id",
@@ -5104,8 +4924,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "User ID of the creator.",
-        "epic": ""
+        "description": "User ID of the creator."
       },
       {
         "name": "upd_date",
@@ -5113,8 +4932,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Timestamp when the record was last updated.",
-        "epic": ""
+        "description": "Timestamp when the record was last updated."
       },
       {
         "name": "upd_user_id",
@@ -5122,8 +4940,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID who last updated the record.",
-        "epic": ""
+        "description": "User ID who last updated the record."
       }
     ]
   },
@@ -5136,8 +4953,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "The unique identifier for the data file.",
-        "epic": ""
+        "description": "The unique identifier for the data file."
       },
       {
         "name": "total_error_data",
@@ -5145,8 +4961,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Total number of accounts with error data.",
-        "epic": ""
+        "description": "Total number of accounts with error data."
       },
       {
         "name": "total_accounts_overseas",
@@ -5154,8 +4969,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Total number of accounts with an overseas address.",
-        "epic": ""
+        "description": "Total number of accounts with an overseas address."
       },
       {
         "name": "total_accounts_lt_pcode",
@@ -5163,8 +4977,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Total number of accounts with less than 6 digits in their postal code.",
-        "epic": ""
+        "description": "Total number of accounts with less than 6 digits in their postal code."
       },
       {
         "name": "total_accounts_pcode",
@@ -5172,8 +4985,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Total number of accounts with a 6-digit postal code.",
-        "epic": ""
+        "description": "Total number of accounts with a 6-digit postal code."
       },
       {
         "name": "total_accounts_printed",
@@ -5181,8 +4993,7 @@
         "primary_key": false,
         "nullable": false,
         "default": "0",
-        "description": "Total number of accounts printed.",
-        "epic": ""
+        "description": "Total number of accounts printed."
       },
       {
         "name": "status",
@@ -5190,8 +5001,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Processing status (e.g., \"Successfully Processed\").",
-        "epic": ""
+        "description": "Processing status (e.g., \"Successfully Processed\")."
       },
       {
         "name": "report_date",
@@ -5199,8 +5009,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Date when the report was generated.",
-        "epic": ""
+        "description": "Date when the report was generated."
       },
       {
         "name": "cre_date",
@@ -5208,8 +5017,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Timestamp when the record was created.",
-        "epic": ""
+        "description": "Timestamp when the record was created."
       },
       {
         "name": "cre_user_id",
@@ -5217,8 +5025,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "User ID of the creator.",
-        "epic": ""
+        "description": "User ID of the creator."
       },
       {
         "name": "upd_date",
@@ -5226,8 +5033,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Timestamp when the record was last updated.",
-        "epic": ""
+        "description": "Timestamp when the record was last updated."
       },
       {
         "name": "upd_user_id",
@@ -5235,8 +5041,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID who last updated the record.",
-        "epic": ""
+        "description": "User ID who last updated the record."
       }
     ]
   },
@@ -5249,8 +5054,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "The notice number associated with the entry.",
-        "epic": ""
+        "description": "The notice number associated with the entry."
       },
       {
         "name": "data_type",
@@ -5258,8 +5062,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "Type of data: 'error', 'oversea', or 'pcode'.",
-        "epic": ""
+        "description": "Type of data: 'error', 'oversea', or 'pcode'."
       },
       {
         "name": "data_file",
@@ -5267,8 +5070,7 @@
         "primary_key": true,
         "nullable": false,
         "default": null,
-        "description": "The associated data file name.",
-        "epic": ""
+        "description": "The associated data file name."
       },
       {
         "name": "address",
@@ -5276,8 +5078,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "The address associated with the notice number.",
-        "epic": ""
+        "description": "The address associated with the notice number."
       },
       {
         "name": "cre_date",
@@ -5285,8 +5086,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Timestamp when the record was created.",
-        "epic": ""
+        "description": "Timestamp when the record was created."
       },
       {
         "name": "cre_user_id",
@@ -5294,8 +5094,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "User ID of the creator.",
-        "epic": ""
+        "description": "User ID of the creator."
       },
       {
         "name": "upd_date",
@@ -5303,8 +5102,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Timestamp when the record was last updated.",
-        "epic": ""
+        "description": "Timestamp when the record was last updated."
       },
       {
         "name": "upd_user_id",
@@ -5312,8 +5110,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "User ID who last updated the record.",
-        "epic": ""
+        "description": "User ID who last updated the record."
       }
     ]
   },
@@ -5512,7 +5309,7 @@
     "columns": [
       {
         "name": "id_no",
-        "type": "VARCHAR(9)",
+        "type": "varchar(9)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -5521,7 +5318,7 @@
       },
       {
         "name": "notice_no",
-        "type": "VARCHAR(10)",
+        "type": "varchar(10)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -5530,7 +5327,7 @@
       },
       {
         "name": "inmate_number",
-        "type": "VARCHAR(11)",
+        "type": "varchar(11)",
         "primary_key": true,
         "nullable": false,
         "default": null,
@@ -5539,7 +5336,7 @@
       },
       {
         "name": "tentative_release_date",
-        "type": "DATETIME2(7)",
+        "type": "datetime2(7)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -5548,7 +5345,7 @@
       },
       {
         "name": "reference_period_release",
-        "type": "DATETIME2(7)",
+        "type": "datetime2(7)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -5557,7 +5354,7 @@
       },
       {
         "name": "cre_date",
-        "type": "DATETIME2(7)",
+        "type": "datetime2(7)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -5566,7 +5363,7 @@
       },
       {
         "name": "cre_user_id",
-        "type": "VARCHAR(50)",
+        "type": "varchar(50)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -5575,7 +5372,7 @@
       },
       {
         "name": "upd_date",
-        "type": "DATETIME2(7)",
+        "type": "datetime2(7)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -5584,7 +5381,7 @@
       },
       {
         "name": "upd_user_id",
-        "type": "VARCHAR(50)",
+        "type": "varchar(50)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -6117,7 +5914,7 @@
       },
       {
         "name": "share_allotted_no",
-        "type": "INT",
+        "type": "int",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -6651,7 +6448,7 @@
     ]
   },
   "ocms_template_store": {
-    "description": "This table stores template information. It is designed to hold template metadata, versioning and human-readable content to support template change control and selection of the live version.",
+    "description": "This table stores template information. It is designed to hold binary template data along with relevant metadata such as type, creation, and update details.",
     "columns": [
       {
         "name": "template_name",
@@ -6681,30 +6478,12 @@
         "epic": "OCMS 44"
       },
       {
-        "name": "version",
-        "type": "integer",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Supports template change control and history.",
-        "epic": "OCMS 9"
-      },
-      {
         "name": "template_content",
         "type": "nvarchar(max)",
         "primary_key": false,
         "nullable": true,
         "default": null,
         "description": "Human-readable description of what the template is for (and optionally what changed)",
-        "epic": "OCMS 9"
-      },
-      {
-        "name": "is_active",
-        "type": "bit",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Marks which version is currently \u201clive\u201d and should be used by the system.",
         "epic": "OCMS 9"
       },
       {
@@ -7181,7 +6960,7 @@
         "name": "new_processing_stage",
         "type": "varchar(3)",
         "primary_key": true,
-        "nullable": true,
+        "nullable": false,
         "default": null,
         "description": "New processing stage after the change.",
         "epic": "OCMS 15"
@@ -7296,7 +7075,7 @@
         "primary_key": false,
         "nullable": false,
         "default": null,
-        "description": "Time of offence ",
+        "description": "Time of offence",
         "epic": "OCMS 14"
       },
       {
@@ -7607,7 +7386,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Vehicle make ",
+        "description": "Vehicle make",
         "epic": "OCMS 14"
       },
       {
@@ -7670,7 +7449,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "CRS date of suspension ",
+        "description": "CRS date of suspension",
         "epic": "OCMS 14"
       },
       {
@@ -7779,7 +7558,7 @@
     "columns": [
       {
         "name": "txn_no",
-        "type": "VARCHAR(20)",
+        "type": "varchar(20)",
         "primary_key": true,
         "nullable": false,
         "default": null,
@@ -7824,7 +7603,7 @@
       },
       {
         "name": "cre_date",
-        "type": "DATETIME2(7)",
+        "type": "datetime2(7)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7833,7 +7612,7 @@
       },
       {
         "name": "cre_user_id",
-        "type": "VARCHAR(50)",
+        "type": "varchar(50)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7842,7 +7621,7 @@
       },
       {
         "name": "upd_date",
-        "type": "DATETIME2(7)",
+        "type": "datetime2(7)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -7851,7 +7630,7 @@
       },
       {
         "name": "upd_user_id",
-        "type": "VARCHAR(50)",
+        "type": "varchar(50)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -7865,7 +7644,7 @@
     "columns": [
       {
         "name": "txn_no",
-        "type": "VARCHAR(20)",
+        "type": "varchar(20)",
         "primary_key": true,
         "nullable": false,
         "default": null,
@@ -7874,7 +7653,7 @@
       },
       {
         "name": "notice_no",
-        "type": "VARCHAR(10)",
+        "type": "varchar(10)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7883,7 +7662,7 @@
       },
       {
         "name": "vehicle_no",
-        "type": "VARCHAR(14)",
+        "type": "varchar(14)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7901,7 +7680,7 @@
       },
       {
         "name": "pp_code",
-        "type": "VARCHAR(5)",
+        "type": "varchar(5)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7910,7 +7689,7 @@
       },
       {
         "name": "pp_name",
-        "type": "VARCHAR(100)",
+        "type": "varchar(100)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7919,7 +7698,7 @@
       },
       {
         "name": "last_processing_stage",
-        "type": "VARCHAR(3)",
+        "type": "varchar(3)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7937,7 +7716,7 @@
       },
       {
         "name": "furnish_id_type",
-        "type": "VARCHAR(1)",
+        "type": "varchar(1)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7946,7 +7725,7 @@
       },
       {
         "name": "furnish_id_no",
-        "type": "VARCHAR(12)",
+        "type": "varchar(12)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7955,7 +7734,7 @@
       },
       {
         "name": "furnish_mail_blk_no",
-        "type": "VARCHAR(10)",
+        "type": "varchar(10)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7964,7 +7743,7 @@
       },
       {
         "name": "furnish_mail_floor",
-        "type": "VARCHAR(3)",
+        "type": "varchar(3)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -7973,7 +7752,7 @@
       },
       {
         "name": "furnish_mail_street_name",
-        "type": "VARCHAR(32)",
+        "type": "varchar(32)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -7982,7 +7761,7 @@
       },
       {
         "name": "furnish_mail_unit_no",
-        "type": "VARCHAR(5)",
+        "type": "varchar(5)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -7991,7 +7770,7 @@
       },
       {
         "name": "furnish_mail_bldg_name",
-        "type": "VARCHAR(65)",
+        "type": "varchar(65)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8000,7 +7779,7 @@
       },
       {
         "name": "furnish_mail_postal_code",
-        "type": "VARCHAR(6)",
+        "type": "varchar(6)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8009,7 +7788,7 @@
       },
       {
         "name": "furnish_tel_code",
-        "type": "VARCHAR(4)",
+        "type": "varchar(4)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8018,7 +7797,7 @@
       },
       {
         "name": "furnish_tel_no",
-        "type": "VARCHAR(12)",
+        "type": "varchar(12)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8036,7 +7815,7 @@
       },
       {
         "name": "owner_driver_indicator",
-        "type": "VARCHAR(1)",
+        "type": "varchar(1)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8045,7 +7824,7 @@
       },
       {
         "name": "hirer_owner_relationship",
-        "type": "VARCHAR(1)",
+        "type": "varchar(1)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8054,7 +7833,7 @@
       },
       {
         "name": "others_relationship_desc",
-        "type": "VARCHAR(15)",
+        "type": "varchar(15)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8063,7 +7842,7 @@
       },
       {
         "name": "ques_one_ans",
-        "type": "VARCHAR(32)",
+        "type": "varchar(32)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8072,7 +7851,7 @@
       },
       {
         "name": "ques_two_ans",
-        "type": "VARCHAR(32)",
+        "type": "varchar(32)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8081,7 +7860,7 @@
       },
       {
         "name": "ques_three_ans",
-        "type": "VARCHAR(32)",
+        "type": "varchar(32)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8108,7 +7887,7 @@
       },
       {
         "name": "status",
-        "type": "VARCHAR(1)",
+        "type": "varchar(1)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8126,7 +7905,7 @@
       },
       {
         "name": "owner_id_no",
-        "type": "VARCHAR(12)",
+        "type": "varchar(12)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8135,7 +7914,7 @@
       },
       {
         "name": "owner_tel_code",
-        "type": "VARCHAR(4)",
+        "type": "varchar(4)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8144,7 +7923,7 @@
       },
       {
         "name": "owner_tel_no",
-        "type": "VARCHAR(20)",
+        "type": "varchar(20)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8171,16 +7950,16 @@
       },
       {
         "name": "reason_for_review",
-        "type": "VARCHAR(255)",
+        "type": "varchar(255)",
         "primary_key": false,
         "nullable": true,
-        "default": "Null",
+        "default": null,
         "description": "Reason the submission cannot be auto approved",
         "epic": "OCMS 42"
       },
       {
         "name": "remarks",
-        "type": "VARCHAR (200)",
+        "type": "varchar (200)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8198,7 +7977,7 @@
       },
       {
         "name": "cre_user_id",
-        "type": "VARCHAR(50)",
+        "type": "varchar(50)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8216,7 +7995,7 @@
       },
       {
         "name": "upd_user_id",
-        "type": "VARCHAR(50)",
+        "type": "varchar(50)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8239,7 +8018,7 @@
       },
       {
         "name": "cre_date",
-        "type": "DATETIME2(7)",
+        "type": "datetime2(7)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8248,7 +8027,7 @@
       },
       {
         "name": "cre_user_id",
-        "type": "VARCHAR(50)",
+        "type": "varchar(50)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8479,7 +8258,7 @@
         "primary_key": false,
         "nullable": true,
         "default": null,
-        "description": "Building name in AN Letter address",
+        "description": "Building name of the source address",
         "epic": "OCMS 20"
       },
       {
@@ -8574,7 +8353,7 @@
       },
       {
         "name": "cre_date",
-        "type": "DATETIME2(7)",
+        "type": "datetime2(7)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8583,7 +8362,7 @@
       },
       {
         "name": "cre_user_id",
-        "type": "VARCHAR(50)",
+        "type": "varchar(50)",
         "primary_key": false,
         "nullable": false,
         "default": null,
@@ -8607,6 +8386,110 @@
         "default": null,
         "description": "User ID of the person who last updated the record.",
         "epic": "OCMS 20"
+      }
+    ]
+  },
+  "ocms_user": {
+    "description": "Stores master OIC information for the OCMS application, including personal details, contact information, user status, and audit trail fields for creation and updates",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "varchar2(10)",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "Unique identifier for the OCMS user. Serves as the primary reference for user records.",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "first_name",
+        "type": "varchar(66)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "The user’s first name as registered in the OCMS system.",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "last_name",
+        "type": "varchar(66)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "The user’s last name or surname as registered in the OCMS system.",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "email_address",
+        "type": "varchar(320)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "The user’s primary email address used for OCMS notifications and communication.",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "contact_no",
+        "type": "varchar(12)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "The user’s contact number (mobile or office) reachable for communication.",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "status",
+        "type": "varchar(1)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "The current status of the user, (ACTIVE, INACTIVE)",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "remarks",
+        "type": "varchar(200)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Additional notes or comments related to the user or the request/change (free text).",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "cre_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Timestamp when the OCMS_USER record was initially created.",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "cre_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "The USER_ID or system identifier that created the OCMS_USER record.",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "upd_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Timestamp of the most recent update to the OCMS_USER record.",
+        "epic": "OCMS 18"
+      },
+      {
+        "name": "upd_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "The USER_ID or system identifier that performed the latest update.",
+        "epic": "OCMS 18"
       }
     ]
   }
