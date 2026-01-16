@@ -1,0 +1,543 @@
+# OCMS 14 – Notice Processing Flow for Special Types of Vehicles
+
+**Prepared by**
+
+NCS Pte Ltd
+
+---
+
+<!--
+IMPORTANT: If information already exists in the Functional Document (FD),
+refer to FD instead of duplicating content.
+-->
+
+---
+
+## Version History
+
+| Version | Updated By | Date | Changes |
+| --- | --- | --- | --- |
+| v1.0 | Claude | 16/01/2026 | Document Initiation - Section 3 (Deceased Offenders) |
+
+---
+
+## Table of Content
+
+| Section | Content | Pages |
+| --- | --- | --- |
+| 3 | Notice Processing Flow for Deceased Offenders | 1 |
+| 3.1 | Use Case | 1 |
+| 3.2 | High Level Processing Flow | 2 |
+| 3.3 | Detect Deceased and Apply PS Suspension | 3 |
+| 3.3.1 | External System Integration | 5 |
+| 3.3.2 | Internal Service Call | 6 |
+| 3.3.3 | Data Mapping | 7 |
+| 3.3.4 | Success Outcome | 8 |
+| 3.3.5 | Error Handling | 8 |
+| 3.4 | Generate RIP Hirer/Driver Furnished Report | 9 |
+| 3.4.1 | Data Mapping | 10 |
+| 3.4.2 | Success Outcome | 11 |
+| 3.4.3 | Error Handling | 11 |
+| 3.5 | Redirect PS-RIP/RP2 Notices | 12 |
+| 3.5.1 | Data Mapping | 13 |
+| 3.5.2 | Success Outcome | 14 |
+| 3.5.3 | Error Handling | 14 |
+
+---
+
+# Section 3 – Notice Processing Flow for Deceased Offenders
+
+## 3.1 Use Case
+
+1. OCMS receives the life status of an Offender when it performs the Owner, Hirer or Driver particulars checks with MHA for NRIC holders or DataHive for FIN holders. Refer to OCMS 8 – Retrieve Offender Particulars Functional Specifications Document.
+
+2. OCMS detects that the Offender is deceased when:<br>a. MHA returns the Life Status of the Offender (NRIC holder) as "D – Dead", OR<br>b. DataHive responds that the FIN holder is listed in the Dead Foreign Pass Holders dataset.
+
+3. Upon detection, the Notice will be processed as a Special Notice where OCMS will permanently suspend the Notice with PS-RIP or PS-RP2, so that the Notice no longer continues along the standard processing flow.
+
+4. OICs will be notified of the Notice's deceased offender status via the following ways:<br>a. The "RIP Hirer/Driver Furnished" report which lists notices where PS-RP2 has been applied and the deceased Offender is either the Hirer or Driver<br>b. A superscript "R" beside a Notice that has an active PS-RIP or PS-RP2 suspension, displayed beside the Notice no. on all view screens including search results<br>c. The "Date of Death" field in the Owner/Hirer/Driver particulars section will be populated if the date is provided by MHA or DataHive
+
+5. Refer to FD Section 4 for detailed business rules and suspension code behaviors.
+
+---
+
+## 3.2 High Level Processing Flow
+
+<!-- Insert flow diagram here -->
+![High Level Flow](./images/section3-high-level-flow.png)
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+| Step | Description | Brief Description |
+| --- | --- | --- |
+| Identify Deceased Offender | Offender is identified as deceased either through MHA returning NRIC Life Status as "D", or FIN holder found in DataHive's "Dead Foreign Pass Holders" dataset (D90) | External system identifies deceased |
+| Update Offender Particulars | OCMS updates the offender's particulars in the database to store the deceased status (life_status, date_of_death) | Store deceased status in DB |
+| Check Date of Death vs Offence Date | System compares date_of_death with offence_date to determine which suspension code to apply | Determine suspension code |
+| Apply PS-RIP or PS-RP2 | Notice is permanently suspended using PS-RIP (if DoD >= offence_date) or PS-RP2 (if DoD < offence_date) | Apply permanent suspension |
+| Generate RP2 Report | A daily report titled "RIP Hirer Driver Furnished" is generated for eligible RP2 notices where offender is Hirer or Driver | Generate daily report |
+| OIC Manual Follow-up | OIC reviews PS-RIP and PS-RP2 Notices and may revive PS and redirect Notice to Owner, Hirer, or Driver | Manual OIC action |
+| End | Process flow ends; Notice may continue standard processing if redirected after PS revival | Process complete |
+
+---
+
+## 3.3 Detect Deceased and Apply PS Suspension
+
+<!-- Insert flow diagram here -->
+![Detect and Suspend Flow](./images/section3-detect-suspend-flow.png)
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+| Step | Description | Brief Description |
+| --- | --- | --- |
+| Start | Process begins when MHA/DataHive returns offender particulars | Flow entry point |
+| Receive life_status | Receive life_status field from MHA/DataHive response | Receive external data |
+| Check life_status = 'D'? | Decision: Check if life_status equals 'D' (deceased) | Deceased check |
+| Continue Normal Processing | If life_status = 'A' (alive), continue standard notice processing | Normal flow |
+| Update Offender Particulars | If deceased, update life_status='D' and date_of_death in database | Update offender data |
+| Check date_of_death >= offence_date? | Compare date of death with offence date | Date comparison |
+| Apply PS-RIP | If DoD >= offence_date, apply PS-RIP (Motorist Deceased On/After Offence Date) | Apply RIP suspension |
+| Apply PS-RP2 | If DoD < offence_date, apply PS-RP2 (Motorist Deceased Before Offence Date) | Apply RP2 suspension |
+| Call PermanentSuspensionHelper.processPS() | Call internal service to apply permanent suspension | Execute PS service |
+| Check appCode = 0? | Check if suspension was applied successfully | Validate result |
+| End (PS Applied) | Suspension successfully applied to notice | Success exit |
+| Log Error and Continue | If error occurred, log error details | Error handling |
+| End (Error Logged) | Process ends with error logged for investigation | Error exit |
+
+### Suspension Code Determination
+
+| Condition | Suspension Code | Description |
+| --- | --- | --- |
+| date_of_death >= offence_date | PS-RIP | Motorist Deceased On or After Offence Date |
+| date_of_death < offence_date | PS-RP2 | Motorist Deceased Before Offence Date |
+
+---
+
+### 3.3.1 External System Integration
+
+#### MHA Life Status Check (NRIC Holders)
+
+| Field | Value |
+| --- | --- |
+| Integration Type | External API - SFTP File Exchange |
+| System | Ministry of Home Affairs (MHA) |
+| Purpose | Retrieve life status and date of death for NRIC holders |
+| Reference | OCMS 8 - Section 3.2.2 |
+
+**MHA Response Fields:**
+
+| Field | Type | Description |
+| --- | --- | --- |
+| life_status | String(1) | 'A' = Alive, 'D' = Dead |
+| date_of_death | Date | Date of death (if deceased) |
+| name | String | Full name of the person |
+| address | String | Registered address |
+
+#### DataHive FIN Death Check (FIN Holders)
+
+| Field | Value |
+| --- | --- |
+| Integration Type | External Database Query |
+| System | DataHive |
+| Dataset | Dead Foreign Pass Holders (D90) |
+| View | V_DH_MHA_FINDEATH |
+| Purpose | Check if FIN holder is in the deceased dataset |
+| Reference | OCMS 8 - Section 7.5 |
+
+**DataHive Query:**
+
+```sql
+SELECT FIN, DATE_OF_DEATH, REFERENCE_PERIOD
+FROM V_DH_MHA_FINDEATH
+WHERE FIN = '<fin_number>'
+```
+
+**Life Status Derivation:**
+
+| Condition | life_status | Description |
+| --- | --- | --- |
+| FIN found in D90 dataset | D | FIN holder is deceased |
+| FIN not found in D90 dataset | A | FIN holder is alive (default) |
+
+---
+
+### 3.3.2 Internal Service Call
+
+#### Apply PS-RIP/RP2 Suspension
+
+| Field | Value |
+| --- | --- |
+| Service Type | Internal Service Call |
+| Service | PermanentSuspensionHelper |
+| Method | processPS() |
+| Trigger | Auto-triggered when deceased offender detected |
+
+**Request Parameters:**
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| noticeNo | String | Yes | Notice number to suspend |
+| suspensionSource | String | Yes | Source: 'CRON' for auto-suspension |
+| reasonOfSuspension | String | Yes | 'RIP' or 'RP2' |
+| suspensionRemarks | String | No | Additional remarks |
+| officerAuthorisingSuspension | String | Yes | 'SYSTEM' for auto-suspension |
+
+**Sample Request:**
+
+```json
+{
+  "noticeNo": "A12345678X",
+  "suspensionSource": "CRON",
+  "reasonOfSuspension": "RIP",
+  "officerAuthorisingSuspension": "SYSTEM"
+}
+```
+
+**Response (Success):**
+
+```json
+{
+  "appCode": 0,
+  "appMessage": "SUCCESS",
+  "noticeNo": "A12345678X"
+}
+```
+
+**Response (Error):**
+
+```json
+{
+  "appCode": 4001,
+  "appMessage": "Invalid Notice Number"
+}
+```
+
+---
+
+### 3.3.3 Data Mapping
+
+#### Database Tables Affected
+
+| Zone | Database Table | Field Name | Description |
+| --- | --- | --- | --- |
+| Intranet | ocms_offence_notice_owner_driver | life_status | Life status indicator ('A' or 'D') |
+| Intranet | ocms_offence_notice_owner_driver | date_of_death | Date of death from MHA/DataHive |
+| Intranet | ocms_offence_notice_owner_driver | upd_date | Record update timestamp |
+| Intranet | ocms_offence_notice_owner_driver | upd_user_id | Audit user: 'ocmsiz_app_conn' |
+| Intranet | ocms_valid_offence_notice | suspension_type | 'PS' for permanent suspension |
+| Intranet | ocms_valid_offence_notice | epr_reason_of_suspension | 'RIP' or 'RP2' |
+| Intranet | ocms_valid_offence_notice | upd_date | Record update timestamp |
+| Intranet | ocms_valid_offence_notice | upd_user_id | Audit user: 'ocmsiz_app_conn' |
+| Intranet | ocms_suspended_notice | notice_no | Notice number |
+| Intranet | ocms_suspended_notice | suspension_type | 'PS' |
+| Intranet | ocms_suspended_notice | reason_of_suspension | 'RIP' or 'RP2' |
+| Intranet | ocms_suspended_notice | date_of_suspension | Timestamp when suspension applied |
+| Intranet | ocms_suspended_notice | due_date_of_revival | NULL (PS never auto-revives) |
+| Intranet | ocms_suspended_notice | officer_authorising_suspension | 'SYSTEM' for auto-suspension |
+| Intranet | ocms_suspended_notice | ins_user_id | Audit user: 'ocmsiz_app_conn' |
+
+**Audit User Note:** All database operations use `ocmsiz_app_conn` as the audit user for intranet database writes.
+
+**Insert Order:**
+1. UPDATE ocms_offence_notice_owner_driver (life_status, date_of_death)
+2. UPDATE ocms_valid_offence_notice (suspension_type, epr_reason_of_suspension)
+3. INSERT ocms_suspended_notice (new suspension record)
+
+---
+
+### 3.3.4 Success Outcome
+
+- Offender particulars updated with life_status = 'D' and date_of_death populated
+- Notice suspended with appropriate PS code (PS-RIP or PS-RP2) based on date comparison
+- New record inserted into ocms_suspended_notice table
+- Notice flagged with superscript "R" for display in Staff Portal
+- The workflow reaches the End state without triggering any error-handling paths
+
+---
+
+### 3.3.5 Error Handling
+
+#### Application Error Handling
+
+| Error Scenario | Definition | Brief Description |
+| --- | --- | --- |
+| MHA Connection Error | Cannot connect to MHA system | Log error, retry with backoff |
+| DataHive Query Error | D90 dataset query fails | Log error, default to life_status='A' |
+| Database Error | Unable to insert/update record | Rollback transaction, log error |
+| Null Date of Death | life_status='D' but date_of_death is null | Log warning, use current date |
+
+#### API Error Handling
+
+| Error Scenario | App Error Code | User Message | Brief Description |
+| --- | --- | --- | --- |
+| Notice Already PS | OCMS-2001 | Notice already has this PS code | Idempotent - return success |
+| Invalid Notice Number | OCMS-4001 | Invalid Notice Number | Notice not found in database |
+| Source Not Allowed | OCMS-4000 | Suspension Source is missing | PLUS cannot apply RIP/RP2 |
+| Paid Notice | OCMS-4003 | Paid/partially paid notices only allow APP, CFA, or VST | Cannot apply RIP/RP2 to paid notice |
+| System Error | OCMS-4007 | System error. Please inform Administrator | Unexpected system error |
+
+---
+
+## 3.4 Generate RIP Hirer/Driver Furnished Report
+
+<!-- Insert flow diagram here -->
+![RIP Report Flow](./images/section3-rip-report-flow.png)
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+| Step | Description | Brief Description |
+| --- | --- | --- |
+| Cron Start (Daily) | Daily scheduled job initiates report generation | Cron job trigger |
+| Query for RP2 Notices | Query database for notices with PS-RP2 applied today + deceased Hirer/Driver | Database query |
+| Any records? | Check if query returns any matching records | Record check |
+| End (No Report) | If no records found, end process without generating report | No report needed |
+| Format Data for Report | Format query results according to report template | Data formatting |
+| Generate Report File (.xlsx) | Generate Excel report file with formatted data | File generation |
+| Generated OK? | Check if report file was generated successfully | Generation check |
+| Send Email to OICs | Send report via email to OICs for follow-up | Email notification |
+| End | Report generation process completes successfully | Success exit |
+| Log Error | Log error details if report generation failed | Error logging |
+| End (Error) | Process ends with error logged | Error exit |
+
+**Shedlock Job Configuration:**
+
+| Attribute | Value |
+| --- | --- |
+| Job Name | generateRIPHirerDriverReport |
+| Schedule | Daily (00:30) |
+| Lock Duration | 15 minutes |
+
+---
+
+### 3.4.1 Data Mapping
+
+#### Query for RIP Report
+
+| Zone | Database Table | Field Name | Description |
+| --- | --- | --- | --- |
+| Intranet | ocms_suspended_notice | notice_no | Notice number |
+| Intranet | ocms_suspended_notice | suspension_type | Must be 'PS' |
+| Intranet | ocms_suspended_notice | reason_of_suspension | Must be 'RP2' |
+| Intranet | ocms_suspended_notice | date_of_suspension | Must be today |
+| Intranet | ocms_suspended_notice | due_date_of_revival | Must be NULL |
+| Intranet | ocms_valid_offence_notice | notice_no | Notice number |
+| Intranet | ocms_valid_offence_notice | offence_date | Offence date for report |
+| Intranet | ocms_offence_notice_owner_driver | name | Offender name |
+| Intranet | ocms_offence_notice_owner_driver | id_no | Offender ID (NRIC/FIN) |
+| Intranet | ocms_offence_notice_owner_driver | owner_driver_indicator | Must be 'H' or 'D' |
+| Intranet | ocms_offence_notice_owner_driver | offender_indicator | Must be 'Y' |
+| Intranet | ocms_offence_notice_owner_driver | life_status | Must be 'D' |
+| Intranet | ocms_offence_notice_owner_driver | date_of_death | Date of death |
+
+**Query (Specific Fields):**
+
+```sql
+SELECT
+  von.notice_no,
+  ond.name AS offender_name,
+  ond.id_no AS offender_id,
+  ond.owner_driver_indicator,
+  ond.life_status,
+  ond.date_of_death,
+  von.offence_date,
+  sn.date_of_suspension
+FROM ocms_suspended_notice sn
+JOIN ocms_valid_offence_notice von
+  ON sn.notice_no = von.notice_no
+JOIN ocms_offence_notice_owner_driver ond
+  ON von.notice_no = ond.notice_no
+WHERE sn.suspension_type = 'PS'
+  AND sn.reason_of_suspension = 'RP2'
+  AND TRUNC(sn.date_of_suspension) = TRUNC(SYSDATE)
+  AND sn.due_date_of_revival IS NULL
+  AND ond.owner_driver_indicator IN ('H', 'D')
+  AND ond.offender_indicator = 'Y'
+  AND ond.life_status = 'D'
+```
+
+**Audit Note:** Query executed as user `ocmsiz_app_conn` (read-only operation).
+
+#### Report Output Columns
+
+| Column | Source Field | Description |
+| --- | --- | --- |
+| Notice No | von.notice_no | Notice number |
+| Offender Name | ond.name | Name of deceased offender |
+| Offender ID | ond.id_no | NRIC/FIN of deceased |
+| Type | ond.owner_driver_indicator | H (Hirer) or D (Driver) |
+| Date of Death | ond.date_of_death | Date of death |
+| Suspension Date | sn.date_of_suspension | Date PS-RP2 was applied |
+| Offence Date | von.offence_date | Original offence date |
+
+---
+
+### 3.4.2 Success Outcome
+
+- Query successfully retrieves all notices matching RP2 report criteria
+- Report file (.xlsx) generated with all required columns
+- Email sent to OICs with report attachment
+- The workflow reaches the End state without triggering any error-handling paths
+
+---
+
+### 3.4.3 Error Handling
+
+#### Application Error Handling
+
+| Error Scenario | Definition | Brief Description |
+| --- | --- | --- |
+| Database Query Error | Unable to execute report query | Log error, retry on next schedule |
+| File Generation Error | Unable to create Excel file | Log error, alert administrator |
+| Email Send Error | Unable to send email to OICs | Log error, store report for manual retrieval |
+
+---
+
+## 3.5 Redirect PS-RIP/RP2 Notices
+
+<!-- Insert flow diagram here -->
+![Redirect RIP Flow](./images/section3-redirect-rip-flow.png)
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+| Step | Description | Brief Description |
+| --- | --- | --- |
+| Start | OIC initiates PS revival from Staff Portal | Manual trigger |
+| OIC revives PS-RIP or PS-RP2 | OIC revives the permanent suspension from Staff Portal | Revival action |
+| Update Suspension | Set date_of_revival and revival_reason in database | Update suspension record |
+| OIC updates particulars | OIC updates Owner/Hirer/Driver particulars in Staff Portal | Update offender details |
+| Update Offender Data | Backend updates offender data in database | Save offender changes |
+| Redirect Notice | Redirect Notice to new Offender (Stage: RD1 or DN1) | Update notice stage |
+| Continue Standard Flow | Notice continues standard processing flow | Normal processing |
+| End | Redirect process completes | Flow exit |
+
+**Redirect Scenarios:**
+
+| Scenario | Description | Action |
+| --- | --- | --- |
+| Wrongly Furnished RIP | RIP ID was incorrectly provided | Redirect Notice to Owner |
+| NOK Furnishes Hirer | Deceased offender's Next-of-Kin provides Hirer details | Redirect Notice to Hirer |
+| NOK Furnishes Driver | Deceased offender's Next-of-Kin provides Driver details | Redirect Notice to Driver |
+
+---
+
+### 3.5.1 Data Mapping
+
+#### Database Tables Updated
+
+| Zone | Database Table | Field Name | Description |
+| --- | --- | --- | --- |
+| Intranet | ocms_suspended_notice | date_of_revival | Timestamp when PS was revived |
+| Intranet | ocms_suspended_notice | revival_reason | Reason for revival |
+| Intranet | ocms_suspended_notice | officer_authorising_revival | OIC ID who authorized revival |
+| Intranet | ocms_suspended_notice | upd_date | Record update timestamp |
+| Intranet | ocms_suspended_notice | upd_user_id | Audit user: 'ocmsiz_app_conn' |
+| Intranet | ocms_valid_offence_notice | suspension_type | Set to NULL after revival |
+| Intranet | ocms_valid_offence_notice | epr_reason_of_suspension | Set to NULL after revival |
+| Intranet | ocms_valid_offence_notice | last_processing_stage | Set to 'RD1' or 'DN1' |
+| Intranet | ocms_valid_offence_notice | current_offender_id | Updated to new offender ID |
+| Intranet | ocms_valid_offence_notice | upd_date | Record update timestamp |
+| Intranet | ocms_valid_offence_notice | upd_user_id | Audit user: 'ocmsiz_app_conn' |
+| Intranet | ocms_offence_notice_owner_driver | (all fields) | New offender details |
+| Intranet | ocms_offence_notice_owner_driver | offender_indicator | Set to 'Y' for new offender |
+| Intranet | ocms_offence_notice_owner_driver | upd_date | Record update timestamp |
+| Intranet | ocms_offence_notice_owner_driver | upd_user_id | Audit user: 'ocmsiz_app_conn' |
+| Intranet | ocms_offence_notice_owner_driver_addr | (all fields) | New offender address |
+| Intranet | ocms_offence_notice_owner_driver_addr | upd_date | Record update timestamp |
+| Intranet | ocms_offence_notice_owner_driver_addr | upd_user_id | Audit user: 'ocmsiz_app_conn' |
+
+**Audit User Note:** All database operations use `ocmsiz_app_conn` as the audit user. Officer ID is captured in `officer_authorising_revival` field.
+
+**API Response (Revival Success):**
+
+```json
+{
+  "appCode": 0,
+  "appMessage": "PS Revival successful",
+  "noticeNo": "A12345678X"
+}
+```
+
+---
+
+### 3.5.2 Success Outcome
+
+- PS-RIP or PS-RP2 suspension successfully revived
+- Suspension record updated with date_of_revival and revival_reason
+- Notice details updated with new offender particulars
+- Notice redirected to appropriate processing stage (RD1 or DN1)
+- Notice continues along standard processing flow
+- The workflow reaches the End state without triggering any error-handling paths
+
+---
+
+### 3.5.3 Error Handling
+
+#### Application Error Handling
+
+| Error Scenario | Definition | Brief Description |
+| --- | --- | --- |
+| Unauthorized User | User not authorized to revive PS | Display error, block action |
+| No Active PS | Notice does not have active PS-RIP/RP2 | Display error message |
+| Database Error | Unable to update record | Rollback transaction, log error |
+
+#### API Error Handling
+
+| Error Scenario | App Error Code | User Message | Brief Description |
+| --- | --- | --- | --- |
+| General Server Error | OCMS-5000 | Something went wrong. Please try again later. | Server error |
+| Bad Request | OCMS-4000 | Invalid request. Please check and try again. | Invalid syntax |
+| Unauthorized Access | OCMS-4001 | You are not authorized. Please log in and try again. | Auth failed |
+
+---
+
+## Appendix A - Suspension Code Reference
+
+| Code | Full Name | Condition | Description |
+| --- | --- | --- | --- |
+| RIP | Motorist Deceased On or After Offence Date | date_of_death >= offence_date | Offender was alive at time of offence but deceased now |
+| RP2 | Motorist Deceased Before Offence Date | date_of_death < offence_date | Offender was already deceased at time of offence |
+
+**PS-RIP/RP2 Exception Code Behavior:**
+
+PS-RIP and PS-RP2 are part of the 5 Exception Codes (DIP, FOR, MID, RIP, RP2) which have special rules:
+- TS suspension can be applied on top of existing PS-RIP/RP2
+- Other PS can stack without revival
+- CRS PS (FP/PRA) can apply WITHOUT PS revival
+- Non-CRS PS (APP, etc.) requires PS revival first
+
+Refer to FD Section 4.4 for detailed suspension code behaviors.
+
+---
+
+## Appendix B - UI Display Rules
+
+### RIP Superscript Display
+
+| Rule | Condition | Display |
+| --- | --- | --- |
+| Show superscript "R" | Active PS-RIP or PS-RP2 | Notice No with superscript R (e.g., "A12345678^R") |
+| Hide superscript | No active RIP/RP2 or revived | Normal notice number |
+
+**Display Locations:**
+- Search Notice result summary list
+- View Notice fixed header box
+- View Notice Overview tab
+
+**Detection Logic:**
+
+```
+IF ocms_valid_offence_notice.suspension_type = 'PS'
+   AND ocms_valid_offence_notice.epr_reason_of_suspension IN ('RIP', 'RP2')
+THEN Display superscript "R" next to Notice Number
+```
+
+Refer to FD Section 4.6 for detailed UI display specifications.
+
+---
+
+## Appendix C - Related Documents
+
+| Document | Section | Description |
+| --- | --- | --- |
+| OCMS 14 FD | Section 4 | Notice Processing Flow for Deceased Offenders |
+| OCMS 8 FD | Section 3.2.2 | MHA output file processing |
+| OCMS 8 FD | Section 7.5 | DataHive deceased FIN processing |

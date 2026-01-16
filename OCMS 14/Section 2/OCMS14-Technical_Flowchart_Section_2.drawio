@@ -1,0 +1,1248 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.1" pages="10">
+  <diagram id="vhub-api-main" name="1_vHub_API_Main_Flow">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3500" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="500" width="3400" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;vHub Update Violation API Interface - Main Flow&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="400" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="40" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="get-for">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="get-for" parent="sw-cron" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Function:&lt;/b&gt;&lt;div&gt;Get FOR param value &amp;amp; calculate date&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="200" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="get-for-ref" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="Refer to sub-flow:&lt;div&gt;&lt;b&gt;2_Get_FOR_Parameter&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="200" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e1a" edge="1" parent="sw-cron" source="get-for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="get-for-ref">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="get-for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="prep-settled">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="prep-settled" parent="sw-cron" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Process:&lt;/b&gt;&lt;div&gt;Prepare Settled Notices List&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="400" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="prep-settled-ref" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="Refer to sub-flow:&lt;div&gt;&lt;b&gt;3_Settled_Notices&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="400" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e2a" edge="1" parent="sw-cron" source="prep-settled" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="prep-settled-ref">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="sw-cron" source="prep-settled" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="prep-cancelled">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="prep-cancelled" parent="sw-cron" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Process:&lt;/b&gt;&lt;div&gt;Prepare Cancelled Notices List&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="600" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="prep-cancelled-ref" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="Refer to sub-flow:&lt;div&gt;&lt;b&gt;4_Cancelled_Notices&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="600" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e3a" edge="1" parent="sw-cron" source="prep-cancelled" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="prep-cancelled-ref">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="prep-cancelled" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="prep-outstanding">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="prep-outstanding" parent="sw-cron" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Process:&lt;/b&gt;&lt;div&gt;Prepare Outstanding Notices List&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="800" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="prep-outstanding-ref" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="Refer to sub-flow:&lt;div&gt;&lt;b&gt;5_Outstanding_Notices&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="800" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e4a" edge="1" parent="sw-cron" source="prep-outstanding" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="prep-outstanding-ref">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="sw-cron" source="prep-outstanding" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="consolidate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="consolidate" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Consolidate all 3 lists for vHub API call" vertex="1">
+          <mxGeometry height="60" width="120" x="1000" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="sw-cron" source="consolidate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="any-records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="any-records" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any records to send?" vertex="1">
+          <mxGeometry height="80" width="100" x="1180" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-no" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="no-records" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="no-records" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log: No records to send" vertex="1">
+          <mxGeometry height="50" width="120" x="1170" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-yes" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="call-vhub" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="call-vhub" parent="sw-cron" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Process:&lt;/b&gt;&lt;div&gt;Call vHub Update Violation Request API &amp;amp; process response&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="160" x="1340" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="call-vhub-ref" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="Refer to sub-flow:&lt;div&gt;&lt;b&gt;6_Call_vHub_API&lt;/b&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="1350" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e7a" edge="1" parent="sw-cron" source="call-vhub" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="call-vhub-ref">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="sw-cron" source="call-vhub" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="consol-errors">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="consol-errors" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Consolidate all interfacing errors" vertex="1">
+          <mxGeometry height="60" width="120" x="1560" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="sw-cron" source="consol-errors" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="any-errors">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="any-errors" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any errors?" vertex="1">
+          <mxGeometry height="80" width="100" x="1740" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e9-yes" edge="1" parent="sw-cron" source="any-errors" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="send-email" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="send-email" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send interfacing error email to operation team" vertex="1">
+          <mxGeometry height="60" width="130" x="1900" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e9-no" edge="1" parent="sw-cron" source="any-errors" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1790" y="250" />
+              <mxPoint x="2120" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="sw-cron" source="send-email" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10a" edge="1" parent="sw-cron" source="no-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1230" y="320" />
+              <mxPoint x="2120" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="end" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="2070" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="info-api" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;vHub API Specification:&lt;/b&gt;&lt;div&gt;- Method: POST&lt;/div&gt;&lt;div&gt;- Batch Size: 50 records per request&lt;/div&gt;&lt;div&gt;- Reference: vHub External Agency API Interface&lt;/div&gt;&lt;div&gt;&amp;nbsp; Requirement Specifications v1.0&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="280" x="40" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="info-status" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;Violation Status Codes:&lt;/b&gt;&lt;div&gt;- O = Outstanding (Unpaid notices)&lt;/div&gt;&lt;div&gt;- S = Settled (Paid notices)&lt;/div&gt;&lt;div&gt;- C = Cancelled (TS/PS/Archived)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="240" x="340" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="info-cron" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CRON Schedule:&lt;/b&gt;&lt;div&gt;- Trigger: Daily (TBD timing)&lt;/div&gt;&lt;div&gt;- Shedlock Name: vhub_update_violation_api&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="600" y="300" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="get-for-param" name="2_Get_FOR_Parameter">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2500" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="400" width="1400" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Sub-flow: Get FOR Parameter Value &amp;amp; Calculate Date&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="400" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="40" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-param">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-param" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query ocms_parameter table to get FOR value" vertex="1">
+          <mxGeometry height="60" width="140" x="350" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="query-box" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_parameter&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT param_value&lt;/div&gt;&lt;div&gt;FROM ocms_parameter&lt;/div&gt;&lt;div&gt;WHERE param_id = &#39;FOR&#39;&lt;/div&gt;&lt;div&gt;AND param_code = &#39;NPA&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="200" x="320" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="e1a" edge="1" parent="sw-cron" source="query-param" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="query-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="query-param" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="param-found">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="param-found" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Parameter found?" vertex="1">
+          <mxGeometry height="80" width="100" x="570" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e2-no" edge="1" parent="sw-cron" source="param-found" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="throw-error" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="throw-error" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" value="Throw error: FOR parameter not found. Stop processing." vertex="1">
+          <mxGeometry height="70" width="140" x="550" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e2-yes" edge="1" parent="sw-cron" source="param-found" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="calc-date" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="calc-date" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Calculate date:&lt;div&gt;Today minus FOR days&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="791" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="formula-box" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Formula:&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;calculated_date = CURRENT_DATE - FOR_days&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;Example: If FOR = 30 days&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;Today: 2026-01-15&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;Result: 2025-12-16&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="130" width="220" x="751" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="e3a" edge="1" parent="sw-cron" source="calc-date" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="formula-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="calc-date" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="store-memory">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="store-memory" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Store calculated date in memory for use in subsequent queries" vertex="1">
+          <mxGeometry height="60" width="140" x="1031" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="sw-cron" source="store-memory" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End Sub-flow" vertex="1">
+          <mxGeometry height="60" width="100" x="1231" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="info-for" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;FOR Parameter:&lt;/b&gt;&lt;div&gt;- param_id: FOR&lt;/div&gt;&lt;div&gt;- param_code: NPA&lt;/div&gt;&lt;div&gt;- Description: Number of days before&lt;/div&gt;&lt;div&gt;&amp;nbsp; sending notice to enforcement agencies&lt;/div&gt;&lt;div&gt;- Source: ocms_parameter (Intranet)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="280" x="10" y="190" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="settled-notices" name="3_Settled_Notices">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3200" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="600" width="2880" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Sub-flow: Prepare Settled Notices List&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="300" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="objective" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;Settled (Paid) Criteria:&lt;/b&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;FOR Notices which have been paid in the last 24 hours&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="300" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="40" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-paid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-paid" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query VON to get FOR notices paid in last 24 hours" vertex="1">
+          <mxGeometry height="60" width="140" x="200" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="query-box1" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT offence_no, vehicle_no, offence_date_and_time,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;offence_rule, pp_code, vehicle_category,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;composition_amount, admin_fee&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;F&#39;&lt;/div&gt;&lt;div&gt;AND amount_paid &amp;gt; 0&lt;/div&gt;&lt;div&gt;AND payment_date &amp;gt;= CURRENT_DATE - 1 day&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="340" x="100" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="e1a" edge="1" parent="sw-cron" source="query-paid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="query-box1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="query-paid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="any-records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="any-records" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any records?" vertex="1">
+          <mxGeometry height="80" width="100" x="420" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="e2-no" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end-no" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="end-no" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End Sub-flow&lt;div&gt;(Empty list)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="420" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="e2-yes" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="call-repccs" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="call-repccs" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Call REPCCS API to get car park list" vertex="1">
+          <mxGeometry height="60" width="140" x="600" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="repccs-box" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;REPCCS Car Park API:&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Method: GET&lt;/div&gt;&lt;div&gt;Response: List of car park codes &amp;amp; names&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Retry Logic:&lt;/b&gt;&lt;/div&gt;&lt;div&gt;- Attempt 1: Immediate&lt;/div&gt;&lt;div&gt;- Attempt 2: Wait 1 second&lt;/div&gt;&lt;div&gt;- Attempt 3: Wait 1 second&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="220" x="560" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e3a" edge="1" parent="sw-cron" source="call-repccs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="repccs-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="call-repccs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="store-carpark">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="store-carpark" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Store car park list in memory as dictionary" vertex="1">
+          <mxGeometry height="60" width="140" x="820" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="sw-cron" source="store-carpark" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="loop-start">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="loop-start" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="For each notice" vertex="1">
+          <mxGeometry height="60" width="120" x="1020" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="sw-cron" source="loop-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-pp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-pp" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query PP code dictionary to get car park name" vertex="1">
+          <mxGeometry height="60" width="140" x="1200" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="sw-cron" source="query-pp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pp-found">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pp-found" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="PP code found?" vertex="1">
+          <mxGeometry height="80" width="100" x="1400" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="e7-no" edge="1" parent="sw-cron" source="pp-found" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="skip-record" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="skip-record" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip record, continue with rest" vertex="1">
+          <mxGeometry height="50" width="140" x="1380" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="e7-yes" edge="1" parent="sw-cron" source="pp-found" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="add-carpark" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="add-carpark" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Add car park name to record" vertex="1">
+          <mxGeometry height="60" width="140" x="1560" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="sw-cron" source="add-carpark" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="veh-cat">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veh-cat" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Vehicle category = H or Y?" vertex="1">
+          <mxGeometry height="80" width="100" x="1760" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="e8-yes" edge="1" parent="sw-cron" source="veh-cat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="map-veh" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="map-veh" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Map vehicle type:&lt;div&gt;H → B (Bus)&lt;/div&gt;&lt;div&gt;Y → M (Motorcycle)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="1920" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="veh-map-info" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;fontStyle=2" value="&lt;b&gt;URA Comment:&lt;/b&gt;&lt;div&gt;vHub does not have &#39;H&#39; (Heavy Vehicle) type.&lt;/div&gt;&lt;div&gt;OCMS maps &#39;H&#39; to &#39;B&#39; (Bus).&lt;/div&gt;&lt;div&gt;&#39;Y&#39; type is mapped to &#39;M&#39; (Motorcycle).&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="220" x="1880" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e8a" edge="1" parent="sw-cron" source="map-veh" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="veh-map-info">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8-no" edge="1" parent="sw-cron" source="veh-cat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gen-settled" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1810" y="460" />
+              <mxPoint x="2180" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="sw-cron" source="map-veh" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gen-settled">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9a" edge="1" parent="sw-cron" source="skip-record" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gen-settled">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1450" y="460" />
+              <mxPoint x="2180" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gen-settled" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Gen Settled records list following vHub format" vertex="1">
+          <mxGeometry height="60" width="140" x="2120" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="sw-cron" source="gen-settled" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="more-records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="more-records" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="More records?" vertex="1">
+          <mxGeometry height="80" width="100" x="2320" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="e10-yes" edge="1" parent="sw-cron" source="more-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="loop-start" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2370" y="130" />
+              <mxPoint x="1080" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10-no" edge="1" parent="sw-cron" source="more-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="set-status" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="set-status" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Set violation_status = &#39;S&#39; (Settled)" vertex="1">
+          <mxGeometry height="60" width="140" x="2480" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="sw-cron" source="set-status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End Sub-flow" vertex="1">
+          <mxGeometry height="60" width="100" x="2680" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-note" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2" value="&lt;i&gt;Run in batches of 50 if more than 200 records&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="180" x="2100" y="260" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="cancelled-notices" name="4_Cancelled_Notices">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3200" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="700" width="2240" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Sub-flow: Prepare Cancelled Notices List&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="300" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="objective" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;Cancelled Criteria:&lt;/b&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;FOR Notices which were TS-ed or PS-ed today&lt;/li&gt;&lt;li&gt;FOR Notices which are scheduled for archival tomorrow&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="350" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="40" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-ts">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-ts" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query VON to get FOR notices TS-ed or PS-ed today" vertex="1">
+          <mxGeometry height="60" width="160" x="200" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="query-box1" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT offence_no, vehicle_no, offence_date_and_time,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;offence_rule, pp_code, vehicle_category&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;F&#39;&lt;/div&gt;&lt;div&gt;AND suspension_type IN (&#39;TS&#39;, &#39;PS&#39;)&lt;/div&gt;&lt;div&gt;AND suspension_date = CURRENT_DATE&lt;/div&gt;&lt;div&gt;AND epr_reason_of_suspension != &#39;FOR&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="340" x="25" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="e1a" edge="1" parent="sw-cron" source="query-ts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="query-box1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="query-ts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-archive">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-archive" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query VON to get FOR notices scheduled for archival tomorrow" vertex="1">
+          <mxGeometry height="60" width="160" x="440" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="query-box2" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT offence_no, vehicle_no, offence_date_and_time,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;offence_rule, pp_code, vehicle_category&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;F&#39;&lt;/div&gt;&lt;div&gt;AND archive_date = CURRENT_DATE + 1 day&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="340" x="440" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="e2a" edge="1" parent="sw-cron" source="query-archive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="query-box2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="sw-cron" source="query-archive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="combine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="combine" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Combine data into 1 list" vertex="1">
+          <mxGeometry height="60" width="140" x="680" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="combine" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="any-records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="any-records" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any records?" vertex="1">
+          <mxGeometry height="80" width="100" x="880" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-no" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end-no" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="end-no" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End Sub-flow&lt;div&gt;(Empty list)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="880" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-yes" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-pp" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-pp" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query PP code dictionary to get car park name" vertex="1">
+          <mxGeometry height="60" width="140" x="1040" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="sw-cron" source="query-pp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="veh-cat">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veh-cat" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Vehicle category = H or Y?" vertex="1">
+          <mxGeometry height="80" width="100" x="1240" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="e5-yes" edge="1" parent="sw-cron" source="veh-cat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="map-veh" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="map-veh" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Map vehicle type:&lt;div&gt;H → B, Y → M&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="1400" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="sw-cron" source="map-veh" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="check-dup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5-no" edge="1" parent="sw-cron" source="veh-cat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="check-dup" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1290" y="320" />
+              <mxPoint x="1630" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="check-dup" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Notice already added to Settled list?" vertex="1">
+          <mxGeometry height="80" width="100" x="1647" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-yes" edge="1" parent="sw-cron" source="check-dup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="remove" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="remove" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Remove notice from Cancelled list" vertex="1">
+          <mxGeometry height="60" width="140" x="1627" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-no" edge="1" parent="sw-cron" source="check-dup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gen-cancelled" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gen-cancelled" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Gen Cancelled records list with status = &#39;C&#39;" vertex="1">
+          <mxGeometry height="60" width="140" x="1839" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="sw-cron" source="gen-cancelled" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7a" edge="1" parent="sw-cron" source="remove" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.57;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2106" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="end" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End Sub-flow" vertex="1">
+          <mxGeometry height="60" width="100" x="2049" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="sw-cron" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2" value="&lt;i&gt;Note: A settled notice takes priority. If a notice appears in both Settled and Cancelled lists, it should only be sent as Settled.&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="250" x="1839" y="280" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="outstanding-notices" name="5_Outstanding_Notices">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3600" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="900" width="3240" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Sub-flow: Prepare Outstanding Notices List&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="350" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="objective" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;Outstanding (Unpaid) Criteria:&lt;/b&gt;&lt;div&gt;&lt;ul&gt;&lt;li&gt;FOR Notices which remain unpaid X days after Offence Date&lt;/li&gt;&lt;li&gt;Unpaid older FOR Notices in which VON fields were updated (eg. PP code, suspension lifted)&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="420" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="40" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-new">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-new" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query VON to get new FOR notices X days after Offence Date" vertex="1">
+          <mxGeometry height="60" width="160" x="200" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="query-box1" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT offence_no, vehicle_no, offence_date_and_time,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;offence_rule, pp_code, vehicle_category,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;composition_amount, admin_fee&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;F&#39;&lt;/div&gt;&lt;div&gt;AND notice_date_and_time = CURRENT_DATE - &amp;lt;FOR&amp;gt; days&lt;/div&gt;&lt;div&gt;AND suspension_type = &#39;PS&#39;&lt;/div&gt;&lt;div&gt;AND epr_reason_of_suspension = &#39;FOR&#39;&lt;/div&gt;&lt;div&gt;AND amount_paid = 0&lt;/div&gt;" vertex="1">
+          <mxGeometry height="220" width="380" x="20" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="e1a" edge="1" parent="sw-cron" source="query-new" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="query-box1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="query-new" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-updated">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-updated" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query VON to get updated FOR notices (older than X days)" vertex="1">
+          <mxGeometry height="60" width="160" x="420" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="query-box2" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT offence_no, vehicle_no, offence_date_and_time,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;offence_rule, pp_code, vehicle_category,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;composition_amount, admin_fee&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;F&#39;&lt;/div&gt;&lt;div&gt;AND notice_date_and_time &amp;lt; CURRENT_DATE - &amp;lt;FOR&amp;gt; days&lt;/div&gt;&lt;div&gt;AND suspension_type = &#39;PS&#39;&lt;/div&gt;&lt;div&gt;AND epr_reason_of_suspension = &#39;FOR&#39;&lt;/div&gt;&lt;div&gt;AND amount_paid = 0&lt;/div&gt;&lt;div&gt;AND upd_date &amp;gt;= CURRENT_DATE - 1 day&lt;/div&gt;" vertex="1">
+          <mxGeometry height="240" width="380" x="420" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="e2a" edge="1" parent="sw-cron" source="query-updated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="query-box2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="sw-cron" source="query-updated" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="check-avss">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="check-avss" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Batch query ocms_offence_avss to check if records sent to vHub today" vertex="1">
+          <mxGeometry height="60" width="160" x="640" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="avss-box" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_offence_avss&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT offence_no&lt;/div&gt;&lt;div&gt;FROM ocms_offence_avss&lt;/div&gt;&lt;div&gt;WHERE offence_no IN (...)&lt;/div&gt;&lt;div&gt;AND batch_date = CURRENT_DATE&lt;/div&gt;&lt;div&gt;AND record_status = &#39;O&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="280" x="580" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="e3a" edge="1" parent="sw-cron" source="check-avss" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="avss-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="avss-note" parent="sw-cron" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2;strokeColor=#6c8ebf;fillColor=#dae8fc;" value="&lt;i&gt;Check AVSS because VON query is general, not restricted by last updated date/time. This step reduces chance of re-sending duplicate for new FOR Notice.&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="280" x="880" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="check-avss" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="any-match">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="any-match" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any match in AVSS?" vertex="1">
+          <mxGeometry height="80" width="100" x="860" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-yes" edge="1" parent="sw-cron" source="any-match" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="remove-dup" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="remove-dup" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Remove duplicate records from list" vertex="1">
+          <mxGeometry height="60" width="140" x="1020" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-no" edge="1" parent="sw-cron" source="any-match" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="combine" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="910" y="160" />
+              <mxPoint x="1280" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="sw-cron" source="remove-dup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="combine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="combine" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Combine data into 1 list" vertex="1">
+          <mxGeometry height="60" width="120" x="1220" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="sw-cron" source="combine" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="any-records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="any-records" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any records?" vertex="1">
+          <mxGeometry height="80" width="100" x="1400" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-no" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end-no" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="end-no" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End Sub-flow&lt;div&gt;(Empty list)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="100" x="1400" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-yes" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-pp" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-pp" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query PP code dictionary to get car park names" vertex="1">
+          <mxGeometry height="60" width="140" x="1560" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="sw-cron" source="query-pp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pp-found">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pp-found" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="PP code found?" vertex="1">
+          <mxGeometry height="80" width="100" x="1760" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e7-no" edge="1" parent="sw-cron" source="pp-found" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="skip" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="skip" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip record, continue with rest" vertex="1">
+          <mxGeometry height="50" width="140" x="1740" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="e7-yes" edge="1" parent="sw-cron" source="pp-found" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="add-carpark" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="add-carpark" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Add car park name to record" vertex="1">
+          <mxGeometry height="60" width="140" x="1920" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="sw-cron" source="add-carpark" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="veh-cat">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="veh-cat" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Vehicle category = H or Y?" vertex="1">
+          <mxGeometry height="80" width="100" x="2120" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e8-yes" edge="1" parent="sw-cron" source="veh-cat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="map-veh" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="map-veh" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Map vehicle type:&lt;div&gt;H → B (Bus)&lt;/div&gt;&lt;div&gt;Y → M (Motorcycle)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="140" x="2280" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="veh-map-info" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;fontStyle=2" value="&lt;b&gt;URA Comment:&lt;/b&gt;&lt;div&gt;We are sending veh cat &#39;H&#39; - Heavy Vehicles&lt;/div&gt;&lt;div&gt;as &#39;B&#39; - Bus to vHub since vHub does not&lt;/div&gt;&lt;div&gt;have &#39;H&#39; vehicle type.&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="2230" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="e8a" edge="1" parent="sw-cron" source="map-veh" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="veh-map-info">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="sw-cron" source="map-veh" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="check-dup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8-no" edge="1" parent="sw-cron" source="veh-cat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="check-dup" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2170" y="160" />
+              <mxPoint x="2590" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="check-dup" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Notice in Settled or Cancelled list?" vertex="1">
+          <mxGeometry height="80" width="100" x="2540" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e9-yes" edge="1" parent="sw-cron" source="check-dup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="remove-notice" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="remove-notice" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Remove from Outstanding list" vertex="1">
+          <mxGeometry height="50" width="140" x="2520" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="e9-no" edge="1" parent="sw-cron" source="check-dup" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gen-outstanding" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gen-outstanding" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Gen Outstanding records list with status = &#39;O&#39;" vertex="1">
+          <mxGeometry height="60" width="160" x="2730" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-note" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2" value="&lt;i&gt;Run in batches of 50 if more than 200 records&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="160" x="2650" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="sw-cron" source="gen-outstanding" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10a" edge="1" parent="sw-cron" source="skip" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1810" y="460" />
+              <mxPoint x="3030" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e10b" edge="1" parent="sw-cron" source="remove-notice" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2590" y="460" />
+              <mxPoint x="3030" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="end" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End Sub-flow" vertex="1">
+          <mxGeometry height="60" width="100" x="2980" y="220" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="call-vhub-api" name="6_Call_vHub_API">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3200" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="760" width="1600" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Sub-flow: Call vHub Update Violation Request API &amp;amp; Process Response&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="500" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="api-spec" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;vHub API Specification:&lt;/b&gt;&lt;div&gt;- Method: POST&lt;/div&gt;&lt;div&gt;- Batch Size: 50 records per request&lt;/div&gt;&lt;div&gt;- Reference: vHub External Agency API&lt;/div&gt;&lt;div&gt;&amp;nbsp; Interface Requirement Specifications v1.0&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="300" x="32" y="309" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="52" y="449" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="prep-batch">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="prep-batch" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Prepare batch of 50 records" vertex="1">
+          <mxGeometry height="60" width="140" x="212" y="449" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="prep-batch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="call-api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="call-api" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Call vHub Update Violation Request API" vertex="1">
+          <mxGeometry height="60" width="140" x="412" y="449" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="sw-cron" source="call-api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="api-success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="api-success" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="API call success?" vertex="1">
+          <mxGeometry height="80" width="100" x="612" y="439" as="geometry" />
+        </mxCell>
+        <mxCell id="e3-no" edge="1" parent="sw-cron" source="api-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="retry" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="retry" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retry 2x" vertex="1">
+          <mxGeometry height="50" width="60" x="632" y="569" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="retry" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="retry-success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="retry-success" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Retry success?" vertex="1">
+          <mxGeometry height="80" width="80" x="732" y="554" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-no" edge="1" parent="sw-cron" source="retry-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="add-batch-error" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="add-batch-error" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" value="Add entire batch to error log" vertex="1">
+          <mxGeometry height="50" width="120" x="862" y="569" as="geometry" />
+        </mxCell>
+        <mxCell id="e3-yes" edge="1" parent="sw-cron" source="api-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="process-resp" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-yes" edge="1" parent="sw-cron" source="retry-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="process-resp" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="772" y="659" />
+              <mxPoint x="832" y="659" />
+              <mxPoint x="832" y="529" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="process-resp" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Process API Response" vertex="1">
+          <mxGeometry height="60" width="120" x="772" y="449" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="sw-cron" source="process-resp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="for-each">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="for-each" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="For each record in response" vertex="1">
+          <mxGeometry height="60" width="120" x="952" y="449" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="sw-cron" source="for-each" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="record-ok">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="record-ok" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Record sent OK?&lt;div&gt;(code=0)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="100" x="1132" y="439" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-yes" edge="1" parent="sw-cron" source="record-ok" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="save-success" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="save-success" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Save to DB with success status" vertex="1">
+          <mxGeometry height="50" width="120" x="1292" y="419" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-no" edge="1" parent="sw-cron" source="record-ok" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="save-error" value="no (code=1)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hFhbQktAizGaOhkWeBZb-1" edge="1" parent="sw-cron" source="save-error" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;dashed=1;dashPattern=8 8;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1352" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="save-error" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Save to DB with error code &amp;amp; description" vertex="1">
+          <mxGeometry height="50" width="120" x="1292" y="499" as="geometry" />
+        </mxCell>
+        <mxCell id="e7a" edge="1" parent="sw-cron" source="save-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="more-records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7b" edge="1" parent="sw-cron" source="save-error" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="more-records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="more-records" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="More records?" vertex="1">
+          <mxGeometry height="80" width="80" x="1452" y="444" as="geometry" />
+        </mxCell>
+        <mxCell id="e7-yes" edge="1" parent="sw-cron" source="more-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="for-each" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1492" y="559" />
+              <mxPoint x="1012" y="559" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="more-batches" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="More batches?" vertex="1">
+          <mxGeometry height="80" width="80" x="1452" y="619" as="geometry" />
+        </mxCell>
+        <mxCell id="e8-yes" edge="1" parent="sw-cron" source="more-batches" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="prep-batch" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1492" y="719" />
+              <mxPoint x="282" y="719" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db-insert-box" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Table: ocms_offence_avss&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;INSERT INTO ocms_offence_avss&lt;/div&gt;&lt;div&gt;(batch_date, offence_no, offence_date, offence_time,&lt;/div&gt;&lt;div&gt;&amp;nbsp;offence_code, location, vehicle_no, vehicle_type,&lt;/div&gt;&lt;div&gt;&amp;nbsp;violation_status, vhub_api_status_code,&lt;/div&gt;&lt;div&gt;&amp;nbsp;vhub_api_error_code, vhub_api_error_description)&lt;/div&gt;&lt;div&gt;VALUES (...)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="380" x="1162" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edb1" edge="1" parent="sw-cron" source="save-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="db-insert-box">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1350" y="309" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db-fields" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Key Fields:&lt;/b&gt;&lt;div&gt;- batch_date: Date batch was generated&lt;/div&gt;&lt;div&gt;- vhub_api_status_code: 0=Success, 1=Error&lt;/div&gt;&lt;div&gt;- vhub_api_error_code: Error code from vHub&lt;/div&gt;&lt;div&gt;- vhub_api_error_description: Error details&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="280" x="862" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-vhub" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="External System (vHub)" vertex="1">
+          <mxGeometry height="500" width="600" x="1680" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="vhub-receive" parent="sw-vhub" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Receive API Request" vertex="1">
+          <mxGeometry height="60" width="120" x="60" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="vhub-process" parent="sw-vhub" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Process &amp;amp; validate records" vertex="1">
+          <mxGeometry height="60" width="120" x="60" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="vhub-respond" parent="sw-vhub" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return response per record" vertex="1">
+          <mxGeometry height="60" width="120" x="60" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="evh1" edge="1" parent="sw-vhub" source="vhub-receive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vhub-process">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evh2" edge="1" parent="sw-vhub" source="vhub-process" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vhub-respond">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="api-req" parent="sw-vhub" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;API Request Payload:&lt;/b&gt;&lt;div&gt;ViolationNo, OffenceDateTime,&lt;/div&gt;&lt;div&gt;OffenceCode, Location, VehicleNo,&lt;/div&gt;&lt;div&gt;VehicleType (B/M/C),&lt;/div&gt;&lt;div&gt;CompositionAmount, AdminFee,&lt;/div&gt;&lt;div&gt;TotalAmount, ViolationStatus (O/S/C)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="220" x="220" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="api-resp" parent="sw-vhub" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;API Response per record:&lt;/b&gt;&lt;div&gt;- code: 0 (Success) / 1 (Error)&lt;/div&gt;&lt;div&gt;- errorCode: E_REC_001/002/003&lt;/div&gt;&lt;div&gt;- errorDesc: Error description&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="220" x="220" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="error-codes" parent="sw-vhub" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;fontStyle=2" value="&lt;b&gt;Error Codes from vHub:&lt;/b&gt;&lt;div&gt;- E_REC_001: Exceed Field Limit&lt;/div&gt;&lt;div&gt;- E_REC_002: Invalid Format&lt;/div&gt;&lt;div&gt;- E_REC_003: Missing Required Field&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="220" x="220" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="e7-no" edge="1" parent="1" source="more-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="more-batches" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="vhub-sftp" name="7_vHub_SFTP_Flow">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="680" width="1400" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;vHub Violation Case Create/Update SFTP Flow&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="400" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sftp-spec" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;vHub SFTP Specification:&lt;/b&gt;&lt;div&gt;- Format: XML&lt;/div&gt;&lt;div&gt;- Frequency: Daily&lt;/div&gt;&lt;div&gt;- File Name: URA_VHUB_VIOLATION_YYYYMMDD_HHMMSS.xml&lt;/div&gt;&lt;div&gt;- Reference: vHub External Agency Interface&lt;/div&gt;&lt;div&gt;&amp;nbsp; Requirement Specifications v1.3&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="340" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="40" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="prep-lists">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="prep-lists" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Prepare Settled, Cancelled, Outstanding lists&lt;div&gt;(Same logic as API flow)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="200" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="prep-lists" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gen-xml">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gen-xml" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate XML file with violation records" vertex="1">
+          <mxGeometry height="60" width="140" x="420" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="sw-cron" source="gen-xml" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="upload-azure">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="upload-azure" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Upload file to Azure Blob Storage" vertex="1">
+          <mxGeometry height="60" width="140" x="620" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="upload-azure" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="azure-success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="azure-success" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Upload success?" vertex="1">
+          <mxGeometry height="80" width="100" x="820" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-no" edge="1" parent="sw-cron" source="azure-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="retry-azure" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="retry-azure" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retry 2x" vertex="1">
+          <mxGeometry height="50" width="60" x="840" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-yes" edge="1" parent="sw-cron" source="azure-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="upload-sftp" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="upload-sftp" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Upload file to vHub SFTP server" vertex="1">
+          <mxGeometry height="60" width="140" x="980" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="sw-cron" source="upload-sftp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="sftp-success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sftp-success" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="SFTP success?" vertex="1">
+          <mxGeometry height="80" width="100" x="1180" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e5-no" edge="1" parent="sw-cron" source="sftp-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="retry-sftp" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="retry-sftp" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" value="Retry 2x, then send error email" vertex="1">
+          <mxGeometry height="50" width="140" x="1160" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="e5-yes" edge="1" parent="sw-cron" source="sftp-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="save-db" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1230" y="160" />
+              <mxPoint x="1330" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Hk7Xtbm4BaBYcsxanvfZ-2" edge="1" parent="sw-cron" source="save-db" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashed=1;dashPattern=8 8;" target="Hk7Xtbm4BaBYcsxanvfZ-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="save-db" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Save results to ocms_offence_avss_sftp" vertex="1">
+          <mxGeometry height="50" width="160" x="40" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="Hk7Xtbm4BaBYcsxanvfZ-1" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Table: ocms_offence_avss&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;INSERT INTO ocms_offence_avss&lt;/div&gt;&lt;div&gt;(batch_date, offence_no, offence_date, offence_time,&lt;/div&gt;&lt;div&gt;&amp;nbsp;offence_code, location, vehicle_no, vehicle_type,&lt;/div&gt;&lt;div&gt;&amp;nbsp;violation_status, vhub_api_status_code,&lt;/div&gt;&lt;div&gt;&amp;nbsp;vhub_api_error_code, vhub_api_error_description)&lt;/div&gt;&lt;div&gt;VALUES (...)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="380" x="20" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-azure" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Azure Blob Storage" vertex="1">
+          <mxGeometry height="450" width="300" x="1480" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="azure-store" parent="sw-azure" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Store XML file" vertex="1">
+          <mxGeometry height="60" width="120" x="60" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-sftp" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="vHub SFTP Server" vertex="1">
+          <mxGeometry height="450" width="300" x="1820" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sftp-receive" parent="sw-sftp" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Receive XML file" vertex="1">
+          <mxGeometry height="60" width="120" x="60" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="sftp-process" parent="sw-sftp" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Process records" vertex="1">
+          <mxGeometry height="60" width="120" x="60" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="sftp-ack" parent="sw-sftp" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate ACK file" vertex="1">
+          <mxGeometry height="60" width="120" x="60" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="es1" edge="1" parent="sw-sftp" source="sftp-receive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="sftp-process">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="es2" edge="1" parent="sw-sftp" source="sftp-process" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="sftp-ack">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="repccs-listed" name="8_REPCCS_Listed_Vehicles">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="640" width="1400" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Gen REP Listed Vehicle CRON Flow&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="350" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="repccs-spec" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;REPCCS SFTP Specification:&lt;/b&gt;&lt;div&gt;- Format: CSV/TXT&lt;/div&gt;&lt;div&gt;- Frequency: Daily&lt;/div&gt;&lt;div&gt;- Reference: REPCCS Interfaces to Other&lt;/div&gt;&lt;div&gt;&amp;nbsp; URA System(s) v2.0&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="280" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="40" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="get-for">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="get-for" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Get FOR param value" vertex="1">
+          <mxGeometry height="60" width="120" x="200" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="get-for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-listed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-listed" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query VON for listed vehicles" vertex="1">
+          <mxGeometry height="60" width="140" x="380" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="sw-cron" source="query-listed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gen-file">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gen-file" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate Listed Vehicle file" vertex="1">
+          <mxGeometry height="60" width="140" x="580" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="file-format" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;File Fields:&lt;/b&gt;&lt;div&gt;- VEHICLE_NO&lt;/div&gt;&lt;div&gt;- OFFENCE_DATE&lt;/div&gt;&lt;div&gt;- OFFENCE_CODE&lt;/div&gt;&lt;div&gt;- LOCATION (pp_code)&lt;/div&gt;&lt;div&gt;- AMOUNT&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="140" x="740" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="e3a" edge="1" parent="sw-cron" source="gen-file" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="file-format">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="gen-file" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="upload-azure">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="170" />
+              <mxPoint x="990" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="upload-azure" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Upload to Azure Blob Storage" vertex="1">
+          <mxGeometry height="60" width="140" x="940" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="sw-cron" source="upload-azure" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="upload-sftp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="upload-sftp" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Upload to REPCCS SFTP server" vertex="1">
+          <mxGeometry height="60" width="140" x="1140" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="sw-cron" source="upload-sftp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="sftp-success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sftp-success" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="SFTP success?" vertex="1">
+          <mxGeometry height="80" width="100" x="1160" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-no" edge="1" parent="sw-cron" source="sftp-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="send-error" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="send-error" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" value="Send interfacing error email" vertex="1">
+          <mxGeometry height="50" width="120" x="980" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-repccs" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="REPCCS SFTP Server" vertex="1">
+          <mxGeometry height="450" width="300" x="1480" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="repccs-receive" parent="sw-repccs" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Receive Listed Vehicle file" vertex="1">
+          <mxGeometry height="60" width="140" x="60" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="repccs-process" parent="sw-repccs" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Process for car park enforcement" vertex="1">
+          <mxGeometry height="60" width="140" x="60" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="er1" edge="1" parent="sw-repccs" source="repccs-receive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="repccs-process">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-box" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT vehicle_no, offence_date_and_time,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;offence_rule, pp_code, composition_amount&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE suspension_type = &#39;PS&#39;&lt;/div&gt;&lt;div&gt;AND epr_reason_of_suspension = &#39;FOR&#39;&lt;/div&gt;&lt;div&gt;AND amount_paid = 0&lt;/div&gt;&lt;div&gt;AND notice_date_and_time &amp;lt;= CURRENT_DATE - &amp;lt;FOR&amp;gt; days&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="360" x="310" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="e2a" edge="1" parent="1" source="query-listed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="query-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ces-eht" name="9_CES_EHT_Tagged_Vehicles">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="520" width="1520" x="41" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Gen CES Tagged Vehicle List CRON Flow&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="350" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ces-spec" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CES EHT SFTP Specification:&lt;/b&gt;&lt;div&gt;- Format: CSV/TXT&lt;/div&gt;&lt;div&gt;- Frequency: Daily&lt;/div&gt;&lt;div&gt;- Purpose: Certis enforcement&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="250" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="40" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="get-for">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="get-for" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Get FOR param value" vertex="1">
+          <mxGeometry height="60" width="120" x="200" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="get-for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-tagged">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-tagged" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query VON for tagged vehicles" vertex="1">
+          <mxGeometry height="60" width="140" x="380" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="query-box" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT vehicle_no, offence_date_and_time,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;offence_rule, composition_amount&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE suspension_type = &#39;PS&#39;&lt;/div&gt;&lt;div&gt;AND epr_reason_of_suspension = &#39;FOR&#39;&lt;/div&gt;&lt;div&gt;AND amount_paid = 0&lt;/div&gt;&lt;div&gt;AND notice_date_and_time &amp;lt;= CURRENT_DATE - &amp;lt;FOR&amp;gt; days&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="360" x="270" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e2a" edge="1" parent="sw-cron" source="query-tagged" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="query-box">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="sw-cron" source="query-tagged" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="gen-file">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gen-file" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate Tagged Vehicle file" vertex="1">
+          <mxGeometry height="60" width="140" x="580" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="file-format" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;File Fields:&lt;/b&gt;&lt;div&gt;- VEHICLE_NO&lt;/div&gt;&lt;div&gt;- OFFENCE_DATE&lt;/div&gt;&lt;div&gt;- OFFENCE_CODE&lt;/div&gt;&lt;div&gt;- AMOUNT&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="140" x="770" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="e3a" edge="1" parent="sw-cron" source="gen-file" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="file-format">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="gen-file" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="upload-azure">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="160" />
+              <mxPoint x="990" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="upload-azure" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Upload to Azure Blob Storage" vertex="1">
+          <mxGeometry height="60" width="140" x="1077" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="sw-cron" source="upload-azure" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="upload-sftp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="upload-sftp" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Upload to CES EHT SFTP server" vertex="1">
+          <mxGeometry height="60" width="140" x="1277" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="sw-cron" source="upload-sftp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="sftp-success">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sftp-success" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="SFTP success?" vertex="1">
+          <mxGeometry height="80" width="100" x="1297" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e6-no" edge="1" parent="sw-cron" source="sftp-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="send-error" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="send-error" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" value="Send interfacing error email" vertex="1">
+          <mxGeometry height="50" width="120" x="1117" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-ces" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="CES EHT SFTP Server" vertex="1">
+          <mxGeometry height="450" width="300" x="1710" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ces-receive" parent="sw-ces" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Receive Tagged Vehicle file" vertex="1">
+          <mxGeometry height="60" width="140" x="60" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="ces-process" parent="sw-ces" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Process for Certis enforcement" vertex="1">
+          <mxGeometry height="60" width="140" x="60" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="ec1" edge="1" parent="sw-ces" source="ces-receive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ces-process">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="admin-fee" name="10_Admin_Fee_Processing">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sw-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="ocmsadmincron (Intranet Cron Tier)" vertex="1">
+          <mxGeometry height="630" width="2200" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="sw-cron" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size:16px&quot;&gt;Admin Fee Processing CRON Flow&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="300" x="20" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-spec" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;Admin Fee Parameters:&lt;/b&gt;&lt;div&gt;- FOD: Days before adding admin fee&lt;/div&gt;&lt;div&gt;- AFO: Admin fee amount&lt;/div&gt;&lt;div&gt;- Source: ocms_parameter (Intranet)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="260" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="40" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="sw-cron" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="get-fod">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="get-fod" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Get FOD param value (days)" vertex="1">
+          <mxGeometry height="60" width="140" x="200" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="fod-query" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_parameter&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT param_value&lt;/div&gt;&lt;div&gt;FROM ocms_parameter&lt;/div&gt;&lt;div&gt;WHERE param_id = &#39;FOD&#39;&lt;/div&gt;&lt;div&gt;AND param_code = &#39;NPA&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="200" x="170" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="e1a" edge="1" parent="sw-cron" source="get-fod" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="fod-query">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="sw-cron" source="get-fod" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="get-afo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="get-afo" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Get AFO param value (amount)" vertex="1">
+          <mxGeometry height="60" width="140" x="530" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="afo-query" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_parameter&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT param_value&lt;/div&gt;&lt;div&gt;FROM ocms_parameter&lt;/div&gt;&lt;div&gt;WHERE param_id = &#39;AFO&#39;&lt;/div&gt;&lt;div&gt;AND param_code = &#39;NPA&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="120" width="200" x="500" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="e2a" edge="1" parent="sw-cron" source="get-afo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="afo-query">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="sw-cron" source="get-afo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="query-eligible">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-eligible" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query VON for eligible notices" vertex="1">
+          <mxGeometry height="60" width="140" x="930" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="eligible-query" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Query: ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;SELECT offence_no, composition_amount, admin_fee&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;F&#39;&lt;/div&gt;&lt;div&gt;AND suspension_type = &#39;PS&#39;&lt;/div&gt;&lt;div&gt;AND epr_reason_of_suspension = &#39;FOR&#39;&lt;/div&gt;&lt;div&gt;AND amount_paid = 0&lt;/div&gt;&lt;div&gt;AND notice_date_and_time &amp;lt;= CURRENT_DATE - &amp;lt;FOD&amp;gt; days&lt;/div&gt;&lt;div&gt;AND admin_fee = 0 (not yet applied)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="200" width="380" x="810" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="e3a" edge="1" parent="sw-cron" source="query-eligible" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="eligible-query">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="sw-cron" source="query-eligible" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="any-records">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="any-records" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any records?" vertex="1">
+          <mxGeometry height="80" width="100" x="1261" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-no" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end-no" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="end-no" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End&lt;div&gt;(No records)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="60" x="1281" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="e4-yes" edge="1" parent="sw-cron" source="any-records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="batch-update" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-1wo9Qs8ghTfZq5CKbwM-1" edge="1" parent="sw-cron" source="batch-update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="_tGq3tfj5r9C7wwF-_mI-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="batch-update" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Batch update notices: Add AFO to composition" vertex="1">
+          <mxGeometry height="60" width="160" x="1488" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="formula" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Admin Fee Calculation:&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;new_composition = composition_amount + AFO&lt;/div&gt;&lt;div&gt;admin_fee = AFO&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;Example: If AFO = $10&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;Original: $50, New: $60&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="220" x="1458" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="e5a" edge="1" parent="sw-cron" source="batch-update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="formula">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="sw-cron" source="batch-update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="prep-vhub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="prep-vhub" parent="sw-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Updated notices will be sent to vHub as Outstanding in next vHub API run" vertex="1">
+          <mxGeometry height="60" width="180" x="1750" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="note" parent="sw-cron" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=2" value="&lt;i&gt;Note: Updated notices with new composition amount will be picked up by vHub API CRON job and sent as Outstanding (O) status with updated amounts.&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="280" x="1750" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="sw-cron" source="prep-vhub" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="2010" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="_tGq3tfj5r9C7wwF-_mI-1" parent="sw-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Table: ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;UPDATE ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;SET composition_amount = composition_amount + &amp;lt;AFO&amp;gt;,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; admin_fee = &amp;lt;AFO&amp;gt;,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; upd_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;/div&gt;&lt;div&gt;WHERE offence_no IN (...)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="340" x="1398" y="310" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
