@@ -177,6 +177,41 @@ Use this to verify compliance with project standards.
 
 ---
 
+## Programmer Self-Sufficiency Review
+
+### 5W1H Test (Can programmer implement without asking tech writer?)
+- [ ] **WHAT**: Feature/API/process clearly described
+- [ ] **WHY**: Business context explained (purpose of the feature)
+- [ ] **WHERE**: Integration points identified (which systems/modules)
+- [ ] **WHEN**: Trigger conditions specified (what starts this process)
+- [ ] **WHO**: User roles and system actors identified
+- [ ] **HOW**: Technical implementation details provided
+
+### Implementation Completeness
+- [ ] **What to build**: Clear feature/function description provided
+- [ ] **How to build**: Technical approach and patterns documented
+- [ ] **What data**: All fields have data types, sources, constraints
+- [ ] **What validations**: All business rules with clear conditions
+- [ ] **What errors**: All error scenarios with codes and messages
+- [ ] **What flow**: Complete flow from trigger to end state
+- [ ] **What edge cases**: Boundary conditions and special scenarios
+
+### Programmer Questions Prevention
+Ask yourself: "If I'm a programmer, will I need to ask about..."
+- [ ] Which table to insert/update? → Table names documented
+- [ ] What is the field data type? → Data types specified
+- [ ] What is the max length? → Field lengths documented
+- [ ] Is this field nullable? → Nullable/required specified
+- [ ] What is the default value? → Defaults documented
+- [ ] What triggers this process? → Trigger clearly stated
+- [ ] What happens if X fails? → Error handling documented
+- [ ] What is the sequence/order? → Step sequence numbered
+- [ ] Which API to call? → API endpoints listed
+- [ ] What payload to send? → Request payload shown
+- [ ] What response to expect? → Response structure shown
+
+---
+
 ## Common Issues to Check
 
 | Issue | Check For |
@@ -205,6 +240,8 @@ Use this to verify compliance with project standards.
 | **Missing data source** | Data shown without source attribution |
 | **Data dictionary mismatch** | Table/column names don't match data dictionary |
 | **Missing in data dictionary** | New tables/columns not documented in data dictionary |
+| **Not self-sufficient** | Programmer needs to ask tech writer for missing info |
+| **Missing 5W1H** | What/Why/Where/When/Who/How not fully answered |
 
 ---
 
@@ -229,6 +266,8 @@ When reviewing, ask these questions if documentation is unclear:
 | **Developer Usability** | "Can this tech doc help developer? Is the implementation guidance clear?" |
 | **Data Source** | "Where does this data come from? What is the source of this field?" |
 | **Data Dictionary** | "Does this table/column exist in the data dictionary? Is the data type correct?" |
+| **Programmer Self-Sufficiency** | "Can programmer implement this without asking tech writer? What info is missing?" |
+| **5W1H Completeness** | "What triggers this? Who uses it? Where does it integrate? How to implement?" |
 
 ---
 
