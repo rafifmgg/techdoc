@@ -1,0 +1,678 @@
+<mxfile host="app.diagrams.net" agent="Claude Code" version="1.0">
+  <diagram name="2.4.4_Manual_OIC_Review" id="oic-review-001">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4500" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-1" value="Manual OIC Review" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="swim-fe" value="Staff Portal" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="20" y="50" width="4400" height="550" as="geometry" />
+        </mxCell>
+        <mxCell id="start-1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim-fe">
+          <mxGeometry x="30" y="130" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" value="Staff portal view pending submission dashboard" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-fe">
+          <mxGeometry x="180" y="115" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" value="Select submission to review" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-fe">
+          <mxGeometry x="330" y="115" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" value="Display review form with submission details" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-fe">
+          <mxGeometry x="630" y="115" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" value="View supporting documents" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-fe">
+          <mxGeometry x="780" y="115" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p5" value="OIC select decision (Approve Hirer / Approve Driver / Reject)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-fe">
+          <mxGeometry x="930" y="110" width="110" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="p6" value="Enter remarks (optional)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-fe">
+          <mxGeometry x="1090" y="115" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p7" value="Select notification (Email/SMS)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-fe">
+          <mxGeometry x="1240" y="115" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p8" value="Submit decision" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-fe">
+          <mxGeometry x="1390" y="115" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p-success" value="Display success message" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-fe">
+          <mxGeometry x="4100" y="115" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="end-1" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim-fe">
+          <mxGeometry x="4250" y="130" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="api-1" value="POST /furnish/pending&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;$skip&quot;: 0,&lt;/div&gt;&lt;div&gt;  &quot;$limit&quot;: 10&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-fe">
+          <mxGeometry x="160" y="280" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="api-2" value="POST /furnish/detail&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;txnNo&quot;: &quot;FH202601070001&quot;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-fe">
+          <mxGeometry x="310" y="280" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="api-3" value="POST /furnish/approve&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;txnNo&quot;: &quot;FH202601070001&quot;,&lt;/div&gt;&lt;div&gt;  &quot;decision&quot;: &quot;APPROVE_HIRER&quot;,&lt;/div&gt;&lt;div&gt;  &quot;remarks&quot;: &quot;...&quot;,&lt;/div&gt;&lt;div&gt;  &quot;sendEmail&quot;: true,&lt;/div&gt;&lt;div&gt;  &quot;sendSms&quot;: false&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-fe">
+          <mxGeometry x="1370" y="280" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="resp-1" value="&lt;b&gt;Response (List):&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;total&quot;: 100,&lt;/div&gt;&lt;div&gt;  &quot;limit&quot;: 10,&lt;/div&gt;&lt;div&gt;  &quot;skip&quot;: 0,&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: [...]&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-fe">
+          <mxGeometry x="160" y="400" width="140" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="resp-2" value="&lt;b&gt;Response (Success):&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;Success&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-fe">
+          <mxGeometry x="1590" y="280" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="resp-3" value="&lt;b&gt;Response (Error):&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-4001&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;Validation failed&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-fe">
+          <mxGeometry x="1590" y="430" width="180" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-fe" source="start-1" target="p1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-fe" source="p1" target="p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-fe" source="p2" target="p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-fe" source="p3" target="p4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-fe" source="p4" target="p5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-fe" source="p5" target="p6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-fe" source="p6" target="p7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-fe" source="p7" target="p8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-success" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-fe" source="p-success" target="end-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-api1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim-fe" source="p1" target="api-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-api2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim-fe" source="p2" target="api-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e-api3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim-fe" source="p8" target="api-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="swim-be" value="OCMS Admin API Intranet" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="600" width="4400" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p1" value="Validate request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="1550" y="80" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-d1" value="valid ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="swim-be">
+          <mxGeometry x="1700" y="60" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p2" value="Check submission status = P" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="1860" y="80" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-d2" value="status = P ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="swim-be">
+          <mxGeometry x="2010" y="60" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="be-d3" value="approve or reject ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="swim-be">
+          <mxGeometry x="2170" y="60" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p3" value="Update status = A" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="2380" y="30" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p4" value="Insert into ocms_offence_notice_owner_driver" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="2530" y="30" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p5" value="Set offender_indicator = Y" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="2700" y="30" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p6" value="Update processing stage" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="2850" y="30" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p7" value="Revive TS-PDP suspension" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="3000" y="30" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p8" value="Update status = R" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="2380" y="200" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p9" value="Keep TS-PDP active" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="2530" y="200" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p10" value="Resend notice to eService" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="2680" y="200" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-d4" value="send notification ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="swim-be">
+          <mxGeometry x="3180" y="60" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p11" value="Send email/SMS notification" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="3380" y="30" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p12" value="Update Internet DB outcome" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="3530" y="80" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-d5" value="success ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="swim-be">
+          <mxGeometry x="3680" y="60" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p-retry" value="Retry x3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="3680" y="200" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p-log" value="Log error" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="3680" y="300" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="be-p13" value="Response success" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="3850" y="80" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-err1" value="Response error: validation failed" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="1700" y="200" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-err2" value="Response error: already processed" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be">
+          <mxGeometry x="2010" y="200" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p1" target="be-d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e2" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d1" target="be-p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e3" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d1" target="be-err1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p2" target="be-d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e5" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d2" target="be-d3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e6" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d2" target="be-err2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e7" value="approve" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d3" target="be-p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e8" value="reject" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d3" target="be-p8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p3" target="be-p4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p4" target="be-p5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p5" target="be-p6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p6" target="be-p7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p7" target="be-d4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p8" target="be-p9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p9" target="be-p10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p10" target="be-d4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2730" y="320" />
+              <mxPoint x="3250" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="be-e17" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d4" target="be-p11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e18" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d4" target="be-p12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p11" target="be-p12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p12" target="be-d5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e21" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d5" target="be-p13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e22" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-d5" target="be-p-retry">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p-retry" target="be-p-log">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be" source="be-p-log" target="be-p13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3900" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db-1" value="&lt;b&gt;Intranet&lt;/b&gt;&lt;div&gt;ocms_furnish_application&lt;/div&gt;&lt;div&gt;SELECT txn_no, notice_no,&lt;/div&gt;&lt;div&gt;furnish_id_no, status, remarks&lt;/div&gt;&lt;div&gt;WHERE status = 'P'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-be">
+          <mxGeometry x="1830" y="400" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="db-2" value="&lt;b&gt;Intranet&lt;/b&gt;&lt;div&gt;ocms_furnish_application&lt;/div&gt;&lt;div&gt;UPDATE SET status = ?,&lt;/div&gt;&lt;div&gt;remarks = ?,&lt;/div&gt;&lt;div&gt;upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-be">
+          <mxGeometry x="2350" y="400" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="db-3" value="&lt;b&gt;Intranet&lt;/b&gt;&lt;div&gt;ocms_offence_notice_owner_driver&lt;/div&gt;&lt;div&gt;INSERT (id_no, name, id_type,&lt;/div&gt;&lt;div&gt;owner_driver_indicator,&lt;/div&gt;&lt;div&gt;offender_indicator = 'Y',&lt;/div&gt;&lt;div&gt;cre_user_id = 'ocmsiz_app_conn')&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-be">
+          <mxGeometry x="2550" y="400" width="220" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="db-4" value="&lt;b&gt;Internet&lt;/b&gt;&lt;div&gt;eocms_furnish_application&lt;/div&gt;&lt;div&gt;UPDATE SET status = ?,&lt;/div&gt;&lt;div&gt;remarks = ?,&lt;/div&gt;&lt;div&gt;upd_user_id = 'ocmsez_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-be">
+          <mxGeometry x="3500" y="400" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e-db1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim-be" source="be-p2" target="db-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e-db2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim-be" source="be-p3" target="db-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e-db3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim-be" source="be-p4" target="db-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="be-e-db4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim-be" source="be-p12" target="db-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note-stage" value="&lt;b&gt;Processing Stage Update&lt;/b&gt;&lt;div&gt;For Hirer: RD1 → RD2&lt;/div&gt;&lt;div&gt;For Driver: Change to DN&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-be">
+          <mxGeometry x="2820" y="130" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e-cross-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="be-p13" target="p-success">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3920" y="500" />
+              <mxPoint x="4170" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e-cross-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p8" target="be-p1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1460" y="500" />
+              <mxPoint x="1600" y="500" />
+              <mxPoint x="1600" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="2.4.5_Update_Internet_Outcome" id="update-outcome-001">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title-2" value="Update Internet Outcome" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="swim-be-2" value="OCMS Admin API Intranet" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="50" width="1700" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="30" y="200" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-p1" value="Receive outcome data" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="180" y="190" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-p2" value="Connect to Internet DB" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="330" y="190" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-d1" value="success ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="480" y="180" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-p3" value="Retry x3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="480" y="320" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-p4" value="Update eocms_furnish_application" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="630" y="190" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-d2" value="success ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="800" y="180" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-p5" value="Retry x3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="800" y="320" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-p6" value="Commit transaction" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="950" y="190" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-p7" value="Log error" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="640" y="400" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-p8" value="Return success" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="1100" y="190" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-p9" value="Return error" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="1100" y="320" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="1250" y="200" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-start" target="uio-p1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-p1" target="uio-p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-p2" target="uio-d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e4" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-d1" target="uio-p4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e5" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-d1" target="uio-p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-p3" target="uio-p7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-p4" target="uio-d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e8" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-d2" target="uio-p6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e9" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-d2" target="uio-p5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-p5" target="uio-p7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-p6" target="uio-p8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-p7" target="uio-p9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-p8" target="uio-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim-be-2" source="uio-p9" target="uio-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-db" value="&lt;b&gt;Internet DB&lt;/b&gt;&lt;div&gt;eocms_furnish_application&lt;/div&gt;&lt;div&gt;UPDATE SET&lt;/div&gt;&lt;div&gt;  status = ? (A or R)&lt;/div&gt;&lt;div&gt;  reason_for_review = ?&lt;/div&gt;&lt;div&gt;  remarks = ?&lt;/div&gt;&lt;div&gt;  upd_date = NOW()&lt;/div&gt;&lt;div&gt;  upd_user_id = ?&lt;/div&gt;&lt;div&gt;WHERE txn_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="1400" y="140" width="200" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="uio-note" value="&lt;b&gt;Note:&lt;/b&gt; This process syncs approval/rejection outcome from Intranet to Internet DB so motorists can view results in eService Portal" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim-be-2">
+          <mxGeometry x="1400" y="340" width="200" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="2.4.2_Sync_Furnish_Cron" id="sync-furnished-001">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3500" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sf-title" value="Sync Furnished Submissions (Cron Job)" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="400" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-schedule" value="&lt;b&gt;Schedule:&lt;/b&gt; Every 5 minutes&lt;div&gt;&lt;b&gt;Component:&lt;/b&gt; ocmsadmincron&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="500" y="10" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-swim-cron" value="OCMS Admin Cron (Intranet)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="60" width="3400" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-start" value="Cron Trigger" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="30" y="160" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p1" value="Check ShedLock for existing job" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="180" y="150" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-d1" value="job locked?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="330" y="145" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p2" value="Acquire job lock" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="480" y="150" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p3" value="Query Internet DB for unsynced submissions" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="630" y="150" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-d2" value="records found?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="800" y="145" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p4" value="For each submission: save to Intranet DB" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="950" y="150" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p5" value="Mark submission as synced in Internet DB" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="1120" y="150" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p6" value="Sync attachment metadata to Intranet" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="1290" y="150" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p7" value="Process Auto Approval rules" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="1460" y="150" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-d3" value="errors?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="1630" y="145" width="100" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p8" value="Send error notification email" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="1780" y="50" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p9" value="Log job status to ocms_batch_job" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="1950" y="150" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-p10" value="Release job lock" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="2120" y="150" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="2270" y="160" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-abort" value="Skip (job already running)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="330" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-skip" value="No records to process" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="sf-swim-cron">
+          <mxGeometry x="800" y="280" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-start" target="sf-p1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p1" target="sf-d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e3" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-d1" target="sf-p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e4" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-d1" target="sf-abort">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p2" target="sf-p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p3" target="sf-d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e7" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-d2" target="sf-p4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e8" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-d2" target="sf-skip">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p4" target="sf-p5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p5" target="sf-p6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p6" target="sf-p7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p7" target="sf-d3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e13" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-d3" target="sf-p8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e14" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-d3" target="sf-p9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p8" target="sf-p9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p9" target="sf-p10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-p10" target="sf-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-e18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-abort" target="sf-end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="360" />
+              <mxPoint x="2320" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sf-e19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="sf-swim-cron" source="sf-skip" target="sf-p9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="850" y="360" />
+              <mxPoint x="2010" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sf-db1" value="&lt;b&gt;Intranet DB&lt;/b&gt;&lt;div&gt;ocms_shedlock&lt;/div&gt;&lt;div&gt;SELECT name, lock_until, locked_at, locked_by&lt;/div&gt;&lt;div&gt;WHERE name = 'sync_furnish_submission'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="160" y="520" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-db2" value="&lt;b&gt;Internet DB&lt;/b&gt;&lt;div&gt;eocms_furnish_application&lt;/div&gt;&lt;div&gt;SELECT txn_no, notice_no, vehicle_no,&lt;/div&gt;&lt;div&gt;furnish_name, furnish_id_no, status&lt;/div&gt;&lt;div&gt;WHERE sync_flag = 'N' AND status = 'P'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="620" y="520" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-db3" value="&lt;b&gt;Intranet DB&lt;/b&gt;&lt;div&gt;ocms_furnish_application&lt;/div&gt;&lt;div&gt;INSERT furnished submission&lt;/div&gt;&lt;div&gt;ocms_furnish_application_doc&lt;/div&gt;&lt;div&gt;INSERT attachment metadata&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="960" y="520" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-db4" value="&lt;b&gt;Internet DB&lt;/b&gt;&lt;div&gt;eocms_furnish_application&lt;/div&gt;&lt;div&gt;UPDATE SET sync_flag = 'Y'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="640" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sf-db5" value="&lt;b&gt;Intranet DB&lt;/b&gt;&lt;div&gt;ocms_batch_job&lt;/div&gt;&lt;div&gt;INSERT job execution status&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="520" width="180" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="2.4.3_Auto_Approval_Review" id="auto-approval-001">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3200" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aa-title" value="Auto Approval Process" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=18;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="300" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-note" value="&lt;b&gt;Triggered by:&lt;/b&gt; Sync Furnished Cron&lt;div&gt;&lt;b&gt;Component:&lt;/b&gt; ocmsadmincron&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="10" width="220" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-swim-cron" value="OCMS Admin Cron (Intranet)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="60" width="3100" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="30" y="200" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p1" value="Get synced submissions pending review" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="180" y="190" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p2" value="For each submission" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="350" y="190" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-d1" value="Same ID type &amp; ID No?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="500" y="180" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-d2" value="Furnished same ID within 30 days?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="680" y="180" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-d3" value="Processing stage RD1?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="860" y="180" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p3" value="Mark for AUTO APPROVAL" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="1040" y="190" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p4" value="Mark for MANUAL OIC REVIEW" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="700" y="340" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p5" value="Update status = A in Intranet" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="1210" y="190" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p6" value="Insert into ocms_offence_notice_owner_driver" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="1380" y="190" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p7" value="Update processing stage" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="1560" y="190" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p8" value="Update Internet DB outcome" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="1730" y="190" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p9" value="Send OIC notification email" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="1040" y="340" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-p10" value="Aggregate results" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="1900" y="190" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="aa-swim-cron">
+          <mxGeometry x="2050" y="200" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-start" target="aa-p1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p1" target="aa-p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p2" target="aa-d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e4" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-d1" target="aa-d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e5" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-d1" target="aa-p4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e6" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-d2" target="aa-d3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e7" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-d2" target="aa-p4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e8" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-d3" target="aa-p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e9" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-d3" target="aa-p4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p3" target="aa-p5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p5" target="aa-p6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p6" target="aa-p7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p7" target="aa-p8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p8" target="aa-p10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p4" target="aa-p9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p9" target="aa-p10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1100" y="450" />
+              <mxPoint x="1950" y="450" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aa-e17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="aa-swim-cron" source="aa-p10" target="aa-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-rules" value="&lt;b&gt;Auto Approval Checks (8 checks):&lt;/b&gt;&lt;div&gt;AA-001: No Permanent Suspension (PS)&lt;/div&gt;&lt;div&gt;AA-002: Furnished ID NOT in HST database&lt;/div&gt;&lt;div&gt;AA-003: ID type NOT FIN/Passport&lt;/div&gt;&lt;div&gt;AA-004: Notice at furnishable stage&lt;/div&gt;&lt;div&gt;AA-005: No prior submissions for notice&lt;/div&gt;&lt;div&gt;AA-006: No existing H/D particulars&lt;/div&gt;&lt;div&gt;AA-007: Furnished ID NOT in H/D details&lt;/div&gt;&lt;div&gt;AA-008: Owner IS current offender&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;ALL PASS:&lt;/b&gt; Auto Approve&lt;/div&gt;&lt;div&gt;&lt;b&gt;ANY FAIL:&lt;/b&gt; Route to Manual OIC Review&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;Refer to plan_condition.md Section 4&lt;/i&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="2200" y="80" width="280" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-db1" value="&lt;b&gt;Intranet DB&lt;/b&gt;&lt;div&gt;ocms_furnish_application&lt;/div&gt;&lt;div&gt;SELECT txn_no, notice_no, furnish_id_type,&lt;/div&gt;&lt;div&gt;furnish_id_no, owner_driver_indicator, status&lt;/div&gt;&lt;div&gt;WHERE status = 'P' AND sync_flag = 'Y'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="170" y="620" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-db2" value="&lt;b&gt;Intranet DB&lt;/b&gt;&lt;div&gt;ocms_furnish_application&lt;/div&gt;&lt;div&gt;UPDATE SET status = 'A'&lt;/div&gt;&lt;div&gt;ocms_offence_notice_owner_driver&lt;/div&gt;&lt;div&gt;INSERT offender record&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="620" width="220" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="aa-db3" value="&lt;b&gt;Internet DB&lt;/b&gt;&lt;div&gt;eocms_furnish_application&lt;/div&gt;&lt;div&gt;UPDATE SET status = 'A'&lt;/div&gt;&lt;div&gt;outcome synced&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1720" y="620" width="200" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

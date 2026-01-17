@@ -1,0 +1,796 @@
+<mxfile host="65bd71144e">
+    <diagram id="section-2" name="2_High_Level_All_APIs">
+        <mxGraphModel dx="928" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;b&gt;CAS-OCMS-PLUS Integration: High-Level Architecture&lt;/b&gt;&lt;br&gt;All 4 APIs showing system interactions and data flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="800" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api1-title" value="&lt;b&gt;API 1: Get Payment Status (Daily)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="100" width="300" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="api1-cas" value="CAS&lt;br&gt;Cron Job" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="160" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api1-ocms" value="OCMS&lt;br&gt;Query &amp; Return" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="160" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api2-title" value="&lt;b&gt;API 2: Update Court Notices (Daily)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="260" width="300" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="api2-cas" value="CAS&lt;br&gt;Court Update" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="320" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api2-ocms" value="OCMS&lt;br&gt;Update &amp; Log" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="322.5" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api2-db" value="DB&lt;br&gt;UPDATE notice" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="430" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api3-title" value="&lt;b&gt;API 3: Refresh VIP Vehicle (Daily)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="100" width="350" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="api3-ocms" value="OCMS&lt;br&gt;Scheduled Job" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="160" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api3-cas" value="CAS&lt;br&gt;VIP Data" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="160" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api4-title" value="&lt;b&gt;API 4: Query Notice Info (Adhoc/Real-time)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="260" width="350" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="api4-plus" value="PLUS&lt;br&gt;User Query" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="320" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api4-iz" value="IZ-APIM&lt;br&gt;Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="320" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api4-ocms" value="OCMS&lt;br&gt;Query &amp; Calc" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="770" y="425" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-title" value="&lt;b&gt;Legend&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="100" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-cas" value="CAS System" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="140" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-ocms" value="OCMS Backend" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="1120" y="140" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-plus" value="PLUS System" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="180" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend-iz" value="IZ-APIM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" vertex="1">
+                    <mxGeometry x="1120" y="180" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="notes-title" value="&lt;b&gt;Key Integration Points&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="240" width="200" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="note1" value="• API 1 &amp; 2: CAS to OCMS (daily)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="280" width="300" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="note2" value="• API 3: OCMS to CAS (daily batch)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="310" width="300" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="note3" value="• API 4: PLUS to OCMS (adhoc/real-time)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="340" width="300" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="note4" value="• All use POST method" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="370" width="300" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="note5" value="• Batch Limit: Max 500 notices/request" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#CC0000;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="400" width="300" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="note6" value="• 2 new tables: ocms_vip_vehicle, ocms_court_case" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="430" width="350" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="note7" value="• EMCON: Handled manually (not in API)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontColor=#CC0000;" parent="1" vertex="1">
+                    <mxGeometry x="1000" y="460" width="350" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" value="POST /v1/ocms/cas-getPaymentStatus" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=8;" parent="1" source="api1-cas" target="api1-ocms" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" value="POST /v1/ocms/cas-updateCourtNotices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=8;" parent="1" source="api2-cas" target="api2-ocms" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;dashed=1;fontSize=9;" parent="1" source="api2-ocms" target="api2-db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="POST /v1/ocms/cas-refreshVIPVehicle" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=8;" parent="1" source="api3-ocms" target="api3-cas" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" value="POST /v1/plus-queryNoticeInfo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=8;" parent="1" source="api4-plus" target="api4-iz" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;fontSize=9;" parent="1" source="api4-iz" target="api4-ocms" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="section-3-1" name="3.1_API1_Detailed">
+        <mxGraphModel dx="516" dy="463" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2600" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;b&gt;API 1: Get Payment Status (Detailed)&lt;/b&gt;&lt;br&gt;Query only - No DB write (EMCON handled manually)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="600" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-sl" value="CAS System" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="80" width="2400" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="40" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-prepare" value="CAS prepares unpaid notice list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="180" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-api-call" value="Call OCMS API" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="340" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api-detail" value="POST /v1/ocms/cas-getPaymentStatus&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;noticeNumbers&quot;: [&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;500400058A&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;500400059B&quot;&lt;br&gt;&amp;nbsp;&amp;nbsp;]&lt;br&gt;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="540" y="50" width="260" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-receive" value="Receive Response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="2100" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="2260" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="cas-sl" source="cas-start" target="cas-prepare" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="cas-sl" source="cas-prepare" target="cas-api-call" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="cas-sl" source="cas-api-call" target="api-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e-recv" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="cas-sl" source="cas-receive" target="cas-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-sl" value="OCMS Backend" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="380" width="2400" height="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-auth" value="Check API Key" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="340" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="auth-check" value="valid ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="500" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-rate" value="Check Rate Limit" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="620" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rate-check" value="OK ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="780" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-valid" value="Validate Request Schema" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="900" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="valid-check" value="valid ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1060" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-batch" value="Check Batch Limit" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1180" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="batch-detail" value="Max 500 notices per request" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1155" y="160" width="170" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="batch-check" value="OK ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1340" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="db-query" value="Query Notice Data from DB" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1460" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="db-detail" value="SELECT notice_no, suspension_type, crs_reason_of_suspension,&lt;br&gt;epr_reason_of_suspension, payment_status, amount_payable,&lt;br&gt;amount_paid, payment_acceptance_allowed&lt;br&gt;FROM ocms_valid_offence_notice&lt;br&gt;WHERE notice_no IN (:noticeNumbers)" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1395" y="160" width="250" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-exist" value="Notice exists ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1620" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-build" value="Build Response (Map all fields)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1760" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-return" value="Return 200 OK" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1920" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="response-detail" value="Response 200 OK:&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;notices&quot;: [{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;noticeNo&quot;: &quot;500400058A&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;suspensionType&quot;: &quot;TS&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;crsReasonOfSuspension&quot;: &quot;APP&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;eprReasonOfSuspension&quot;: null,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;paymentStatus&quot;: &quot;null&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;amountPayable&quot;: 300.00,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;amountPaid&quot;: 0.00,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;paymentAcceptanceAllowed&quot;: &quot;Y&quot;&lt;br&gt;&amp;nbsp;&amp;nbsp;}]&lt;br&gt;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1840" y="160" width="280" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-401" value="Return Unauthorized&lt;br&gt;(OCMS-4001)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="470" y="300" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-429" value="Return Rate Limit&lt;br&gt;(OCMS-4029)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="750" y="300" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-400" value="Return Bad Request&lt;br&gt;(OCMS-4000)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1030" y="300" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-413" value="Return Payload Too Large&lt;br&gt;(OCMS-4013)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1310" y="300" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-404" value="Return empty" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1600" y="300" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-auth" target="auth-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="auth-check" target="ocms-rate" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="auth-check" target="err-401" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-rate" target="rate-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="rate-check" target="ocms-valid" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="rate-check" target="err-429" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-valid" target="valid-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="valid-check" target="ocms-batch" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="valid-check" target="err-400" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="ocms-batch" target="batch-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-batch" target="batch-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="batch-check" target="db-query" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="batch-check" target="err-413" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="db-query" target="db-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="db-query" target="ocms-exist" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-exist" target="ocms-build" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-exist" target="err-404" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-build" target="ocms-return" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="ocms-return" target="response-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="1" source="cas-api-call" target="ocms-auth" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="1" source="ocms-return" target="cas-receive" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="section-3-2" name="3.2_API2_Detailed">
+        <mxGraphModel dx="502" dy="451" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2800" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;b&gt;API 2: Update Court Notices (Detailed)&lt;/b&gt;&lt;br&gt;Update court notices only (dayend = &#39;Y&#39;)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="600" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-sl" value="CAS System" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="80" width="2700" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="40" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-prepare" value="CAS prepares court notice data" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="180" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-api-call" value="Call OCMS API" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="340" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api-detail" value="POST /v1/ocms/cas-updateCourtNotices&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;notices&quot;: [{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;noticeNo&quot;: &quot;500400058A&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;suspensionType&quot;: &quot;TS&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;lastProcessingStage&quot;: &quot;CSD&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;prevProcessingStage&quot;: &quot;CPC&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;nextProcessingStage&quot;: &quot;CSR&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;lastProcessingDate&quot;: &quot;2024-01-15&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;prevProcessingDate&quot;: &quot;2024-01-10&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;nextProcessingDate&quot;: &quot;2024-01-20&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;atomsFlag&quot;: &quot;Y&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;amountPayable&quot;: 300.00,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;paymentAcceptanceAllowed&quot;: &quot;Y&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;eprReasonOfSuspension&quot;: &quot;APP&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;eprDateOfSuspension&quot;: &quot;2024-01-15&quot;&lt;br&gt;&amp;nbsp;&amp;nbsp;}]&lt;br&gt;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="530" y="30" width="300" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-receive" value="Receive Response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="2400" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="2560" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="cas-sl" source="cas-start" target="cas-prepare" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="cas-sl" source="cas-prepare" target="cas-api-call" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="cas-sl" source="cas-api-call" target="api-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e-recv" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="cas-sl" source="cas-receive" target="cas-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-sl" value="OCMS Backend" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="380" width="2700" height="450" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-auth" value="Check API Key" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="340" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="auth-check" value="valid ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="500" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-valid" value="Validate Request Schema" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="750" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="valid-check" value="valid ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1060" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-batch" value="Check Batch Limit" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1180" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="batch-detail" value="Max 500 notices per request" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1155" y="160" width="170" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="batch-check" value="OK ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1340" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="db-query" value="Query Notice from DB" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1460" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="db-select-detail" value="SELECT notice_no, last_processing_stage&lt;br&gt;FROM ocms_valid_offence_notice&lt;br&gt;WHERE notice_no = :noticeNo" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1400" y="160" width="240" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-exist" value="Notice exists ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1620" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="court-check" value="last_processing_stage&lt;div&gt;!=&lt;/div&gt;&lt;div&gt;NPA,ROV,ENA,&lt;/div&gt;&lt;div&gt;RD1,RD2,&lt;span style=&quot;color: rgb(63, 63, 63); background-color: transparent;&quot;&gt;RR3&lt;/span&gt;&lt;/div&gt;&lt;div&gt;DN1,DN2,DR3&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1760" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="db-update" value="Update Notice in DB" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1900" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="db-update-detail" value="UPDATE ocms_valid_offence_notice&lt;br&gt;SET last_processing_stage = :lastProcessingStage,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;prev_processing_stage = :prevProcessingStage,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;next_processing_stage = :nextProcessingStage,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;last_processing_date = :lastProcessingDate,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;prev_processing_date = :prevProcessingDate,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;next_processing_date = :nextProcessingDate,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;atoms_flag = :atomsFlag,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;amount_payable = :amountPayable,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;payment_acceptance_allowed = :paymentAllowance,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;epr_reason_of_suspension = :eprReason,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;epr_date_of_suspension = :eprDate,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;suspension_type = :suspensionType&lt;br&gt;WHERE notice_no = :noticeNo" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1900" y="170" width="310" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-log" value="Log to App Log" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="2060" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-build" value="Build Response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="2220" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-return" value="Return 200 OK" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="2380" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="response-detail" value="Response 200 OK:&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;updatedCount&quot;: 2,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;failedCount&quot;: 0,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;notices&quot;: [{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;noticeNo&quot;: &quot;500400058A&quot;,&lt;br&gt;&lt;font style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&amp;nbsp; &amp;nbsp; &quot;appCode&quot;: &quot;OCMS-2000&quot;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;/font&gt;&lt;span style=&quot;color: rgb(63, 63, 63);&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;status&quot;: &quot;OK&quot;&lt;/span&gt;&lt;div&gt;&amp;nbsp; }, {&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;noticeNo&quot;: &quot;500400059B&quot;,&lt;br&gt;&lt;font style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&amp;nbsp; &amp;nbsp; &quot;appCode&quot;: &quot;OCMS-2000&quot;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;/font&gt;&lt;span style=&quot;color: rgb(63, 63, 63);&quot;&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;status&quot;: &quot;OK&quot;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&amp;nbsp; }]&lt;br&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="2300" y="160" width="240" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-401" value="Return Unauthorized&lt;br&gt;(OCMS-4001)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="470" y="340" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-400" value="Return Bad Request&lt;br&gt;(OCMS-4000)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1030" y="340" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-413" value="Return Payload Too Large&lt;br&gt;(OCMS-4013)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1310" y="340" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-404" value="Return empty" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1600" y="340" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-400-court" value="Return Not Court Notice&lt;br&gt;(OCMS-4009)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1741" y="340" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-auth" target="auth-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="auth-check" target="ocms-valid" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="620" y="90" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e5b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="auth-check" target="err-401" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-valid" target="valid-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="valid-check" target="ocms-batch" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="valid-check" target="err-400" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="ocms-batch" target="batch-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-batch" target="batch-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="batch-check" target="db-query" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="batch-check" target="err-413" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="db-query" target="db-select-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="db-query" target="ocms-exist" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-exist" target="court-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-exist" target="err-404" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="court-check" target="db-update" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="court-check" target="err-400-court" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="db-update" target="db-update-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="db-update" target="ocms-log" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-log" target="ocms-build" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-build" target="ocms-return" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e17b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="ocms-return" target="response-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="1" source="cas-api-call" target="ocms-auth" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="1" source="ocms-return" target="cas-receive" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="section-3-3" name="3.3_API3_Detailed">
+        <mxGraphModel dx="884" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2600" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="e6c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="1" source="cas-return" target="ocms-receive" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="title" value="&lt;b&gt;API 3: Refresh VIP Vehicle Data (Detailed)&lt;/b&gt;&lt;br&gt;Daily batch job - TRUNCATE + INSERT" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="600" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-sl" value="OCMS Cron" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="80" width="2100" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="40" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-record-start" value="Record Start Time" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="180" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-prepare" value="Prepare Request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="340" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-api-call" value="Call CAS API&lt;div&gt;using APIM&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="500" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api-detail" value="POST /v1/cas/refreshVIPVehicle (TBD)" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="660" y="60" width="210" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-receive" value="Receive VIP Data" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="960" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="response-check" value="Success ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1120" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="retry-check" value="Retry &lt; 3 ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1120" y="200" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-wait" value="retry" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="840" y="210" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="db-insert" value="Insert VIP Vehicle records" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1340" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="db-insert-detail" value="INSERT INTO ocms_vip_vehicle&lt;br&gt;(vehicle_no, vip_vehicle, description, status,&lt;br&gt;&amp;nbsp;cre_date, cre_user_id)&lt;br&gt;VALUES (:vehicleNo, :vipVehicle, :description,&lt;br&gt;&amp;nbsp;:status, GETDATE(), &#39;ocmsiz_app_conn&#39;)" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1260" y="170" width="280" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="insert-check" value="Success ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1560" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-log" value="Log Completion" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1680" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1840" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-email" value="Send Email Alert to Operations" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1280" y="280" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-500" value="log error to application log" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1530" y="280" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-start" target="ocms-record-start" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-record-start" target="ocms-prepare" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-prepare" target="ocms-api-call" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="ocms-api-call" target="api-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-receive" target="response-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="response-check" target="db-insert" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1240" y="90" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e9" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="response-check" target="retry-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="retry-check" target="err-email" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;dashed=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" parent="ocms-sl" source="ocms-wait" target="ocms-api-call" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="590" y="240"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e13b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="db-insert" target="db-insert-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="db-insert" target="insert-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e15" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="insert-check" target="ocms-log" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e15b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="insert-check" target="err-500" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-log" target="ocms-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;jumpStyle=arc;" parent="ocms-sl" source="retry-check" target="ocms-wait" edge="1">
+                    <mxGeometry x="-0.5556" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="cas-sl" value="CAS System" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="450" width="2100" height="380" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-validate" value="CAS validates APIM" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="490" y="60" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-query" value="CAS queries VIP vehicles" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="680" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cas-return" value="CAS returns vehicle list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="840" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="response-detail" value="Response 200 OK: (TBD)&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;data&quot;: [{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;vehicleNo&quot;: &quot;ABC1234&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;description&quot;: &quot;VIP Vehicle&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;status&quot;: &quot;ACTIVE&quot;&lt;br&gt;&amp;nbsp;&amp;nbsp;}],&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;totalCount&quot;: 150&lt;br&gt;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="cas-sl" vertex="1">
+                    <mxGeometry x="780" y="160" width="240" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="cas-sl" source="cas-validate" target="cas-query" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="cas-sl" source="cas-query" target="cas-return" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="cas-sl" source="cas-return" target="response-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="1" source="ocms-api-call" target="cas-validate" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="section-3-4" name="3.4_API4_Detailed">
+        <mxGraphModel dx="884" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="title" value="&lt;b&gt;API 4: Query Notice Info (Detailed)&lt;/b&gt;&lt;br&gt;PLUS adhoc query - Payment allowance calculation" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="600" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="plus-sl" value="PLUS System (via IZ-APIM)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="80" width="2800" height="320" as="geometry"/>
+                </mxCell>
+                <mxCell id="plus-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="plus-sl" vertex="1">
+                    <mxGeometry x="40" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="plus-prepare" value="PLUS prepares notice list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="plus-sl" vertex="1">
+                    <mxGeometry x="180" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="plus-api-call" value="Call IZ-APIM Gateway" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="plus-sl" vertex="1">
+                    <mxGeometry x="340" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="api-detail" value="POST /v1/plus-queryNoticeInfo&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;noticeNumbers&quot;: [&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;500400058A&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;500400059B&quot;&lt;br&gt;&amp;nbsp;&amp;nbsp;],&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;paymentDueDate&quot;: &quot;2024-01-15&quot;&lt;br&gt;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="plus-sl" vertex="1">
+                    <mxGeometry x="260" y="160" width="280" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="iz-auth" value="IZ-APIM validate" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="plus-sl" vertex="1">
+                    <mxGeometry x="500" y="60" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="iz-route" value="Route to OCMS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="plus-sl" vertex="1">
+                    <mxGeometry x="820" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="plus-receive" value="Receive Response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="plus-sl" vertex="1">
+                    <mxGeometry x="2500" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="plus-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="plus-sl" vertex="1">
+                    <mxGeometry x="2660" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="plus-sl" source="plus-start" target="plus-prepare" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="plus-sl" source="plus-prepare" target="plus-api-call" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="plus-sl" source="plus-api-call" target="api-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="plus-sl" source="plus-api-call" target="iz-auth" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="plus-sl" source="iz-auth" target="iz-route" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="680" y="90" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e-recv" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="plus-sl" source="plus-receive" target="plus-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-sl" value="OCMS Backend" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="420" width="2800" height="480" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-auth" value="Validate IZ-APIM key" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="820" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="auth-check" value="valid ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="980" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-valid" value="Validate Request Schema" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1115" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="valid-check" value="valid ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1415" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-batch" value="Check Batch Limit" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1535" y="60" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="batch-detail" value="Max 10 notices per request" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1510" y="160" width="170" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="batch-check" value="OK ?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1695" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="db-merge" value="update Court Case" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="2430" y="60" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-build" value="Build Response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="2500" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ocms-return" value="Return 200 OK" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="2600" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-401" value="Return Unauthorized&lt;br&gt;(OCMS-4001)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="950" y="360" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-400" value="Return Bad Request&lt;br&gt;(OCMS-4000)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1385" y="360" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="err-413" value="Return Payload Too Large&lt;br&gt;(OCMS-4013)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="1665" y="360" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-auth" target="auth-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="auth-check" target="ocms-valid" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1100" y="90" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e9b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="auth-check" target="err-401" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-valid" target="valid-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="valid-check" target="ocms-batch" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="valid-check" target="err-400" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;" parent="ocms-sl" source="ocms-batch" target="batch-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="ocms-batch" target="batch-check" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e15" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="CnwurfEKyOJQQAmyVgED-3" target="uIbw83WRKTf36Usm0QF--1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1940" y="90" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="e15b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="batch-check" target="err-413" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="ocms-sl" source="db-merge" target="ocms-build" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="ocms-sl" source="ocms-build" target="ocms-return" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="response-detail" value="Response 200 OK:&lt;br&gt;{&lt;div&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp; &quot;updatedCount&quot;: 1,&lt;/span&gt;&lt;br style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;&amp;nbsp;&amp;nbsp;&quot;failedCount&quot;: 0,&lt;/span&gt;&lt;font color=&quot;#000000&quot;&gt;&lt;br&gt;&lt;/font&gt;&amp;nbsp;&amp;nbsp;&quot;notices&quot;: [{&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;noticeNo&quot;: &quot;500400058A&quot;,&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &quot;appCode&quot;: &quot;OCMS-2000&quot;&lt;br&gt;&lt;/font&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;status&quot;: &quot;OK&quot;&lt;div&gt;&amp;nbsp;&amp;nbsp;}]&lt;br&gt;}&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ocms-sl" vertex="1">
+                    <mxGeometry x="2590" y="290" width="200" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="e20b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;endArrow=none;endFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="ocms-sl" source="ocms-return" target="response-detail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uIbw83WRKTf36Usm0QF--2" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="ocms-sl" source="uIbw83WRKTf36Usm0QF--1" target="db-merge">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uIbw83WRKTf36Usm0QF--1" value="update VON" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="ocms-sl">
+                    <mxGeometry x="2230" y="60" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="CnwurfEKyOJQQAmyVgED-1" value="check crs_reason_of_suspension" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="ocms-sl">
+                    <mxGeometry x="1850" y="60" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="CnwurfEKyOJQQAmyVgED-2" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" edge="1" parent="ocms-sl" source="batch-check" target="CnwurfEKyOJQQAmyVgED-1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1815" y="510" as="sourcePoint"/>
+                        <mxPoint x="2100" y="510" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="CnwurfEKyOJQQAmyVgED-6" value="" style="edgeStyle=none;html=1;" edge="1" parent="ocms-sl" source="CnwurfEKyOJQQAmyVgED-3" target="CnwurfEKyOJQQAmyVgED-5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="CnwurfEKyOJQQAmyVgED-3" value="crs_reason_of_suspension&lt;div&gt;=&lt;/div&gt;&lt;div&gt;null&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="ocms-sl">
+                    <mxGeometry x="2070" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="CnwurfEKyOJQQAmyVgED-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" edge="1" parent="ocms-sl" source="CnwurfEKyOJQQAmyVgED-1" target="CnwurfEKyOJQQAmyVgED-3">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2030" y="510" as="sourcePoint"/>
+                        <mxPoint x="2270" y="510" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="CnwurfEKyOJQQAmyVgED-7" style="edgeStyle=none;html=1;" edge="1" parent="ocms-sl" source="CnwurfEKyOJQQAmyVgED-5" target="ocms-build">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="CnwurfEKyOJQQAmyVgED-5" value="retrun OCMS-4003 notice already paid" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="ocms-sl">
+                    <mxGeometry x="2050" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="1" source="iz-route" target="ocms-auth" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=classic;endFill=1;" parent="1" source="ocms-return" target="plus-receive" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
