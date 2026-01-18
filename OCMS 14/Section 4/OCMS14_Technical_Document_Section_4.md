@@ -18,6 +18,7 @@ refer to FD instead of duplicating content.
 | Version | Updated By | Date | Changes |
 | --- | --- | --- | --- |
 | v1.0 | Claude | 15/01/2026 | Document Initiation - Section 4 |
+| v1.1 | Claude | 18/01/2026 | Updated queries and database operations based on data dictionary |
 
 ---
 
@@ -126,25 +127,45 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ### Notice Creation Details
 
-#### Hardcoded MINDEF Owner Details
+#### Notice Creation Fields (ocms_valid_offence_notice)
 
-| Field | Value | Description |
-| --- | --- | --- |
-| name | MINDEF | Ministry of Defence |
-| id_type | B | Business entity type |
-| id_no | T08GA0011B | MINDEF UEN |
-| owner_driver_indicator | O | Owner record |
-| offender_indicator | Y | Is offender |
+| Field | Type | Value/Source | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | Generated | Primary key, unique notice number |
+| vehicle_no | varchar(14) | Raw offence data | Vehicle number (MID/MINDEF pattern) |
+| vehicle_registration_type | varchar(1) | 'I' | Military vehicle type |
+| offence_notice_type | varchar(1) | Raw offence data | O (On-street), E (ERP), U (UPL) |
+| computer_rule_code | integer | Raw offence data | Offence rule code |
+| pp_code | varchar(5) | Raw offence data | Car park code |
+| parking_lot_no | varchar(5) | Raw offence data | Parking lot number (optional) |
+| notice_date_and_time | datetime2(7) | Raw offence data | Date and time of offence |
+| last_processing_stage | varchar(3) | 'NPA' | Initial stage |
+| next_processing_stage | varchar(3) | 'RD1' | Next stage in flow |
+| payment_acceptance_allowed | varchar(1) | 'Y' | Notice is payable |
 
-#### Hardcoded MINDEF Address
+#### Hardcoded MINDEF Owner Details (ocms_offence_notice_owner_driver)
 
-| Field | Value |
-| --- | --- |
-| type_of_address | MINDEF_ADDRESS |
-| bldg_name | Kranji Camp 3 |
-| blk_hse_no | 151 |
-| street_name | Choa Chu Kang Way |
-| postal_code | 688248 |
+| Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | Notice number | Foreign key |
+| owner_driver_indicator | varchar(1) | O | Owner record |
+| name | varchar(66) | MINDEF | Ministry of Defence |
+| id_type | varchar(1) | B | Business entity type |
+| id_no | varchar(12) | T08GA0011B | MINDEF UEN |
+| offender_indicator | varchar(1) | Y | Is offender |
+| mha_dh_check_allow | varchar(1) | N | Bypass MHA/DataHive check |
+
+#### Hardcoded MINDEF Address (ocms_offence_notice_owner_driver_addr)
+
+| Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | Notice number | Primary key |
+| owner_driver_indicator | varchar(1) | O | Primary key |
+| type_of_address | varchar(20) | MINDEF_ADDRESS | Primary key - address type |
+| bldg_name | varchar(65) | Kranji Camp 3 | Building name |
+| blk_hse_no | varchar(10) | 151 | Block/house number |
+| street_name | varchar(32) | Choa Chu Kang Way | Street name |
+| postal_code | varchar(6) | 688248 | Postal code |
 
 ### Double Booking Check (DBB) Criteria
 
@@ -157,6 +178,17 @@ All 5 conditions must match an existing notice to trigger PS-DBB:
 | 3 | computer_rule_code | Exact match |
 | 4 | parking_lot_no | Exact match (null = null) |
 | 5 | pp_code | Exact match |
+
+#### Double Booking Check Query
+
+```sql
+SELECT * FROM ocms_valid_offence_notice
+WHERE vehicle_no = :vehicleNo
+  AND notice_date_and_time = :noticeDateTime
+  AND computer_rule_code = :ruleCode
+  AND (parking_lot_no = :lotNo OR (parking_lot_no IS NULL AND :lotNo IS NULL))
+  AND pp_code = :ppCode
+```
 
 ### Decision Logic
 
@@ -333,6 +365,33 @@ WHERE vehicle_registration_type = 'I'
 | Apply PS-ANS | UPDATE | ocms_valid_offence_notice | Set suspension_type = 'PS', epr_reason = 'ANS' |
 | Record Suspension | INSERT | ocms_suspended_notice | Create suspension record |
 
+#### UPDATE ocms_valid_offence_notice (PS-ANS)
+
+```sql
+UPDATE ocms_valid_offence_notice
+SET suspension_type = 'PS',
+    epr_reason_of_suspension = 'ANS',
+    epr_date_of_suspension = CURRENT_TIMESTAMP,
+    last_processing_stage = 'RD1',
+    upd_date = CURRENT_TIMESTAMP,
+    upd_user_id = 'SYSTEM'
+WHERE notice_no = :noticeNo
+```
+
+#### INSERT ocms_suspended_notice (PS-ANS)
+
+| Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | Notice number | Primary key |
+| date_of_suspension | datetime2(7) | CURRENT_TIMESTAMP | Primary key |
+| sr_no | integer | Running number | Primary key |
+| suspension_type | varchar(2) | PS | Permanent Suspension |
+| reason_of_suspension | varchar(3) | ANS | Advisory Notice Suspension |
+| suspension_source | varchar(8) | OCMS | System source |
+| officer_authorising_suspension | varchar(50) | SYSTEM | Auto-authorized |
+| due_date_of_revival | datetime2(7) | NULL | Permanent (no revival) |
+| process_indicator | varchar(64) | ANLetterGenerationJob | CRON job name |
+
 ---
 
 ## 4.5 Furnish Driver/Hirer Sub-flow
@@ -374,19 +433,32 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | DN2 | No | Already furnished to Driver |
 | PS-MID | No | Notice suspended, no changes allowed |
 
-### Furnish Application Fields
+### Furnish Application Fields (eocms_furnish_application)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| notice_no | String | Yes | Notice number |
-| furnish_type | String | Yes | D (Driver) or H (Hirer) |
-| name | String | Yes | Driver/Hirer name |
-| id_type | String | Yes | NRIC or FIN |
-| id_no | String | Yes | ID number |
-| address_type | String | Yes | Address type |
-| blk_hse_no | String | No | Block/house number |
-| street_name | String | Yes | Street name |
-| postal_code | String | Yes | Postal code |
+| txn_no | varchar(20) | Yes | Primary key - unique submission reference |
+| notice_no | varchar(10) | Yes | Notice number |
+| vehicle_no | varchar(14) | Yes | Vehicle number |
+| offence_date | datetime2(7) | Yes | Date of offence |
+| pp_code | varchar(5) | Yes | Car park code |
+| pp_name | varchar(100) | Yes | Car park name |
+| last_processing_stage | varchar(3) | Yes | Notice's current stage |
+| furnish_name | varchar(66) | Yes | Driver/Hirer name |
+| furnish_id_type | varchar(1) | Yes | ID type (NRIC/FIN) |
+| furnish_id_no | varchar(12) | Yes | ID number |
+| furnish_mail_blk_no | varchar(10) | Yes | Block/house number |
+| furnish_mail_floor | varchar(3) | No | Floor number |
+| furnish_mail_street_name | varchar(32) | Yes | Street name |
+| furnish_mail_unit_no | varchar(5) | No | Unit number |
+| furnish_mail_bldg_name | varchar(65) | No | Building name |
+| furnish_mail_postal_code | varchar(6) | Yes | Postal code |
+| furnish_tel_code | varchar(4) | No | Country code |
+| furnish_tel_no | varchar(12) | No | Contact number |
+| furnish_email_addr | varchar(320) | No | Email address |
+| owner_driver_indicator | varchar(1) | Yes | D (Driver) or H (Hirer) |
+| hirer_owner_relationship | varchar(1) | Yes | Relationship code |
+| status | varchar(1) | Yes | P (Pending), A (Approved), R (Rejected) |
 
 ### External System Integration
 
@@ -407,8 +479,52 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Submit | INSERT | eocms_furnish_application | Internet | Store application |
 | Sync | SELECT/INSERT | ocms_furnish_application | Intranet | Copy from Internet |
 | Create Record | INSERT | ocms_offence_notice_owner_driver | Intranet | Add Driver/Hirer |
-| Create Address | INSERT | ocms_offence_notice_owner_driver_address | Intranet | Add address |
+| Create Address | INSERT | ocms_offence_notice_owner_driver_addr | Intranet | Add address |
 | Update Stage | UPDATE | ocms_valid_offence_notice | Intranet | Set next_processing_stage |
+
+#### INSERT ocms_offence_notice_owner_driver (Furnished Driver/Hirer)
+
+| Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | Notice number | Primary key |
+| owner_driver_indicator | varchar(1) | D or H | Primary key - Driver or Hirer |
+| name | varchar(66) | furnish_name | Driver/Hirer name |
+| id_type | varchar(1) | furnish_id_type | ID type (NRIC/FIN) |
+| id_no | varchar(12) | furnish_id_no | ID number |
+| offender_indicator | varchar(1) | Y | Is offender |
+| mha_dh_check_allow | varchar(1) | Y | Enable MHA/DataHive check |
+
+#### INSERT ocms_offence_notice_owner_driver_addr (Furnished Address)
+
+| Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | Notice number | Primary key |
+| owner_driver_indicator | varchar(1) | D or H | Primary key |
+| type_of_address | varchar(20) | furnished_mail | Primary key - address type |
+| blk_hse_no | varchar(10) | furnish_mail_blk_no | Block/house number |
+| street_name | varchar(32) | furnish_mail_street_name | Street name |
+| postal_code | varchar(6) | furnish_mail_postal_code | Postal code |
+| floor_no | varchar(3) | furnish_mail_floor | Floor number |
+| unit_no | varchar(5) | furnish_mail_unit_no | Unit number |
+| bldg_name | varchar(65) | furnish_mail_bldg_name | Building name |
+
+#### UPDATE ocms_valid_offence_notice (After Furnish Approval)
+
+```sql
+-- For Driver
+UPDATE ocms_valid_offence_notice
+SET next_processing_stage = 'DN1',
+    upd_date = CURRENT_TIMESTAMP,
+    upd_user_id = 'SYSTEM'
+WHERE notice_no = :noticeNo
+
+-- For Hirer
+UPDATE ocms_valid_offence_notice
+SET next_processing_stage = 'RD1',
+    upd_date = CURRENT_TIMESTAMP,
+    upd_user_id = 'SYSTEM'
+WHERE notice_no = :noticeNo
+```
 
 ---
 
@@ -444,51 +560,103 @@ NOTE: Due to page size limit, the full-sized image is appended.
 ### PS-MID Query
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage,
+       suspension_type, crs_reason_of_suspension
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'I'
   AND crs_reason_of_suspension IS NULL
   AND last_processing_stage IN ('RD2', 'DN2')
   AND next_processing_stage IN ('RR3', 'DR3')
 ```
 
-### PS-MID Update Fields
+### UPDATE ocms_valid_offence_notice (Intranet)
 
-| Field | Value | Description |
-| --- | --- | --- |
-| suspension_type | PS | Permanent Suspension |
-| epr_reason_of_suspension | MID | Military vehicle reason |
-| epr_date_of_suspension | CURRENT_TIMESTAMP | Suspension date/time |
+```sql
+UPDATE ocms_valid_offence_notice
+SET suspension_type = 'PS',
+    epr_reason_of_suspension = 'MID',
+    epr_date_of_suspension = CURRENT_TIMESTAMP,
+    upd_date = CURRENT_TIMESTAMP,
+    upd_user_id = 'SYSTEM'
+WHERE notice_no = :noticeNo
+```
 
-### Suspended Notice Record
+| Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| suspension_type | varchar(2) | PS | Permanent Suspension |
+| epr_reason_of_suspension | varchar(4) | MID | Military vehicle reason |
+| epr_date_of_suspension | datetime2(7) | CURRENT_TIMESTAMP | Suspension timestamp |
+| upd_date | datetime2(7) | CURRENT_TIMESTAMP | Record update timestamp |
+| upd_user_id | varchar(50) | SYSTEM | System user |
 
-| Field | Value |
-| --- | --- |
-| notice_no | Notice number |
-| suspension_type | PS |
-| reason_of_suspension | MID |
-| date_of_suspension | CURRENT_TIMESTAMP |
-| suspension_source | OCMS |
-| sr_no | Running number |
-| officer_authorising_suspension | System or OIC name |
+### UPDATE eocms_valid_offence_notice (Internet Sync)
+
+```sql
+UPDATE eocms_valid_offence_notice
+SET suspension_type = 'PS',
+    epr_reason_of_suspension = 'MID',
+    epr_date_of_suspension = CURRENT_TIMESTAMP,
+    is_sync = 'N',
+    upd_date = CURRENT_TIMESTAMP,
+    upd_user_id = 'SYSTEM'
+WHERE notice_no = :noticeNo
+```
+
+| Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| is_sync | varchar(1) | N | Mark for sync to Intranet |
+
+### INSERT ocms_suspended_notice
+
+| Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | Notice number | Primary key (PK1) |
+| date_of_suspension | datetime2(7) | CURRENT_TIMESTAMP | Primary key (PK2) |
+| sr_no | numeric(3,0) | Running number | Primary key (PK3) |
+| suspension_type | varchar(2) | PS | Permanent Suspension |
+| reason_of_suspension | varchar(4) | MID | MINDEF reason code |
+| suspension_source | varchar(4) | OCMS | Source system |
+| officer_authorising_suspension | varchar(50) | SYSTEM | System or OIC name |
+| due_date_of_revival | datetime2(7) | NULL | NULL for permanent suspension |
+| suspension_remarks | varchar(256) | NULL | No remarks |
+| process_indicator | varchar(50) | DipMidForRecheckJob | CRON job identifier |
+| cre_date | datetime2(7) | CURRENT_TIMESTAMP | Record creation timestamp |
+| cre_user_id | varchar(50) | SYSTEM | System user |
+
+**Note:** The `ocms_suspended_notice` table uses a composite primary key consisting of `notice_no` + `date_of_suspension` + `sr_no`. This allows multiple suspension records for the same notice (e.g., temporary suspension while PS-MID is active).
 
 ### Daily Re-check (DipMidForRecheckJob)
 
 | Attribute | Value |
 | --- | --- |
+| CRON Job | DipMidForRecheckJob |
 | Schedule | Daily at 11:59 PM |
 | Purpose | Re-apply PS-MID if accidentally revived |
-| Scope | Vehicle types D, I, F at RD2/DN2 without PS |
+| Scope | Vehicle types D (Diplomat), I (Military), F (Foreign) at RD2/DN2 without PS |
 
 The daily re-check ensures that if a Military vehicle notice is accidentally revived (suspension removed), the PS-MID is re-applied before the notice can progress to RR3/DR3 (Court Referral stages).
 
 ### Re-check Query
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage,
+       suspension_type
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type IN ('D', 'I', 'F')
   AND last_processing_stage IN ('RD2', 'DN2')
   AND suspension_type IS NULL
 ```
+
+### PS-MID Suspension Rules
+
+| Rule | Value | Description |
+| --- | --- | --- |
+| Payment Allowed | Yes | Can pay via eService/AXS |
+| Furnish Allowed | No | Cannot furnish after PS-MID |
+| Revival Date | NULL | Permanent suspension (no auto-revival) |
+| Court Escalation | Blocked | Cannot progress to RR3/DR3 |
 
 ### Database Operations
 
@@ -496,8 +664,8 @@ WHERE vehicle_registration_type IN ('D', 'I', 'F')
 | --- | --- | --- | --- | --- |
 | Query | SELECT | ocms_valid_offence_notice | Intranet | Get PS-MID candidates |
 | Update | UPDATE | ocms_valid_offence_notice | Intranet | Set PS-MID suspension |
-| Sync | UPDATE | eocms_valid_offence_notice | Internet | Sync suspension status |
-| Record | INSERT | ocms_suspended_notice | Intranet | Create suspension record |
+| Sync | UPDATE | eocms_valid_offence_notice | Internet | Sync suspension status (is_sync = 'N') |
+| Record | INSERT | ocms_suspended_notice | Intranet | Create suspension record with process_indicator |
 
 ---
 
