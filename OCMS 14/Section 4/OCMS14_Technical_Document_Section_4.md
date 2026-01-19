@@ -220,11 +220,74 @@ WHERE vehicle_no = :vehicleNo
 
 | Field | Value |
 | --- | --- |
-| Integration Type | SFTP File Transfer |
-| Vendor | TOPPAN (Printing) |
-| Purpose | Send letter generation requests |
+| Integration Name | TOPPAN Letter Generation |
+| Type | SFTP File Transfer |
+| Direction | OCMS → TOPPAN (Outbound) |
+| Protocol | SFTP |
+| Host | UAT: [configured in environment] <br> PRD: [configured in environment] |
+| Port | 22 |
+| Authentication | SSH Key-based |
 | Trigger | End of day CRON job |
-| Letter Types | RD1 Letter, RD2 Letter, DN1 Letter, DN2 Letter |
+| File Format | PDF letter files |
+
+##### Letter Types Generated
+
+| Letter Code | Letter Name | Stage | Description |
+| --- | --- | --- | --- |
+| RD1 | Reminder Letter 1 | NPA → RD1 | First reminder to MINDEF |
+| RD2 | Reminder Letter 2 | RD1 → RD2 | Second reminder to MINDEF |
+| DN1 | Driver Notice 1 | RD1 → DN1 | First notice to furnished Driver |
+| DN2 | Driver Notice 2 | DN1 → DN2 | Second notice to furnished Driver |
+| AN | Advisory Notice | NPA → RD1 | Advisory Notice for eligible Type O |
+
+##### SFTP File Transfer Flow
+
+| Step | Action | Description |
+| --- | --- | --- |
+| 1 | Generate PDF | CRON job generates letter PDF with notice details |
+| 2 | Create Batch | Group letters into batch file |
+| 3 | Connect SFTP | Establish SFTP connection to TOPPAN server |
+| 4 | Upload Files | Transfer PDF files to TOPPAN drop folder |
+| 5 | Verify Transfer | Confirm successful file transfer |
+| 6 | Update Status | Update letter_generated_flag in database |
+
+##### Error Handling
+
+| Error Scenario | Definition | Brief Description |
+| --- | --- | --- |
+| SFTP Connection Failure | Cannot establish connection to TOPPAN server | Log error, retry 3 times, queue for next CRON cycle |
+| File Transfer Failure | File upload fails during transfer | Log error, rollback batch, retry in next cycle |
+| Authentication Failure | SSH key authentication fails | Alert admin, log error, stop processing |
+
+#### MHA/DataHive Check (Furnished Driver/Hirer Only)
+
+| Field | Value |
+| --- | --- |
+| Integration Name | MHA/DataHive Identity Validation |
+| Type | External API |
+| Direction | OCMS → MHA/DataHive (Outbound) |
+| Protocol | HTTPS REST API |
+| Method | POST |
+| Trigger | Before RD2/DN2 stage processing (for furnished Driver/Hirer only) |
+| Purpose | Validate Driver/Hirer NRIC/FIN identity |
+
+##### When Called
+
+| Condition | System Called | Purpose |
+| --- | --- | --- |
+| Furnished Driver/Hirer with NRIC | MHA | Validate Singapore citizen/PR identity |
+| Furnished Driver/Hirer with FIN | DataHive | Validate foreigner identity |
+| MINDEF Owner (id_type = 'B') | NOT CALLED | UEN does not require identity check |
+
+##### Response Handling
+
+| Response | Action |
+| --- | --- |
+| Valid Identity | Continue to RD2/DN2 processing |
+| Invalid Identity | Flag for OIC review, hold processing |
+| System Error | Retry 3 times, then queue for manual review |
+
+**Note:** MHA/DataHive check is only performed for furnished Driver/Hirer (mha_dh_check_allow = 'Y'). MINDEF owner record has mha_dh_check_allow = 'N' to bypass this check.
 
 ---
 
@@ -374,7 +437,7 @@ SET suspension_type = 'PS',
     epr_date_of_suspension = CURRENT_TIMESTAMP,
     last_processing_stage = 'RD1',
     upd_date = CURRENT_TIMESTAMP,
-    upd_user_id = 'SYSTEM'
+    upd_user_id = 'ocmsiz_app_conn'
 WHERE notice_no = :noticeNo
 ```
 
@@ -515,14 +578,14 @@ NOTE: Due to page size limit, the full-sized image is appended.
 UPDATE ocms_valid_offence_notice
 SET next_processing_stage = 'DN1',
     upd_date = CURRENT_TIMESTAMP,
-    upd_user_id = 'SYSTEM'
+    upd_user_id = 'ocmsiz_app_conn'
 WHERE notice_no = :noticeNo
 
 -- For Hirer
 UPDATE ocms_valid_offence_notice
 SET next_processing_stage = 'RD1',
     upd_date = CURRENT_TIMESTAMP,
-    upd_user_id = 'SYSTEM'
+    upd_user_id = 'ocmsiz_app_conn'
 WHERE notice_no = :noticeNo
 ```
 
@@ -578,7 +641,7 @@ SET suspension_type = 'PS',
     epr_reason_of_suspension = 'MID',
     epr_date_of_suspension = CURRENT_TIMESTAMP,
     upd_date = CURRENT_TIMESTAMP,
-    upd_user_id = 'SYSTEM'
+    upd_user_id = 'ocmsiz_app_conn'
 WHERE notice_no = :noticeNo
 ```
 
@@ -588,7 +651,7 @@ WHERE notice_no = :noticeNo
 | epr_reason_of_suspension | varchar(4) | MID | Military vehicle reason |
 | epr_date_of_suspension | datetime2(7) | CURRENT_TIMESTAMP | Suspension timestamp |
 | upd_date | datetime2(7) | CURRENT_TIMESTAMP | Record update timestamp |
-| upd_user_id | varchar(50) | SYSTEM | System user |
+| upd_user_id | varchar(50) | ocmsiz_app_conn | Intranet DB user |
 
 ### UPDATE eocms_valid_offence_notice (Internet Sync)
 
@@ -599,7 +662,7 @@ SET suspension_type = 'PS',
     epr_date_of_suspension = CURRENT_TIMESTAMP,
     is_sync = 'N',
     upd_date = CURRENT_TIMESTAMP,
-    upd_user_id = 'SYSTEM'
+    upd_user_id = 'ocmsiz_app_conn'
 WHERE notice_no = :noticeNo
 ```
 
@@ -622,7 +685,7 @@ WHERE notice_no = :noticeNo
 | suspension_remarks | varchar(256) | NULL | No remarks |
 | process_indicator | varchar(50) | DipMidForRecheckJob | CRON job identifier |
 | cre_date | datetime2(7) | CURRENT_TIMESTAMP | Record creation timestamp |
-| cre_user_id | varchar(50) | SYSTEM | System user |
+| cre_user_id | varchar(50) | ocmsiz_app_conn | Intranet DB user |
 
 **Note:** The `ocms_suspended_notice` table uses a composite primary key consisting of `notice_no` + `date_of_suspension` + `sr_no`. This allows multiple suspension records for the same notice (e.g., temporary suspension while PS-MID is active).
 

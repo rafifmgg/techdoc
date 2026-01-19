@@ -620,10 +620,10 @@ The technical flowchart for this section is available in:
 - File: `OCMS14-Technical_Flowchart_Section_5.drawio`
 - Tabs:
   1. Section_5_High_Level - High-level overview
-  2. Section_5_DIP_Type_O_E - Type O & E processing flow
-  3. Section_5_DIP_AN_Subflow - Advisory Notice sub-flow
-  4. Section_5_DIP_Furnish_Subflow - Furnish Driver/Hirer sub-flow
-  5. Section_5_PS_DIP_Suspension - PS-DIP suspension CRON process
+  2. Section_5_DIP_Type_OE - Type O & E processing flow (3 swimlanes: Backend, External System, Database)
+  3. Section_5_DIP_AN_Subflow - Advisory Notice sub-flow (3 swimlanes: Backend, External System, Database)
+  4. Section_5_DIP_Furnish_Subflow - Furnish Driver/Hirer sub-flow (4 swimlanes: Frontend, Backend, External System, Database)
+  5. Section_5_PS_DIP_Suspension - PS-DIP suspension CRON process (3 swimlanes: Backend, Database Intranet, Database Internet)
 
 ---
 

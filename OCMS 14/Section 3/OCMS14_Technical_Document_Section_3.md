@@ -18,6 +18,7 @@ refer to FD instead of duplicating content.
 | Version | Updated By | Date | Changes |
 | --- | --- | --- | --- |
 | v1.0 | Claude | 16/01/2026 | Document Initiation - Section 3 (Deceased Offenders) |
+| v1.1 | Claude | 18/01/2026 | Added API Specification tables per template format (Section 3.3.2, 3.5.1) |
 
 ---
 
@@ -30,7 +31,7 @@ refer to FD instead of duplicating content.
 | 3.2 | High Level Processing Flow | 2 |
 | 3.3 | Detect Deceased and Apply PS Suspension | 3 |
 | 3.3.1 | External System Integration | 5 |
-| 3.3.2 | Internal Service Call | 6 |
+| 3.3.2 | API Specification | 6 |
 | 3.3.3 | Data Mapping | 7 |
 | 3.3.4 | Success Outcome | 8 |
 | 3.3.5 | Error Handling | 8 |
@@ -39,9 +40,10 @@ refer to FD instead of duplicating content.
 | 3.4.2 | Success Outcome | 11 |
 | 3.4.3 | Error Handling | 11 |
 | 3.5 | Redirect PS-RIP/RP2 Notices | 12 |
-| 3.5.1 | Data Mapping | 13 |
-| 3.5.2 | Success Outcome | 14 |
-| 3.5.3 | Error Handling | 14 |
+| 3.5.1 | API Specification | 13 |
+| 3.5.2 | Data Mapping | 14 |
+| 3.5.3 | Success Outcome | 15 |
+| 3.5.4 | Error Handling | 15 |
 
 ---
 
@@ -160,18 +162,23 @@ WHERE FIN = '<fin_number>'
 
 ---
 
-### 3.3.2 Internal Service Call
+### 3.3.2 API Specification
 
-#### Apply PS-RIP/RP2 Suspension
+#### API Apply PS-RIP/RP2 Suspension
 
 | Field | Value |
 | --- | --- |
-| Service Type | Internal Service Call |
-| Service | PermanentSuspensionHelper |
-| Method | processPS() |
-| Trigger | Auto-triggered when deceased offender detected |
+| API Name | processPS |
+| URL | Internal Service Call (PermanentSuspensionHelper.processPS()) |
+| Description | Apply permanent suspension (PS-RIP or PS-RP2) to notice when deceased offender detected |
+| Method | POST |
+| Trigger | Auto-triggered by CRON when deceased offender detected |
+| Header | N/A (Internal service call) |
+| Payload | `{ "noticeNo": "A12345678X", "suspensionSource": "CRON", "reasonOfSuspension": "RIP", "officerAuthorisingSuspension": "SYSTEM" }` |
+| Response | `{ "appCode": 0, "appMessage": "SUCCESS", "noticeNo": "A12345678X" }` |
+| Response Failure | `{ "appCode": 4001, "appMessage": "Invalid Notice Number" }` |
 
-**Request Parameters:**
+#### Request Parameters
 
 | Parameter | Type | Required | Description |
 | --- | --- | --- | --- |
@@ -181,7 +188,7 @@ WHERE FIN = '<fin_number>'
 | suspensionRemarks | String | No | Additional remarks |
 | officerAuthorisingSuspension | String | Yes | 'SYSTEM' for auto-suspension |
 
-**Sample Request:**
+#### Sample Request
 
 ```json
 {
@@ -192,7 +199,7 @@ WHERE FIN = '<fin_number>'
 }
 ```
 
-**Response (Success):**
+#### Response (Success)
 
 ```json
 {
@@ -202,7 +209,7 @@ WHERE FIN = '<fin_number>'
 }
 ```
 
-**Response (Error):**
+#### Response (Error)
 
 ```json
 {
@@ -419,7 +426,62 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ---
 
-### 3.5.1 Data Mapping
+### 3.5.1 API Specification
+
+#### API Revive PS-RIP/RP2 Suspension
+
+| Field | Value |
+| --- | --- |
+| API Name | revivePS |
+| URL | UAT: https://[domain]/ocms/v1/suspendednotice/revive <br> PRD: https://[domain]/ocms/v1/suspendednotice/revive |
+| Description | Revive permanent suspension (PS-RIP or PS-RP2) from Staff Portal |
+| Method | POST |
+| Source | OCMS Staff Portal (Manual action by OIC) |
+| Header | `{ "Authorization": "Bearer [token]", "Content-Type": "application/json" }` |
+| Payload | `{ "noticeNo": "A12345678X", "revivalReason": "Redirect to correct offender", "officerAuthorisingRevival": "OIC001" }` |
+| Response | `{ "appCode": 0, "appMessage": "PS Revival successful", "noticeNo": "A12345678X" }` |
+| Response Failure | `{ "appCode": 4001, "appMessage": "Notice does not have active PS-RIP/RP2" }` |
+
+#### Request Parameters
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| noticeNo | String | Yes | Notice number to revive |
+| revivalReason | String | Yes | Reason for revival |
+| officerAuthorisingRevival | String | Yes | OIC ID who authorized revival |
+
+#### Sample Request
+
+```json
+{
+  "noticeNo": "A12345678X",
+  "revivalReason": "Redirect to correct offender",
+  "officerAuthorisingRevival": "OIC001"
+}
+```
+
+#### Response (Success)
+
+```json
+{
+  "appCode": 0,
+  "appMessage": "PS Revival successful",
+  "noticeNo": "A12345678X"
+}
+```
+
+#### Response (Error)
+
+```json
+{
+  "appCode": 4001,
+  "appMessage": "Notice does not have active PS-RIP/RP2"
+}
+```
+
+---
+
+### 3.5.2 Data Mapping
 
 #### Database Tables Updated
 
@@ -446,19 +508,9 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 **Audit User Note:** All database operations use `ocmsiz_app_conn` as the audit user. Officer ID is captured in `officer_authorising_revival` field.
 
-**API Response (Revival Success):**
-
-```json
-{
-  "appCode": 0,
-  "appMessage": "PS Revival successful",
-  "noticeNo": "A12345678X"
-}
-```
-
 ---
 
-### 3.5.2 Success Outcome
+### 3.5.3 Success Outcome
 
 - PS-RIP or PS-RP2 suspension successfully revived
 - Suspension record updated with date_of_revival and revival_reason
@@ -469,7 +521,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ---
 
-### 3.5.3 Error Handling
+### 3.5.4 Error Handling
 
 #### Application Error Handling
 

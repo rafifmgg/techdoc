@@ -1,0 +1,745 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.2" pages="6">
+  <diagram id="vip-high-level" name="VIP_High_Level">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3500" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hl-title" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;&lt;b&gt;High-Level VIP Vehicle Notice Processing Flow&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="160" y="40" width="3200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="160" y="80" width="3200" height="500" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-1" value="Raw offence data received&lt;div&gt;from Source&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="200" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-1-note" value="&lt;b&gt;Source:&lt;/b&gt;&lt;div&gt;REPCCS, CES-EHT&lt;/div&gt;&lt;div&gt;EEPS, PLUS Portal&lt;/div&gt;&lt;div&gt;OCMS Staff Portal&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="200" y="310" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-1-label" value="&lt;b&gt;Pre-condition&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="190" y="170" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" parent="1" source="hl-1" target="hl-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-2" value="Validate data" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="350" y="220" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" parent="1" source="hl-2" target="hl-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-3" value="Check duplicate Notice Number" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="500" y="220" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" parent="1" source="hl-3" target="hl-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-4" value="Identify Offence Type" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="650" y="220" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e4a" value="Type O &amp; E" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-4" target="hl-5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e4b" value="Type U" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-4" target="hl-5u" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-5u" value="&lt;b&gt;Workflow&lt;/b&gt;&lt;div&gt;Type U Workflow&lt;/div&gt;&lt;div&gt;(KIV)&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="640" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-5" value="&lt;b&gt;Workflow&lt;/b&gt;&lt;div&gt;Type O &amp;amp; E Workflow&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" parent="1" vertex="1">
+          <mxGeometry x="820" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-5" target="hl-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-6" value="Vehicle reg type = V?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="990" y="210" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e6a" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-6" target="hl-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e6b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-6" target="hl-std" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-std" value="Continue standard Type O/E flow" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="980" y="400" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-7" value="Apply TS-OLD (21 days)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1130" y="220" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-7-note" value="&lt;b&gt;Note:&lt;/b&gt;&lt;div&gt;TS-OLD for OIC investigation&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="290" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-7" target="hl-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-8" value="OIC revives OR auto revival" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1280" y="220" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-8" target="hl-9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-9" value="Process through RD1 - RD2 - RR3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1430" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-9" target="hl-10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-10" value="Notice outstanding at RR3/DR3?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="1600" y="210" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e10a" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-10" target="hl-11" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e10b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-10" target="hl-fp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-fp" value="Apply PS-FP" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1590" y="400" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e-fp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-fp" target="hl-end2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-end2" value="Processing Stops" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="1610" y="500" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-11" value="Move to CPC, Apply TS-CLV" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1750" y="220" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-11" target="hl-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-12" value="OIC manually revives?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="1910" y="210" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e12a" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-12" target="hl-13" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e12b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-12" target="hl-14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-13" value="Type changed V to S?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+          <mxGeometry x="2050" y="210" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e13a" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-13" target="hl-exit" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e13b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="hl-13" target="hl-11" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2090" y="350" />
+              <mxPoint x="1800" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hl-exit" value="Exit loop, continue standard flow" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="2200" y="220" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-14" value="TS-CLV expires" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="1900" y="400" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-14" target="hl-15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-15" value="Auto re-apply TS-CLV" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="2050" y="400" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hl-e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="hl-15" target="hl-11" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2100" y="500" />
+              <mxPoint x="1800" y="500" />
+              <mxPoint x="1800" y="350" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hl-clv-note" value="&lt;b&gt;Note:&lt;/b&gt;&lt;div&gt;TS-CLV is a looping TS. Auto re-applies until OIC revives and changes type V to S or notice is paid.&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="2200" y="380" width="200" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="vip-type-oe" name="VIP_Type_O_E">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5500" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="oe-backend" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="OCMS Admin API Intranet" vertex="1">
+          <mxGeometry height="610" width="2840" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-start" parent="oe-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="40" width="80" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e1" edge="1" parent="oe-backend" source="oe-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-2" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Duplicate Notice Details Check" vertex="1">
+          <mxGeometry height="80" width="100" x="160" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e2" edge="1" parent="oe-backend" source="oe-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-3" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Detect Vehicle Registration Type = V" vertex="1">
+          <mxGeometry height="80" width="100" x="300" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e3" edge="1" parent="oe-backend" source="oe-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-4" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice Created at NPA" vertex="1">
+          <mxGeometry height="80" width="100" x="440" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e4-db" edge="1" parent="oe-backend" source="oe-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="oe-insert-npa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-insert-npa" parent="oe-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_valid_offence_notice&lt;div&gt;(notice_no, vehicle_no, vehicle_registration_type,&lt;/div&gt;&lt;div&gt;offence_notice_type, notice_date_and_time,&lt;/div&gt;&lt;div&gt;computer_rule_code, pp_code, pp_name,&lt;/div&gt;&lt;div&gt;parking_lot_no, composition_amount,&lt;/div&gt;&lt;div&gt;amount_payable, payment_status,&lt;/div&gt;&lt;div&gt;last_processing_stage, next_processing_stage,&lt;/div&gt;&lt;div&gt;next_processing_date, an_flag,&lt;/div&gt;&lt;div&gt;cre_date, cre_user_id)&lt;/div&gt;&lt;div&gt;VALUES&lt;/div&gt;&lt;div&gt;(:notice_no, :vehicle_no, &#39;V&#39;,&lt;/div&gt;&lt;div&gt;:offence_type, :notice_datetime,&lt;/div&gt;&lt;div&gt;:rule_code, :pp_code, :pp_name,&lt;/div&gt;&lt;div&gt;:lot_no, :comp_amt, :amt_payable, &#39;U&#39;,&lt;/div&gt;&lt;div&gt;&#39;NPA&#39;, &#39;ROV&#39;, :next_date, :an_flag,&lt;/div&gt;&lt;div&gt;CURRENT_TIMESTAMP, &#39;ocmsiz_app_conn&#39;)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="250" width="290" x="345" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e4" edge="1" parent="oe-backend" source="oe-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-5" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check Double Booking" vertex="1">
+          <mxGeometry height="80" width="100" x="580" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e5" edge="1" parent="oe-backend" source="oe-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-6" parent="oe-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="AN Qualification?" vertex="1">
+          <mxGeometry height="80" width="80" x="720" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e6a" edge="1" parent="oe-backend" source="oe-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-7" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e6b" edge="1" parent="oe-backend" source="oe-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-an" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-an" parent="oe-backend" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="AN Sub-flow (Tab 3)" vertex="1">
+          <mxGeometry height="60" width="120" x="700" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-7" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Apply TS-OLD (21 days)" vertex="1">
+          <mxGeometry height="80" width="100" x="850" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e7-db" edge="1" parent="oe-backend" source="oe-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="oe-update-tsold">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-update-tsold" parent="oe-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;div&gt;SET suspension_type = &#39;TS&#39;,&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension = &#39;OLD&#39;,&lt;/div&gt;&lt;div&gt;epr_date_of_suspension = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;due_date_of_revival = CURRENT_DATE + 21,&lt;/div&gt;&lt;div&gt;upd_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;/div&gt;&lt;div&gt;WHERE notice_no = :notice_no&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;INSERT INTO ocms_suspended_notice&lt;/div&gt;&lt;div&gt;(notice_no, date_of_suspension, sr_no,&lt;/div&gt;&lt;div&gt;suspension_source, suspension_type,&lt;/div&gt;&lt;div&gt;reason_of_suspension,&lt;/div&gt;&lt;div&gt;officer_authorising_suspension,&lt;/div&gt;&lt;div&gt;due_date_of_revival, suspension_remarks,&lt;/div&gt;&lt;div&gt;process_indicator, cre_date, cre_user_id)&lt;/div&gt;&lt;div&gt;VALUES (:notice_no, CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;:sr_no, &#39;OCMS&#39;, &#39;TS&#39;, &#39;OLD&#39;, &#39;SYSTEM&#39;,&lt;/div&gt;&lt;div&gt;CURRENT_DATE + 21, &#39;VIP OIC Investigation&#39;,&lt;/div&gt;&lt;div&gt;&#39;PROCESSED&#39;, CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;&#39;ocmsiz_app_conn&#39;)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="340" width="280" x="850" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e7" edge="1" parent="oe-backend" source="oe-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-8" parent="oe-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="TS-OLD Revived?" vertex="1">
+          <mxGeometry height="80" width="80" x="990" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e8" edge="1" parent="oe-backend" source="oe-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-9" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-9" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="LTA Vehicle Ownership Check (ROV)" vertex="1">
+          <mxGeometry height="80" width="100" x="1138" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e9" edge="1" parent="oe-backend" source="oe-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-10" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Prepare RD1 for MHA/DH" vertex="1">
+          <mxGeometry height="80" width="100" x="1278" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e10" edge="1" parent="oe-backend" source="oe-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="oe-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1438" y="100" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oe-11" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate RD1 Letter" vertex="1">
+          <mxGeometry height="80" width="100" x="1478" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e11-db" edge="1" parent="oe-backend" source="oe-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="oe-update-rd1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-update-rd1" parent="oe-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;div&gt;SET last_processing_stage = &#39;RD1&#39;,&lt;/div&gt;&lt;div&gt;last_processing_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;next_processing_stage = &#39;RD2&#39;,&lt;/div&gt;&lt;div&gt;next_processing_date = :calculated_date,&lt;/div&gt;&lt;div&gt;prev_processing_stage = &#39;ROV&#39;,&lt;/div&gt;&lt;div&gt;prev_processing_date = :prev_date,&lt;/div&gt;&lt;div&gt;upd_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;/div&gt;&lt;div&gt;WHERE notice_no = :notice_no&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="280" x="1388" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e11" edge="1" parent="oe-backend" source="oe-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-12" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice at RD1" vertex="1">
+          <mxGeometry height="80" width="100" x="1618" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e12" edge="1" parent="oe-backend" source="oe-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-13" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Prepare RD2 for MHA/DH" vertex="1">
+          <mxGeometry height="80" width="100" x="1768" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e13-db" edge="1" parent="oe-backend" source="oe-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="oe-update-rd2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-update-rd2" parent="oe-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;div&gt;SET last_processing_stage = &#39;RD2&#39;,&lt;/div&gt;&lt;div&gt;last_processing_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;next_processing_stage = &#39;RR3&#39;,&lt;/div&gt;&lt;div&gt;next_processing_date = :calculated_date,&lt;/div&gt;&lt;div&gt;prev_processing_stage = &#39;RD1&#39;,&lt;/div&gt;&lt;div&gt;prev_processing_date = :prev_date,&lt;/div&gt;&lt;div&gt;upd_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;/div&gt;&lt;div&gt;WHERE notice_no = :notice_no&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="280" x="1678" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e13" edge="1" parent="oe-backend" source="oe-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-14" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice at RD2" vertex="1">
+          <mxGeometry height="80" width="100" x="1918" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e14" edge="1" parent="oe-backend" source="oe-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-15" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Prepare RR3 for MHA/DH" vertex="1">
+          <mxGeometry height="80" width="100" x="2068" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e15-db" edge="1" parent="oe-backend" source="oe-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="oe-update-rr3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-update-rr3" parent="oe-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;div&gt;SET last_processing_stage = &#39;RR3&#39;,&lt;/div&gt;&lt;div&gt;last_processing_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;next_processing_stage = &#39;CPC&#39;,&lt;/div&gt;&lt;div&gt;next_processing_date = :calculated_date,&lt;/div&gt;&lt;div&gt;prev_processing_stage = &#39;RD2&#39;,&lt;/div&gt;&lt;div&gt;prev_processing_date = :prev_date,&lt;/div&gt;&lt;div&gt;upd_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;/div&gt;&lt;div&gt;WHERE notice_no = :notice_no&lt;/div&gt;" vertex="1">
+          <mxGeometry height="160" width="280" x="1978" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e15" edge="1" parent="oe-backend" source="oe-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-16" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice at RR3" vertex="1">
+          <mxGeometry height="80" width="100" x="2228" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e16" edge="1" parent="oe-backend" source="oe-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-17" parent="oe-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Outstanding at end of RR3?" vertex="1">
+          <mxGeometry height="80" width="80" x="2374" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e17a" edge="1" parent="oe-backend" source="oe-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-18" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e17b" edge="1" parent="oe-backend" source="oe-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-end-paid" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-end-paid" parent="oe-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End (PS-FP)" vertex="1">
+          <mxGeometry height="40" width="80" x="2374" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-18" parent="oe-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Apply TS-CLV at CPC" vertex="1">
+          <mxGeometry height="80" width="100" x="2548" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e18-db" edge="1" parent="oe-backend" source="oe-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="oe-update-clv">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-update-clv" parent="oe-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;div&gt;SET last_processing_stage = &#39;CPC&#39;,&lt;/div&gt;&lt;div&gt;last_processing_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;next_processing_stage = &#39;CSD&#39;,&lt;/div&gt;&lt;div&gt;suspension_type = &#39;TS&#39;,&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension = &#39;CLV&#39;,&lt;/div&gt;&lt;div&gt;epr_date_of_suspension = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;due_date_of_revival = :calculated_due_date,&lt;/div&gt;&lt;div&gt;upd_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;/div&gt;&lt;div&gt;WHERE notice_no = :notice_no&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;INSERT INTO ocms_suspended_notice&lt;/div&gt;&lt;div&gt;(notice_no, date_of_suspension, sr_no,&lt;/div&gt;&lt;div&gt;suspension_source, suspension_type,&lt;/div&gt;&lt;div&gt;reason_of_suspension,&lt;/div&gt;&lt;div&gt;officer_authorising_suspension,&lt;/div&gt;&lt;div&gt;due_date_of_revival, suspension_remarks,&lt;/div&gt;&lt;div&gt;process_indicator, cre_date, cre_user_id)&lt;/div&gt;&lt;div&gt;VALUES (:notice_no, CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;:sr_no, &#39;OCMS&#39;, &#39;TS&#39;, &#39;CLV&#39;, &#39;SYSTEM&#39;,&lt;/div&gt;&lt;div&gt;:due_date, &#39;VIP CLV at CPC stage&#39;,&lt;/div&gt;&lt;div&gt;&#39;PROCESSED&#39;, CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;&#39;ocmsiz_app_conn&#39;)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="390" width="280" x="2458" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-e18" edge="1" parent="oe-backend" source="oe-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="oe-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-end" parent="oe-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="40" width="80" x="2718" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-ext" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="External System (LTA, MHA, DataHive)" vertex="1">
+          <mxGeometry height="360" width="2840" x="40" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-lta" parent="oe-ext" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="LTA VRLS" vertex="1">
+          <mxGeometry height="60" width="100" x="1138" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-lta-api" parent="oe-ext" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;LTA VRLS API&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Request:&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;vehicleNo&quot;: &quot;SBA1234A&quot;,&lt;/div&gt;&lt;div&gt;  &quot;requestType&quot;: &quot;OWNERSHIP&quot;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Response:&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;vehicleNo&quot;: &quot;SBA1234A&quot;,&lt;/div&gt;&lt;div&gt;  &quot;ownerName&quot;: &quot;JOHN DOE&quot;,&lt;/div&gt;&lt;div&gt;  &quot;ownerIdType&quot;: &quot;NRIC&quot;,&lt;/div&gt;&lt;div&gt;  &quot;ownerIdNo&quot;: &quot;S1234567A&quot;,&lt;/div&gt;&lt;div&gt;  &quot;vehicleType&quot;: &quot;PRIVATE CAR&quot;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" vertex="1">
+          <mxGeometry height="230" width="200" x="1060" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-mha" parent="oe-ext" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="MHA / DataHive" vertex="1">
+          <mxGeometry height="60" width="100" x="1278" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-mha-api" parent="oe-ext" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;MHA / DataHive API&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Request:&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;idType&quot;: &quot;NRIC&quot;,&lt;/div&gt;&lt;div&gt;  &quot;idNumber&quot;: &quot;S1234567A&quot;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Response:&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;idNumber&quot;: &quot;S1234567A&quot;,&lt;/div&gt;&lt;div&gt;  &quot;name&quot;: &quot;JOHN DOE&quot;,&lt;/div&gt;&lt;div&gt;  &quot;address&quot;: {...},&lt;/div&gt;&lt;div&gt;  &quot;isDeceased&quot;: false&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" vertex="1">
+          <mxGeometry height="220" width="200" x="1280" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-note-rov" parent="oe-ext" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Note:&lt;/b&gt; LTA check at ROV stage to verify vehicle ownership and update owner details" vertex="1">
+          <mxGeometry height="60" width="200" x="1500" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="oe-note-mha" parent="oe-ext" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Note:&lt;/b&gt; MHA/DataHive check at RD1, RD2, RR3 stages to update offender address info" vertex="1">
+          <mxGeometry height="60" width="200" x="1500" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="exUP8i-sDI6gJdlMTQzJ-2" edge="1" parent="1" source="oe-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="oe-lta">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="exUP8i-sDI6gJdlMTQzJ-3" edge="1" parent="1" source="oe-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="oe-mha">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="vip-an" name="VIP_Advisory_Notice">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="an-backend" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="OCMS Admin API Intranet" vertex="1">
+          <mxGeometry height="480" width="1520" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="an-start" parent="an-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="40" width="80" x="40" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e1" edge="1" parent="an-backend" source="an-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="an-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-2" parent="an-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Type O Offence with AN Qualification" vertex="1">
+          <mxGeometry height="80" width="100" x="160" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e2" edge="1" parent="an-backend" source="an-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="an-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-3" parent="an-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Set an_flag = Y" vertex="1">
+          <mxGeometry height="80" width="100" x="300" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e3" edge="1" parent="an-backend" source="an-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="an-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-4" parent="an-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query AN Notices" vertex="1">
+          <mxGeometry height="80" width="100" x="490" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e4-db" edge="1" parent="an-backend" source="an-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="an-query">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-query" parent="an-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, vehicle_no, vehicle_registration_type,&lt;div&gt;offence_notice_type, an_flag, notice_date_and_time,&lt;/div&gt;&lt;div&gt;computer_rule_code, pp_code, pp_name,&lt;/div&gt;&lt;div&gt;composition_amount, last_processing_stage,&lt;/div&gt;&lt;div&gt;next_processing_stage, next_processing_date&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;V&#39;&lt;/div&gt;&lt;div&gt;AND an_flag = &#39;Y&#39;&lt;/div&gt;&lt;div&gt;AND last_processing_stage = &#39;NPA&#39;&lt;/div&gt;&lt;div&gt;AND next_processing_stage = &#39;ROV&#39;&lt;/div&gt;&lt;div&gt;AND next_processing_date &amp;lt;= CURRENT_DATE&lt;/div&gt;&lt;div&gt;AND suspension_type IS NULL&lt;/div&gt;" vertex="1">
+          <mxGeometry height="230" width="280" x="400" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e4" edge="1" parent="an-backend" source="an-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="an-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-5" parent="an-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate AN Letter PDF" vertex="1">
+          <mxGeometry height="80" width="100" x="680" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e5" edge="1" parent="an-backend" source="an-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="an-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-6" parent="an-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Drop Letters to SFTP" vertex="1">
+          <mxGeometry height="80" width="100" x="820" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e6" edge="1" parent="an-backend" source="an-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="an-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-7" parent="an-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Update Notice Stage" vertex="1">
+          <mxGeometry height="80" width="100" x="960" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e7-db" edge="1" parent="an-backend" source="an-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="an-update">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-update" parent="an-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;div&gt;SET last_processing_stage = &#39;RD1&#39;,&lt;/div&gt;&lt;div&gt;last_processing_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;next_processing_stage = &#39;RD2&#39;,&lt;/div&gt;&lt;div&gt;next_processing_date = :calculated_date,&lt;/div&gt;&lt;div&gt;upd_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;/div&gt;&lt;div&gt;WHERE notice_no = :notice_no&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="280" x="870" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e7" edge="1" parent="an-backend" source="an-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="an-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-8" parent="an-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Apply PS-ANS" vertex="1">
+          <mxGeometry height="80" width="100" x="1130" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e8-db" edge="1" parent="an-backend" source="an-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="an-insert">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-insert" parent="an-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_suspended_notice&lt;div&gt;(notice_no, date_of_suspension, sr_no,&lt;/div&gt;&lt;div&gt;suspension_source, suspension_type,&lt;/div&gt;&lt;div&gt;reason_of_suspension,&lt;/div&gt;&lt;div&gt;officer_authorising_suspension,&lt;/div&gt;&lt;div&gt;cre_date, cre_user_id)&lt;/div&gt;&lt;div&gt;VALUES&lt;/div&gt;&lt;div&gt;(:notice_no, CURRENT_TIMESTAMP, :sr_no,&lt;/div&gt;&lt;div&gt;&#39;OCMS&#39;, &#39;PS&#39;, &#39;ANS&#39;, &#39;SYSTEM&#39;,&lt;/div&gt;&lt;div&gt;CURRENT_TIMESTAMP, &#39;ocmsiz_app_conn&#39;)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="280" x="1190" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="an-e8" edge="1" parent="an-backend" source="an-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="an-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="an-end" parent="an-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="40" width="80" x="1350" y="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="vip-furnish" name="VIP_Furnish_Driver">
+    <mxGraphModel dx="2037" dy="1281" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="fu-eservice" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="eService Portal" vertex="1">
+          <mxGeometry height="260" width="1520" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-start" parent="fu-eservice" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="40" width="80" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e1" edge="1" parent="fu-eservice" source="fu-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f1CBn6Ar_ifvq0rbMsFk-2" edge="1" parent="fu-eservice" source="fu-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="f1CBn6Ar_ifvq0rbMsFk-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350" y="100" />
+              <mxPoint x="350" y="150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fu-2" parent="fu-eservice" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Owner Submits Furnish Application" vertex="1">
+          <mxGeometry height="80" width="100" x="160" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="f1CBn6Ar_ifvq0rbMsFk-1" parent="fu-eservice" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;INSERT eocms_furnish_application:&lt;/b&gt;&lt;br&gt;txn_no (PK), notice_no, vehicle_no,&lt;br&gt;offence_date, pp_code, pp_name,&lt;br&gt;last_processing_stage,&lt;br&gt;furnish_name, furnish_id_type,&lt;br&gt;furnish_id_no, furnish_mail_blk_no,&lt;br&gt;furnish_mail_street_name,&lt;br&gt;furnish_mail_postal_code,&lt;br&gt;owner_driver_indicator = &#39;D&#39;/&#39;H&#39;,&lt;br&gt;hirer_owner_relationship,&lt;br&gt;status = &#39;P&#39; (Pending)" vertex="1">
+          <mxGeometry height="200" width="220" x="410" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-backend" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="OCMS Admin API Intranet" vertex="1">
+          <mxGeometry height="550" width="1520" x="40" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-3" parent="fu-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Validate Furnish Particulars" vertex="1">
+          <mxGeometry height="80" width="100" x="300" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e3-db" edge="1" parent="fu-backend" source="fu-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="fu-api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-api" parent="fu-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="POST /notices/{noticeNo}/furnish&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Request:&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;furnishType&quot;: &quot;DRIVER&quot;,&lt;/div&gt;&lt;div&gt;  &quot;particulars&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;idType&quot;: &quot;NRIC&quot;,&lt;/div&gt;&lt;div&gt;    &quot;idNumber&quot;: &quot;S1234567A&quot;,&lt;/div&gt;&lt;div&gt;    &quot;name&quot;: &quot;JOHN DOE&quot;,&lt;/div&gt;&lt;div&gt;    &quot;contactNo&quot;: &quot;91234567&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Response:&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;  &quot;message&quot;: &quot;Success&quot;,&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;applicationId&quot;: &quot;FA20260115001&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" vertex="1">
+          <mxGeometry height="320" width="300" x="200" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e3" edge="1" parent="fu-backend" source="fu-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-4" parent="fu-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Auto Approve Criteria?" vertex="1">
+          <mxGeometry height="80" width="80" x="450" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e4a" edge="1" parent="fu-backend" source="fu-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-5" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e4b" edge="1" parent="fu-backend" source="fu-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-oic" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-oic" parent="fu-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="OIC Manual Review" vertex="1">
+          <mxGeometry height="80" width="100" x="570" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-5" parent="fu-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Auto Approve" vertex="1">
+          <mxGeometry height="80" width="100" x="710" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e5" edge="1" parent="fu-backend" source="fu-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e-oic" edge="1" parent="fu-backend" source="fu-oic" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="40" />
+              <mxPoint x="760" y="40" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fu-6" parent="fu-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Create Owner/Driver Record" vertex="1">
+          <mxGeometry height="80" width="100" x="850" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e6-db" edge="1" parent="fu-backend" source="fu-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="fu-insert">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-insert" parent="fu-backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_offence_notice_owner_driver&lt;div&gt;(notice_no, owner_driver_indicator,&lt;/div&gt;&lt;div&gt;id_type, id_no, name, date_of_birth,&lt;/div&gt;&lt;div&gt;life_status, email_addr, lta_entity_type,&lt;/div&gt;&lt;div&gt;offender_indicator, offender_tel_code,&lt;/div&gt;&lt;div&gt;offender_tel_no, passport_place_of_issue,&lt;/div&gt;&lt;div&gt;is_sync, mha_dh_check_allow,&lt;/div&gt;&lt;div&gt;cre_date, cre_user_id)&lt;/div&gt;&lt;div&gt;VALUES&lt;/div&gt;&lt;div&gt;(:notice_no, :owner_driver_indicator,&lt;/div&gt;&lt;div&gt;:id_type, :id_no, :name, :dob,&lt;/div&gt;&lt;div&gt;&#39;A&#39;, :email, :entity_type,&lt;/div&gt;&lt;div&gt;&#39;Y&#39;, :tel_code, :tel_no, :passport_poi,&lt;/div&gt;&lt;div&gt;&#39;N&#39;, &#39;Y&#39;,&lt;/div&gt;&lt;div&gt;CURRENT_TIMESTAMP, &#39;ocmsiz_app_conn&#39;)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="260" width="300" x="750" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e6" edge="1" parent="fu-backend" source="fu-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-7" parent="fu-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Driver or Hirer?" vertex="1">
+          <mxGeometry height="80" width="80" x="1050" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e7a" edge="1" parent="fu-backend" source="fu-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-dn1" value="Driver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e7b" edge="1" parent="fu-backend" source="fu-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-rd1" value="Hirer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-dn1" parent="fu-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Update Stage to DN1" vertex="1">
+          <mxGeometry height="60" width="100" x="1230" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-rd1" parent="fu-backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Update Stage to RD1" vertex="1">
+          <mxGeometry height="60" width="100" x="1230" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e-dn1" edge="1" parent="fu-backend" source="fu-dn1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-e-rd1" edge="1" parent="fu-backend" source="fu-rd1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="fu-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fu-end" parent="fu-backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="40" width="80" x="1380" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="0o4OqGV4TZumpkUjoWWn-1" edge="1" parent="1" source="fu-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="fu-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="vip-ts-clv-cron" name="VIP_TS_CLV_Cron">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3500" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="clv-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="OCMS Cron Service" vertex="1">
+          <mxGeometry height="510" width="1520" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-start" parent="clv-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="CRON Start" vertex="1">
+          <mxGeometry height="40" width="100" x="40" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e1" edge="1" parent="clv-cron" source="clv-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="clv-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="176" y="120" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="clv-2" parent="clv-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query VIP Notices at RR3/DR3" vertex="1">
+          <mxGeometry height="80" width="100" x="226" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e2-db" edge="1" parent="clv-cron" source="clv-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="clv-query">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-query" parent="clv-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, vehicle_no, vehicle_registration_type,&lt;div&gt;offence_notice_type, last_processing_stage,&lt;/div&gt;&lt;div&gt;last_processing_date, next_processing_stage,&lt;/div&gt;&lt;div&gt;next_processing_date, prev_processing_stage,&lt;/div&gt;&lt;div&gt;prev_processing_date, suspension_type,&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension, epr_date_of_suspension,&lt;/div&gt;&lt;div&gt;due_date_of_revival, payment_status,&lt;/div&gt;&lt;div&gt;composition_amount, amount_payable&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;V&#39;&lt;/div&gt;&lt;div&gt;AND last_processing_stage IN (&#39;RR3&#39;, &#39;DR3&#39;)&lt;/div&gt;&lt;div&gt;AND next_processing_stage = &#39;CPC&#39;&lt;/div&gt;&lt;div&gt;AND next_processing_date &amp;lt;= CURRENT_DATE&lt;/div&gt;&lt;div&gt;AND (suspension_type IS NULL&lt;/div&gt;&lt;div&gt;     OR suspension_type = &#39;TS&#39;)&lt;/div&gt;&lt;div&gt;AND payment_status != &#39;FP&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="260" width="300" x="126" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e2" edge="1" parent="clv-cron" source="clv-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="clv-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-3" parent="clv-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Records found?" vertex="1">
+          <mxGeometry height="80" width="80" x="438" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e3a" edge="1" parent="clv-cron" source="clv-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="clv-4" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e3b" edge="1" parent="clv-cron" source="clv-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="clv-end-no" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-end-no" parent="clv-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="40" width="80" x="438" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-4" parent="clv-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Move to CPC stage" vertex="1">
+          <mxGeometry height="80" width="100" x="591" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e4" edge="1" parent="clv-cron" source="clv-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="clv-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-5" parent="clv-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Apply TS-CLV suspension" vertex="1">
+          <mxGeometry height="80" width="100" x="773" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e5" edge="1" parent="clv-cron" source="clv-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="clv-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-6" parent="clv-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Patch notice details" vertex="1">
+          <mxGeometry height="80" width="100" x="960" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e6-db" edge="1" parent="clv-cron" source="clv-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="clv-update">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-update" parent="clv-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;div&gt;SET last_processing_stage = &#39;CPC&#39;,&lt;/div&gt;&lt;div&gt;last_processing_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;next_processing_stage = &#39;CSD&#39;,&lt;/div&gt;&lt;div&gt;next_processing_date = NULL,&lt;/div&gt;&lt;div&gt;prev_processing_stage = :from_stage,&lt;/div&gt;&lt;div&gt;prev_processing_date = :from_date,&lt;/div&gt;&lt;div&gt;suspension_type = &#39;TS&#39;,&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension = &#39;CLV&#39;,&lt;/div&gt;&lt;div&gt;epr_date_of_suspension = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;due_date_of_revival = :calculated_due_date,&lt;/div&gt;&lt;div&gt;upd_date = CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;/div&gt;&lt;div&gt;WHERE notice_no = :notice_no&lt;/div&gt;" vertex="1">
+          <mxGeometry height="200" width="300" x="790" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e6" edge="1" parent="clv-cron" source="clv-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="clv-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-7" parent="clv-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Create suspension record" vertex="1">
+          <mxGeometry height="80" width="100" x="1190" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e7-db" edge="1" parent="clv-cron" source="clv-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="clv-insert">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-insert" parent="clv-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_suspended_notice&lt;div&gt;(notice_no, date_of_suspension, sr_no,&lt;/div&gt;&lt;div&gt;suspension_source, suspension_type,&lt;/div&gt;&lt;div&gt;reason_of_suspension,&lt;/div&gt;&lt;div&gt;officer_authorising_suspension,&lt;/div&gt;&lt;div&gt;due_date_of_revival,&lt;/div&gt;&lt;div&gt;suspension_remarks, process_indicator,&lt;/div&gt;&lt;div&gt;cre_date, cre_user_id)&lt;/div&gt;&lt;div&gt;VALUES&lt;/div&gt;&lt;div&gt;(:notice_no, CURRENT_TIMESTAMP,&lt;/div&gt;&lt;div&gt;:next_sr_no, &#39;OCMS&#39;, &#39;TS&#39;, &#39;CLV&#39;,&lt;/div&gt;&lt;div&gt;&#39;SYSTEM&#39;, :calculated_due_date,&lt;/div&gt;&lt;div&gt;&#39;Auto TS-CLV at CPC stage&#39;, &#39;PROCESSED&#39;,&lt;/div&gt;&lt;div&gt;CURRENT_TIMESTAMP, &#39;ocmsiz_app_conn&#39;)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="200" width="300" x="1160" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-e7" edge="1" parent="clv-cron" source="clv-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="clv-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-end" parent="clv-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="40" width="80" x="1370" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="clv-note" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Auto Re-apply TS-CLV Cron&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Query:&lt;/div&gt;&lt;div&gt;SELECT notice_no, vehicle_registration_type,&lt;/div&gt;&lt;div&gt;last_processing_stage, suspension_type,&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension, due_date_of_revival&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;V&#39;&lt;/div&gt;&lt;div&gt;AND last_processing_stage = &#39;CPC&#39;&lt;/div&gt;&lt;div&gt;AND suspension_type = &#39;TS&#39;&lt;/div&gt;&lt;div&gt;AND epr_reason_of_suspension = &#39;CLV&#39;&lt;/div&gt;&lt;div&gt;AND due_date_of_revival &amp;lt;= CURRENT_DATE&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Actions:&lt;/div&gt;&lt;div&gt;1. Create revival record&lt;/div&gt;&lt;div&gt;2. Re-apply TS-CLV with new due_date&lt;/div&gt;&lt;div&gt;3. Create new suspension record&lt;/div&gt;" vertex="1">
+          <mxGeometry height="260" width="300" x="40" y="610" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="vip-report" name="VIP_Classified_Report">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4500" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="rpt-cron" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="OCMS Cron Service" vertex="1">
+          <mxGeometry height="550" width="2200" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-start" parent="rpt-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="CRON Start" vertex="1">
+          <mxGeometry height="40" width="100" x="40" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e1" edge="1" parent="rpt-cron" source="rpt-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="rpt-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="171" y="120" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rpt-2" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Active VIP Vehicles from CAS" vertex="1">
+          <mxGeometry height="80" width="100" x="221" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e2-db" edge="1" parent="rpt-cron" source="rpt-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="rpt-query-cas">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-query-cas" parent="rpt-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT vehicle_no, vip_label_status,&lt;div&gt;label_expiry_date&lt;/div&gt;&lt;div&gt;FROM vip_vehicle&lt;/div&gt;&lt;div&gt;WHERE status = &#39;ACTIVE&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="210" x="166" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e2" edge="1" parent="rpt-cron" source="rpt-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-3" parent="rpt-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="VIP found?" vertex="1">
+          <mxGeometry height="80" width="80" x="426" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e3a" edge="1" parent="rpt-cron" source="rpt-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-4" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e3b" edge="1" parent="rpt-cron" source="rpt-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-empty" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-empty" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate empty report" vertex="1">
+          <mxGeometry height="60" width="100" x="416" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-4" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Notice Details from OCMS" vertex="1">
+          <mxGeometry height="80" width="100" x="621" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e4" edge="1" parent="rpt-cron" source="rpt-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-5" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Offender Details" vertex="1">
+          <mxGeometry height="80" width="100" x="896" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e5-db" edge="1" parent="rpt-cron" source="rpt-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="rpt-query-ond">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-query-ond" parent="rpt-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, owner_driver_indicator,&lt;div&gt;id_type, id_no, name, date_of_birth,&lt;/div&gt;&lt;div&gt;life_status, email_addr, lta_entity_type,&lt;/div&gt;&lt;div&gt;offender_indicator, offender_tel_no&lt;/div&gt;&lt;div&gt;FROM ocms_offence_notice_owner_driver&lt;/div&gt;&lt;div&gt;WHERE notice_no IN (:notice_list)&lt;/div&gt;&lt;div&gt;AND offender_indicator = &#39;Y&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="270" x="811" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e5" edge="1" parent="rpt-cron" source="rpt-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-6" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Amended Notices (V-S)" vertex="1">
+          <mxGeometry height="80" width="100" x="1190" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e6-db" edge="1" parent="rpt-cron" source="rpt-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="rpt-query-amended">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-query-amended" parent="rpt-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT von.notice_no, von.vehicle_no,&lt;div&gt;von.notice_date_and_time, von.pp_name,&lt;/div&gt;&lt;div&gt;von.composition_amount, von.amount_payable,&lt;/div&gt;&lt;div&gt;sn.date_of_suspension, sn.date_of_revival&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice von&lt;/div&gt;&lt;div&gt;JOIN ocms_suspended_notice sn&lt;/div&gt;&lt;div&gt;  ON von.notice_no = sn.notice_no&lt;/div&gt;&lt;div&gt;WHERE sn.reason_of_suspension = &#39;CLV&#39;&lt;/div&gt;&lt;div&gt;AND sn.date_of_revival IS NOT NULL&lt;/div&gt;&lt;div&gt;AND von.vehicle_registration_type = &#39;S&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="280" x="1100" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e6" edge="1" parent="rpt-cron" source="rpt-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-7" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Calculate Outstanding &amp; Settled counts" vertex="1">
+          <mxGeometry height="80" width="100" x="1436" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e7" edge="1" parent="rpt-cron" source="rpt-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="M9qFOGL2bPoQAym4CJyC-1" edge="1" parent="rpt-cron" source="rpt-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;dashed=1;dashPattern=8 8;" target="rpt-sheets">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-8" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate Excel Report (3 sheets)" vertex="1">
+          <mxGeometry height="80" width="100" x="1680" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-sheets" parent="rpt-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Excel Report Structure:&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Sheet 1 - Summary:&lt;/b&gt;&lt;/div&gt;&lt;div&gt;- Report Date&lt;/div&gt;&lt;div&gt;- Total Notices Issued (Type V)&lt;/div&gt;&lt;div&gt;- Outstanding Notices (Unpaid)&lt;/div&gt;&lt;div&gt;- Settled Notices (Paid)&lt;/div&gt;&lt;div&gt;- Notices Amended (V→S)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Sheet 2 - Type V Notices Detail:&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Columns: S/N, Notice No, Vehicle No,&lt;/div&gt;&lt;div&gt;Notice Date, Offence Code, Place,&lt;/div&gt;&lt;div&gt;Composition Amt, Amount Payable,&lt;/div&gt;&lt;div&gt;Payment Status, Suspension Type/Reason&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;Sheet 3 - Amended Notices (V→S):&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Columns: S/N, Notice No, Vehicle No,&lt;/div&gt;&lt;div&gt;Notice Date, Original Type, Amended Type,&lt;/div&gt;&lt;div&gt;Suspension Date, Revival Date, Place,&lt;/div&gt;&lt;div&gt;Composition Amt, Amount Payable&lt;/div&gt;" vertex="1">
+          <mxGeometry height="310" width="320" x="1570" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e8" edge="1" parent="rpt-cron" source="rpt-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-9" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send Email to OICs" vertex="1">
+          <mxGeometry height="80" width="100" x="1892" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e9" edge="1" parent="rpt-cron" source="rpt-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-end" parent="rpt-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="40" width="80" x="2070" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-query-von" parent="rpt-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT von.notice_no, von.vehicle_no,&lt;div&gt;von.vehicle_registration_type,&lt;/div&gt;&lt;div&gt;von.notice_date_and_time, von.computer_rule_code,&lt;/div&gt;&lt;div&gt;von.pp_code, von.pp_name,&lt;/div&gt;&lt;div&gt;von.composition_amount, von.amount_payable,&lt;/div&gt;&lt;div&gt;von.suspension_type, von.epr_reason_of_suspension,&lt;/div&gt;&lt;div&gt;von.crs_reason_of_suspension,&lt;/div&gt;&lt;div&gt;von.last_processing_stage, von.payment_status&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice von&lt;/div&gt;&lt;div&gt;WHERE von.vehicle_no IN (:vip_vehicle_list)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="310" x="516" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="rpt-e4-db" edge="1" parent="rpt-cron" source="rpt-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="rpt-query-von">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="671" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
