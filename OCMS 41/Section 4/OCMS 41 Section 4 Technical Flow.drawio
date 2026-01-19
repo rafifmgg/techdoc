@@ -147,7 +147,7 @@
         </mxCell>
 
         <!-- API boxes -->
-        <mxCell id="hl-api1" value="POST /notice/offender/furnish&lt;div&gt;POST /notice/offender/redirect&lt;/div&gt;&lt;div&gt;PATCH /notice/offender/update&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="hl-swim-portal">
+        <mxCell id="hl-api1" value="POST /notice/offender/furnish&lt;div&gt;POST /notice/offender/redirect&lt;/div&gt;&lt;div&gt;POST /notice/offender/update&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;rounded=0;" vertex="1" parent="hl-swim-portal">
           <mxGeometry x="1520" y="200" width="170" height="60" as="geometry" />
         </mxCell>
 
@@ -438,7 +438,7 @@
           <mxGeometry x="2420" y="160" width="140" height="60" as="geometry" />
         </mxCell>
         <!-- Response format box -->
-        <mxCell id="frn-resp" value="&lt;b&gt;Response&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;Furnish successful&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="frn-swim-api">
+        <mxCell id="frn-resp" value="&lt;b&gt;Response&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;Furnish successful&quot;,&lt;/div&gt;&lt;div&gt;    &quot;noticeNo&quot;: &quot;500500303J&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="frn-swim-api">
           <mxGeometry x="2870" y="80" width="200" height="120" as="geometry" />
         </mxCell>
         <mxCell id="frn-resp-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="frn-swim-api" source="frn-be-p11" target="frn-resp">
@@ -502,7 +502,7 @@
         </mxCell>
 
         <!-- Database query boxes (inside API swimlane) -->
-        <mxCell id="frn-db1" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT notice_no, vehicle_no,&lt;/div&gt;&lt;div&gt;processing_stage, offence_date,&lt;/div&gt;&lt;div&gt;offence_type, status&lt;/div&gt;&lt;div&gt;WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="frn-swim-api">
+        <mxCell id="frn-db1" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT notice_no, vehicle_no,&lt;/div&gt;&lt;div&gt;last_processing_stage&lt;/div&gt;&lt;div&gt;WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="frn-swim-api">
           <mxGeometry x="1000" y="180" width="200" height="100" as="geometry" />
         </mxCell>
         <mxCell id="frn-db2" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;INSERT/UPDATE offender record&lt;/div&gt;&lt;div&gt;SET offender_indicator = 'Y'&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="frn-swim-api">
@@ -511,7 +511,7 @@
         <mxCell id="frn-db3" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;UPDATE SET offender_indicator = 'N',&lt;/div&gt;&lt;div&gt;upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;&lt;div&gt;WHERE notice_no = ? AND offender_indicator = 'Y'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="frn-swim-api">
           <mxGeometry x="2210" y="180" width="260" height="85" as="geometry" />
         </mxCell>
-        <mxCell id="frn-db4" value="&lt;b&gt;eocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;INSERT/UPDATE offender record for eService&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsez_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="frn-swim-api">
+        <mxCell id="frn-db4" value="&lt;b&gt;eocms_furnish_application&lt;/b&gt;&lt;div&gt;INSERT furnish application record&lt;/div&gt;&lt;div&gt;Sync to PII zone&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsez_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="frn-swim-api">
           <mxGeometry x="2530" y="180" width="240" height="75" as="geometry" />
         </mxCell>
 
@@ -707,7 +707,7 @@
           <mxGeometry x="2300" y="160" width="140" height="60" as="geometry" />
         </mxCell>
         <!-- Response format box -->
-        <mxCell id="rdr-resp" value="&lt;b&gt;Response&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;Redirect successful&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="rdr-swim-api">
+        <mxCell id="rdr-resp" value="&lt;b&gt;Response&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;Redirect successful&quot;,&lt;/div&gt;&lt;div&gt;    &quot;noticeNo&quot;: &quot;500500303J&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="rdr-swim-api">
           <mxGeometry x="2750" y="80" width="200" height="120" as="geometry" />
         </mxCell>
         <mxCell id="rdr-resp-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="rdr-swim-api" source="rdr-be-p10" target="rdr-resp">
@@ -768,7 +768,7 @@
         <mxCell id="rdr-db2" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;INSERT/UPDATE target offender&lt;/div&gt;&lt;div&gt;SET offender_indicator = 'Y'&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="rdr-swim-api">
           <mxGeometry x="2100" y="180" width="220" height="85" as="geometry" />
         </mxCell>
-        <mxCell id="rdr-db3" value="&lt;b&gt;eocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;Sync redirect changes to Internet&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsez_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="rdr-swim-api">
+        <mxCell id="rdr-db3" value="&lt;b&gt;eocms_furnish_application&lt;/b&gt;&lt;div&gt;Sync redirect changes to PII&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsez_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="rdr-swim-api">
           <mxGeometry x="2410" y="180" width="220" height="75" as="geometry" />
         </mxCell>
 
@@ -811,7 +811,7 @@
         <mxCell id="1" parent="0" />
 
         <!-- Title -->
-        <mxCell id="upd-title" value="4.8 Update Offender Particulars - PATCH /notice/offender/update" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=14;fontStyle=1" vertex="1" parent="1">
+        <mxCell id="upd-title" value="4.8 Update Offender Particulars - POST /notice/offender/update" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=14;fontStyle=1" vertex="1" parent="1">
           <mxGeometry x="40" y="10" width="550" height="30" as="geometry" />
         </mxCell>
 
@@ -857,7 +857,7 @@
         </mxCell>
 
         <!-- API Box -->
-        <mxCell id="upd-api" value="&lt;b&gt;PATCH /notice/offender/update&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  noticeNo, offenderType,&lt;/div&gt;&lt;div&gt;  name, email, contactNo,&lt;/div&gt;&lt;div&gt;  address&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="upd-swim-portal">
+        <mxCell id="upd-api" value="&lt;b&gt;POST /notice/offender/update&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  noticeNo, offenderType,&lt;/div&gt;&lt;div&gt;  name, email, contactNo,&lt;/div&gt;&lt;div&gt;  address&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="upd-swim-portal">
           <mxGeometry x="150" y="175" width="180" height="100" as="geometry" />
         </mxCell>
 
@@ -930,7 +930,7 @@
           <mxGeometry x="1520" y="160" width="180" height="60" as="geometry" />
         </mxCell>
         <!-- Response format box -->
-        <mxCell id="upd-resp" value="&lt;b&gt;Response&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;Update successful&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="upd-swim-api">
+        <mxCell id="upd-resp" value="&lt;b&gt;Response&lt;/b&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;Update successful&quot;,&lt;/div&gt;&lt;div&gt;    &quot;noticeNo&quot;: &quot;500500303J&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="upd-swim-api">
           <mxGeometry x="1830" y="60" width="200" height="120" as="geometry" />
         </mxCell>
         <mxCell id="upd-resp-e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="upd-swim-api" source="upd-be-p5" target="upd-resp">
@@ -964,10 +964,10 @@
         </mxCell>
 
         <!-- Database query boxes (inside API swimlane) -->
-        <mxCell id="upd-db1" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;SELECT notice_no, id_no, id_type,&lt;/div&gt;&lt;div&gt;name, email_addr, contact_no,&lt;/div&gt;&lt;div&gt;offender_indicator, owner_driver_indicator&lt;/div&gt;&lt;div&gt;WHERE notice_no = ?&lt;/div&gt;&lt;div&gt;AND owner_driver_indicator = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="upd-swim-api">
+        <mxCell id="upd-db1" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;SELECT notice_no, id_no, id_type,&lt;/div&gt;&lt;div&gt;name, email_addr, offender_tel_no,&lt;/div&gt;&lt;div&gt;offender_indicator, owner_driver_indicator&lt;/div&gt;&lt;div&gt;WHERE notice_no = ?&lt;/div&gt;&lt;div&gt;AND owner_driver_indicator = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="upd-swim-api">
           <mxGeometry x="1170" y="170" width="240" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="upd-db2" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;UPDATE SET name=?, email=?,&lt;/div&gt;&lt;div&gt;contact_no=?, address=?,&lt;/div&gt;&lt;div&gt;upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;&lt;div&gt;WHERE notice_no = ? AND ...&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="upd-swim-api">
+        <mxCell id="upd-db2" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;UPDATE SET name=?, email_addr=?,&lt;/div&gt;&lt;div&gt;offender_tel_no=?,&lt;/div&gt;&lt;div&gt;upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;&lt;div&gt;WHERE notice_no = ? AND ...&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="upd-swim-api">
           <mxGeometry x="1480" y="170" width="220" height="105" as="geometry" />
         </mxCell>
 

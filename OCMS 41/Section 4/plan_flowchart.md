@@ -4,8 +4,8 @@
 
 | Field | Value |
 |-------|-------|
-| Version | 1.0 |
-| Date | 2026-01-07 |
+| Version | 1.1 |
+| Date | 2026-01-19 |
 | Source | Functional Document v1.1, Section 4 |
 | Module | OCMS 41 - Section 4: Staff Portal Manual Furnish or Update |
 
@@ -158,9 +158,11 @@ Functional Flow drawio memiliki diagram berikut:
 14. Return success response
 
 **Database Operations:**
-- ocms_valid_offence_notice: Query notice
-- ocms_offence_notice_owner_driver: INSERT/UPDATE offender
-- eocms_offence_notice_owner_driver: Sync to Internet
+- ocms_valid_offence_notice (VON): Query notice (last_processing_stage, vehicle_no)
+- ocms_offence_notice_owner_driver (OND): INSERT/UPDATE offender
+- ocms_offence_notice_owner_driver_addr (OND_ADDR): INSERT/UPDATE address (type_of_address='furnished_mail')
+- ocms_furnish_application (FA): INSERT furnish application record
+- eocms_furnish_application (eFA): Sync to PII zone
 
 **Estimated Dimensions:**
 - Width: ~3200px
@@ -228,7 +230,7 @@ Functional Flow drawio memiliki diagram berikut:
 3. OIC modifies particulars
 4. OIC clicks Submit
 5. Frontend validation
-6. Call PATCH /notice/offender/update
+6. Call POST /notice/offender/update
 7. Receive response
 8. Display success/error message
 9. End

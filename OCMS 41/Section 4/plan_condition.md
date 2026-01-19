@@ -4,8 +4,8 @@
 
 | Field | Value |
 |-------|-------|
-| Version | 1.0 |
-| Date | 2026-01-07 |
+| Version | 1.1 |
+| Date | 2026-01-19 |
 | Source | Functional Document v1.1, Section 4 |
 | Module | OCMS 41 - Section 4: Staff Portal Manual Furnish or Update |
 
@@ -40,7 +40,7 @@
 | ID Number | FRN-002 | Required | ID Number is required |
 | ID Number | FRN-003 | Format check based on ID Type | Invalid {idType} format |
 | Name | FRN-004 | Required | Name is required |
-| Name | FRN-005 | Max 100 characters | Name exceeds maximum length |
+| Name | FRN-005 | Max 66 characters | Name exceeds maximum length |
 | Email | FRN-006 | Valid email format if provided | Invalid email format |
 | Contact No | FRN-007 | Numeric only, 8 digits for SG | Invalid contact number |
 | Postal Code | FRN-008 | 6 digits for Singapore | Invalid postal code |
@@ -115,13 +115,13 @@
 
 #### Processing Stage Update Rules
 
-| Offender Type | Current Stage | New Stage |
-|---------------|---------------|-----------|
-| HIRER | OW | RD1 |
-| HIRER | RD1 | RD2 |
-| DRIVER | OW | DN |
-| DRIVER | RD1 | DN |
-| DRIVER | RD2 | DN |
+| Offender Type (owner_driver_indicator) | Current Stage | New Stage |
+|-----------------------------------------|---------------|-----------|
+| H (Hirer) | OW | RD1 |
+| H (Hirer) | RD1 | RD2 |
+| D (Driver) | OW | DN |
+| D (Driver) | RD1 | DN |
+| D (Driver) | RD2 | DN |
 
 ### 2.5 Redirect Processing Rules (Section 4.7.2.3)
 

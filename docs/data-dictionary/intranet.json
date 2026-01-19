@@ -550,8 +550,8 @@
         "epic": "OCMS 39"
       },
       {
-        "name": "reason_source",
-        "type": "varchar(8)",
+        "name": "suspension_source",
+        "type": "varchar(4)",
         "primary_key": true,
         "nullable": false,
         "default": null,
@@ -954,22 +954,6 @@
         "epic": "OCMS 7"
       },
       {
-        "name": "incentive_payt_amt",
-        "type": "decimal(19,2)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Incentive payment amount"
-      },
-      {
-        "name": "incentive_payt_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Incentive payment date"
-      },
-      {
         "name": "last_processing_date",
         "type": "datetime2(7)",
         "primary_key": false,
@@ -1136,14 +1120,6 @@
         "description": "Surcharge amount"
       },
       {
-        "name": "susp_type_update_allowed",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Indicates if suspension type update allowed"
-      },
-      {
         "name": "suspension_type",
         "type": "varchar(2)",
         "primary_key": false,
@@ -1187,14 +1163,6 @@
         "default": null,
         "description": "Vehicle number",
         "epic": "OCMS 5"
-      },
-      {
-        "name": "vehicle_owner_type",
-        "type": "varchar(5)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Type of vehicle owner"
       },
       {
         "name": "vehicle_registration_type",
@@ -1312,15 +1280,6 @@
         "nullable": true,
         "default": null,
         "description": "Color of the vehicle entered by OIC in Staff Portal create notice",
-        "epic": "OCMS 5"
-      },
-      {
-        "name": "comments",
-        "type": "varchar(30)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Additional comments related to the offense.",
         "epic": "OCMS 5"
       },
       {
@@ -2275,15 +2234,6 @@
         "epic": "OCMS 11"
       },
       {
-        "name": "reminder_flag",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Flag indicating if a reminder has been issued.",
-        "epic": "OCMS 11"
-      },
-      {
         "name": "unclaimed_reason",
         "type": "varchar(3)",
         "primary_key": false,
@@ -2763,14 +2713,6 @@
         "epic": "OCMS 7"
       },
       {
-        "name": "comments",
-        "type": "varchar(30)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Additional comments."
-      },
-      {
         "name": "cre_date",
         "type": "datetime2(7)",
         "primary_key": false,
@@ -2825,15 +2767,6 @@
         "epic": "OCMS 8"
       },
       {
-        "name": "email_alt_addr",
-        "type": "varchar(320)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "An alternate email address of the driver/hirer/owner.",
-        "epic": "OCMS 8"
-      },
-      {
         "name": "lta_entity_type",
         "type": "varchar(1)",
         "primary_key": false,
@@ -2843,14 +2776,6 @@
         "epic": "OCMS 7"
       },
       {
-        "name": "invalid_addr_tag",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Flag to indicate if the address is invalid."
-      },
-      {
         "name": "id_type",
         "type": "varchar(1)",
         "primary_key": false,
@@ -2858,70 +2783,6 @@
         "default": null,
         "description": "specific owner identification type.",
         "epic": "OCMS 7"
-      },
-      {
-        "name": "mail_bldg",
-        "type": "varchar(65)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Building name of the mailing address."
-      },
-      {
-        "name": "mail_blk_hse_no",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Block or house number of the mailing address."
-      },
-      {
-        "name": "mail_country_code",
-        "type": "varchar(6)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Country code of the mailing address."
-      },
-      {
-        "name": "mail_floor",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Floor number of the mailing address."
-      },
-      {
-        "name": "mail_postal_code",
-        "type": "varchar(6)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Postal code of the mailing address."
-      },
-      {
-        "name": "mail_street",
-        "type": "varchar(32)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Street name of the mailing address."
-      },
-      {
-        "name": "mail_unit",
-        "type": "varchar(5)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Unit number of the mailing address."
-      },
-      {
-        "name": "mail_upd_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "The date when the mailing address was last updated."
       },
       {
         "name": "name",
@@ -2951,24 +2812,6 @@
         "epic": "OCMS 8"
       },
       {
-        "name": "offender_mobile_code",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Mobile country code for the offender.",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "offender_mobile_no",
-        "type": "varchar(12)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Mobile number of the offender.",
-        "epic": "OCMS 42"
-      },
-      {
         "name": "offender_tel_code",
         "type": "varchar(3)",
         "primary_key": false,
@@ -2985,41 +2828,6 @@
         "default": null,
         "description": "Mobile number of the offender.",
         "epic": "OCMS 8"
-      },
-      {
-        "name": "offender_tel_code",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Telephone country code for the offender.",
-        "epic": "OCMS 8"
-      },
-      {
-        "name": "offender_tel_no",
-        "type": "varchar(20)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Telephone number of the offender.",
-        "epic": "OCMS 8"
-      },
-      {
-        "name": "offender_tel_type",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Type of telephone (home, work, etc.).",
-        "epic": "OCMS 8"
-      },
-      {
-        "name": "owner_partner_director",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Indicates if the owner is a partner or director in the company."
       },
       {
         "name": "passport_place_of_issue",
@@ -3029,70 +2837,6 @@
         "default": null,
         "description": "The place of issue of the passport.",
         "epic": "OCMS 7"
-      },
-      {
-        "name": "reg_bldg",
-        "type": "varchar(65)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "The building name of the registered address."
-      },
-      {
-        "name": "reg_blk_hse_no",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Block or house number of the registered address."
-      },
-      {
-        "name": "reg_country_code",
-        "type": "varchar(6)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Country code of the registered address."
-      },
-      {
-        "name": "reg_floor",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Floor number of the registered address."
-      },
-      {
-        "name": "reg_postal_code",
-        "type": "varchar(6)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Postal code of the registered address."
-      },
-      {
-        "name": "reg_street",
-        "type": "varchar(32)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Street name of the registered address."
-      },
-      {
-        "name": "reg_unit",
-        "type": "varchar(5)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Unit number of the registered address."
-      },
-      {
-        "name": "reg_upd_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Date when the registered address was last updated."
       },
       {
         "name": "upd_date",
@@ -3129,166 +2873,6 @@
         "default": "Y",
         "description": "Indicator for bypass MHA and DH check",
         "epic": "OCMS 15"
-      },
-      {
-        "name": "lta_reg_bldg",
-        "type": "varchar(65)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Building name of the mailing address."
-      },
-      {
-        "name": "lta_reg_blk_hse_no",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Block or house number of the mailing address."
-      },
-      {
-        "name": "lta_reg_country_code",
-        "type": "varchar(6)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Country code of the mailing address."
-      },
-      {
-        "name": "lta_reg_floor",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Floor number of the mailing address."
-      },
-      {
-        "name": "lta_reg_postal_code",
-        "type": "varchar(6)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Postal code of the mailing address."
-      },
-      {
-        "name": "lta_reg_street",
-        "type": "varchar(32)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Street name of the mailing address."
-      },
-      {
-        "name": "lta_reg_unit",
-        "type": "varchar(5)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Unit number of the mailing address."
-      },
-      {
-        "name": "lta_reg_address_effective_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Effective date of the registered address according to LTA records."
-      },
-      {
-        "name": "lta_mailing_block_house_number",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Block or house number of the LTA mailing address."
-      },
-      {
-        "name": "lta_mailing_street_name",
-        "type": "varchar(32)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Street name of the LTA mailing address."
-      },
-      {
-        "name": "lta_mailing_floor_number",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Floor number of the LTA mailing address."
-      },
-      {
-        "name": "lta_mailing_unit_number",
-        "type": "varchar(5)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Unit number of the LTA mailing address."
-      },
-      {
-        "name": "lta_mailing_building_name",
-        "type": "varchar(65)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Building name of the LTA mailing address."
-      },
-      {
-        "name": "lta_mailing_postal_code",
-        "type": "varchar(6)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Postal code of the LTA mailing address."
-      },
-      {
-        "name": "lta_mailing_address_effective_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Effective date of the LTA mailing address."
-      },
-      {
-        "name": "address_type",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Address type return from MHA result file"
-      },
-      {
-        "name": "findeath_reference_period",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Reference period from datahive for fin death dataset"
-      },
-      {
-        "name": "gazetted_flag",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Flag to indicate company is gazetted or not"
-      },
-      {
-        "name": "last_change_address_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Date when the last address change was recorded source from datahive."
-      },
-      {
-        "name": "mha_processing_date_time",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Date time when the record process by MHA."
       }
     ]
   },
@@ -3515,20 +3099,11 @@
       },
       {
         "name": "suspension_source",
-        "type": "varchar(8)",
+        "type": "varchar(4)",
         "primary_key": false,
         "nullable": false,
         "default": null,
         "description": "Source of the suspension data. Length restricted to 8 characters.",
-        "epic": "OCMS 17"
-      },
-      {
-        "name": "case_no",
-        "type": "varchar(20)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Case number associated with the suspension.",
         "epic": "OCMS 17"
       },
       {
@@ -4436,15 +4011,6 @@
         "epic": "OCMS 5"
       },
       {
-        "name": "txn_no",
-        "type": "varchar(20)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Unique transaction number for the furnish application.",
-        "epic": "OCMS 42"
-      },
-      {
         "name": "notice_no",
         "type": "varchar(10)",
         "primary_key": false,
@@ -4971,14 +4537,6 @@
         "epic": "OCMS 11"
       },
       {
-        "name": "seq_no",
-        "type": "integer",
-        "primary_key": true,
-        "nullable": false,
-        "default": null,
-        "description": "sequence processing stage to determine the new next processing stage"
-      },
-      {
         "name": "cre_date",
         "type": "datetime2(7)",
         "primary_key": false,
@@ -5101,15 +4659,6 @@
         "epic": "OCMS 43"
       },
       {
-        "name": "total_amount",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Total amount of the transaction",
-        "epic": "OCMS 43"
-      },
-      {
         "name": "payment_amount",
         "type": "decimal(19,2)",
         "primary_key": false,
@@ -5188,15 +4737,6 @@
         "nullable": true,
         "default": null,
         "description": "ID of user who last updated the record",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "merchant_ref_no",
-        "type": "varchar(16)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "merchant reference number that get from URA PG",
         "epic": "OCMS 43"
       }
     ]
@@ -5615,14 +5155,6 @@
         "epic": "OCMS 7"
       },
       {
-        "name": "record_counter",
-        "type": "",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "No of records processed by batch job"
-      },
-      {
         "name": "log_text",
         "type": "text",
         "primary_key": false,
@@ -5686,111 +5218,6 @@
         "epic": "OCMS 7"
       }
     ]
-  },
-  "ocms_slift_operation": {
-    "description": "This table manages file operations and processing workflows within the OCMS system. It tracks file uploads, processing status, and maintains metadata about file operations for various application components.",
-    "columns": [
-      {
-        "name": "request_id",
-        "type": "varchar(50)",
-        "primary_key": true,
-        "nullable": false,
-        "default": null,
-        "description": "Primary key, unique identifier for each file operation request."
-      },
-      {
-        "name": "app_code",
-        "type": "varchar(20)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Application code identifying which component initiated the request."
-      },
-      {
-        "name": "operation_type",
-        "type": "varchar(20)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Type of operation being performed (ENCRYPTION/DECRYPTION)."
-      },
-      {
-        "name": "workflow_type",
-        "type": "varchar(20)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Specific workflow category for the operation.(LTA_ENQUIRY, LTA_RESULT, MHA_ENQUIRY, MHA_RESULT)"
-      },
-      {
-        "name": "file_name",
-        "type": "varchar(255)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Name of the file being processed."
-      },
-      {
-        "name": "token",
-        "type": "varchar(100)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Security token associated with the operation."
-      },
-      {
-        "name": "status",
-        "type": "varchar(20)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Current status of the operation (COMPLETED, COMPLETED_WITH_ERRORS, FAILED, TIMEOUT, PROCESSED)"
-      },
-      {
-        "name": "error_message",
-        "type": "nvarchar(max)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Error message if the operation failed."
-      },
-      {
-        "name": "retry_count",
-        "type": "integer",
-        "primary_key": false,
-        "nullable": false,
-        "default": "0",
-        "description": "Number of retry attempts for the operation."
-      },
-      {
-        "name": "cre_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Timestamp when the request was created."
-      },
-      {
-        "name": "upd_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Timestamp when the request was last updated."
-      },
-      {
-        "name": "completed_at",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Timestamp when the operation was completed."
-      }
-    ]
-  },
-  "sequence sql server": {
-    "description": "for generate notice number",
-    "columns": []
   },
   "ocms_dh_sps_custody": {
     "description": "This table stores custody records for individuals (e.g., ex-SCs, ex-PRs, or other identified persons) based on their incarceration status. It includes key identifiers, admission institution mappings, custody, offense timelines, and metadata tracking.",
@@ -5918,39 +5345,12 @@
         "epic": "OCMS 8"
       },
       {
-        "name": "inmate_programme_category",
-        "type": "VARCHAR(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Code for the rehabilitation programme category assigned to the inmate",
-        "epic": "OCMS 8"
-      },
-      {
-        "name": "adm_date",
-        "type": "DATETIME2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Admission date of the inmate",
-        "epic": "OCMS 8"
-      },
-      {
         "name": "tentative_release_date",
         "type": "datetime2(7)",
         "primary_key": false,
         "nullable": true,
         "default": null,
         "description": "Expected or projected release date of the inmate",
-        "epic": "OCMS 8"
-      },
-      {
-        "name": "reference_period_offence_info",
-        "type": "DATETIME2(7)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Reporting period associated with the incarceration record",
         "epic": "OCMS 8"
       },
       {
@@ -6977,15 +6377,6 @@
         "default": null,
         "description": "Flag to indicate if the address is invalid from MHA result file.",
         "epic": "OCMS 8"
-      },
-      {
-        "name": "is_sync",
-        "type": "boolean",
-        "primary_key": false,
-        "nullable": false,
-        "default": "False",
-        "description": "Indicator for sync intranet to intranet",
-        "epic": "OCMS 43"
       }
     ]
   },
@@ -7066,335 +6457,6 @@
       }
     ]
   },
-  "ocms_refund_notice": {
-    "description": "Stores refund transactions raised against paid notices. Each record represents one unique refund request, approval trail, and execution outcome returned from Workday.",
-    "columns": [
-      {
-        "name": "refund_notice_id",
-        "type": "varchar(16)",
-        "primary_key": true,
-        "nullable": false,
-        "default": null,
-        "description": "Unique reference number for the refund notice.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "receipt_no",
-        "type": "varchar(16)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Receipt number from payment txn.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "notice_no",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Original notice number related to this refund.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "pp_code",
-        "type": "varchar(5)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Car Park Code - in case the car park is not managed by URA.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "amount_paid",
-        "type": "decimal(19,2)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Original amount paid (drawn from VON amount_paid field).",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "workday_refund_ref_no",
-        "type": "varchar(20)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "External gateway reference number returned from Workday.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_amount",
-        "type": "decimal(19,2)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Amount approved to be refunded.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_reason",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Reason for the refund.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_remarks",
-        "type": "varchar(200)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Officer remarks if any.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_status",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": false,
-        "default": "requested'",
-        "description": "Current status of refund. Allowed values: requested, approved, sent, completed, failed, cancelled.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_completed_at",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Date/time when refund was completed by Workday.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_request_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Date/time refund was requested by requesting officer.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_request_officer",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "User ID of officer who requested the refund.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_approved_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Date/time refund was approved.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_approving_officer",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "User ID of officer who approved the refund.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_method",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Method used to execute refund (e.g. GIRO, PayNow).",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "sent_to_workday_at",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Date/time when refund was sent to Workday for execution.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "cre_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Date record was created.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "cre_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "User ID who created the record.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "upd_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Date the record was last updated.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "upd_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "User ID who last updated the record.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_notice_id",
-        "type": "varchar(16)",
-        "primary_key": true,
-        "nullable": false,
-        "default": null,
-        "description": "Unique reference number for the refund notice.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "receipt_no",
-        "type": "varchar(16)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Receipt number from payment txn.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "notice_no",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Original notice number related to this refund.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "pp_code",
-        "type": "varchar(5)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Car Park Code - in case the car park is not managed by URA.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "amount_paid",
-        "type": "decimal(19,2)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Original amount paid (drawn from VON amount_paid field).",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "amount_payable",
-        "type": "decimal(19,2)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Original amount payable (drawn from VON amount_payable field)",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "suspension_type",
-        "type": "varchar(2)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Suspension type",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "epr_reason_of_suspension",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "EPR suspension reason",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "crs_reason_of_suspension",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "CRS suspension reason",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_amount",
-        "type": "decimal(19,2)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Amount approved to be refunded.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "refund_reason",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Reason for the refund.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "cre_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Date record was created.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "cre_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "User ID who created the record.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "upd_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Date the record was last updated.",
-        "epic": "OCMS 43"
-      },
-      {
-        "name": "upd_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "User or system ID who updated the record",
-        "epic": "OCMS 43"
-      }
-    ]
-  },
   "ocms_template_store": {
     "description": "This table stores template information. It is designed to hold binary template data along with relevant metadata such as type, creation, and update details.",
     "columns": [
@@ -7426,30 +6488,12 @@
         "epic": "OCMS 44"
       },
       {
-        "name": "version",
-        "type": "Integer",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Supports template change control and history.",
-        "epic": "OCMS 9"
-      },
-      {
         "name": "template_content",
         "type": "nvarchar(max)",
         "primary_key": false,
         "nullable": true,
         "default": null,
         "description": "Human-readable description of what the template is for (and optionally what changed)",
-        "epic": "OCMS 9"
-      },
-      {
-        "name": "is_active",
-        "type": "bit",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Marks which version is currently “live” and should be used by the system.",
         "epic": "OCMS 9"
       },
       {
@@ -7590,182 +6634,6 @@
         "nullable": true,
         "default": null,
         "description": "User ID who last updated the parameter.",
-        "epic": "OCMS 10"
-      }
-    ]
-  },
-  "ocms_an_letter": {
-    "description": "",
-    "columns": [
-      {
-        "name": "date_of_processing",
-        "type": "datetime(2)",
-        "primary_key": true,
-        "nullable": false,
-        "default": null,
-        "description": "Date the AN Letter was generated",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "notice_no",
-        "type": "varchar(10)",
-        "primary_key": true,
-        "nullable": false,
-        "default": null,
-        "description": "The unique identifier for the offence notice.",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "cre_date",
-        "type": "datetime(2)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Creation date of the record",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "cre_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "ID of user who created the record",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "date_of_an_letter",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Date printed in the AN Letter",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "date_of_return",
-        "type": "datetime(2)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Date AN Letter was returned to URA as an Unclaimed Letter",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "owner_bldg",
-        "type": "varchar(65)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Building name in AN Letter address",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "owner_blk_hse_no",
-        "type": "varchar(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Block/house number in AN Letter address",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "owner_floor",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Floor/level in AN Letter address",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "owner_id_type",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Vehicle Owner’s ID type",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "owner_name",
-        "type": "varchar(66)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Name of Vehicle Owner",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "owner_nric_no",
-        "type": "varchar(12)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "ID number of Vehicle Owner",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "owner_postal_code",
-        "type": "varchar(6)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Postal Code in AN Letter address",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "owner_street",
-        "type": "varchar(32)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Street Name in AN Letter address",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "owner_unit",
-        "type": "varchar(5)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Unit Number in AN Letter address",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "processing_stage",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Notice’s Last Processing Stage when AN Letter was generated",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "unclaimed_reason",
-        "type": "varchar(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Unclaimed reason if Letter was returned to URA as an Unclaimed Notice",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "upd_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Last updated date",
-        "epic": "OCMS 10"
-      },
-      {
-        "name": "upd_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "ID of user who last updated the record",
         "epic": "OCMS 10"
       }
     ]
@@ -8519,92 +7387,6 @@
       }
     ]
   },
-  "ocms_furnish_application_doc": {
-    "description": "Store furnish attachment document",
-    "columns": [
-      {
-        "name": "txn_no",
-        "type": "varchar(20)",
-        "primary_key": true,
-        "nullable": false,
-        "default": null,
-        "description": "Unique transaction number for the furnish application. (PK)",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "attachment_id",
-        "type": "integer",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Unique identifier for the attachment.",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "doc_name",
-        "type": "varchar(2000)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Name of supporting document",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "mime",
-        "type": "varchar(100)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "MIME type of the file (e.g., image/png, application/pdf).",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "size",
-        "type": "bigint",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "File size in bytes.",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "cre_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Date when the record was created.",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "cre_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "ID of the user who created the record.",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "upd_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Date when the record was last updated.",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "upd_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "ID of the user who last updated the record.",
-        "epic": "OCMS 42"
-      }
-    ]
-  },
   "ocms_furnish_application": {
     "description": "Store furnish data after doing furnish notice",
     "columns": [
@@ -8753,26 +7535,8 @@
         "epic": "OCMS 42"
       },
       {
-        "name": "furnish_tel_country_code",
-        "type": "VARCHAR(4)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Country code of the furnished contact number. Based on PLUS eService max length (+1-849), total 4 chars",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "furnish_tel_area_code",
-        "type": "VARCHAR(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Area code, for countries that use area code, eg. US",
-        "epic": "OCMS 42"
-      },
-      {
         "name": "furnish_tel_code",
-        "type": "varchar(4)",
+        "type": "varchar(3)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8786,33 +7550,6 @@
         "nullable": true,
         "default": null,
         "description": "Contact number of furnished hirer or driver",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "furnish_alt_tel_country_code",
-        "type": "VARCHAR(10)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Country code of alternative contact number furnished",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "furnish_alt_tel_area_code",
-        "type": "VARCHAR(3)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Area code, for countries that use area code, eg. US",
-        "epic": "OCMS 42"
-      },
-      {
-        "name": "furnish_alt_contact_no",
-        "type": "VARCHAR(12)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Alternative contact number furnished",
         "epic": "OCMS 42"
       },
       {
@@ -8925,7 +7662,7 @@
       },
       {
         "name": "owner_tel_code",
-        "type": "varchar(4)",
+        "type": "varchar(3)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -8933,17 +7670,8 @@
         "epic": "OCMS 42"
       },
       {
-        "name": "hst_id_deteted",
-        "type": "VARCHAR(1)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "ID furnished is detected as a HST ID (e.g. Y or blank)",
-        "epic": "OCMS 42"
-      },
-      {
         "name": "owner_tel_no",
-        "type": "varchar(20)",
+        "type": "varchar(12)",
         "primary_key": false,
         "nullable": true,
         "default": null,
@@ -9024,6 +7752,101 @@
       }
     ]
   },
+  "ocms_furnish_application_doc": {
+    "description": "",
+    "columns": [
+      {
+        "name": "attachment_id",
+        "type": "integer",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "Unique identifier for the attachment.",
+        "epic": "OCMS 42"
+      },
+      {
+        "name": "txn_no",
+        "type": "varchar(20)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Unique transaction number for the furnish application.",
+        "epic": "OCMS 42"
+      },
+      {
+        "name": "notice_no",
+        "type": "varchar(10)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "The offence notice number linked to the attachment.",
+        "epic": "OCMS 42"
+      },
+      {
+        "name": "cre_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Date and time when the attachment was created.",
+        "epic": "OCMS 42"
+      },
+      {
+        "name": "cre_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "User ID of the person who uploaded the attachment.",
+        "epic": "OCMS 42"
+      },
+      {
+        "name": "file_name",
+        "type": "varchar(2000)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Name of the attached file and path to azure blob.",
+        "epic": "OCMS 42"
+      },
+      {
+        "name": "mime",
+        "type": "varchar(100)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "MIME type of the file (e.g., image/png, application/pdf).",
+        "epic": "OCMS 42"
+      },
+      {
+        "name": "size",
+        "type": "bigint",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "File size in bytes.",
+        "epic": "OCMS 42"
+      },
+      {
+        "name": "upd_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Date and time of the last update.",
+        "epic": "OCMS 42"
+      },
+      {
+        "name": "upd_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "User ID of the person who last updated the attachment.",
+        "epic": "OCMS 42"
+      }
+    ]
+  },
   "ocms_unclaim_report": {
     "description": "To store generated unclaim report",
     "columns": [
@@ -9080,6 +7903,146 @@
         "default": null,
         "description": "Indicates the type or category of the report",
         "epic": "OCMS 20"
+      }
+    ]
+  },
+  "ocms_refund_notice": {
+    "description": "Stores refund transactions raised against paid notices. Each record represents one unique refund request, approval trail, and execution outcome returned from Workday.",
+    "columns": [
+      {
+        "name": "refund_notice_id",
+        "type": "varchar(16)",
+        "primary_key": true,
+        "nullable": false,
+        "default": null,
+        "description": "Unique reference number for the refund notice.",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "receipt_no",
+        "type": "varchar(16)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Receipt number from payment txn.",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "notice_no",
+        "type": "varchar(10)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Original notice number related to this refund.",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "pp_code",
+        "type": "varchar(5)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Car Park Code - in case the car park is not managed by URA.",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "amount_paid",
+        "type": "decimal(19,2)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Original amount paid (drawn from VON amount_paid field).",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "amount_payable",
+        "type": "decimal(19,2)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Original amount payable (drawn from VON amount_payable field)",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "suspension_type",
+        "type": "varchar(2)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Suspension type",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "epr_reason_of_suspension",
+        "type": "varchar(3)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "EPR suspension reason",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "crs_reason_of_suspension",
+        "type": "varchar(3)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "CRS suspension reason",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "refund_amount",
+        "type": "decimal(19,2)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Amount approved to be refunded.",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "refund_reason",
+        "type": "varchar(3)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Reason for the refund.",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "cre_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "Date record was created.",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "cre_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": false,
+        "default": null,
+        "description": "User ID who created the record.",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "upd_date",
+        "type": "datetime2(7)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "Date the record was last updated.",
+        "epic": "OCMS 43"
+      },
+      {
+        "name": "upd_user_id",
+        "type": "varchar(50)",
+        "primary_key": false,
+        "nullable": true,
+        "default": null,
+        "description": "User or system ID who updated the record",
+        "epic": "OCMS 43"
       }
     ]
   },
@@ -9266,110 +8229,6 @@
         "default": null,
         "description": "User ID of the person who last updated the record.",
         "epic": "OCMS 20"
-      }
-    ]
-  },
-  "ocms_user": {
-    "description": "Stores master OIC information for the OCMS application, including personal details, contact information, user status, and audit trail fields for creation and updates",
-    "columns": [
-      {
-        "name": "user_id",
-        "type": "varchar2(10)",
-        "primary_key": true,
-        "nullable": false,
-        "default": null,
-        "description": "Unique identifier for the OCMS user. Serves as the primary reference for user records.",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "first_name",
-        "type": "varchar(66)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "The user’s first name as registered in the OCMS system.",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "last_name",
-        "type": "varchar(66)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "The user’s last name or surname as registered in the OCMS system.",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "email_address",
-        "type": "varchar(320)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "The user’s primary email address used for OCMS notifications and communication.",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "contact_no",
-        "type": "varchar(12)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "The user’s contact number (mobile or office) reachable for communication.",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "status",
-        "type": "varchar(1)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "The current status of the user, (ACTIVE, INACTIVE)",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "remarks",
-        "type": "varchar(200)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Additional notes or comments related to the user or the request/change (free text).",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "cre_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "Timestamp when the OCMS_USER record was initially created.",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "cre_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": false,
-        "default": null,
-        "description": "The USER_ID or system identifier that created the OCMS_USER record.",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "upd_date",
-        "type": "datetime2(7)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "Timestamp of the most recent update to the OCMS_USER record.",
-        "epic": "OCMS 18"
-      },
-      {
-        "name": "upd_user_id",
-        "type": "varchar(50)",
-        "primary_key": false,
-        "nullable": true,
-        "default": null,
-        "description": "The USER_ID or system identifier that performed the latest update.",
-        "epic": "OCMS 18"
       }
     ]
   },
