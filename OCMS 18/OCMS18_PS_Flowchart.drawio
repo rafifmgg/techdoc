@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="HighLevelFlow" name="PS_High_Level">
-        <mxGraphModel dx="1009" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="6800" pageHeight="1800" math="0" shadow="0">
+        <mxGraphModel dx="1168" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="6800" pageHeight="1800" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -294,7 +294,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="Page3" name="UI_Side_Validation">
-        <mxGraphModel dx="1009" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7500" pageHeight="2000" math="0" shadow="0">
+        <mxGraphModel dx="1168" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7500" pageHeight="2000" math="0" shadow="0">
             <root>
                 <mxCell id="p3_0"/>
                 <mxCell id="p3_1" parent="p3_0"/>
@@ -849,7 +849,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="Page5" name="PLUS_Staff_Portal_Manual_PS">
-        <mxGraphModel dx="917" dy="758" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7500" pageHeight="2400" math="0" shadow="0">
+        <mxGraphModel dx="708" dy="505" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7500" pageHeight="2400" math="0" shadow="0">
             <root>
                 <mxCell id="p5_0"/>
                 <mxCell id="p5_1" parent="p5_0"/>
@@ -1212,7 +1212,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="Page2" name="OCMS_Staff_Portal_Manual_PS">
-        <mxGraphModel dx="747" dy="618" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="6800" pageHeight="1800" math="0" shadow="0">
+        <mxGraphModel dx="2124" dy="1516" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="6800" pageHeight="1800" math="0" shadow="0">
             <root>
                 <mxCell id="p2_0"/>
                 <mxCell id="p2_1" parent="p2_0"/>
@@ -1220,7 +1220,7 @@
                     <mxGeometry x="40" y="10" width="350" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_swim_fe" value="Staff Portal" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="p2_1" vertex="1">
-                    <mxGeometry x="20" y="50" width="6700" height="630" as="geometry"/>
+                    <mxGeometry x="20" y="50" width="6040" height="630" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="p2_swim_fe" vertex="1">
                     <mxGeometry x="30" y="130" width="100" height="60" as="geometry"/>
@@ -1303,7 +1303,7 @@
                 <mxCell id="p2_e11a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="p2_swim_fe" source="p2_p7" target="p2_api2" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_api2" value="POST /suspensionreasonlist&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  suspensionType: &quot;PS&quot;,&lt;/div&gt;&lt;div&gt;  status: &quot;A&quot;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="p2_swim_fe" vertex="1">
+                <mxCell id="p2_api2" value="POST /suspensionreasonlist&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  suspensionType: &quot;PS&quot;,&lt;/div&gt;&lt;div&gt;  status: &quot;A&quot;,&lt;/div&gt;&lt;div&gt;reasonSource: &quot;OCMS_&lt;span style=&quot;color: rgb(63, 63, 63); background-color: transparent;&quot;&gt;FE&quot;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="p2_swim_fe" vertex="1">
                     <mxGeometry x="1350" y="250" width="160" height="100" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="p2_swim_fe" source="p2_p7" target="p2_p8" edge="1">
@@ -1352,31 +1352,31 @@
                     <mxGeometry x="2360" y="270" width="140" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_p12" value="Receive API response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="p2_swim_fe" vertex="1">
-                    <mxGeometry x="6130" y="110" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="5450" y="130" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_e_resp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="p2_swim_fe" source="p2_p12" target="p2_p13" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_p13" value="Consolidate success and failed results" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="p2_swim_fe" vertex="1">
-                    <mxGeometry x="6300" y="110" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="5620" y="130" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_e_disp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="p2_swim_fe" source="p2_p13" target="p2_p14" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_p14" value="Display results table (Success/Failed tabs)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="p2_swim_fe" vertex="1">
-                    <mxGeometry x="6470" y="110" width="120" height="60" as="geometry"/>
+                    <mxGeometry x="5790" y="130" width="120" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_e_end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="p2_swim_fe" source="p2_p14" target="p2_end" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="p2_swim_fe" vertex="1">
-                    <mxGeometry x="6620" y="110" width="60" height="60" as="geometry"/>
+                    <mxGeometry x="5940" y="130" width="60" height="60" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_e_err1_end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="p2_swim_fe" source="p2_err1" target="p2_end" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="680" y="540"/>
-                            <mxPoint x="6650" y="540"/>
+                            <mxPoint x="5970" y="540"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -1389,7 +1389,7 @@
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="p2_swim_be" value="OCMS Admin API Intranet" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="p2_1" vertex="1">
-                    <mxGeometry x="20" y="690" width="6700" height="1020" as="geometry"/>
+                    <mxGeometry x="20" y="690" width="6040" height="1020" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_be_p1" value="validate authentication" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" parent="p2_swim_be" vertex="1">
                     <mxGeometry x="2120" y="220" width="120" height="60" as="geometry"/>
@@ -1463,7 +1463,7 @@
                 <mxCell id="p2_be_p5_conn" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="p2_swim_be" source="p2_be_p5" target="p2_be_note_ps" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="p2_be_note_ps" value="&lt;b&gt;PS Codes Allowed by Source:&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;OCMS Staff (22 codes):&lt;/b&gt;&lt;/div&gt;&lt;div&gt;ANS, CAN, CFA, CFP, DBB, DIP, FCT,&lt;/div&gt;&lt;div&gt;FOR, FTC, IST, MID, OTH, RIP, RP2,&lt;/div&gt;&lt;div&gt;SCT, SLC, SSV, VCT, VST, WWC, WWF, WWP&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;PLUS (5 codes):&lt;/b&gt;&lt;/div&gt;&lt;div&gt;APP, CAN, CFA, OTH, VST&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;OCMS Backend (14 codes):&lt;/b&gt;&lt;/div&gt;&lt;div&gt;ANS, DBB, DIP, FOR, MID, RIP, RP2,&lt;/div&gt;&lt;div&gt;FP, PRA, CFP, IST, WWC, WWF, WWP&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;Note: Codes stored in parameter table&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;(not hardcoded in application)&lt;/i&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;rounded=0;" parent="p2_swim_be" vertex="1">
+                <mxCell id="p2_be_note_ps" value="&lt;b&gt;PS Codes Allowed by Source:&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;OCMS Staff (22 codes):&lt;/b&gt;&lt;/div&gt;&lt;div&gt;ANS, CAN, CFA, CFP, DBB, DIP, FCT,&lt;/div&gt;&lt;div&gt;FOR, FTC, IST, MID, OTH, RIP, RP2,&lt;/div&gt;&lt;div&gt;SCT, SLC, SSV, VCT, VST, WWC, WWF, WWP&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;PLUS (5 codes):&lt;/b&gt;&lt;/div&gt;&lt;div&gt;APP, CAN, CFA, OTH, VST&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;b&gt;OCMS Backend (14 codes):&lt;/b&gt;&lt;/div&gt;&lt;div&gt;ANS, DBB, DIP, FOR, MID, RIP, RP2,&lt;/div&gt;&lt;div&gt;FP, PRA, CFP, IST, WWC, WWF, WWP&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;Note: Codes stored in suspension reason table&lt;/i&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;(not hardcoded in application)&lt;/i&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;rounded=0;" parent="p2_swim_be" vertex="1">
                     <mxGeometry x="3210" y="350" width="240" height="270" as="geometry"/>
                 </mxCell>
                 <mxCell id="p2_be_e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="p2_swim_be" source="p2_be_p5" target="p2_be_d3" edge="1">
@@ -1695,7 +1695,7 @@
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="5350" y="640"/>
-                            <mxPoint x="6190" y="640"/>
+                            <mxPoint x="5530" y="640"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -1703,7 +1703,7 @@
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="2750" y="640"/>
-                            <mxPoint x="6190" y="640"/>
+                            <mxPoint x="5530" y="640"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -1711,7 +1711,7 @@
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="3150" y="640"/>
-                            <mxPoint x="6190" y="640"/>
+                            <mxPoint x="5530" y="640"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -1719,7 +1719,7 @@
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="3530" y="640"/>
-                            <mxPoint x="6190" y="640"/>
+                            <mxPoint x="5530" y="640"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -1727,7 +1727,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="AutoPSTriggers" name="Auto_PS_Triggers">
-        <mxGraphModel dx="2018" dy="1668" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="3000" math="0" shadow="0">
+        <mxGraphModel dx="1168" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="3000" math="0" shadow="0">
             <root>
                 <mxCell id="p6_0"/>
                 <mxCell id="p6_1" parent="p6_0"/>
@@ -2028,7 +2028,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="PSReport" name="PS_Report">
-        <mxGraphModel dx="612" dy="505" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7000" pageHeight="2000" math="0" shadow="0">
+        <mxGraphModel dx="2336" dy="1668" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7000" pageHeight="2000" math="0" shadow="0">
             <root>
                 <mxCell id="p8_0"/>
                 <mxCell id="p8_1" parent="p8_0"/>

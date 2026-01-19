@@ -274,7 +274,67 @@ Before finalizing documentation, ask:
 
 ---
 
-## 10. Quick Reference Table
+## 10. Programmer Self-Sufficiency
+
+### 10.1 Goal
+Documentation must be **self-sufficient** for programmers. They should be able to implement the feature **without asking additional questions** to the tech writer.
+
+### 10.2 5W1H Test
+Before finalizing, ensure documentation answers all:
+
+| Question | What to Document |
+|----------|------------------|
+| **WHAT** | Clear feature/API/process description |
+| **WHY** | Business context and purpose |
+| **WHERE** | Integration points (systems, modules, tables) |
+| **WHEN** | Trigger conditions (what starts this process) |
+| **WHO** | User roles and system actors |
+| **HOW** | Technical implementation details |
+
+### 10.3 Implementation Completeness Checklist
+
+| Aspect | Must Include |
+|--------|--------------|
+| **What to build** | Clear feature/function description |
+| **How to build** | Technical approach, patterns, integration points |
+| **What data** | All fields with data types, sources, constraints |
+| **What validations** | All business rules with clear conditions |
+| **What errors** | All error scenarios with codes and messages |
+| **What flow** | Complete flow from trigger to end state |
+| **What edge cases** | Boundary conditions and special scenarios |
+
+### 10.4 Programmer Questions Prevention
+
+Ask yourself: **"Will programmer need to ask me about..."**
+
+| Common Question | Ensure Documentation Has |
+|-----------------|--------------------------|
+| Which table to insert/update? | Table names clearly listed |
+| What is the field data type? | Data types specified |
+| What is the max length? | Field lengths documented |
+| Is this field nullable? | Nullable/required specified |
+| What is the default value? | Defaults documented |
+| What triggers this process? | Trigger clearly stated |
+| What happens if X fails? | Error handling documented |
+| What is the sequence/order? | Step sequence numbered |
+| Which API to call? | API endpoints listed |
+| What payload to send? | Request payload example shown |
+| What response to expect? | Response structure documented |
+
+### 10.5 Self-Check Before Submit
+
+Before submitting documentation, read it as if you are the programmer and ask:
+1. Can I start coding immediately after reading this?
+2. Do I know exactly which tables and fields to use?
+3. Do I know all the validations and error scenarios?
+4. Do I understand the complete flow from start to end?
+5. Are there any gaps that would make me ask the tech writer?
+
+If any answer is **NO**, the documentation is **NOT ready**.
+
+---
+
+## 11. Quick Reference Table
 
 | Topic | Rule |
 |-------|------|
@@ -308,3 +368,6 @@ Before finalizing documentation, ask:
 | FD Reference | Refer to FD, don't duplicate |
 | Developer Usability | Doc must help developers |
 | Data Source | Always explain data source |
+| Programmer Self-Sufficiency | Programmer can implement without asking tech writer |
+| 5W1H Test | What/Why/Where/When/Who/How all answered |
+| Self-Check | Read as programmer before submit |

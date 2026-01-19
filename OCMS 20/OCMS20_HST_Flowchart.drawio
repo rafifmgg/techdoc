@@ -1,0 +1,1223 @@
+<mxfile host="65bd71144e">
+    <diagram id="hst-high-level" name="HST_High_Level_Flow">
+        <mxGraphModel dx="928" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2250" pageHeight="380" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="hl-title" value="HST Suspension - High Level Process Flow" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=14;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="10" width="350" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-precond" value="PRE-CONDITION: No new address found for Unclaimed Offender" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="60" width="200" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="150" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-step1" value="Create HST Suspension via Staff Portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="130" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-start" target="hl-step1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-ref1" value="Refer to HST_Manual_Suspend_User_Journey" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="1" vertex="1">
+                    <mxGeometry x="165" y="240" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-ref1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="1" source="hl-step1" target="hl-ref1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-step2" value="Suspend all Notices under ID with TS-HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="130" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-step1" target="hl-step2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-ref2" value="Refer to HST_Manual_Suspend_Backend" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="1" vertex="1">
+                    <mxGeometry x="335" y="240" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-ref2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="1" source="hl-step2" target="hl-ref2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-note1" value="Note: New Notices under ID will be suspended with TS-HST before RD1" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="130" width="140" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-note1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-step2" target="hl-note1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-dec1" value="Payment made?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="710" y="130" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-note1" target="hl-dec1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-payment" value="Notice suspended with PS-FP" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="700" y="280" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-pay" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-dec1" target="hl-payment" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-loop" value="Looping TS-HST applied upon suspension expiry" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="860" y="130" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge4" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-dec1" target="hl-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-ref-ocms17" value="Refer to OCMS 17 Functional Document" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="1" vertex="1">
+                    <mxGeometry x="845" y="240" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-ref17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="1" source="hl-loop" target="hl-ref-ocms17" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-cron" value="Monthly DataHive checks &amp; Reports" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="130" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-loop" target="hl-cron" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-ref-cron" value="Refer to HST_Monthly_Cron" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="1" vertex="1">
+                    <mxGeometry x="1015" y="240" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-ref-cron" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="1" source="hl-cron" target="hl-ref-cron" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-dec2" value="New address found?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="1200" y="130" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-cron" target="hl-dec2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-loopback" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-dec2" target="hl-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1250" y="80"/>
+                            <mxPoint x="920" y="80"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="hl-update" value="Manual HST Update (New address)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="1350" y="130" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge7" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-dec2" target="hl-update" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-ref-update" value="Refer to HST_Update_User_Journey" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="1" vertex="1">
+                    <mxGeometry x="1335" y="240" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-ref-update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="1" source="hl-update" target="hl-ref-update" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-addr-updated" value="Offender name/address for all TS-HST Notices updated" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="1520" y="130" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-update" target="hl-addr-updated" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-revival" value="Manual HST Revival" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="1690" y="130" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-addr-updated" target="hl-revival" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-ref-revival" value="Refer to HST_Revival_User_Journey" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="1" vertex="1">
+                    <mxGeometry x="1675" y="240" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-ref-revival" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="1" source="hl-revival" target="hl-ref-revival" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-lifted" value="All HST suspensions under the ID lifted" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="1860" y="130" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-revival" target="hl-lifted" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="2030" y="150" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="hl-lifted" target="hl-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-continue" value="Notice continues along standard Notice processing workflow" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="2010" y="240" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="hl-edge-continue" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="1" source="hl-end" target="hl-continue" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="hst-suspend-uj" name="HST_Manual_Suspend_User_Journey">
+        <mxGraphModel dx="1229" dy="878" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3400" pageHeight="600" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="suj-swimlane" value="Staff Portal" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="40" width="3200" height="510" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="30" y="130" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-step1" value="OIC launches OCMS Staff Portal HST module" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="180" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-start" target="suj-step1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-step2" value="OIC selects Manual HST Suspension" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="330" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-step1" target="suj-step2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-step3" value="Portal displays ID number input text box" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="480" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-step2" target="suj-step3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-step4" value="OIC enters Unclaimed Offender ID number" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="630" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-step3" target="suj-step4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-step5" value="Portal detects ID type and auto populate" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="780" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-step4" target="suj-step5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-step6" value="Portal queries Backend to check if Offender is HST ID" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="930" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-step5" target="suj-step6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-api1" value="POST /hstexists&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;idNo&quot;: &quot;S1234567A&quot;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="910" y="240" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge-api1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="suj-swimlane" source="suj-step6" target="suj-api1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-step7" value="Portal reads result returned by Backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1080" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-step6" target="suj-step7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-dec1" value="Offender ID found in HST?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1230" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-step7" target="suj-dec1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-already" value="Display: ID is suspended under HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1230" y="260" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge-already" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-dec1" target="suj-already" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-dismiss1" value="OIC dismisses prompt" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1230" y="380" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge-dismiss1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-already" target="suj-dismiss1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-display" value="Portal displays Offender name and address details" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1380" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge9" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-dec1" target="suj-display" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-review" value="OIC reviews Offender address details" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1530" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-display" target="suj-review" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edit" value="OPTIONAL: OIC edit Offender address details" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1680" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-review" target="suj-edit" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-apply" value="OIC clicks Apply HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1830" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-edit" target="suj-apply" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-send" value="Portal sends request to Backend to create HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1980" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-apply" target="suj-send" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-api2" value="POST /v1/apply-hst&lt;div&gt;Refer to HST_Manual_Suspend_Backend&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="1950" y="240" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge-api2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="suj-swimlane" source="suj-send" target="suj-api2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-result" value="Portal reads result returned by Backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="2130" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-send" target="suj-result" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-dec2" value="HST ID created?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="2280" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-result" target="suj-dec2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-failed" value="Display: Unable to create HST ID" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="2280" y="260" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge-failed" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-dec2" target="suj-failed" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-dec3" value="Any notices suspended?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="2430" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge16" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-dec2" target="suj-dec3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-no-notices" value="Display: HST ID created. No Notices to suspend." style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="2430" y="260" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge-nonotices" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-dec3" target="suj-no-notices" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-success" value="Display: Suspension and HST ID processed with table" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="2580" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge17" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-dec3" target="suj-success" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-dismiss2" value="OIC dismisses prompt" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="2730" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-success" target="suj-dismiss2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge-merge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-no-notices" target="suj-dismiss2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-redirect" value="Portal redirects to Manual HST Suspension main screen" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="2880" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-dismiss2" target="suj-redirect" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge-dismiss1-merge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-dismiss1" target="suj-redirect" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1280" y="500"/>
+                            <mxPoint x="2930" y="500"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="suj-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="suj-swimlane" vertex="1">
+                    <mxGeometry x="3030" y="130" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="suj-edge20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="suj-swimlane" source="suj-redirect" target="suj-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="hst-suspend-be" name="HST_Manual_Suspend_Backend">
+        <mxGraphModel dx="928" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="650" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="be-swimlane-fe" value="Staff Portal" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="40" width="2800" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-start" value="OIC clicks Apply HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-fe" vertex="1">
+                    <mxGeometry x="30" y="70" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-success" value="Portal displays success message" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-fe" vertex="1">
+                    <mxGeometry x="2550" y="70" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="be-swimlane-fe" vertex="1">
+                    <mxGeometry x="2680" y="80" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-fe" source="be-success" target="be-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-swimlane-api" value="OCMS Admin API Intranet" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="230" width="2800" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-receive" value="Receive API request POST /v1/apply-hst" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="30" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-jwt" value="Validate JWT Authentication" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="200" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-jwt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-receive" target="be-jwt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-jwt-ref" value="Refer to JWT Authentication Technical Document" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="180" y="180" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-dec-jwt" value="JWT valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="350" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-dec-jwt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-jwt" target="be-dec-jwt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-jwt-error" value="Return error OCMS-4001" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="350" y="220" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-jwt-error" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-jwt" target="be-jwt-error" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-validate" value="Validate payload: idNo, idType required" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="500" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-validate" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-jwt" target="be-validate" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-dec-payload" value="Payload valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="650" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-dec-payload" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-validate" target="be-dec-payload" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-payload-error" value="Return error OCMS-4000" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="650" y="220" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-payload-error" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-payload" target="be-payload-error" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-check-hst" value="Query ocms_hst to check if ID already exists" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="800" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-check" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-payload" target="be-check-hst" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-check-sql" value="SELECT id_no, id_type, name FROM ocms_hst WHERE id_no = ?" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="780" y="190" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-check-sql" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="be-swimlane-api" source="be-check-hst" target="be-check-sql" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-dec-exists" value="ID exists?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="970" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-dec-exists" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-check-hst" target="be-dec-exists" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-exists-error" value="Return error OCMS-4004 Already HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="970" y="220" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-exists-error" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-exists" target="be-exists-error" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-create-hst" value="INSERT to ocms_hst (Create HST record)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1120" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-create" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-exists" target="be-create-hst" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-create-sql" value="INSERT INTO ocms_hst&lt;div&gt;(id_no, id_type, name, postal_code,&lt;/div&gt;&lt;div&gt;blk_hse_no, street_name, floor_no,&lt;/div&gt;&lt;div&gt;unit_no, bldg_name, cre_date, cre_user_id)&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1080" y="220" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-create-sql" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="be-swimlane-api" source="be-create-hst" target="be-create-sql" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-query-notices" value="Query notices under this ID from ONOD" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1290" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-query" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-create-hst" target="be-query-notices" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-query-sql" value="SELECT notice_no FROM&lt;div&gt;ocms_offence_notice_owner_driver&lt;/div&gt;&lt;div&gt;WHERE id_no = ? AND&lt;/div&gt;&lt;div&gt;offender_indicator = &#39;Y&#39;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1290" y="220" width="200" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-query-sql" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="be-swimlane-api" source="be-query-notices" target="be-query-sql" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-dec-notices" value="Notices found?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1460" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-dec-notices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-query-notices" target="be-dec-notices" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-no-notices" value="Return success: HST created, no notices" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1500" y="220" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-no-notices" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-notices" target="be-no-notices" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-loop" value="FOR EACH notice" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1610" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-loop" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-notices" target="be-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-eligibility" value="Check notice suspension eligibility" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1760" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-eligibility" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-loop" target="be-eligibility" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-note" value="Cannot suspend if: PS, Court, or already TS-HST" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1730" y="190" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-dec-suspend" value="Can suspend?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1910" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-dec-suspend" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-eligibility" target="be-dec-suspend" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-skip" value="Skip notice, log debug" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="1910" y="220" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-skip" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-suspend" target="be-skip" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-max" value="Get MAX(sr_no) from suspended_notice" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="2060" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-max" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-suspend" target="be-max" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-update-von" value="UPDATE VON suspension fields" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="2210" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-update-von" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-max" target="be-update-von" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-update-von-sql" value="UPDATE ocms_valid_offence_notice&lt;div&gt;SET suspension_type = 'TS',&lt;/div&gt;&lt;div&gt;    epr_reason_of_suspension = 'HST',&lt;/div&gt;&lt;div&gt;    epr_date_of_suspension = GETDATE(),&lt;/div&gt;&lt;div&gt;    upd_date = GETDATE(),&lt;/div&gt;&lt;div&gt;    upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;&lt;div&gt;WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="2160" y="180" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-update-von-sql" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="be-swimlane-api" source="be-update-von" target="be-update-von-sql" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-insert-susp" value="INSERT to ocms_suspended_notice (TS-HST)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="2380" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-insert" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-update-von" target="be-insert-susp" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-insert-sql" value="&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;INSERT INTO ocms_suspended_notice&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; (notice_no, date_of_suspension, sr_no, suspension_source,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp;suspension_type, reason_of_suspension, officer_authorising_suspension,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp;due_date_of_revival, suspension_remarks, cre_date, cre_user_id)&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; VALUES (?, GETDATE(), ?, &#39;OCMS_BE&#39;, &#39;TS&#39;, &#39;HST&#39;, ?, ?, ?, GETDATE(), ?)&lt;/font&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="2330" y="180" width="295" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-insert-sql" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="be-swimlane-api" source="be-insert-susp" target="be-insert-sql" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-dec-more" value="More notices?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="2550" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-dec-more" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-insert-susp" target="be-dec-more" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-loopback" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-more" target="be-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="2600" y="40"/>
+                            <mxPoint x="1660" y="40"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="be-edge-skip-loop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-skip" target="be-dec-more" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1960" y="300"/>
+                            <mxPoint x="2600" y="300"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="be-response" value="Return success response with suspended notices list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="2700" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-response" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="be-swimlane-api" source="be-dec-more" target="be-response" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-response-json" value="{&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;HST ID created&quot;,&lt;/div&gt;&lt;div&gt;    &quot;noticesSuspended&quot;: [...]&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="be-swimlane-api" vertex="1">
+                    <mxGeometry x="2670" y="190" width="180" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-response-json" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="be-swimlane-api" source="be-response" target="be-response-json" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-to-api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="be-start" target="be-receive" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be-edge-to-portal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="be-response" target="be-success" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="hst-update-uj" name="HST_Update_User_Journey">
+        <mxGraphModel dx="1031" dy="927" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1900" pageHeight="500" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="uuj-swimlane" value="Staff Portal" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="40" width="1750" height="380" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="30" y="130" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-step1" value="OIC launches OCMS Staff Portal HST module" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="180" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-start" target="uuj-step1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-step2" value="OIC selects HST Update" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="330" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-step1" target="uuj-step2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-step3" value="Portal displays HST records list with New Address Found" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="480" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-step2" target="uuj-step3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-step4" value="OIC selects HST record to update" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="630" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-step3" target="uuj-step4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-step5" value="Portal displays current and new address details" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="780" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-step4" target="uuj-step5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-step6" value="OIC reviews new address details" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="930" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-step5" target="uuj-step6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-step7" value="OIC clicks Update" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="1080" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-step6" target="uuj-step7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-send" value="Portal sends request to Backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="1230" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-step7" target="uuj-send" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-api" value="POST /v1/update-hst&lt;div&gt;Refer to HST_Update_Backend&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="1210" y="240" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge-api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="uuj-swimlane" source="uuj-send" target="uuj-api" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-success" value="Display success: HST record updated" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="1380" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-send" target="uuj-success" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="uuj-swimlane" vertex="1">
+                    <mxGeometry x="1530" y="130" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uuj-edge10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="uuj-swimlane" source="uuj-success" target="uuj-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="hst-update-be" name="HST_Update_Backend">
+        <mxGraphModel dx="807" dy="725" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2550" pageHeight="620" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="ube-swimlane-portal" value="Staff Portal" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="40" width="2400" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-start" value="OIC clicks Update" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-portal" vertex="1">
+                    <mxGeometry x="30" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-success" value="Display success: HST record updated" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-portal" vertex="1">
+                    <mxGeometry x="2280" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-swimlane-api" value="OCMS Admin API Intranet" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="200" width="2400" height="390" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-receive" value="Receive API request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="180" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-payload" value="POST /v1/update-hst&lt;div&gt;{ name, postalCode, blkHseNo,&lt;/div&gt;&lt;div&gt;  streetName, floorNo, unitNo, bldgName, idNo }&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="160" y="190" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-payload" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="ube-swimlane-api" source="ube-receive" target="ube-payload" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-jwt" value="Validate JWT Authentication" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="330" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-jwt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-receive" target="ube-jwt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-dec-jwt" value="JWT valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="480" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-dec-jwt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-jwt" target="ube-dec-jwt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-err-jwt" value="Return error OCMS-4001" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="480" y="220" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-err-jwt" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-dec-jwt" target="ube-err-jwt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-validate" value="Validate payload: idNo, newAddress required" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="630" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-validate" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-dec-jwt" target="ube-validate" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-dec-payload" value="Payload valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="780" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-dec-pay" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-validate" target="ube-dec-payload" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-err-payload" value="Return error OCMS-4000" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="780" y="220" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-err-pay" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-dec-payload" target="ube-err-payload" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-query" value="Query ocms_hst to check if ID exists" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="930" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-query" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-dec-payload" target="ube-query" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-sql" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;SELECT id_no, id_type, name FROM ocms_hst WHERE id_no = ?&lt;/span&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="910" y="190" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-sql" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="ube-swimlane-api" source="ube-query" target="ube-sql" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-dec-hst" value="HST ID exists?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="1100" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-dec-hst" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-query" target="ube-dec-hst" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-err-hst" value="Return error OCMS-4003: HST ID not found" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="1100" y="220" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-err-hst" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-dec-hst" target="ube-err-hst" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-update-hst" value="UPDATE ocms_hst with new name (if changed)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="1250" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-update-hst" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-dec-hst" target="ube-update-hst" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="y-5SEJd67FXAq_zZl_ug-3" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="ube-swimlane-api" source="ube-query-notices" target="y-5SEJd67FXAq_zZl_ug-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-query-notices" value="Query notices under this HST ID" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="1420" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-qn" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-update-hst" target="ube-query-notices" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-loop" value="FOR EACH notice with TS-HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="1570" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-loop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-query-notices" target="ube-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-update-addr" value="UPDATE address in ocms_offence_notice_owner_driver_addr" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="1720" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-upaddr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-loop" target="ube-update-addr" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-sql-up" value="&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;UPDATE ocms_offence_notice_owner_driver_addr&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; SET postal_code = ?,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; blk_hse_no = ?,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; street_name = ?,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; floor_no = ?,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; unit_no = ?,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; bldg_name = ?&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; WHERE notice_no = ?&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; AND owner_driver_indicator = ?&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; AND type_of_address = ?&lt;/font&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="1660" y="190" width="240" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-sql-up" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="ube-swimlane-api" source="ube-update-addr" target="ube-sql-up" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-dec-more" value="More notices?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="1940" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-dec-more" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-update-addr" target="ube-dec-more" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-loopback" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-dec-more" target="ube-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1990" y="40"/>
+                            <mxPoint x="1620" y="40"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ube-response" value="Return success response with noticesUpdated count" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="2090" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-response" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ube-swimlane-api" source="ube-dec-more" target="ube-response" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-response-json" value="{&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;HST record updated&quot;,&lt;/div&gt;&lt;div&gt;    &quot;noticesUpdated&quot;: 5&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ube-swimlane-api" vertex="1">
+                    <mxGeometry x="2060" y="190" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-response-json" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="ube-swimlane-api" source="ube-response" target="ube-response-json" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="y-5SEJd67FXAq_zZl_ug-2" value="&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;SELECT sn.notice_no FROM ocms_suspended_notice sn JOIN ocms_offence_notice_owner_driver onod ON sn.notice_no = onod.notice_no WHERE onod.id_no = ? AND&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;sn.suspension_type = &#39;TS&#39; AND sn.reason_of_suspension = &#39;HST&#39; AND sn.date_of_revival IS NULL&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="ube-swimlane-api">
+                    <mxGeometry x="1370" y="200" width="200" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="ube-start" target="ube-receive" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ube-edge-to-portal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="ube-response" target="ube-success" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="hst-revival-uj" name="HST_Revival_User_Journey">
+        <mxGraphModel dx="928" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="520" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="ruj-swimlane" value="Staff Portal" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="40" width="2050" height="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="30" y="130" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-step1" value="OIC launches OCMS Staff Portal HST module" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="180" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-start" target="ruj-step1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-step2" value="OIC selects HST Revival" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="330" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-step1" target="ruj-step2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-step3" value="Portal displays active HST records list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="480" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-step2" target="ruj-step3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-step4" value="OIC selects HST record to revive" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="630" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-step3" target="ruj-step4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-step5" value="Portal displays HST details with suspended notices list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="780" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-step4" target="ruj-step5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-step6" value="OIC enters revival reason and remarks" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="930" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-step5" target="ruj-step6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-step7" value="OIC clicks Revive HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="1080" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-step6" target="ruj-step7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-confirm" value="Portal displays confirmation dialog: Lift all TS-HST?" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="1230" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-step7" target="ruj-confirm" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-dec1" value="OIC confirms?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="1380" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-confirm" target="ruj-dec1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-cancel" value="Cancel, return to list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="1380" y="260" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge-cancel" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-dec1" target="ruj-cancel" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge-cancel-loop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-cancel" target="ruj-step3" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1430" y="350"/>
+                            <mxPoint x="530" y="350"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ruj-send" value="Portal sends request to Backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="1530" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge10" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-dec1" target="ruj-send" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-api" value="POST /v1/revive-hst&lt;div&gt;Refer to HST_Revival_Backend&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="1510" y="240" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge-api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="ruj-swimlane" source="ruj-send" target="ruj-api" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-success" value="Display success: HST revived, notices continue normal flow" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="1680" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-send" target="ruj-success" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="ruj-swimlane" vertex="1">
+                    <mxGeometry x="1830" y="130" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ruj-edge12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="ruj-swimlane" source="ruj-success" target="ruj-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="hst-revival-be" name="HST_Revival_Backend">
+        <mxGraphModel dx="928" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2550" pageHeight="620" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="rbe-swimlane-portal" value="Staff Portal" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="40" width="2400" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-start" value="OIC confirms Revive HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-portal" vertex="1">
+                    <mxGeometry x="30" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-success" value="Display success: HST revived, notices continue normal flow" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-portal" vertex="1">
+                    <mxGeometry x="2280" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-swimlane-api" value="OCMS Admin API Intranet" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="200" width="2400" height="370" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-receive" value="Receive API request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="180" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-payload" value="POST /v1/revive-hst&lt;div&gt;{ idNo, revivalReason,&lt;/div&gt;&lt;div&gt;  remarks }&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="160" y="190" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-payload" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="rbe-swimlane-api" source="rbe-receive" target="rbe-payload" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-jwt" value="Validate JWT Authentication" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="330" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-jwt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-receive" target="rbe-jwt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-dec-jwt" value="JWT valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="480" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-dec-jwt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-jwt" target="rbe-dec-jwt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-err-jwt" value="Return error OCMS-4001" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="480" y="220" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-err-jwt" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-dec-jwt" target="rbe-err-jwt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-validate" value="Validate payload: idNo required" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="630" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-validate" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-dec-jwt" target="rbe-validate" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-dec-payload" value="Payload valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="780" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-dec-pay" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-validate" target="rbe-dec-payload" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-err-payload" value="Return error OCMS-4000" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="780" y="220" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-err-pay" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-dec-payload" target="rbe-err-payload" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-query" value="Query ocms_hst to check if ID exists" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="930" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-query" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-dec-payload" target="rbe-query" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-sql" value="SELECT id_no, id_type, name FROM ocms_hst WHERE id_no = ?" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="900" y="190" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-sql" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="rbe-swimlane-api" source="rbe-query" target="rbe-sql" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-dec-hst" value="HST ID exists?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="1100" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-dec-hst" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-query" target="rbe-dec-hst" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-err-hst" value="Return error OCMS-4003: HST ID not found" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="1100" y="220" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-err-hst" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-dec-hst" target="rbe-err-hst" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-update-hst" value="DELETE from ocms_hst (remove HST record)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="1250" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-update-hst" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-dec-hst" target="rbe-update-hst" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-sql-update" value="DELETE FROM ocms_hst&lt;div&gt;WHERE id_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="1230" y="190" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-sql-update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="rbe-swimlane-api" source="rbe-update-hst" target="rbe-sql-update" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="THmyANBbZDv_2vUN-RJj-2" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" edge="1" parent="rbe-swimlane-api" source="rbe-query-notices" target="THmyANBbZDv_2vUN-RJj-1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-query-notices" value="Query notices with TS-HST under this ID" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="1420" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-qn" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-update-hst" target="rbe-query-notices" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-loop" value="FOR EACH notice with TS-HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="1570" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-loop" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-query-notices" target="rbe-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-remove" value="Remove TS-HST suspension from ocms_suspended_notice" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="1720" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-remove" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-loop" target="rbe-remove" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-sql-del" value="&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; UPDATE ocms_suspended_notice&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; SET date_of_revival = GETDATE(),&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; revival_reason = ?,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; officer_authorising_revival = ?,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; revival_remarks = ?,&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; upd_date = GETDATE(),&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; upd_user_id = ?&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; WHERE notice_no = ?&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; AND suspension_type = &#39;TS&#39;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; AND reason_of_suspension = &#39;HST&#39;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; AND date_of_revival IS NULL&lt;/font&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="1690" y="190" width="200" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-sql-del" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="rbe-swimlane-api" source="rbe-remove" target="rbe-sql-del" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-dec-more" value="More notices?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="1940" y="70" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-dec-more" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-remove" target="rbe-dec-more" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-loopback" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-dec-more" target="rbe-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1990" y="40"/>
+                            <mxPoint x="1620" y="40"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="rbe-response" value="Return success response with revived notices list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="2090" y="80" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-response" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="rbe-swimlane-api" source="rbe-dec-more" target="rbe-response" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-response-json" value="{&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;HST revived&quot;,&lt;/div&gt;&lt;div&gt;    &quot;noticesRevived&quot;: [...],&lt;/div&gt;&lt;div&gt;    &quot;hstIdStatus&quot;: &quot;REVIVED&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="rbe-swimlane-api" vertex="1">
+                    <mxGeometry x="2060" y="190" width="180" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-response-json" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="rbe-swimlane-api" source="rbe-response" target="rbe-response-json" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="THmyANBbZDv_2vUN-RJj-1" value="&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;SELECT sn.notice_no, sn.date_of_suspension, sn.sr_no&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; FROM ocms_suspended_notice sn&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; JOIN ocms_offence_notice_owner_driver onod&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; ON sn.notice_no = onod.notice_no&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; WHERE onod.id_no = ?&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; AND sn.suspension_type = &#39;TS&#39;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; AND sn.reason_of_suspension = &#39;HST&#39;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#000000&quot;&gt;&amp;nbsp; &amp;nbsp; AND sn.date_of_revival IS NULL&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="rbe-swimlane-api">
+                    <mxGeometry x="1400" y="190" width="250" height="145" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="rbe-start" target="rbe-receive" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe-edge-to-portal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="rbe-response" target="rbe-success" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="hst-monthly-cron" name="HST_Monthly_Cron">
+        <mxGraphModel dx="516" dy="463" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2700" pageHeight="500" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="cron-swimlane" value="OCMS Admin Cron Service" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="40" width="2550" height="380" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-start" value="Cron Start (Monthly)" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="30" y="130" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-record-start" value="Record job start in ocms_batch_job" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="180" y="110" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-start" target="cron-record-start" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-sql-start" value="INSERT INTO ocms_batch_job&lt;div&gt;&amp;nbsp; (name, run_status, log_text,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;start_run, cre_date, cre_user_id)&lt;/div&gt;&lt;div&gt;VALUES&lt;/div&gt;&lt;div&gt;&amp;nbsp; (&amp;#39;sync_hst_monthly_report&amp;#39;, NULL, &amp;#39;&amp;#39;,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp;GETDATE(), GETDATE(), &amp;#39;ocmsiz_app_conn&amp;#39;)&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="70" y="250" width="230" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge-sql-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="cron-swimlane" source="cron-record-start" target="cron-sql-start" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-query" value="Query ocms_hst for all HST IDs" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="350" y="110" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-record-start" target="cron-query" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-sql1" value="SELECT id_no, id_type FROM ocms_hst" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="320" y="250" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge-sql1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="cron-swimlane" source="cron-query" target="cron-sql1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-dec1" value="Any records?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="520" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-query" target="cron-dec1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-no-records" value="Log: No active HST" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="520" y="260" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge-no" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-dec1" target="cron-no-records" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-loop" value="FOR EACH active HST ID" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="670" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge3" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-dec1" target="cron-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-datahive" value="Queue ID for DataHive query (NRIC/FIN/UEN)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="820" y="110" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-loop" target="cron-datahive" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-ref-dh" value="Refer to DataHive Integration Technical Document" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="805" y="230" width="150" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-wait" value="Wait for DataHive results (async)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="990" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-datahive" target="cron-wait" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-process" value="Process DataHive results" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="1140" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-wait" target="cron-process" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-dec2" value="New address found?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="1290" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-process" target="cron-dec2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-store" value="Store new address in temp table" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="1440" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge8" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-dec2" target="cron-store" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-continue" value="Continue TS-HST loop (re-apply on expiry)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="1440" y="180" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge9" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-dec2" target="cron-continue" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-ref-17" value="Refer to OCMS 17 for suspension expiry" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="1420" y="280" width="150" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-report" value="Generate New Address report" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="1590" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-store" target="cron-report" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-dec3" value="More HST IDs?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="1740" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-report" target="cron-dec3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge-continue" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="cron-swimlane" source="cron-continue" target="cron-dec3" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1710" y="220"/>
+                            <mxPoint x="1710" y="160"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="cron-edge-loopback" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-dec3" target="cron-loop" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1790" y="60"/>
+                            <mxPoint x="720" y="60"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="cron-summary" value="Generate Monthly HST Summary Report" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="1890" y="110" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge12" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-dec3" target="cron-summary" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-upload" value="Upload reports to Azure Blob Storage" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="2060" y="110" width="100" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-summary" target="cron-upload" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-update-status" value="Update job status to SUCCESS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="2210" y="110" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge-status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-upload" target="cron-update-status" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-sql-status" value="UPDATE ocms_batch_job&lt;div&gt;SET run_status = &amp;#39;S&amp;#39;,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; end_run = GETDATE(),&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; log_text = ?,&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; upd_date = GETDATE(),&lt;/div&gt;&lt;div&gt;&amp;nbsp; &amp;nbsp; upd_user_id = &amp;#39;ocmsiz_app_conn&amp;#39;&lt;/div&gt;&lt;div&gt;WHERE batch_job_id = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="2310" y="250" width="200" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge-sql-status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="cron-swimlane" source="cron-update-status" target="cron-sql-status" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="cron-swimlane" vertex="1">
+                    <mxGeometry x="2380" y="130" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-update-status" target="cron-end" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cron-edge-no-end" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="cron-swimlane" source="cron-no-records" target="cron-update-status" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="570" y="350"/>
+                            <mxPoint x="2270" y="350"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

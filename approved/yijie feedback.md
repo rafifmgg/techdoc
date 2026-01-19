@@ -83,6 +83,23 @@
 
 28. If there is data in the documentation, always explain the source. Specify where the data comes from (e.g., database table, API response, user input, calculated field). Never leave data without source attribution.
 
+29. Documentation must be **programmer self-sufficient**. A programmer should be able to implement the feature without asking additional questions to the tech writer. Check these aspects:
+    - **What to build**: Clear feature/function description
+    - **How to build**: Technical approach, patterns, integration points
+    - **What data**: All fields with data types, sources, and constraints
+    - **What validations**: All business rules with clear conditions
+    - **What errors**: All error scenarios with codes and messages
+    - **What flow**: Complete flow from trigger to end state
+    - **What edge cases**: Boundary conditions and special scenarios handled
+
+30. Before finalizing documentation, apply the **"5W1H Test"** for programmer:
+    - **What**: What feature/API/process is being built?
+    - **Why**: Why is this needed? (business context)
+    - **Where**: Where does this fit in the system? (integration points)
+    - **When**: When is this triggered? (trigger conditions)
+    - **Who**: Who uses this? (user roles, system actors)
+    - **How**: How to implement? (technical details, step-by-step)
+
 ---
 
 ## Part 2: Review Comments (Questions/Clarifications)

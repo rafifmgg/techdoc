@@ -1,0 +1,157 @@
+{
+  "ocms_vip_vehicle": {
+    "description": "This table is refreshed daily via API 3 from CAS and stores the full list of VIP vehicles.",
+    "columns": [
+      {
+        "name": "vip_vehicle",
+        "type": "VARCHAR(255)",
+        "primary_key": true,
+        "nullable": false,
+        "description": "The primary identifier for the VIP vehicle record."
+      },
+      {
+        "name": "vehicle_no",
+        "type": "VARCHAR(50)",
+        "primary_key": false,
+        "nullable": false,
+        "description": "The vehicle registration number."
+      },
+      {
+        "name": "description",
+        "type": "VARCHAR(255)",
+        "primary_key": false,
+        "nullable": true,
+        "description": "A description associated with the VIP vehicle."
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "primary_key": false,
+        "nullable": false,
+        "description": "The status of the VIP vehicle entry."
+      },
+      {
+        "name": "cre_date",
+        "type": "DATETIME2",
+        "primary_key": false,
+        "nullable": false,
+        "description": "Record creation timestamp."
+      },
+      {
+        "name": "cre_user_id",
+        "type": "VARCHAR(50)",
+        "primary_key": false,
+        "nullable": false,
+        "description": "ID of the user or process that created the record."
+      },
+      {
+        "name": "upd_date",
+        "type": "DATETIME2",
+        "primary_key": false,
+        "nullable": true,
+        "description": "Record last update timestamp."
+      },
+      {
+        "name": "upd_user_id",
+        "type": "VARCHAR(50)",
+        "primary_key": false,
+        "nullable": true,
+        "description": "ID of the user or process that last updated the record."
+      }
+    ]
+  },
+  "ocms_cas_emcons": {
+    "description": "This table is created via API 1 to host notice numbers associated with the emcons_flag.",
+    "columns": [
+      {
+        "name": "notice_no",
+        "type": "VARCHAR(50)",
+        "primary_key": true,
+        "nullable": false,
+        "description": "The notice number from an EMCON notice."
+      },
+      {
+        "name": "emcons_flag",
+        "type": "VARCHAR(50)",
+        "primary_key": false,
+        "nullable": true,
+        "description": "The flag associated with the EMCON notice."
+      },
+      {
+        "name": "cre_date",
+        "type": "DATETIME2",
+        "primary_key": false,
+        "nullable": false,
+        "description": "Record creation timestamp."
+      },
+      {
+        "name": "cre_user_id",
+        "type": "VARCHAR(50)",
+        "primary_key": false,
+        "nullable": false,
+        "description": "ID of the user or process that created the record."
+      },
+      {
+        "name": "upd_date",
+        "type": "DATETIME2",
+        "primary_key": false,
+        "nullable": true,
+        "description": "Record last update timestamp."
+      },
+      {
+        "name": "upd_user_id",
+        "type": "VARCHAR(50)",
+        "primary_key": false,
+        "nullable": true,
+        "description": "ID of the user or process that last updated the record."
+      }
+    ]
+  },
+  "ocms_court_case": {
+    "description": "This table is populated via API 4 to store court-related payment due dates for notices queried by PLUS.",
+    "columns": [
+      {
+        "name": "notice_no",
+        "type": "VARCHAR(50)",
+        "primary_key": true,
+        "nullable": false,
+        "description": "The notice number."
+      },
+      {
+        "name": "court_payment_due_date",
+        "type": "DATETIME2",
+        "primary_key": false,
+        "nullable": true,
+        "description": "The payment due date associated with the court case."
+      },
+      {
+        "name": "cre_date",
+        "type": "DATETIME2",
+        "primary_key": false,
+        "nullable": false,
+        "description": "Record creation timestamp."
+      },
+      {
+        "name": "cre_user_id",
+        "type": "VARCHAR(50)",
+        "primary_key": false,
+        "nullable": false,
+        "description": "ID of the user or process that created the record."
+      },
+      {
+        "name": "upd_date",
+        "type": "DATETIME2",
+        "primary_key": false,
+        "nullable": true,
+        "description": "Record last update timestamp."
+      },
+      {
+        "name": "upd_user_id",
+        "type": "VARCHAR(50)",
+        "primary_key": false,
+        "nullable": true,
+        "description": "ID of the user or process that last updated the record."
+      }
+    ]
+  }
+}

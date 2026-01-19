@@ -1,4 +1,8 @@
  # Project Documentation Rules
+  ## 0. baca file didalam folder docs
+  - data-dictionary -> source yang harus sesuai ketika buat flow dan document, jika tdak tersedia harus alert bahwa ada field / table baru
+  - guidelines -> rules ketika generate file apapun, format drawio
+  - templates -> format document, review checlist, step-step
 
   ## 1. Generate plan_api.md dan plan_condition.md
 
