@@ -4,8 +4,8 @@
 
 | Field | Value |
 |-------|-------|
-| Version | 1.0 |
-| Date | 2026-01-07 |
+| Version | 1.1 |
+| Date | 2026-01-19 |
 | Source | Functional Document v1.1, Section 5 |
 | Module | OCMS 41 - Section 5: Batch Furnish and Batch Update |
 
@@ -33,15 +33,15 @@
 
 | Field | Rule ID | Validation | Error Message |
 |-------|---------|------------|---------------|
-| Role | BF-FRM-001 | Required (Owner/Hirer/Driver) | Role is required |
+| Role (owner_driver_indicator) | BF-FRM-001 | Required (O/H/D) | Role is required |
 | Name | BF-FRM-002 | Required | Name is required |
-| Name | BF-FRM-003 | Max 100 characters | Name exceeds maximum length |
+| Name | BF-FRM-003 | Max 66 characters | Name exceeds maximum length |
 | ID Type | BF-FRM-004 | Required | ID Type is required |
 | ID Number | BF-FRM-005 | Required | ID Number is required |
 | ID Number | BF-FRM-006 | Format check based on ID Type | Invalid {idType} format |
 | Entity Type | BF-FRM-007 | Required if ID Type = UEN | Entity Type is required for UEN |
-| Email | BF-FRM-008 | Valid email format if provided | Invalid email format |
-| Contact No | BF-FRM-009 | Valid format if provided | Invalid contact number |
+| Email (email_addr) | BF-FRM-008 | Valid email format if provided | Invalid email format |
+| Contact No (offender_tel_no) | BF-FRM-009 | Valid format if provided | Invalid contact number |
 
 ### 1.3 Batch Update - Search Validations (Section 5.3)
 
@@ -56,8 +56,8 @@
 |-------|---------|------------|---------------|
 | Notice Selection | BU-FRM-001 | At least one Notice must be selected | Please select at least one Notice |
 | Postal Code | BU-FRM-002 | 6 digits for Singapore address | Invalid postal code |
-| Email | BU-FRM-003 | Valid email format if provided | Invalid email format |
-| Contact No | BU-FRM-004 | Valid format if provided | Invalid contact number |
+| Email (email_addr) | BU-FRM-003 | Valid email format if provided | Invalid email format |
+| Contact No (offender_tel_no) | BU-FRM-004 | Valid format if provided | Invalid contact number |
 
 ---
 
@@ -117,7 +117,7 @@
 |------|---------|-------|--------|
 | 1 | BU-PR-001 | Validate offender is current | Verify offender_indicator = 'Y' |
 | 2 | BU-PR-002 | Update address record | Update ocms_offence_notice_owner_driver_addr |
-| 3 | BU-PR-003 | Update contact info | Update contact_no and email if provided |
+| 3 | BU-PR-003 | Update contact info | Update offender_tel_no and email_addr if provided |
 | 4 | BU-PR-004 | No stage change | Processing stage remains unchanged |
 
 ---

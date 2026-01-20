@@ -1,13 +1,16 @@
 # Flowchart Planning Document - OCMS 10: Advisory Notices Processing
 
 ## Document Information
-- **Version:** 1.0
-- **Date:** 2026-01-09
+- **Version:** 1.1
+- **Date:** 2026-01-15
 - **Source Documents:**
-  - Functional Document: v1.1_OCMS 10_Functional Document (1).md
+  - Functional Document: v1.2_OCMS 10_Functional Document.md
   - plan_api.md
   - plan_condition.md
 - **Reference Guidelines:** Docs/guidelines/plan_flowchart.md
+
+**Change Log:**
+- v1.1 (2026-01-15): Updated to align with FD v1.2 - Removed Same-Day AN Check, updated CES handling
 
 ---
 
@@ -31,7 +34,7 @@
 |------|-----------|-------------------|
 | Start | Entry point | Notice data received from external source or manual creation |
 | Notice Creation | Create notice record | Validate mandatory fields and create notice in system |
-| AN Verification | Check qualification | Verify if notice qualifies as Advisory Notice (same-day check + qualification check) |
+| AN Verification | Check qualification | Verify if notice qualifies as Advisory Notice (exemption rules + past offense check). Note: CES notices with an_flag='Y' skip qualification and go directly to PS-ANS |
 | Decision: Qualifies? | AN qualification result | Check if notice passed all AN qualification criteria |
 | Update AN Flags | Mark as AN | Set an_flag='Y', payment_acceptance_allowed='N' |
 | Retrieve Owner Info | Get vehicle owner | Call LTA API to retrieve vehicle owner particulars |
@@ -45,7 +48,7 @@
 
 | Decision | Input | Condition | True Action | False Action |
 |----------|-------|-----------|-------------|--------------|
-| Qualifies as AN? | Verification result | Passes all checks (offense type, vehicle type, same-day limit, past offense, exemption rules) | Update AN flags | Process as standard notice |
+| Qualifies as AN? | Verification result | Passes all checks (offense type, vehicle type, exemption rules, past offense with ANS PS reasons). For CES: if an_flag='Y' in payload, skip checks and create PS-ANS | Update AN flags | Process as standard notice |
 | eAN Eligible? | Owner contact info | Mobile OR email available AND not in exclusion list AND not suspended | Send eNotification | Send physical letter |
 
 #### Swimlanes Definition
@@ -70,80 +73,17 @@
 
 ## Section 3: Detailed Flows
 
-### Tab 3.1: AN Verification - Same-Day Check
+### Tab 3.1: AN Verification - Qualification Check
 
-#### Process Overview
-
-| Attribute | Value |
-|-----------|-------|
-| Process Name | Same-Day AN Check |
-| Section | 3.1 |
-| Trigger | Notice creation with offense_type='O' and vehicle_type in [S,D,V,I] |
-| Frequency | Real-time (per notice creation) |
-| Systems Involved | Backend (AdvisoryNoticeHelper), Database (Intranet) |
-
-#### Process Steps Table
-
-| Step | Definition | Brief Description |
-|------|-----------|-------------------|
-| Start | Check triggered | AN qualification process initiated after notice creation |
-| Receive Notice Data | Input parameters | Receive vehicle number and notice date/time |
-| Calculate Day Boundaries | Get calendar day | Calculate start and end of notice calendar day (00:00:00 to 23:59:59) |
-| Query Database | Search existing ANs | Query ocms_valid_offence_notice for same vehicle with an_flag='Y' on same day |
-| Decision: Records Found? | Check query result | Any existing AN found for same vehicle on same day? |
-| Return Limit Exceeded | Fail check | Return "Same-day limit exceeded" reason |
-| Return Within Limit | Pass check | Return qualified for same-day check |
-| End | Check complete | Same-day check result returned |
-
-#### Decision Logic
-
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Records Found? | Query result | count > 0 | Return limit exceeded (not qualified) | Return within limit (qualified) |
-
-#### Database Query
-
-**Table:** `ocms_valid_offence_notice` (Intranet)
-
-**Query Logic:**
-```
-SELECT * FROM ocms_valid_offence_notice
-WHERE vehicle_no = [current vehicle]
-  AND an_flag = 'Y'
-  AND notice_date_and_time >= [dayStart]
-  AND notice_date_and_time <= [dayEnd]
-```
-
-**Fields Used:**
-- `vehicle_no`: Vehicle registration number
-- `an_flag`: Advisory Notice flag
-- `notice_date_and_time`: Notice date and time
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| Database Query | SQLException | Return qualification failed | Notice processed as standard (not AN) |
-| Null Vehicle Number | Validation error | Skip check, return not qualified | Standard notice processing |
-
-#### Swimlanes Definition
-
-| Swimlane | Color | Steps |
-|----------|-------|-------|
-| Backend | Purple (#e1d5e7) | All processing steps (Receive data, Calculate day boundaries, Return result) |
-| Database | Yellow (#fff2cc) | Query existing ANs |
-
----
-
-### Tab 3.2: AN Verification - Qualification Check
+> **Note:** FD v1.2 states Same-Day AN Check should be removed, but it is **STILL ACTIVE** in actual code implementation (AdvisoryNoticeHelper.java:104-107, 142-182).
 
 #### Process Overview
 
 | Attribute | Value |
 |-----------|-------|
 | Process Name | AN Qualification Check |
-| Section | 3.2 |
-| Trigger | Notice creation passes same-day check |
+| Section | 3.1 |
+| Trigger | Notice creation with offence_notice_type='O' and vehicle_type in [S,D,V,I]. **Note:** CES notices with an_flag='Y' skip this check and go directly to PS-ANS (per FD v1.2 Section 4.2) |
 | Frequency | Real-time (per notice creation) |
 | Systems Involved | Backend (AdvisoryNoticeHelper), Database (Intranet) |
 
@@ -152,7 +92,7 @@ WHERE vehicle_no = [current vehicle]
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
 | Start | Qualification check | Check if notice qualifies as Advisory Notice |
-| Check Offense Type | Validate offense type | Apply BR-AN-GATE-001: offense_type must be 'O' |
+| Check Offense Type | Validate offense type | Apply BR-AN-GATE-001: offence_notice_type must be 'O' |
 | Decision: Offense Type = 'O'? | Gate check 1 | Check if offense type is 'O' (Offender) |
 | Check Vehicle Type | Validate vehicle type | Apply BR-AN-GATE-002: vehicle_registration_type must be in [S,D,V,I] |
 | Decision: Vehicle Type Valid? | Gate check 2 | Check if vehicle type is local (S/D/V/I) |
@@ -168,7 +108,7 @@ WHERE vehicle_no = [current vehicle]
 
 | Decision | Input | Condition | True Action | False Action |
 |----------|-------|-----------|-------------|--------------|
-| Offense Type = 'O'? | offense_type | offense_type == 'O' | Continue to vehicle type check | Return not qualified ("Offense type must be 'O'") |
+| Offense Type = 'O'? | offence_notice_type | offence_notice_type == 'O' | Continue to vehicle type check | Return not qualified ("Offense type must be 'O'") |
 | Vehicle Type Valid? | vehicle_registration_type | vehicle_registration_type IN ['S','D','V','I'] | Continue to exemption check | Return not qualified ("Vehicle type must be S/D/V/I") |
 | Exempt? | Rule code + composition/category | (Rule 20412 AND amount=$80) OR (Rule 11210 AND category in [LB,HL]) | Return not qualified ("Offense exempt from AN") | Continue to past offense check |
 | Has Past Offense? | Query result | count > 0 | Return qualified | Return not qualified ("No qualifying offense in past 24 months") |
@@ -232,14 +172,16 @@ WHERE vehicle_no = [current vehicle]
 
 ---
 
-### Tab 3.3: Receive AN Data from REPCCS
+### Tab 3.2: Receive AN Data from REPCCS
+
+> **Note (FD v1.2 Section 4.2):** OCMS DISREGARDS the anFlag value sent by REPCCS. OCMS performs its own AN Qualification check for all REPCCS notices.
 
 #### Process Overview
 
 | Attribute | Value |
 |-----------|-------|
 | Process Name | Receive AN Data from REPCCS |
-| Section | 3.3 |
+| Section | 3.2 |
 | Trigger | REPCCS webhook call to /v1/repccsWebhook |
 | Frequency | Real-time (event-driven) |
 | Systems Involved | External System (REPCCS), Backend (OCMS API), Database (Intranet) |
@@ -260,7 +202,7 @@ WHERE vehicle_no = [current vehicle]
 | Check Double Booking | DBB detection | Apply BR-AN-DUP-002: Query for duplicate offense details |
 | Decision: Duplicate Offense? | DBB check result | Check if matching offense found |
 | Create PS-DBB Suspension | Suspend notice | Create PS-DBB suspension record, early return |
-| Run AN Qualification | Qualification check | Call checkQualification() for offense_type='O' and vehicle_type in [S,D,V,I] |
+| Run AN Qualification | Qualification check | Call checkQualification() for offence_notice_type='O' and vehicle_type in [S,D,V,I] |
 | Decision: Qualifies as AN? | AN qualification result | Check if notice passed all AN checks |
 | Update AN Flags | Mark as AN | Set an_flag='Y', payment_acceptance_allowed='N' |
 | Process Uploaded File | File handling | Process any uploaded photos/videos |
@@ -302,11 +244,9 @@ WHERE vehicle_no = [current vehicle]
 }
 ```
 
-**Success Response:**
+**Success Response (HTTP 200):**
 ```json
 {
-  "HTTPStatusCode": "200",
-  "HTTPStatusDescription": "OK",
   "data": {
     "appCode": "OCMS-2000",
     "message": "OK"
@@ -314,17 +254,17 @@ WHERE vehicle_no = [current vehicle]
 }
 ```
 
-**Error Response:**
+**Error Response (HTTP 400):**
 ```json
 {
-  "HTTPStatusCode": "400",
-  "HTTPStatusDescription": "Bad Request",
   "data": {
     "appCode": "OCMS-4000",
     "message": "Missing mandatory fields / Duplicate notice detected"
   }
 }
 ```
+
+**Note:** REPCCS webhook uses OCMS-4000 (HTTP 400) for ALL errors including duplicate notice.
 
 #### Database Operations
 
@@ -356,14 +296,16 @@ WHERE vehicle_no = [current vehicle]
 
 ---
 
-### Tab 3.4: Receive AN Data from CES
+### Tab 3.3: Receive AN Data from CES
+
+> **CRITICAL (FD v1.2 Section 4.2):** OCMS uses the anFlag value directly from CES. If CES sends an_flag='Y', OCMS creates the notice with an_flag='Y' and **immediately suspends with PS-ANS WITHOUT performing AN Qualification check**.
 
 #### Process Overview
 
 | Attribute | Value |
 |-----------|-------|
 | Process Name | Receive AN Data from CES (Certis) |
-| Section | 3.4 |
+| Section | 3.3 |
 | Trigger | CES webhook call to /v1/cesWebhook-create-notice |
 | Frequency | Real-time (event-driven) |
 | Systems Involved | External System (CES), Backend (OCMS API), Database (Intranet) |
@@ -390,7 +332,7 @@ WHERE vehicle_no = [current vehicle]
 | Check Double Booking | DBB detection | Apply BR-AN-DUP-002: Query for duplicate offense details |
 | Decision: Duplicate Offense? | DBB check result | Check if matching offense found |
 | Create PS-DBB Suspension | Suspend notice | Create PS-DBB suspension record, early return |
-| Run AN Qualification | Qualification check | Call checkQualification() for offense_type='O' and vehicle_type in [S,D,V,I] |
+| Run AN Qualification | Qualification check | Call checkQualification() for offence_notice_type='O' and vehicle_type in [S,D,V,I] |
 | Decision: Qualifies as AN? | AN qualification result | Check if notice passed all AN checks |
 | Update AN Flags | Mark as AN | Set an_flag='Y', payment_acceptance_allowed='N' |
 | Process Uploaded File | File handling | Process any uploaded photos/videos |
@@ -402,10 +344,10 @@ WHERE vehicle_no = [current vehicle]
 
 | Decision | Input | Condition | True Action | False Action |
 |----------|-------|-----------|-------------|--------------|
-| Valid Payload? | Validation result | All mandatory fields present and valid | Continue to subsystem validation | Return error OCMS-4000 |
-| Valid Subsystem? | Subsystem validation | Length 3-8 chars AND first 3 chars numeric 030-999 | Continue to duplicate check | Return error OCMS-4000 with specific message |
-| Duplicate? | Query result | Notice number exists in database | Return error OCMS-2026 "Notice number already exists" | Continue to rule code validation |
-| Valid Rule Code? | Rule validation | Rule code exists in offense_rule_code table | Continue to vehicle detection | Return error OCMS-2026 "Invalid Offence Rule Code" |
+| Valid Payload? | Validation result | All mandatory fields present and valid | Continue to subsystem validation | Return error OCMS-4000 (HTTP 400) |
+| Valid Subsystem? | Subsystem validation | Length 3-8 chars AND first 3 chars numeric 030-999 | Continue to duplicate check | Return error OCMS-4000 (HTTP 400) with specific message |
+| Duplicate? | Query result | Notice number exists in database | Return error **OCMS-2026 (HTTP 226)** "Notice no Already exists" | Continue to rule code validation |
+| Valid Rule Code? | Rule validation | Rule code exists in offense_rule_code table | Continue to vehicle detection | Return error **OCMS-2026 (HTTP 226)** "Invalid Offence Rule Code" |
 | EHT with AN Flag? | Subsystem + flag check | Subsystem 030-999 AND an_flag='Y' | Create PS-ANS, early return | Continue to standard flow |
 | Duplicate Offense? | DBB query result | Matching offense found (same vehicle, rule code, date/time) | Create PS-DBB suspension, early return | Continue to AN qualification |
 | Qualifies as AN? | Qualification result | Passes all AN checks | Update AN flags | Continue to file processing |
@@ -435,11 +377,9 @@ WHERE vehicle_no = [current vehicle]
 }
 ```
 
-**Success Response:**
+**Success Response (HTTP 200):**
 ```json
 {
-  "HTTPStatusCode": "200",
-  "HTTPStatusDescription": "OK",
   "data": {
     "appCode": "OCMS-2000",
     "message": "Resource created successfully"
@@ -447,28 +387,29 @@ WHERE vehicle_no = [current vehicle]
 }
 ```
 
-**Error Responses:**
+**Error Response - Validation Errors (HTTP 400):**
 ```json
 {
-  "HTTPStatusCode": "400",
-  "HTTPStatusDescription": "Bad Request",
   "data": {
     "appCode": "OCMS-4000",
-    "message": "subsystemlabel Length < 3 / subsystemlabel Length > 8 / subsystemlabel Not in Range 030-999"
+    "message": "Invalid input format or failed validation"
   }
 }
 ```
 
+**Error Response - Duplicate Notice / Invalid Rule Code (HTTP 226 IM Used):**
 ```json
 {
-  "HTTPStatusCode": "226",
-  "HTTPStatusDescription": "IM Used",
   "data": {
     "appCode": "OCMS-2026",
-    "message": "Notice number already exists / Invalid Offence Rule Code"
+    "message": "Notice no Already exists / Invalid Offence Rule Code"
   }
 }
 ```
+
+**Note:** CES webhook uses different error codes than REPCCS:
+- **OCMS-4000 (HTTP 400):** For validation errors (mandatory fields, subsystem label format)
+- **OCMS-2026 (HTTP 226):** For duplicate notice and invalid rule code errors
 
 #### Database Operations
 
@@ -485,9 +426,9 @@ WHERE vehicle_no = [current vehicle]
 
 | Error Point | Error Type | Handling | Recovery |
 |-------------|-----------|----------|----------|
-| Subsystem Label Validation | Invalid format | Return OCMS-4000 with specific error | CES corrects subsystem label |
-| Duplicate Notice Check | Notice exists | Return OCMS-2026 error | CES does not retry |
-| Rule Code Validation | Invalid rule code | Return OCMS-2026 error | CES corrects rule code |
+| Subsystem Label Validation | Invalid format | Return OCMS-4000 (HTTP 400) | CES corrects subsystem label |
+| Duplicate Notice Check | Notice exists | Return **OCMS-2026 (HTTP 226)** | CES does not retry |
+| Rule Code Validation | Invalid rule code | Return **OCMS-2026 (HTTP 226)** | CES corrects rule code |
 | Database Insert | SQLException | Return OCMS-5000 error | CES retries |
 | DBB Query Retry | SQLException | Retry 3 times, apply TS-OLD fallback | Create TS-OLD suspension |
 
@@ -501,14 +442,14 @@ WHERE vehicle_no = [current vehicle]
 
 ---
 
-### Tab 3.5: Retrieve Vehicle Owner Particulars (LTA + DataHive/MHA)
+### Tab 3.4: Retrieve Vehicle Owner Particulars (LTA + DataHive/MHA)
 
 #### Process Overview
 
 | Attribute | Value |
 |-----------|-------|
 | Process Name | Retrieve Vehicle Owner Particulars |
-| Section | 3.5 |
+| Section | 3.4 |
 | Trigger | After AN qualification passes (an_flag='Y') |
 | Frequency | Real-time (per qualified AN) |
 | Systems Involved | Backend (OCMS API), External Systems (LTA, DataHive, MHA) |
@@ -531,10 +472,10 @@ WHERE vehicle_no = [current vehicle]
 | Decision: In Exclusion List? | Exclusion check | Check if owner NRIC in exclusion list |
 | Call DataHive API | Contact retrieval | Apply OP-AN-DATAHIVE-001: Call DataHive API with owner NRIC to get mobile/email |
 | Decision: Contact Found? | Contact availability | Check if mobile OR email retrieved from DataHive |
-| Qualify for eAN | eNotification path | Set eAN eligible flag, proceed to eAN sending (Tab 3.6) |
+| Qualify for eAN | eNotification path | Set eAN eligible flag, proceed to eAN sending (Tab 3.5) |
 | Call MHA API | Address retrieval | Apply OP-AN-MHA-001: Call MHA API with owner NRIC to get registered address |
 | Decision: Address Found? | Address availability | Check if registered address retrieved from MHA |
-| Qualify for AN Letter | Physical letter path | Set AN letter flag, proceed to letter generation (Tab 3.7) |
+| Qualify for AN Letter | Physical letter path | Set AN letter flag, proceed to letter generation (Tab 3.6) |
 | Manual Review Queue | Manual handling | Add to manual review queue for staff follow-up |
 | End | Retrieval complete | Owner particulars retrieval process finished |
 
@@ -655,14 +596,14 @@ Headers:
 
 ---
 
-### Tab 3.6: Send eNotification (eAN)
+### Tab 3.5: Send eNotification (eAN)
 
 #### Process Overview
 
 | Attribute | Value |
 |-----------|-------|
 | Process Name | Send eNotification for Advisory Notice (eAN) |
-| Section | 3.6 |
+| Section | 3.5 |
 | Trigger | After owner contact retrieval (mobile OR email available) |
 | Frequency | Real-time (per qualified eAN) |
 | Systems Involved | Backend (OCMS API), External Systems (SMS Gateway, Email Service) |
@@ -686,7 +627,7 @@ Headers:
 | Update eAN Status | Update database | Update notice with eAN sent flag, sent timestamp, notification method |
 | Log Notification Complete | Completion logging | Log eAN notification completion |
 | Retry Notification | Retry logic | Retry failed notification (max 3 times) |
-| Fallback to Letter | Physical letter path | If all retries fail, proceed to AN letter sending (Tab 3.7) |
+| Fallback to Letter | Physical letter path | If all retries fail, proceed to AN letter sending (Tab 3.6) |
 | End | eAN complete | eNotification sending process finished |
 
 #### Decision Logic
@@ -809,7 +750,7 @@ POST EMAIL_SERVICE_API/send
 | SMS Gateway Error | API error | Log error, retry | Try email after 3 failures |
 | Email Service Timeout | Timeout (>10s) | Retry 3 times | Fallback to physical letter if both fail |
 | Email Service Error | API error | Log error, retry | Fallback to physical letter after 3 failures |
-| All Notifications Failed | All retries exhausted | Log critical error | Proceed to AN letter sending (Tab 3.7) |
+| All Notifications Failed | All retries exhausted | Log critical error | Proceed to AN letter sending (Tab 3.6) |
 
 #### Swimlanes Definition
 
@@ -822,14 +763,14 @@ POST EMAIL_SERVICE_API/send
 
 ---
 
-### Tab 3.7: Send AN Letter (SLIFT)
+### Tab 3.6: Send AN Letter (SLIFT)
 
 #### Process Overview
 
 | Attribute | Value |
 |-----------|-------|
 | Process Name | Send Advisory Notice Letter |
-| Section | 3.7 |
+| Section | 3.6 |
 | Trigger | After owner address retrieval OR eNotification failed |
 | Frequency | Real-time (per qualified AN letter) |
 | Systems Involved | Backend (OCMS API), External System (SLIFT/SFTP) |
@@ -983,14 +924,14 @@ Body (multipart/form-data):
 
 ---
 
-### Tab 3.8: Suspend Notice with PS-ANS
+### Tab 3.7: Suspend Notice with PS-ANS
 
 #### Process Overview
 
 | Attribute | Value |
 |-----------|-------|
 | Process Name | Suspend Notice with PS-ANS |
-| Section | 3.8 |
+| Section | 3.7 |
 | Trigger | After AN qualification and notification (eAN or letter) sent |
 | Frequency | Real-time (per qualified AN) |
 | Systems Involved | Backend (OCMS API), Database (Intranet) |
@@ -1069,14 +1010,14 @@ Mirror same suspension fields from intranet table.
 
 ---
 
-### Tab 3.9: Generate ANS Reports
+### Tab 3.8: Generate ANS Reports
 
 #### Process Overview
 
 | Attribute | Value |
 |-----------|-------|
 | Process Name | Generate Advisory Notice Suspension Reports |
-| Section | 3.9 |
+| Section | 3.8 |
 | Trigger | Ad-hoc request from staff portal OR scheduled cron job |
 | Frequency | On-demand / Daily (scheduled) |
 | Systems Involved | Backend (OCMS API), Database (Intranet), Frontend (Staff Portal) |
@@ -1089,8 +1030,7 @@ Mirror same suspension fields from intranet table.
 | Receive Report Parameters | Get report criteria | Receive date range, vehicle number, subsystem filter from user |
 | Validate Parameters | Parameter validation | Validate date range (max 31 days), required fields |
 | Decision: Valid Parameters? | Validation result | Check if parameters are valid |
-| Query Suspended Notices | Database query | Query ocms_suspended_notice for reason_of_suspension='ANS' |
-| Join Notice Details | Get notice info | Join with ocms_valid_offence_notice to get full notice details |
+| Query ANS Suspension Data | Database query | Query ocms_suspended_notice joined with ocms_valid_offence_notice for reason_of_suspension='ANS' |
 | Apply Filters | Filter results | Apply vehicle number, subsystem, date range filters |
 | Decision: Any Records? | Record check | Check if query returned any records |
 | Sort Results | Order data | Sort by suspension date descending |
@@ -1193,14 +1133,14 @@ Total Records: [Count]
 
 ---
 
-### Tab 3.10: Send Unqualified AN List (REPCCS/CES)
+### Tab 3.9: Send Unqualified AN List (REPCCS/CES)
 
 #### Process Overview
 
 | Attribute | Value |
 |-----------|-------|
 | Process Name | Send Unqualified AN List to REPCCS/CES |
-| Section | 3.10 |
+| Section | 3.9 |
 | Trigger | Scheduled cron job (daily) |
 | Frequency | Daily at configured time |
 | Systems Involved | Backend (OCMS Cron), Database (Intranet), External Systems (REPCCS, CES) |
@@ -1263,14 +1203,16 @@ ORDER BY created_date ASC
 **REPCCS Subsystems:** Configured list of REPCCS subsystem codes
 **CES Subsystems:** Subsystems starting with 030-999
 
-#### Unqualified AN Conditions (from FD Section 10.2)
+#### Unqualified AN Conditions (Actual Code Implementation)
 
 Notices are considered unqualified if:
-1. `offense_type` != 'O'
+1. `offence_notice_type` != 'O'
 2. `vehicle_registration_type` NOT IN ['S','D','V','I']
-3. Failed same-day limit check (already has AN on same day)
+3. Vehicle already has AN today (same-day limit - still active in code)
 4. Exempt offense (Rule 20412 + $80 OR Rule 11210 + LB/HL)
-5. No past qualifying offense in 24 months
+5. No past offense in 24 months (simplified logic - any past offense qualifies)
+
+> **Note:** Code uses simplified logic. FD v1.2 requires ANS PS reason check, but code just checks for any past offense.
 
 #### External API Calls
 

@@ -1,12 +1,15 @@
 # API Planning Document - OCMS 10: Advisory Notices Processing
 
 ## Document Information
-- **Version:** 1.0
-- **Date:** 2026-01-09
+- **Version:** 1.1
+- **Date:** 2026-01-15
 - **Source Documents:**
-  - Functional Document: v1.1_OCMS 10_Functional Document (1).md
+  - Functional Document: v1.2_OCMS 10_Functional Document.md
   - Backend Code: ura-project-ocmsadminapi-5e962080c0b4
   - Key Files: AdvisoryNoticeHelper.java, CreateNoticeServiceImpl.java, CreateNoticeController.java
+
+**Change Log:**
+- v1.1 (2026-01-15): Updated to align with FD v1.2 - Added REPCCS/CES AN flag handling notes
 
 ---
 
@@ -54,8 +57,6 @@
 **Response:**
 ```json
 {
-  "HTTPStatusCode": "string",
-  "HTTPStatusDescription": "string",
   "data": {
     "appCode": "string",
     "message": "string",
@@ -66,13 +67,10 @@
 
 **Success Codes:**
 - `OCMS-2000`: Operation completed successfully
-- `OCMS-2001`: Resource created successfully
 
 **Error Codes:**
 - `OCMS-4000`: Bad request - Missing mandatory fields or invalid format
-- `OCMS-4001`: Unauthorized access
 - `OCMS-5000`: Internal server error
-- `OCMS-5001`: Database connection failed
 
 ---
 
@@ -139,11 +137,9 @@
 }
 ```
 
-**Response:**
+**Success Response (HTTP 200):**
 ```json
 {
-  "HTTPStatusCode": "string",
-  "HTTPStatusDescription": "string",
   "data": {
     "appCode": "OCMS-2000",
     "message": "OK"
@@ -151,15 +147,24 @@
 }
 ```
 
+**Error Response (HTTP 400):**
+```json
+{
+  "data": {
+    "appCode": "OCMS-4000",
+    "message": "Invalid input format or failed validation"
+  }
+}
+```
+
 **Special Behavior:**
-- Success response message is modified to return "OK" instead of full message
-- Notice number is removed from response for REPCCS
+- Success response returns "OK" message (modified from standard "Resource created successfully")
 - Duplicate check is performed before notice creation
+- All errors return HTTP 400 with OCMS-4000
 
 **Error Codes:**
-- `OCMS-4000`: Missing mandatory fields or invalid input format
-- `OCMS-4000`: Duplicate notice detected
-- `OCMS-5000`: System error
+- `OCMS-4000` (HTTP 400): Missing mandatory fields / Invalid input format / Duplicate notice detected
+- `OCMS-5000` (HTTP 500): System error
 
 ---
 
@@ -200,22 +205,42 @@
 - Duplicate notice check performed
 - Offence rule code validation
 
-**Response:**
+**Success Response (HTTP 200):**
 ```json
 {
-  "HTTPStatusCode": "string",
-  "HTTPStatusDescription": "string",
   "data": {
-    "appCode": "string",
-    "message": "string"
+    "appCode": "OCMS-2000",
+    "message": "Resource created successfully"
+  }
+}
+```
+
+**Error Response - Validation Errors (HTTP 400):**
+```json
+{
+  "data": {
+    "appCode": "OCMS-4000",
+    "message": "Invalid input format or failed validation"
+  }
+}
+```
+
+**Error Response - Duplicate Notice / Invalid Rule Code (HTTP 226 IM Used):**
+```json
+{
+  "data": {
+    "appCode": "OCMS-2026",
+    "message": "Notice no Already exists / Invalid Offence Rule Code"
   }
 }
 ```
 
 **Error Codes:**
-- `OCMS-4000`: Invalid subsystemLabel format or range
-- `OCMS-2026`: Notice number already exists
-- `OCMS-5000`: Internal server error
+- `OCMS-4000` (HTTP 400): Invalid subsystemLabel format or range / Missing mandatory fields
+- `OCMS-2026` (HTTP 226): Notice number already exists / Invalid Offence Rule Code
+- `OCMS-5000` (HTTP 500): Internal server error
+
+**Note:** CES webhook uses HTTP 226 (IM Used) status code for duplicate notice and invalid rule code errors, which differs from REPCCS webhook that uses HTTP 400 for all errors.
 
 ---
 
@@ -254,12 +279,14 @@ AdvisoryNoticeResult {
 }
 ```
 
-**Qualification Criteria:**
+**Qualification Criteria (Actual Code Implementation):**
 1. Offense Type = 'O' (Offender notices only)
 2. Vehicle Type in [S, D, V, I] (Local vehicles only)
-3. Same-day limit: Maximum 1 AN per vehicle per day
-4. Exemption rules check
-5. Past offense check (24-month window)
+3. Same-day limit check - Maximum 1 AN per vehicle per calendar day
+4. Exemption rules check (Rule 20412+$80, Rule 11210+LB/HL)
+5. Past offense check (24-month window) - Simplified: any past offense in 24 months qualifies
+
+> **Note:** FD v1.2 states same-day limit check should be removed, but code still implements this check. Past offense logic is simplified in current Phase 2 implementation.
 
 ---
 
@@ -279,18 +306,29 @@ AdvisoryNoticeResult {
 #### 1.3.3 Check Same-Day Limit (Internal)
 **Function:** `AdvisoryNoticeHelper.checkSameDayLimit()`
 
-**Description:** Ensures maximum 1 AN per vehicle per calendar day
+**Description:** Checks if vehicle already has an AN on the same day
 
 **Input:**
 - `vehicleNo`: String
-- `noticeDateAndTime`: LocalDateTime
+- `currentNoticeDate`: LocalDateTime
 
-**Return:** `boolean` (true if within limit, false if exceeded)
+**Return:** `boolean` (true if no same-day AN exists, false if already has AN today)
 
-**Query:** Searches `ocms_valid_offence_notice` for:
-- Same vehicle number
-- `an_flag` = 'Y'
-- Same calendar day
+**Logic:**
+```
+Query ocms_valid_offence_notice WHERE:
+  - vehicle_no = current vehicle
+  - an_flag = 'Y'
+  - notice_date_and_time is same calendar day as currentNoticeDate
+
+IF record exists THEN
+  RETURN false (already has AN today)
+ELSE
+  RETURN true (can proceed with AN)
+END IF
+```
+
+> **Note:** FD v1.2 states this check should be removed, but it is still actively implemented in code (AdvisoryNoticeHelper.java:104-107, 142-182).
 
 ---
 
@@ -324,9 +362,77 @@ AdvisoryNoticeResult {
 
 **Query Window:** Current date minus 24 months
 
+**Logic (Simplified - Phase 2 Implementation):**
+```
+Query ocms_valid_offence_notice WHERE:
+  - vehicle_no = current vehicle
+  - notice_date_and_time >= (currentDate - 24 months)
+  - notice_date_and_time < currentNoticeDate
+
+IF any record found THEN
+  RETURN true (has past offense = qualified for AN)
+ELSE
+  RETURN false (no past offense = not qualified)
+END IF
+```
+
+> **Note:** FD v1.2 requires checking if past offenses are suspended with ANS PS reasons (CAN/CFA/DBB/VST). Current code uses simplified logic: "any past offense qualifies" (per code comment: "For Phase 2, we'll keep it simple").
+
 ---
 
 ## 2. External API Integrations
+
+> **⚠️ Implementation Status:** The following external API integrations (Sections 2.0 - 2.4) are documented per Yi Jie standards but **NOT YET IMPLEMENTED** in current codebase. These are planned for future phases.
+
+### 2.0 External API Standards (Yi Jie Compliance) [FUTURE PHASE]
+
+#### 2.0.1 Token Refresh Handling
+
+**Rule:** If token expired or invalid, the system should retry to get another refreshed token to continue. Should NOT stop processing.
+
+| Scenario | Action | Result |
+|----------|--------|--------|
+| Token valid | Proceed with API call | Normal flow |
+| Token expired (401) | Auto refresh token | Continue with new token |
+| Token invalid | Auto refresh token | Continue with new token |
+| Refresh failed | Retry refresh 3 times | If all fail, log error and alert |
+
+**Implementation:**
+```
+1. Make API call with current token
+2. IF response = 401 (Unauthorized) THEN
+   a. Call token refresh endpoint
+   b. IF refresh success THEN
+      - Store new token
+      - Retry original API call with new token
+   c. ELSE
+      - Retry refresh up to 3 times
+      - IF all retries fail THEN trigger email alert
+   END IF
+3. Continue processing
+```
+
+#### 2.0.2 Retry Mechanism with Email Alert
+
+**Rule:** When OCMS calls external APIs and fails to connect, it should auto retry 3 times before stopping and triggering email alert.
+
+| Retry | Wait Time | Action |
+|-------|-----------|--------|
+| 1st attempt | 0s | Initial call |
+| 2nd attempt | 1s | Retry with exponential backoff |
+| 3rd attempt | 2s | Retry with exponential backoff |
+| 4th attempt | 4s | Final retry |
+| All failed | - | Stop processing, trigger email alert |
+
+**Email Alert on Failure:**
+
+| Field | Value |
+|-------|-------|
+| Subject | [OCMS-ALERT] External API Connection Failed - {API_NAME} |
+| To | System administrators, Support team |
+| Body | API: {endpoint}<br>Error: {error_message}<br>Timestamp: {datetime}<br>Retry Count: 3<br>Action Required: Check external system connectivity |
+
+---
 
 ### 2.1 LTA Vehicle Ownership Check
 
@@ -346,7 +452,8 @@ AdvisoryNoticeResult {
 
 **Error Handling:**
 - Timeout: 30 seconds
-- Retry: 3 attempts
+- Retry: 3 attempts with exponential backoff (see Section 2.0.2)
+- Email Alert: Triggered after 3 failed retries (see Section 2.0.2)
 - Fallback: Manual review queue
 
 ---
@@ -368,6 +475,12 @@ AdvisoryNoticeResult {
 - Owner must NOT be in eNotification exclusion list
 - Notice must NOT be suspended
 
+**Error Handling:**
+- Timeout: 30 seconds
+- Retry: 3 attempts with exponential backoff (see Section 2.0.2)
+- Email Alert: Triggered after 3 failed retries (see Section 2.0.2)
+- Fallback: Proceed to physical letter flow
+
 ---
 
 ### 2.3 MHA Address Retrieval
@@ -384,6 +497,12 @@ AdvisoryNoticeResult {
 - Street name
 - Postal code
 - Unit number
+
+**Error Handling:**
+- Timeout: 30 seconds
+- Retry: 3 attempts with exponential backoff (see Section 2.0.2)
+- Email Alert: Triggered after 3 failed retries (see Section 2.0.2)
+- Fallback: Manual review queue
 
 ---
 
@@ -404,9 +523,50 @@ AdvisoryNoticeResult {
 
 **File Format:** PDF or XML (based on SLIFT requirements)
 
+**Error Handling:**
+- Timeout: 60 seconds (file transfer)
+- Retry: 3 attempts with exponential backoff (see Section 2.0.2)
+- Email Alert: Triggered after 3 failed retries (see Section 2.0.2)
+- Fallback: Manual review queue, letter pending status
+
 ---
 
 ## 3. Database Operations
+
+### 3.0 Database Standards (Yi Jie Compliance)
+
+#### 3.0.1 SQL Server Sequences
+
+**Rule:** All numbering formats (e.g., notice number, sr_no) must use SQL Server sequences.
+
+| Table | Field | Sequence Name |
+|-------|-------|---------------|
+| ocms_valid_offence_notice | notice_no | Generated by source system |
+| ocms_suspended_notice | sr_no | `nextval('ocms_suspended_notice_sr_no_seq')` |
+| ocms_offence_notice_detail | - | Uses notice_no from VON |
+
+#### 3.0.2 Insert Order (Parent First, Child After)
+
+**Rule:** When inserting related records, parent table must be updated/inserted first, followed by child tables.
+
+**Insert Order for Notice Creation:**
+1. `ocms_valid_offence_notice` (VON) - Parent table
+2. `ocms_offence_notice_detail` (OND) - Child table
+3. `ocms_suspended_notice` - If suspension applies
+
+**Insert Order for Suspension:**
+1. UPDATE `ocms_valid_offence_notice` (set suspension fields)
+2. INSERT `ocms_suspended_notice` (create suspension record)
+3. UPDATE `eocms_valid_offence_notice` (sync to internet)
+
+#### 3.0.3 Audit User Fields
+
+**Rule:** cre_user_id and upd_user_id cannot use "SYSTEM". Use database user instead.
+
+| Zone | Audit User |
+|------|------------|
+| Intranet | `ocmsiz_app_conn` |
+| Internet | `ocmsez_app_conn` |
 
 ### 3.1 Primary Tables
 
@@ -417,7 +577,7 @@ AdvisoryNoticeResult {
 - `notice_no` (PK): Notice number
 - `an_flag`: Advisory Notice flag (Y/N)
 - `payment_acceptance_allowed`: Payment acceptance flag
-- `offense_type`: Type of offense
+- `offence_notice_type`: Type of offence notice (O/U/E)
 - `vehicle_registration_type`: Vehicle registration type
 - `computer_rule_code`: Offense rule code
 - `composition_amount`: Composition amount
@@ -432,7 +592,7 @@ AdvisoryNoticeResult {
 **Operations:**
 - INSERT: Create new notice
 - UPDATE: Set AN flags after qualification
-- SELECT: Query for same-day limit check, past offense check
+- SELECT: Query for same-day limit check and past offense check
 
 ---
 
@@ -480,14 +640,15 @@ AdvisoryNoticeResult {
 
 ### 3.2 Query Patterns
 
-#### Same-Day AN Check Query
+#### Same-Day AN Check Query [STILL ACTIVE in code]
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT COUNT(*) FROM ocms_valid_offence_notice
 WHERE vehicle_no = ?
   AND an_flag = 'Y'
-  AND notice_date_and_time >= ? (start of day)
-  AND notice_date_and_time <= ? (end of day)
+  AND CAST(notice_date_and_time AS DATE) = CAST(? AS DATE)
 ```
+
+> **Note:** FD v1.2 states this should be removed, but code still implements this check.
 
 #### Past Offense Check Query (24-month window)
 ```sql

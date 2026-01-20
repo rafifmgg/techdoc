@@ -1,12 +1,15 @@
 # Condition and Validation Planning Document - OCMS 10: Advisory Notices Processing
 
 ## Document Information
-- **Version:** 1.0
-- **Date:** 2026-01-09
+- **Version:** 1.1
+- **Date:** 2026-01-15
 - **Source Documents:**
-  - Functional Document: v1.1_OCMS 10_Functional Document (1).md
+  - Functional Document: v1.2_OCMS 10_Functional Document.md
   - Backend Code: ura-project-ocmsadminapi-5e962080c0b4
   - Key Files: AdvisoryNoticeHelper.java, CreateNoticeServiceImpl.java, ValidationServices.java
+
+**Change Log:**
+- v1.1 (2026-01-15): Updated to align with FD v1.2 - Removed Same-Day AN Check, updated Past Offense logic
 
 ---
 
@@ -77,14 +80,14 @@ Same as Section 1.1, with automatic subsystem label set to PLUS code.
 
 ### 2.1 Gating Conditions (Pre-qualification)
 
-#### BR-AN-GATE-001: Offense Type Check
-**Rule:** Offense type must be 'O' (Offender) for AN eligibility
+#### Offence Notice Type Check
+**Rule:** Offence notice type must be 'O' (Offender) for AN eligibility
 
 **Implementation:** `AdvisoryNoticeHelper.checkQualification()`
 
 **Logic:**
 ```
-IF offenseType != 'O' THEN
+IF offenceNoticeType != 'O' THEN
   RETURN not qualified
   REASON: "Offense type must be 'O'"
 END IF
@@ -101,7 +104,7 @@ END IF
 
 ---
 
-#### BR-AN-GATE-002: Vehicle Type Check
+#### Vehicle Type Check
 **Rule:** Vehicle registration type must be S, D, V, or I (local vehicles only)
 
 **Implementation:** `AdvisoryNoticeHelper.checkQualification()`
@@ -130,53 +133,43 @@ END IF
 
 ### 2.2 Qualification Conditions
 
-#### BR-AN-QUAL-001: Same-Day Limit Check
+#### Same-Day Limit Check
 **Rule:** Maximum 1 AN per vehicle per calendar day
 
 **Implementation:** `AdvisoryNoticeHelper.checkSameDayLimit()`
 
 **Logic:**
 ```
-Get start and end of notice date (calendar day)
 Query ocms_valid_offence_notice WHERE:
   - vehicle_no = current vehicle
   - an_flag = 'Y'
-  - notice_date_and_time BETWEEN dayStart AND dayEnd
+  - notice_date_and_time is same calendar day as currentNoticeDate
 
-IF any records found THEN
-  RETURN limit exceeded (not qualified)
-  REASON: "Same-day limit exceeded"
+IF record exists THEN
+  RETURN false (already has AN today - not qualified)
 ELSE
-  RETURN within limit (qualified)
+  RETURN true (can proceed with AN qualification)
 END IF
 ```
 
 **Location in Code:**
 - File: AdvisoryNoticeHelper.java
-- Lines: 142-182
-
-**Database Query:**
-```sql
-SELECT * FROM ocms_valid_offence_notice
-WHERE vehicle_no = ?
-  AND an_flag = 'Y'
-  AND notice_date_and_time >= ?
-  AND notice_date_and_time <= ?
-```
+- Lines: 104-107 (check call), 142-182 (method implementation)
 
 **Test Cases:**
-- ✓ No AN on same day → Pass
-- ✗ 1 AN already exists on same day → Fail
-- ✗ Multiple ANs on same day → Fail
+- ✓ Vehicle has no AN today → Pass (can qualify)
+- ✗ Vehicle already has AN today → Fail (limit 1 per day)
+
+> **Note:** FD v1.2 states this check should be REMOVED, but it is still actively implemented in code.
 
 ---
 
-#### BR-AN-QUAL-002: Past Offense Check (24-month window)
-**Rule:** Vehicle must have qualifying offense in past 24 months
+#### Past Offense Check (24-month window)
+**Rule (Actual Code - Simplified Phase 2):** Any past offense in 24 months qualifies for AN
 
 **Implementation:** `AdvisoryNoticeHelper.hasPastQualifyingOffense()`
 
-**Logic:**
+**Logic (Actual Code Implementation):**
 ```
 Calculate date 24 months ago from current notice date
 Query ocms_valid_offence_notice WHERE:
@@ -184,11 +177,10 @@ Query ocms_valid_offence_notice WHERE:
   - notice_date_and_time >= (currentDate - 24 months)
   - notice_date_and_time < currentNoticeDate
 
-IF any records found THEN
-  RETURN has past offense (qualified)
+IF any record found THEN
+  RETURN true (has past offense = qualified for AN)
 ELSE
-  RETURN no past offense (not qualified)
-  REASON: "No qualifying offense in past 24 months"
+  RETURN false (no past offense = not qualified)
 END IF
 ```
 
@@ -198,27 +190,27 @@ END IF
 
 **Database Query:**
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT COUNT(*) FROM ocms_valid_offence_notice
 WHERE vehicle_no = ?
   AND notice_date_and_time >= ?
   AND notice_date_and_time < ?
 ```
 
 **Test Cases:**
-- ✓ Vehicle has 1 past offense within 24 months → Pass
-- ✓ Vehicle has multiple past offenses within 24 months → Pass
-- ✗ Vehicle has past offense > 24 months ago → Fail
-- ✗ Vehicle has no past offenses → Fail
+- ✓ Vehicle has any past offense in 24 months → Qualified
+- ✗ Vehicle has no past offense in 24 months → Not Qualified
 
-**Business Rule Clarification:**
-- Phase 2 simplification: Any past offense qualifies (no PS suspension code check)
-- Future phases may add PS suspension code filtering (CAN, CFA, DBB, VST)
+> **Note:** FD v1.2 requires checking ANS PS reasons (CAN/CFA/DBB/VST), but current code uses simplified logic per code comment: "For Phase 2, we'll keep it simple: any past offense qualifies"
+
+**FD v1.2 Requirement (NOT YET IMPLEMENTED):**
+- Past offense qualifies for AN only if all past notices are suspended with ANS PS reasons
+- ANS PS reasons: CAN (Cancelled), CFA (Compound Fine Accepted), DBB (Double Booking), VST (Vehicle Stopped)
 
 ---
 
 ### 2.3 Exemption Rules
 
-#### BR-AN-EXEMPT-001: Rule Code 20412 with $80 Composition
+#### Rule Code 20412 with $80 Composition
 **Rule:** Offense code 20412 with composition amount = $80 is exempt from AN
 
 **Implementation:** `AdvisoryNoticeHelper.isExemptFromAN()`
@@ -243,7 +235,7 @@ END IF
 
 ---
 
-#### BR-AN-EXEMPT-002: Rule Code 11210 with Vehicle Category LB or HL
+#### Rule Code 11210 with Vehicle Category LB or HL
 **Rule:** Offense code 11210 with vehicle category "LB" (Loading Bay) or "HL" (Handicap Lot) is exempt from AN
 
 **Implementation:** `AdvisoryNoticeHelper.isExemptFromAN()`
@@ -270,7 +262,7 @@ END IF
 
 ### 2.4 External API Conditions
 
-#### OP-AN-LTA-001: LTA Vehicle Ownership Check
+#### LTA Vehicle Ownership Check
 **Condition:** After AN qualification, retrieve vehicle owner information from LTA
 
 **Pre-call Validation:**
@@ -287,14 +279,17 @@ END IF
 
 **Response Handling:**
 - **Success:** Store owner details in database
-- **Timeout:** Retry 3 times with exponential backoff
+- **Timeout:** Retry 3 times with exponential backoff (1s, 2s, 4s)
 - **Owner Not Found:** Mark notice for manual review
-- **API Error:** Log error, mark notice for manual review
+- **API Error:** Log error, trigger email alert, mark notice for manual review
 
-**Error Decision:**
+**Error Decision (Yi Jie Compliance):**
 ```
 IF LTA returns error THEN
   Log error details
+  IF retryCount >= 3 THEN
+    Trigger email alert to administrators
+  END IF
   Create manual review task
   Continue notice processing with limited owner info
 END IF
@@ -302,7 +297,7 @@ END IF
 
 ---
 
-#### OP-AN-DATAHIVE-001: DataHive Contact Retrieval
+#### DataHive Contact Retrieval
 **Condition:** After LTA ownership check, retrieve contact information for eNotification
 
 **Pre-call Validation:**
@@ -320,7 +315,8 @@ END IF
 **Response Handling:**
 - **Success with Mobile/Email:** Proceed to eNotification flow
 - **No Contact Found:** Proceed to physical letter flow
-- **API Error:** Fallback to physical letter flow
+- **Timeout:** Retry 3 times with exponential backoff (1s, 2s, 4s)
+- **API Error:** Log error, trigger email alert after 3 retries, fallback to physical letter flow
 
 **Qualification for eNotification:**
 ```
@@ -333,7 +329,7 @@ END IF
 
 ---
 
-#### OP-AN-MHA-001: MHA Address Retrieval
+#### MHA Address Retrieval
 **Condition:** When eNotification is not eligible, retrieve registered address for physical letter
 
 **Pre-call Validation:**
@@ -349,12 +345,13 @@ END IF
 
 **Response Handling:**
 - **Success:** Proceed to SLIFT letter generation
+- **Timeout:** Retry 3 times with exponential backoff (1s, 2s, 4s)
 - **Address Not Found:** Mark notice for manual review
-- **API Error:** Retry 3 times, then manual review
+- **API Error:** Retry 3 times, trigger email alert after all retries fail, then manual review
 
 ---
 
-#### OP-AN-SLIFT-001: SLIFT Letter Submission
+#### SLIFT Letter Submission
 **Condition:** Submit AN letter for physical printing
 
 **Pre-call Validation:**
@@ -372,14 +369,15 @@ END IF
 
 **Response Handling:**
 - **Success:** Update notice with letter sent status
-- **Submission Failed:** Retry 3 times with exponential backoff
-- **Persistent Failure:** Mark for manual review
+- **Timeout:** 60 seconds (file transfer)
+- **Submission Failed:** Retry 3 times with exponential backoff (1s, 2s, 4s)
+- **Persistent Failure:** Trigger email alert, mark for manual review
 
 ---
 
 ### 2.5 Duplicate Detection
 
-#### BR-AN-DUP-001: Duplicate Notice Number Check
+#### Duplicate Notice Number Check
 **Rule:** Notice number must be unique in system
 
 **Implementation:** `ValidationServices.checkNoticeExisting()`
@@ -390,7 +388,9 @@ Query ocms_valid_offence_notice WHERE notice_no = ?
 
 IF record exists THEN
   RETURN duplicate detected
-  ERROR: "OCMS-4000: Notice no Already exists"
+  ERROR varies by source:
+    - REPCCS: OCMS-4000 (HTTP 400)
+    - CES: OCMS-2026 (HTTP 226)
 ELSE
   RETURN no duplicate
 END IF
@@ -400,15 +400,36 @@ END IF
 - File: CreateNoticeServiceImpl.java (REPCCS/CES webhooks)
 - Lines: 250-259 (REPCCS), 358-366 (CES)
 
+**Error Response - REPCCS Webhook (HTTP 400):**
+```json
+{
+  "data": {
+    "appCode": "OCMS-4000",
+    "message": "Invalid input format or failed validation"
+  }
+}
+```
+
+**Error Response - CES Webhook (HTTP 226 IM Used):**
+```json
+{
+  "data": {
+    "appCode": "OCMS-2026",
+    "message": "Notice no Already exists"
+  }
+}
+```
+
 **Test Cases:**
 - ✓ New notice number → Pass
-- ✗ Existing notice number → Fail
+- ✗ Existing notice number (REPCCS) → Fail with OCMS-4000
+- ✗ Existing notice number (CES) → Fail with OCMS-2026
 
 **Note:** Duplicate notice number check is currently COMMENTED OUT in standard create notice flow (lines 816-847) per user request. Only active in REPCCS/CES webhooks.
 
 ---
 
-#### BR-AN-DUP-002: Duplicate Offense Details Check (Double Booking)
+#### Duplicate Offense Details Check (Double Booking)
 **Rule:** Detect duplicate offense for same vehicle, rule code, and date/time
 
 **Implementation:** `CreateNoticeHelper.checkDuplicateOffenseDetails()`
@@ -448,7 +469,7 @@ END IF
 
 ### 2.6 Mandatory Field Validation (Backend)
 
-#### BR-AN-MAND-001: Required Fields for Notice Creation
+#### Required Fields for Notice Creation
 **Rule:** All mandatory fields must be present and valid
 
 **Implementation:** `CreateNoticeHelper.validateMandatoryFieldsForBatch()`
@@ -490,27 +511,17 @@ END IF
 **Error Response (Single Notice):**
 ```json
 {
-  "HTTPStatusCode": "400",
-  "HTTPStatusDescription": "Bad Request",
-  "data": {
-    "appCode": "OCMS-4000",
-    "message": "Missing Mandatory Fields"
-  }
+  "appCode": "OCMS-4000",
+  "message": "Missing Mandatory Fields"
 }
 ```
 
 **Error Response (Batch):**
 ```json
 {
-  "HTTPStatusCode": "200",
-  "HTTPStatusDescription": "OK",
-  "data": {
-    "successfulNotices": [],
-    "failedNotices": {
-      "PS1234567": "Missing Mandatory Fields",
-      "PS1234568": "Missing Mandatory Fields"
-    }
-  }
+  "appCode": "OCMS-4000",
+  "message": "Missing Mandatory Fields",
+  "failedNotices": ["PS1234567", "PS1234568"]
 }
 ```
 
@@ -518,7 +529,7 @@ END IF
 
 ### 2.7 REPCCS/CES Specific Validations
 
-#### BR-AN-REP-001: REPCCS Payload Validation
+#### REPCCS Payload Validation
 **Rule:** REPCCS webhook payload must have all mandatory fields
 
 **Implementation:** `RepWebHookPayloadValidator.validateMandatoryFields()`
@@ -532,12 +543,8 @@ END IF
 **Error Response:**
 ```json
 {
-  "HTTPStatusCode": "400",
-  "HTTPStatusDescription": "Bad Request",
-  "data": {
-    "appCode": "OCMS-4000",
-    "message": "Invalid input format or failed validation"
-  }
+  "appCode": "OCMS-4000",
+  "message": "Invalid input format or failed validation"
 }
 ```
 
@@ -547,7 +554,7 @@ END IF
 
 ---
 
-#### BR-AN-CES-001: CES Subsystem Label Validation
+#### CES Subsystem Label Validation
 **Rule:** CES subsystem label must be 3-8 characters, starting with 030-999
 
 **Implementation:** `CreateNoticeServiceImpl.processEHTWebhook()`
@@ -600,7 +607,7 @@ END IF
 
 ---
 
-#### BR-AN-CES-002: CES Offense Rule Code Validation
+#### CES Offense Rule Code Validation
 **Rule:** CES offense rule code must be valid
 
 **Implementation:** `ValidationServices.validateToDto()`
@@ -609,17 +616,17 @@ END IF
 - Check if computer_rule_code exists in offense_rule_code table
 - If not found, throw exception
 
-**Error Response:**
+**Error Response (HTTP 226 IM Used):**
 ```json
 {
-  "HTTPStatusCode": "226",
-  "HTTPStatusDescription": "IM Used",
   "data": {
     "appCode": "OCMS-2026",
     "message": "Invalid input format or failed validation - Invalid Offence Rule Code"
   }
 }
 ```
+
+**Note:** CES webhook returns OCMS-2026 with HTTP 226 for invalid rule code, which differs from other webhooks that use OCMS-4000.
 
 **Location in Code:**
 - File: CreateNoticeServiceImpl.java
@@ -629,7 +636,7 @@ END IF
 
 ### 2.8 EHT/Certis AN Flag Handling
 
-#### BR-AN-EHT-001: EHT AN Flag Check
+#### EHT AN Flag Check
 **Rule:** For EHT/Certis subsystems (030-999), if an_flag='Y' in payload, create PS-ANS suspension immediately
 
 **Implementation:** `CreateNoticeHelper.checkANSForEHT()`
@@ -673,7 +680,7 @@ END IF
 
 ### 2.9 Database Query Retry Logic
 
-#### OP-AN-DBB-RETRY: Double Booking Query Retry
+#### Double Booking Query Retry
 **Rule:** If DBB query fails, retry 3 times before applying TS-OLD fallback
 
 **Implementation:** `CreateNoticeHelper.checkDuplicateOffenseDetails()` with retry wrapper
@@ -699,14 +706,23 @@ END WHILE
 IF all retries failed THEN
   Set dbbQueryFailed = true
   Set dbbQueryException = exception message
+  Trigger email alert (Yi Jie Compliance)
   Apply TS-OLD fallback
 END IF
 ```
+
+**Email Alert on DBB Query Failure (Yi Jie Compliance):**
+| Field | Value |
+|-------|-------|
+| Subject | [OCMS-ALERT] DBB Query Failed - Notice Creation |
+| To | System administrators, Support team |
+| Body | Notice: {notice_no}<br>Error: {exception_message}<br>Timestamp: {datetime}<br>Retry Count: 3<br>Fallback: TS-OLD applied |
 
 **TS-OLD Fallback Logic:**
 ```
 IF dbbQueryFailed = true THEN
   Log error: "DBB query failed after 3 retries"
+  Send email alert to administrators
 
   Update notice:
     - suspension_type = 'TS'
@@ -737,15 +753,17 @@ END IF
 
 ## 3. Decision Trees
 
-### 3.1 AN Qualification Decision Tree
+### 3.1 AN Qualification Decision Tree (Actual Code Implementation)
+
+> **Note:** This reflects actual code implementation, which differs from FD v1.2 in Steps 3 and 5.
 
 ```
 START: New Notice Created
 │
-├─► STEP 1: Check Offense Type
-│   ├─► IF offenseType != 'O'
+├─► STEP 1: Check Offence Notice Type
+│   ├─► IF offenceNoticeType != 'O'
 │   │   └─► Not AN → Standard Processing
-│   └─► IF offenseType = 'O'
+│   └─► IF offenceNoticeType = 'O'
 │       └─► Continue to STEP 2
 │
 ├─► STEP 2: Check Vehicle Type
@@ -754,9 +772,9 @@ START: New Notice Created
 │   └─► IF vehicleRegType IN ['S','D','V','I']
 │       └─► Continue to STEP 3
 │
-├─► STEP 3: Check Same-Day Limit
-│   ├─► IF already has AN today
-│   │   └─► Not AN → Standard Processing
+├─► STEP 3: Check Same-Day Limit [STILL ACTIVE in code]
+│   ├─► IF vehicle already has AN today
+│   │   └─► Not AN → Standard Processing (limit 1 per day)
 │   └─► IF no AN today
 │       └─► Continue to STEP 4
 │
@@ -768,17 +786,21 @@ START: New Notice Created
 │   └─► IF not exempt
 │       └─► Continue to STEP 5
 │
-├─► STEP 5: Check Past Offenses (24 months)
-│   ├─► IF no past offense in 24 months
-│   │   └─► Not AN → Standard Processing
-│   └─► IF has past offense
-│       └─► Qualified for AN
+├─► STEP 5: Check Past Offenses (Simplified Phase 2)
+│   ├─► IF any past offense in 24 months
+│   │   └─► Qualified for AN
+│   └─► IF no past offense in 24 months
+│       └─► Not AN → Standard Processing
 │
 └─► RESULT: Advisory Notice
     ├─► Update an_flag = 'Y'
     ├─► Update payment_acceptance_allowed = 'N'
     └─► Continue to eAN/Letter Processing
 ```
+
+> **Differences from FD v1.2:**
+> - STEP 3: FD says remove same-day check, but code still implements it
+> - STEP 5: FD requires ANS PS reason check, but code uses simplified "any past offense qualifies"
 
 ---
 
@@ -935,21 +957,21 @@ START: AN Qualified
 
 ## 5. Integration Test Scenarios
 
-### 5.1 AN Qualification Flow
+### 5.1 AN Qualification Flow (FD v1.2)
 
-**Test Case 1: Fully Qualified AN**
+**Test Case 1: Fully Qualified AN (first offense)**
 - Offense Type: O
 - Vehicle Type: S
-- No AN today
 - Not exempt (Rule 20413)
-- Has past offense in 24 months
+- No past offense in 24 months (first offense for this vehicle)
 - **Expected:** an_flag='Y', payment_acceptance_allowed='N'
 
-**Test Case 2: Fails Same-Day Limit**
+**Test Case 2: Fully Qualified AN (all past offenses suspended with ANS PS)**
 - Offense Type: O
 - Vehicle Type: D
-- Already has AN today
-- **Expected:** Not AN, standard processing
+- Not exempt
+- Has past offenses, ALL suspended with CAN/CFA/DBB/VST
+- **Expected:** an_flag='Y', payment_acceptance_allowed='N'
 
 **Test Case 3: Exempt Rule 20412**
 - Offense Type: O
@@ -957,11 +979,19 @@ START: AN Qualified
 - Rule Code: 20412, Amount: $80
 - **Expected:** Exempt, not AN
 
-**Test Case 4: No Past Offense**
+**Test Case 4: No Past Offense in 24 Months**
 - Offense Type: O
 - Vehicle Type: I
 - No past offense in 24 months
-- **Expected:** Not AN, standard processing
+- **Expected:** Not AN (simplified logic requires past offense)
+
+**Test Case 5: Same-Day Limit Exceeded [STILL ACTIVE in code]**
+- Offense Type: O
+- Vehicle Type: S
+- Vehicle already has AN today
+- **Expected:** Not AN (limit 1 per day)
+
+> **Note:** FD v1.2 states same-day limit should be removed, but code still implements this check.
 
 ---
 
@@ -1021,14 +1051,16 @@ START: AN Qualified
 
 ## 6. Error Code Summary
 
-| Error Code | Description | HTTP Status | Use Case |
+| Error Code | HTTP Status | Description | Use Case |
 |------------|-------------|-------------|----------|
-| OCMS-2000 | Operation completed successfully | 200 | Success response |
-| OCMS-2026 | Notice number already exists | 226 | Duplicate notice (CES) |
-| OCMS-4000 | Bad request - Invalid input | 400 | Missing fields, validation failure |
-| OCMS-4001 | Unauthorized access | 401 | Authentication failure |
-| OCMS-5000 | Internal server error | 500 | System error |
-| OCMS-5001 | Database connection failed | 500 | DB error |
+| OCMS-2000 | 200 | Operation completed successfully | Success response |
+| OCMS-2026 | 226 (IM Used) | Notice already exists / Invalid rule code | CES webhook only - duplicate notice, invalid offence rule code |
+| OCMS-4000 | 400 | Bad request - Invalid input | Missing fields, validation failure, duplicate notice (REPCCS) |
+| OCMS-5000 | 500 | Internal server error | System error |
+
+**Note on Error Code Differences:**
+- **REPCCS webhook:** Returns OCMS-4000 (HTTP 400) for all validation errors including duplicate notice
+- **CES webhook:** Returns OCMS-2026 (HTTP 226) for duplicate notice and invalid rule code errors; returns OCMS-4000 (HTTP 400) for other validation errors (mandatory fields, subsystem label format)
 
 ---
 

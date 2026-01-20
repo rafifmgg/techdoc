@@ -301,16 +301,16 @@
         </mxCell>
 
         <!-- Database query boxes (inside API swimlane) -->
-        <mxCell id="bf-db1" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT * WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bf-swim-api">
+        <mxCell id="bf-db1" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT notice_no, vehicle_no, last_processing_stage WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bf-swim-api">
           <mxGeometry x="400" y="200" width="180" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="bf-db2" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;INSERT/UPDATE offender&lt;/div&gt;&lt;div&gt;SET offender_indicator = 'Y'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bf-swim-api">
+        <mxCell id="bf-db2" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;INSERT/UPDATE offender&lt;/div&gt;&lt;div&gt;SET offender_indicator = 'Y'&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bf-swim-api">
           <mxGeometry x="2530" y="200" width="200" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="bf-db3" value="&lt;b&gt;ocms_offence_notice_owner_driver_addr&lt;/b&gt;&lt;div&gt;INSERT/UPDATE address&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bf-swim-api">
+        <mxCell id="bf-db3" value="&lt;b&gt;ocms_offence_notice_owner_driver_addr&lt;/b&gt;&lt;div&gt;INSERT/UPDATE address&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bf-swim-api">
           <mxGeometry x="2670" y="280" width="220" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="bf-inet-db" value="&lt;b&gt;eocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;Sync to Internet DB&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bf-swim-api">
+        <mxCell id="bf-inet-db" value="&lt;b&gt;eocms_furnish_application&lt;/b&gt;&lt;div&gt;Sync to Internet/PII&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsez_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bf-swim-api">
           <mxGeometry x="2950" y="200" width="200" height="50" as="geometry" />
         </mxCell>
 
@@ -372,7 +372,7 @@
           <mxGeometry x="430" y="90" width="100" height="70" as="geometry" />
         </mxCell>
 
-        <mxCell id="bu-p4" value="Call GET /outstanding/{idNo}" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="bu-swim-portal">
+        <mxCell id="bu-p4" value="Call POST /outstanding" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="bu-swim-portal">
           <mxGeometry x="570" y="90" width="100" height="70" as="geometry" />
         </mxCell>
 
@@ -412,7 +412,7 @@
           <mxGeometry x="1550" y="200" width="80" height="50" as="geometry" />
         </mxCell>
 
-        <mxCell id="bu-p12" value="Call PATCH /batch/update-address" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="bu-swim-portal">
+        <mxCell id="bu-p12" value="Call POST /batch/update-address" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="bu-swim-portal">
           <mxGeometry x="1680" y="90" width="100" height="70" as="geometry" />
         </mxCell>
 
@@ -583,16 +583,16 @@
         </mxCell>
 
         <!-- Database query boxes (inside API swimlane) -->
-        <mxCell id="bu-db1" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;SELECT * WHERE id_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bu-swim-api">
+        <mxCell id="bu-db1" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;SELECT notice_no, id_no, id_type, name, email_addr, offender_tel_no, offender_indicator, owner_driver_indicator WHERE id_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bu-swim-api">
           <mxGeometry x="680" y="220" width="200" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="bu-db2" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT * WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bu-swim-api">
+        <mxCell id="bu-db2" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT notice_no, vehicle_no, last_processing_stage WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bu-swim-api">
           <mxGeometry x="940" y="220" width="180" height="50" as="geometry" />
         </mxCell>
         <mxCell id="bu-db3" value="&lt;b&gt;ocms_suspended_notice&lt;/b&gt;&lt;div&gt;Check PS suspension&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bu-swim-api">
           <mxGeometry x="1080" y="280" width="160" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="bu-db4" value="&lt;b&gt;ocms_offence_notice_owner_driver_addr&lt;/b&gt;&lt;div&gt;SELECT/INSERT/UPDATE address&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bu-swim-api">
+        <mxCell id="bu-db4" value="&lt;b&gt;ocms_offence_notice_owner_driver_addr&lt;/b&gt;&lt;div&gt;SELECT/INSERT/UPDATE address&lt;/div&gt;&lt;div&gt;cre/upd_user_id = 'ocmsiz_app_conn'&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="bu-swim-api">
           <mxGeometry x="1360" y="220" width="220" height="50" as="geometry" />
         </mxCell>
 
@@ -839,10 +839,10 @@
         </mxCell>
 
         <!-- Database query boxes (inside API swimlane) -->
-        <mxCell id="ro-db1" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;SELECT * WHERE id_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="ro-swim-api">
+        <mxCell id="ro-db1" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;SELECT notice_no, id_no, id_type, name, email_addr, offender_tel_no, offender_indicator, owner_driver_indicator WHERE id_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="ro-swim-api">
           <mxGeometry x="280" y="420" width="200" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ro-db2" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT * WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="ro-swim-api">
+        <mxCell id="ro-db2" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT notice_no, vehicle_no, last_processing_stage WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="ro-swim-api">
           <mxGeometry x="880" y="420" width="180" height="50" as="geometry" />
         </mxCell>
         <mxCell id="ro-db3" value="&lt;b&gt;ocms_suspended_notice&lt;/b&gt;&lt;div&gt;Check PS suspension&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="ro-swim-api">
@@ -985,10 +985,10 @@
           <mxGeometry x="40" y="10" width="500" height="30" as="geometry" />
         </mxCell>
         <!-- API 1: Get Outstanding -->
-        <mxCell id="ua-api1-title" value="&lt;b&gt;API 1: GET /v1/ocms41/staff-furnish/outstanding/{idNo}&lt;/b&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontStyle=0" vertex="1" parent="1">
+        <mxCell id="ua-api1-title" value="&lt;b&gt;API 1: POST /v1/ocms41/staff-furnish/outstanding&lt;/b&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontStyle=0" vertex="1" parent="1">
           <mxGeometry x="40" y="50" width="450" height="25" as="geometry" />
         </mxCell>
-        <mxCell id="ua-api1-req" value="&lt;b&gt;Request&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Path Parameter:&lt;/div&gt;&lt;div&gt;- idNo: S1234567A (Offender ID Number)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Example:&lt;/div&gt;&lt;div&gt;GET /v1/ocms41/staff-furnish/outstanding/S1234567A&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=top;rounded=0;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
+        <mxCell id="ua-api1-req" value="&lt;b&gt;Request&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Request Body:&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  "idNo": "S1234567A"&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Example:&lt;/div&gt;&lt;div&gt;POST /v1/ocms41/staff-furnish/outstanding&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=top;rounded=0;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
           <mxGeometry x="40" y="80" width="350" height="150" as="geometry" />
         </mxCell>
         <mxCell id="ua-api1-resp" value="&lt;b&gt;Response Payload&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;offender&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;name&quot;: &quot;TAN AH KOW&quot;,&lt;/div&gt;&lt;div&gt;    &quot;id_type&quot;: &quot;NRIC&quot;,&lt;/div&gt;&lt;div&gt;    &quot;id_no&quot;: &quot;S1234567A&quot;&lt;/div&gt;&lt;div&gt;  },&lt;/div&gt;&lt;div&gt;  &quot;notices&quot;: [&lt;/div&gt;&lt;div&gt;    {&lt;/div&gt;&lt;div&gt;      &quot;notice_no&quot;: &quot;001234567A&quot;,&lt;/div&gt;&lt;div&gt;      &quot;vehicle_no&quot;: &quot;SBA1234A&quot;,&lt;/div&gt;&lt;div&gt;      &quot;offence_date&quot;: &quot;2026-01-01&quot;,&lt;/div&gt;&lt;div&gt;      &quot;processing_stage&quot;: &quot;DN1&quot;,&lt;/div&gt;&lt;div&gt;      &quot;role&quot;: &quot;H&quot;,&lt;/div&gt;&lt;div&gt;      &quot;mailing_address&quot;: {&lt;/div&gt;&lt;div&gt;        &quot;postal_code&quot;: &quot;123456&quot;,&lt;/div&gt;&lt;div&gt;        &quot;blk_hse_no&quot;: &quot;123&quot;,&lt;/div&gt;&lt;div&gt;        &quot;street_name&quot;: &quot;ORCHARD ROAD&quot;,&lt;/div&gt;&lt;div&gt;        &quot;floor_no&quot;: &quot;05&quot;,&lt;/div&gt;&lt;div&gt;        &quot;unit_no&quot;: &quot;123&quot;,&lt;/div&gt;&lt;div&gt;        &quot;bldg_name&quot;: &quot;THE BUILDING&quot;&lt;/div&gt;&lt;div&gt;      }&lt;/div&gt;&lt;div&gt;    },&lt;/div&gt;&lt;div&gt;    {&lt;/div&gt;&lt;div&gt;      &quot;notice_no&quot;: &quot;001234568B&quot;,&lt;/div&gt;&lt;div&gt;      &quot;vehicle_no&quot;: &quot;SBA5678B&quot;,&lt;/div&gt;&lt;div&gt;      ...&lt;/div&gt;&lt;div&gt;    }&lt;/div&gt;&lt;div&gt;  ],&lt;/div&gt;&lt;div&gt;  &quot;total_records&quot;: 5&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;rounded=0;spacingLeft=5;spacingTop=5" vertex="1" parent="1">
@@ -999,7 +999,7 @@
           <mxGeometry x="40" y="250" width="350" height="140" as="geometry" />
         </mxCell>
         <!-- API 2: Batch Update -->
-        <mxCell id="ua-api2-title" value="&lt;b&gt;API 2: PATCH /v1/ocms41/staff-furnish/batch-update-address&lt;/b&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontStyle=0" vertex="1" parent="1">
+        <mxCell id="ua-api2-title" value="&lt;b&gt;API 2: POST /v1/ocms41/staff-furnish/batch-update-address&lt;/b&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=12;fontStyle=0" vertex="1" parent="1">
           <mxGeometry x="40" y="610" width="500" height="25" as="geometry" />
         </mxCell>
         <mxCell id="ua-api2-req" value="&lt;b&gt;Request Payload&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;notice_list&quot;: [&lt;/div&gt;&lt;div&gt;    &quot;001234567A&quot;,&lt;/div&gt;&lt;div&gt;    &quot;001234568B&quot;,&lt;/div&gt;&lt;div&gt;    &quot;001234569C&quot;&lt;/div&gt;&lt;div&gt;  ],&lt;/div&gt;&lt;div&gt;  &quot;new_mailing_address&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;postal_code&quot;: &quot;654321&quot;,&lt;/div&gt;&lt;div&gt;    &quot;blk_hse_no&quot;: &quot;456&quot;,&lt;/div&gt;&lt;div&gt;    &quot;street_name&quot;: &quot;ROBINSON ROAD&quot;,&lt;/div&gt;&lt;div&gt;    &quot;floor_no&quot;: &quot;10&quot;,&lt;/div&gt;&lt;div&gt;    &quot;unit_no&quot;: &quot;01&quot;,&lt;/div&gt;&lt;div&gt;    &quot;bldg_name&quot;: &quot;OFFICE TOWER&quot;&lt;/div&gt;&lt;div&gt;  },&lt;/div&gt;&lt;div&gt;  &quot;user_id&quot;: &quot;ALICIATAN&quot;&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=top;rounded=0;spacingLeft=5;spacingTop=5" vertex="1" parent="1">

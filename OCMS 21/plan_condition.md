@@ -4,8 +4,8 @@
 
 | Field | Value |
 |-------|-------|
-| **Document Version** | 1.2 |
-| **Date** | 2026-01-13 |
+| **Document Version** | 1.3 |
+| **Date** | 2026-01-15 |
 | **Epic** | OCMS 21 - Manage Duplicate Notices |
 | **Feature** | Double Booking (DBB) Detection Conditions |
 | **Source Documents** | v1.0_OCMS_21_Duplicate_Notices.md (FD) |
@@ -523,11 +523,9 @@ if (existingNoticeDateTime == null) {
 
 **Source:** FD Section 3.5.1 - "NULL (as notice is permanently suspended)"
 
-**Current Code:** ⚠️ Sets `due_date_of_revival = NOW() + duration days` (INCORRECT)
+**Status:** ✅ RESOLVED - Flowchart updated to show `due_date_of_revival = NULL` for PS-DBB.
 
-**Impact:** DBB notices may auto-revive instead of staying permanently suspended.
-
-**Action Required:** Fix code to set `NULL` for PS-DBB.
+**Note:** For TS-OLD suspension, FD does not specify exact duration. Value should be based on system configuration.
 
 ---
 
@@ -635,6 +633,7 @@ if (existingNoticeDateTime == null) {
 | 1.0 | 2026-01-08 | Initial planning document |
 | 1.1 | 2026-01-13 | Updated Type E eligibility per FD 3.4 compliance |
 | 1.2 | 2026-01-13 | Final verification - confirmed TS eligibility per FD 3.3 Step 5 |
+| 1.3 | 2026-01-15 | Marked PS-DBB revival date issue as RESOLVED |
 
 ### v1.2 Changes (2026-01-13)
 

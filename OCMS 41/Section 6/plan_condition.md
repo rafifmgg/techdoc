@@ -4,8 +4,8 @@
 
 | Field | Value |
 |-------|-------|
-| Version | 1.0 |
-| Date | 2026-01-07 |
+| Version | 1.1 |
+| Date | 2026-01-19 |
 | Source | Functional Document v1.1, Section 6 |
 | Module | OCMS 41 - Section 6: PLUS External System Integration |
 
@@ -30,7 +30,7 @@
 |-------|---------|------------|---------------|
 | Offender Type | PL-FRM-001 | Required (Hirer/Driver only) | Offender type is required |
 | Name | PL-FRM-002 | Required | Name is required |
-| Name | PL-FRM-003 | Max 100 characters | Name exceeds maximum length |
+| Name | PL-FRM-003 | Max 66 characters | Name exceeds maximum length |
 | ID Type | PL-FRM-004 | Required | ID Type is required |
 | ID Number | PL-FRM-005 | Required | ID Number is required |
 | ID Number | PL-FRM-006 | Format check based on ID Type | Invalid {idType} format |
