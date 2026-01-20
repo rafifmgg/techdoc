@@ -1,0 +1,1055 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2" pages="4">
+  <diagram id="tab_1_2" name="1.2 - DBB in Create Notice">
+    <mxGraphModel dx="1042" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="swim2_backend" value="OCMS Admin API - Intranet (Backend)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="40" y="360" width="3640" height="860" as="geometry" />
+        </mxCell>
+        <mxCell id="start" value="START" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="60" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="start" target="box1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="box1" value="Receive Notice Data from external source" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="220" y="60" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="box1" target="box2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="box2" value="[DISABLED] Check duplicate Notice Number" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="400" y="60" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="box2" target="box3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="box3" value="Identify Offence Type from rule code" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="580" y="60" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="box3" target="dec1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dec1" value="Offence Type = U?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="740" y="60" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge5_yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec1" target="boxU" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxU" value="Route to Type U Manual Processing" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="740" y="220" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxU" target="endU" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="endU" value="END" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="750" y="360" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge7_no" value="No (Type O/E)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec1" target="box4" edge="1">
+          <mxGeometry y="10" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="box4" value="Check Vehicle Registration Type" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="940" y="60" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="box4" target="box5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="box5" value="Generate Notice Number" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1120" y="60" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="box5" target="box6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="box6" value="CREATE NOTICE (Insert to both DBs)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1300" y="60" width="130" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="box6" target="box7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="box7" value="Execute DBB Query (with 3 retry attempts)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1490" y="60" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="box7" target="dec2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dec2" value="Query Failed (3 retries)?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1700" y="50" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="edge12_yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec2" target="boxTSOLD" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxTSOLD" value="Apply TS-OLD Suspension" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1700" y="220" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="edge13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxTSOLD" target="boxTSOLD_update" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxTSOLD_update" value="Update Intranet + Internet Notice, Create Suspended Record" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1690" y="360" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxTSOLD_update" target="endTSOLD" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="endTSOLD" value="END" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1710" y="520" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge15_no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec2" target="dec3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dec3" value="Any matching notices?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1890" y="50" width="130" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="edge16_no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec3" target="boxNoDup" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxNoDup" value="Continue to AN Qualification (Type O)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1895" y="220" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="edge17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxNoDup" target="endNoDup" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="endNoDup" value="END" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2090" y="230" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge18_yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec3" target="box8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="box8" value="FOR EACH matching notice: Check eligibility" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2090" y="60" width="130" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="box8" target="dec4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dec4" value="Date/Time Match?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2280" y="40" width="150" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="edge20_no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec4" target="boxSkip" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxSkip" value="Skip (not duplicate)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2295" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxSkip" target="boxNoDup" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2355" y="340" />
+              <mxPoint x="1960" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge22_yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec4" target="dec5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dec5" value="Suspension Eligible?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2520" y="40" width="150" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="edge23_no" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec5" target="boxSkip2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxSkip2" value="Skip (not eligible)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2535" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="edge24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxSkip2" target="boxNoDup" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2595" y="340" />
+              <mxPoint x="1960" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge25_yes" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="dec5" target="boxDBB" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxDBB" value="DUPLICATE FOUND - Apply PS-DBB Suspension" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2760" y="60" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxDBB" target="boxUpdateIntra" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxUpdateIntra" value="Update Intranet Notice (PS-DBB)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2960" y="60" width="130" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxUpdateIntra" target="boxUpdateInter" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxUpdateInter" value="Update Internet Notice (PS-DBB)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="3150" y="60" width="130" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxUpdateInter" target="boxCreateSN" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="boxCreateSN" value="Create Suspended Notice Record" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="3340" y="60" width="130" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="edge29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="swim2_backend" source="boxCreateSN" target="endDBB" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="endDBB" value="END" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="3505" y="80" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="db1" value="[DISABLED] SELECT count(*) FROM ocms_valid_offence_notice WHERE notice_no = ?" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#f5f5f5;strokeColor=#666666;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="370" y="250" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_db1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="swim2_backend" source="box2" target="db1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db2" value="INSERT INTO ocms_valid_offence_notice (...)&lt;div&gt;and&lt;/div&gt;&lt;div&gt;eocms_valid_offence_notice (...)&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1255" y="190" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_db2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="swim2_backend" source="box6" target="db2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db4" value="SELECT notice_no, notice_date_and_time, suspension_type, epr_reason_of_suspension, crs_reason_of_suspension&amp;nbsp;&lt;div&gt;FROM ocms_valid_offence_notice&amp;nbsp;&lt;/div&gt;&lt;div&gt;WHERE vehicle_no = ?&amp;nbsp;&lt;/div&gt;&lt;div&gt;AND computer_rule_code = ?&amp;nbsp;&lt;/div&gt;&lt;div&gt;AND pp_code = ?&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1350" y="260" width="340" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_db4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="swim2_backend" source="box7" target="db4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db5" value="UPDATE ocms_valid_offence_notice&amp;nbsp;&lt;div&gt;SET suspension_type=&#39;TS&#39;,&amp;nbsp;&lt;div&gt;epr_reason_of_suspension=&#39;OLD&#39;, epr_date_of_suspension=NOW(), due_date_of_revival=NOW()+21days,&amp;nbsp;&lt;/div&gt;&lt;div&gt;upd_user_id=&#39;ocmsiz_app_conn&#39;&amp;nbsp;&lt;/div&gt;&lt;div&gt;WHERE notice_no = ?&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;UPDATE eocms_valid_offence_notice&amp;nbsp;&lt;/div&gt;&lt;div&gt;SET suspension_type=&#39;TS&#39;,&amp;nbsp;&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension=&#39;OLD&#39;, epr_date_of_suspension=NOW(),&amp;nbsp;&lt;/div&gt;&lt;div&gt;upd_user_id=&#39;ocmsiz_app_conn&#39;&amp;nbsp;&lt;/div&gt;&lt;div&gt;WHERE notice_no = ?&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1330" y="430" width="220" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="BVrYevj-QCL8X4Q_6zfT-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="swim2_backend" source="boxTSOLD_update" target="db5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1760" y="460" as="sourcePoint" />
+            <mxPoint x="1740" y="1260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="db7" value="INSERT INTO ocms_suspended_notice&amp;nbsp;&lt;div&gt;sr_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;notice_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;date_of_suspension,&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_source=&#39;OCMS&#39;,&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_type=&#39;TS&#39;,&amp;nbsp;&lt;/div&gt;&lt;div&gt;reason_of_suspension=&#39;OLD&#39;, officer_authorising_suspension=&#39;ocmsiz_app_conn&#39;, due_date_of_revival=NOW()+21days,&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_remarks=&#39;TS-OLD: DBB query failed&#39;,&amp;nbsp;&lt;/div&gt;&lt;div&gt;cre_user_id=&#39;ocmsiz_app_conn&#39;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1295" y="670" width="290" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_db7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="swim2_backend" source="db5" target="db7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="note2" value="Retry Logic:&#xa;- Max 3 attempts&#xa;- Exponential backoff: 100ms, 200ms, 400ms&#xa;- If all fail → TS-OLD fallback" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="1640" y="620" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="note3" value="Suspension Eligibility:&#xa;- NULL (active notice)&#xa;- PS-FOR (foreign)&#xa;- PS-ANS (Type O ONLY)&#xa;- PS-DBB (double booking)&#xa;- PS-FP/PRA (paid)&#xa;- TS/Other (treat as active)&#xa;&#xa;NOT eligible:&#xa;- Other PS codes" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2500" y="370" width="220" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="db8" value="UPDATE ocms_valid_offence_notice&amp;nbsp;&lt;div&gt;SET suspension_type=&#39;PS&#39;,&amp;nbsp;&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension=&#39;DBB&#39;, epr_date_of_suspension=NOW(),&amp;nbsp;&lt;/div&gt;&lt;div&gt;due_date_of_revival=NULL,&amp;nbsp;&lt;/div&gt;&lt;div&gt;upd_user_id=&#39;ocmsiz_app_conn&#39;&amp;nbsp;&lt;/div&gt;&lt;div&gt;WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2875" y="215" width="215" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_db8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="swim2_backend" source="boxUpdateIntra" target="db8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db9" value="UPDATE eocms_valid_offence_notice&amp;nbsp;&lt;div&gt;SET suspension_type=&#39;PS&#39;,&amp;nbsp;&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension=&#39;DBB&#39;, epr_date_of_suspension=NOW(),&amp;nbsp;&lt;/div&gt;&lt;div&gt;due_date_of_revival=NULL,&amp;nbsp;&lt;/div&gt;&lt;div&gt;upd_user_id=&#39;ocmsiz_app_conn&#39;&amp;nbsp;&lt;/div&gt;&lt;div&gt;WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="3160" y="215" width="210" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_db9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="swim2_backend" source="boxUpdateInter" target="db9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="db10" value="INSERT INTO ocms_suspended_notice&amp;nbsp;&lt;div&gt;sr_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;notice_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;date_of_suspension,&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_source=&#39;OCMS&#39;,&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_type=&#39;PS&#39;,&amp;nbsp;&lt;/div&gt;&lt;div&gt;reason_of_suspension=&#39;DBB&#39;, officer_authorising_suspension=&#39;ocmsiz_app_conn&#39;, due_date_of_revival=NULL,&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_remarks=&#39;DBB&#39;,&lt;/div&gt;&lt;div&gt;cre_user_id=&#39;ocmsiz_app_conn&#39;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="3262.5" y="340" width="285" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="conn_db10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="swim2_backend" source="boxCreateSN" target="db10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="YcI1bBxvprOcpGMDbiLj-1" value="Type O: date only,&amp;nbsp;&lt;div&gt;Type E: date+HH:MM&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;rounded=0;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2380" y="150" width="130" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="YcI1bBxvprOcpGMDbiLj-2" value="&amp;nbsp;NULL/PS-FOR/PS-ANS*/PS-DBB/PS-FP/PRA" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;" parent="swim2_backend" vertex="1">
+          <mxGeometry x="2606" y="160" width="154" height="37" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab_2_2" name="2.2 - High-Level DBB Processing">
+    <mxGraphModel dx="2065" dy="1210" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="1600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="t2_1" parent="0" />
+        <mxCell id="t2_swim2_backend" parent="t2_1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="ocmsintranetapi" vertex="1">
+          <mxGeometry height="780" width="2240" x="40" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_start" parent="t2_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="START&#xa;Check for&#xa;Double Booking" vertex="1">
+          <mxGeometry height="80" width="120" x="60" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge1" edge="1" parent="t2_swim2_backend" source="t2_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="t2_box2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="239.99999999999977" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2_box2" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Identify Offence Type&lt;br&gt;(O/E/U)" vertex="1">
+          <mxGeometry height="90" width="150" x="250" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge4" edge="1" parent="t2_swim2_backend" source="t2_box2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_box3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_box3" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check Notice Fields" vertex="1">
+          <mxGeometry height="100" width="170" x="450" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge5" edge="1" parent="t2_swim2_backend" source="t2_box3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_dec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_dec2" parent="t2_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="All required&#xa;fields present?" vertex="1">
+          <mxGeometry height="160" width="140" x="670" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge6_no" edge="1" parent="t2_swim2_backend" source="t2_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_return2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eQknmRUP01RU5x84-xnX-5" connectable="0" parent="t2_edge6_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.1333" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2_return2" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="RETURN:&#xa;Skip DBB&#xa;(Not Duplicate)" vertex="1">
+          <mxGeometry height="80" width="120" x="680" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge6_yes" edge="1" parent="t2_swim2_backend" source="t2_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_box4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eQknmRUP01RU5x84-xnX-6" connectable="0" parent="t2_edge6_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.037" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2_box4" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Prepare Query Parameters" vertex="1">
+          <mxGeometry height="80" width="160" x="870" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge7" edge="1" parent="t2_swim2_backend" source="t2_box4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="t2_db1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2_box5" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Execute Query&#xa;with Retry Logic" vertex="1">
+          <mxGeometry height="80" width="120" x="890" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge7b" edge="1" parent="t2_swim2_backend" source="t2_box4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_box5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_dec3" parent="t2_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Query&#xa;successful?" vertex="1">
+          <mxGeometry height="120" width="120" x="890" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge8b" edge="1" parent="t2_swim2_backend" source="t2_box5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_dec3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge9_no" edge="1" parent="t2_swim2_backend" source="t2_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_return3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eQknmRUP01RU5x84-xnX-8" connectable="0" parent="t2_edge9_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.4152" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2_return3" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="RETURN:&lt;br&gt;Not Duplicate&lt;br&gt;(Will trigger TS-OLD)" vertex="1">
+          <mxGeometry height="80" width="170" x="865" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge9_yes" edge="1" parent="t2_swim2_backend" source="t2_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_box6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eQknmRUP01RU5x84-xnX-7" connectable="0" parent="t2_edge9_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.2" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="eQknmRUP01RU5x84-xnX-9" edge="1" parent="t2_swim2_backend" source="t2_box6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="t2_db2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_box6" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Receive Query Results&#xa;(List of matching notices)" vertex="1">
+          <mxGeometry height="120" width="160" x="1090" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge11" edge="1" parent="t2_swim2_backend" source="t2_box6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_dec4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_dec4" parent="t2_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Offence&#xa;Type?" vertex="1">
+          <mxGeometry height="140" width="140" x="1310" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge12_o" edge="1" parent="t2_swim2_backend" source="t2_dec4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;" target="t2_call_o">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eQknmRUP01RU5x84-xnX-10" connectable="0" parent="t2_edge12_o" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Type O" vertex="1">
+          <mxGeometry relative="1" x="0.0558" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2_call_o" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Type O DBB Logic&lt;br&gt;&lt;br&gt;Date-only comparison&lt;br&gt;PS-ANS eligible" vertex="1">
+          <mxGeometry height="90" width="170" x="1530" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge12_e" edge="1" parent="t2_swim2_backend" source="t2_dec4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="t2_call_e">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eQknmRUP01RU5x84-xnX-12" connectable="0" parent="t2_edge12_e" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Type E" vertex="1">
+          <mxGeometry relative="1" x="-0.0215" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t2_call_e" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Type E DBB Logic&lt;br&gt;&lt;br&gt;Date+Time (HH:MM)&lt;br&gt;Eligible: FOR, FP, PRA only" vertex="1">
+          <mxGeometry height="90" width="170" x="1530" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge13_o" edge="1" parent="t2_swim2_backend" source="t2_call_o" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_box7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge13_e" edge="1" parent="t2_swim2_backend" source="t2_call_e" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_box7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_box7" parent="t2_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Receive Result&lt;br&gt;from Sub-flow" vertex="1">
+          <mxGeometry height="80" width="160" x="1790" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_edge14" edge="1" parent="t2_swim2_backend" source="t2_box7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t2_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_end" parent="t2_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="END&#xa;Return Duplicate&#xa;Status" vertex="1">
+          <mxGeometry height="100" width="140" x="2020" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_db1" parent="t2_swim2_backend" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" value="SELECT&amp;nbsp;&lt;div&gt;von.vehicle_no,&lt;/div&gt;&lt;div&gt;von.computer_rule_code,&lt;/div&gt;&lt;div&gt;von.pp_code&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice AS von&lt;br&gt;WHERE vehicle_no = :vehicleNo&lt;br&gt;AND computer_rule_code = :computerRuleCode&lt;br&gt;AND pp_code = :ppCode&lt;/div&gt;" vertex="1">
+          <mxGeometry height="125" width="280" x="1110" y="57.5" as="geometry" />
+        </mxCell>
+        <mxCell id="t2_db2" parent="t2_swim2_backend" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" value="RESPONSE FROM DATABASE:&lt;br&gt;List&lt;br&gt;&lt;br&gt;Fields returned:&lt;br&gt;- notice_no&lt;br&gt;- notice_date_and_time&lt;br&gt;- suspension_type&lt;br&gt;- epr_reason_of_suspension&lt;br&gt;- crs_reason_of_suspension" vertex="1">
+          <mxGeometry height="150" width="200" x="1070" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="eQknmRUP01RU5x84-xnX-4" parent="t2_swim2_backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="- vehicle_no&lt;br&gt;- computer_rule_code&lt;br&gt;- pp_code&lt;br&gt;- notice_date_and_time" vertex="1">
+          <mxGeometry height="80" width="150" x="460" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="eQknmRUP01RU5x84-xnX-11" parent="t2_swim2_backend" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="Refer to Type O DBB Criteria" vertex="1">
+          <mxGeometry height="30" width="180" x="1525" y="200" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab_2_3" name="2.3 - Type O DBB Criteria">
+    <mxGraphModel dx="1500" dy="1027" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="6000" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="t3_1" parent="0" />
+        <mxCell id="t3_swim2_backend" parent="t3_1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="ocmsintranetapi" vertex="1">
+          <mxGeometry height="950" width="3250" x="10" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_start" parent="t3_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="START" vertex="1">
+          <mxGeometry height="80" width="140" x="60" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge1" edge="1" parent="t3_swim2_backend" source="t3_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_box1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_box1" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Type O DBB Check" vertex="1">
+          <mxGeometry height="70" width="150" x="260" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge2" edge="1" parent="t3_swim2_backend" source="t3_box1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dec1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_dec1" parent="t3_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any records&#xa;returned?" vertex="1">
+          <mxGeometry height="120" width="120" x="500" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge3_no" edge="1" parent="t3_swim2_backend" source="t3_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="t3_return_not_dup">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="560" y="220" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p8J7v3otqR3DaxTA3VGk-5" connectable="0" parent="t3_edge3_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.24" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_return_not_dup" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="RETURN:&#xa;Not Duplicate" vertex="1">
+          <mxGeometry height="80" width="120" x="500" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge3_yes" edge="1" parent="t3_swim2_backend" source="t3_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_loop_start">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p8J7v3otqR3DaxTA3VGk-12" connectable="0" parent="t3_edge3_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.225" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_loop_start" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="FOR EACH notice&#xa;in list" vertex="1">
+          <mxGeometry height="70" width="130" x="700" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge4" edge="1" parent="t3_swim2_backend" source="t3_loop_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_dec2" parent="t3_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Notice_no ==&lt;br&gt;current?" vertex="1">
+          <mxGeometry height="125" width="130" x="880" y="57.5" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge5_yes" edge="1" parent="t3_swim2_backend" source="t3_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="t3_skip1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="950" y="270" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p8J7v3otqR3DaxTA3VGk-6" connectable="0" parent="t3_edge5_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.0261" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_skip1" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip this notice" vertex="1">
+          <mxGeometry height="80" width="120" x="885" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge5_no" edge="1" parent="t3_swim2_backend" source="t3_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="t3_box2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p8J7v3otqR3DaxTA3VGk-3" connectable="0" parent="t3_edge5_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="0.0786" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_box2" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check:&lt;br&gt;existing_notice_date_and_time" vertex="1">
+          <mxGeometry height="80" width="160" x="1070" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge6" edge="1" parent="t3_swim2_backend" source="t3_box2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dec3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_dec3" parent="t3_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Date&#xa;NULL?" vertex="1">
+          <mxGeometry height="120" width="120" x="1280" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge7_yes" edge="1" parent="t3_swim2_backend" source="t3_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_skip2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p8J7v3otqR3DaxTA3VGk-7" connectable="0" parent="t3_edge7_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.27" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_skip2" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip this notice&#xa;(next iteration)" vertex="1">
+          <mxGeometry height="80" width="120" x="1280" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge7_no" edge="1" parent="t3_swim2_backend" source="t3_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="t3_dec4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1520" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p8J7v3otqR3DaxTA3VGk-8" connectable="0" parent="t3_edge7_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.15" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_dec4" parent="t3_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Date&#xa;Match?" vertex="1">
+          <mxGeometry height="120" width="120" x="1480" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge9_no" edge="1" parent="t3_swim2_backend" source="t3_dec4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="t3_skip3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1819.9999999999995" y="220" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p8J7v3otqR3DaxTA3VGk-13" connectable="0" parent="t3_edge9_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p8J7v3otqR3DaxTA3VGk-15" edge="1" parent="t3_swim2_backend" source="t3_skip3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;jumpStyle=arc;" target="t3_loop_start">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_skip3" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip this notice&#xa;(next iteration)" vertex="1">
+          <mxGeometry height="80" width="120" x="1480" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge9_yes" edge="1" parent="t3_swim2_backend" source="t3_dec4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_box4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p8J7v3otqR3DaxTA3VGk-14" connectable="0" parent="t3_edge9_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.1655" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_box4" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check suspension" vertex="1">
+          <mxGeometry height="80" width="180" x="1690" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge10" edge="1" parent="t3_swim2_backend" source="t3_box4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dec5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_dec5" parent="t3_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="suspension_type?" vertex="1">
+          <mxGeometry height="120" width="120" x="1720" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge11_null" edge="1" parent="t3_swim2_backend" source="t3_dec5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dup_active">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-2" connectable="0" parent="t3_edge11_null" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Null" vertex="1">
+          <mxGeometry relative="1" x="0.322" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_dup_active" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&#xa;Active notice&#xa;(not suspended)" vertex="1">
+          <mxGeometry height="80" width="160" x="1550" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge11_ps" edge="1" parent="t3_swim2_backend" source="t3_dec5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dec6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-3" connectable="0" parent="t3_edge11_ps" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="PS" vertex="1">
+          <mxGeometry relative="1" y="4" as="geometry">
+            <mxPoint x="-4" y="-25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_dec6" parent="t3_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="epr_reason?" vertex="1">
+          <mxGeometry height="120" width="120" x="1720" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge12_for" edge="1" parent="t3_swim2_backend" source="t3_dec6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dup_for">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1550" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-4" connectable="0" parent="t3_edge12_for" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="FOR" vertex="1">
+          <mxGeometry relative="1" x="-0.6" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_dup_for" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&#xa;PS-FOR&#xa;(Foreign)" vertex="1">
+          <mxGeometry height="80" width="150" x="1470" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge12_ans" edge="1" parent="t3_swim2_backend" source="t3_dec6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dup_ans">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-5" connectable="0" parent="t3_edge12_ans" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="ANS" vertex="1">
+          <mxGeometry relative="1" x="-0.0889" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_dup_ans" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&#xa;PS-ANS&#xa;(Advisory Notice Sent)" vertex="1">
+          <mxGeometry height="90" width="160" x="1700" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge14_dbb" edge="1" parent="t3_swim2_backend" source="t3_dec6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dup_dbb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-7" connectable="0" parent="t3_edge14_dbb" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="DBB" vertex="1">
+          <mxGeometry relative="1" x="0.5952" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_dup_dbb" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&#xa;PS-DBB&#xa;(Double Booking)" vertex="1">
+          <mxGeometry height="92.5" width="170" x="1930" y="727.5" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge14_crs" edge="1" parent="t3_swim2_backend" source="t3_dec6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dec8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-8" connectable="0" parent="t3_edge14_crs" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Other" vertex="1">
+          <mxGeometry relative="1" x="0.359" y="-4" as="geometry">
+            <mxPoint x="-25" y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_dec8" parent="t3_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="crs_reason?&#xa;(FP/PRA)" vertex="1">
+          <mxGeometry height="120" width="120" x="2230" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge15_fp" edge="1" parent="t3_swim2_backend" source="t3_dec8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dup_fp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-9" connectable="0" parent="t3_edge15_fp" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="FP or PRA" vertex="1">
+          <mxGeometry relative="1" x="-0.0937" y="-2" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_dup_fp" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&#xa;PS-FP/PRA&#xa;(Paid)" vertex="1">
+          <mxGeometry height="90" width="170" x="2205" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge15_other" edge="1" parent="t3_swim2_backend" source="t3_dec8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_skip4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-10" connectable="0" parent="t3_edge15_other" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Other" vertex="1">
+          <mxGeometry relative="1" x="-0.8136" y="1" as="geometry">
+            <mxPoint x="22" y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_skip4" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" value="Skip this notice&lt;br&gt;(next iteration)" vertex="1">
+          <mxGeometry height="90" width="190" x="2540" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge11_other" edge="1" parent="t3_swim2_backend" source="t3_dec5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_dup_other">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-6" connectable="0" parent="t3_edge11_other" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="TS" vertex="1">
+          <mxGeometry relative="1" x="-0.8304" as="geometry">
+            <mxPoint x="21" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_dup_other" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&lt;br&gt;Temporary Suspended" vertex="1">
+          <mxGeometry height="80" width="140" x="1950" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge16_2" edge="1" parent="t3_swim2_backend" source="t3_dup_for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_box_store">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1550" y="870" />
+              <mxPoint x="2770" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_edge16_3" edge="1" parent="t3_swim2_backend" source="t3_dup_ans" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_box_store">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1780" y="870" />
+              <mxPoint x="2770" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_edge16_4" edge="1" parent="t3_swim2_backend" source="t3_dup_dbb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_box_store">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2020" y="870" />
+              <mxPoint x="2770" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t3_edge16_5" edge="1" parent="t3_swim2_backend" source="t3_dup_fp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_box_store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge16_6" edge="1" parent="t3_swim2_backend" source="t3_dup_other" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_box_store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_box_store" parent="t3_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Confirm Duplicate Notice" vertex="1">
+          <mxGeometry height="90" width="180" x="2680" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge17" edge="1" parent="t3_swim2_backend" source="t3_box_store" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_end_dup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_end_dup" parent="t3_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fontStyle=0" value="END&#xa;RETURN:&#xa;Duplicate Detected" vertex="1">
+          <mxGeometry height="120" width="160" x="2910" y="714.75" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge_skip1" edge="1" parent="t3_swim2_backend" source="t3_skip1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_loop_start">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge_skip2" edge="1" parent="t3_swim2_backend" source="t3_skip2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t3_loop_start">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t3_edge_skip4" edge="1" parent="t3_swim2_backend" source="t3_skip4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;jumpStyle=arc;" target="t3_loop_start">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2640" y="470" />
+              <mxPoint x="765" y="470" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NQfdKIiR1CM4M2pSpr5D-0" parent="t3_1" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="- suspension_type&lt;br&gt;- epr_reason_of_suspension&lt;br&gt;- crs_reason_of_suspension" vertex="1">
+          <mxGeometry height="60" width="180" x="1880" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="XkNwnQkJ0h2dZbzRnnC8-0" edge="1" parent="t3_1" source="t3_box4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="NQfdKIiR1CM4M2pSpr5D-0">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab_2_4" name="2.4 - Type E DBB Criteria">
+    <mxGraphModel dx="2571" dy="1760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="6000" pageHeight="2400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="t4_1" parent="0" />
+        <mxCell id="t4_swim2_backend" parent="t4_1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="OCMS Admin API - Type E DBB Check (NoticeValidationHelper)" vertex="1">
+          <mxGeometry height="950" width="3320" x="40" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_start" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="START" vertex="1">
+          <mxGeometry height="80" width="140" x="60" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge1" edge="1" parent="t4_swim2_backend" source="t4_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_box1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_box1" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Type E DBB Check" vertex="1">
+          <mxGeometry height="80" width="150" x="250" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge2" edge="1" parent="t4_swim2_backend" source="t4_box1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dec1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_dec1" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any records&#xa;returned?" vertex="1">
+          <mxGeometry height="120" width="120" x="450" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge3_no" edge="1" parent="t4_swim2_backend" source="t4_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_return_not_dup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-0" connectable="0" parent="t4_edge3_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.1818" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_return_not_dup" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="RETURN:&#xa;Not Duplicate" vertex="1">
+          <mxGeometry height="80" width="120" x="450" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge3_yes" edge="1" parent="t4_swim2_backend" source="t4_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_loop_start">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-1" connectable="0" parent="t4_edge3_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.4517" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_loop_start" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="FOR EACH notice&#xa;in list" vertex="1">
+          <mxGeometry height="80" width="160" x="620" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge4" edge="1" parent="t4_swim2_backend" source="t4_loop_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dec2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_dec2" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="notice_no ==&lt;br&gt;current?" vertex="1">
+          <mxGeometry height="125" width="130" x="830" y="57.5" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge5_yes" edge="1" parent="t4_swim2_backend" source="t4_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_skip1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-2" connectable="0" parent="t4_edge5_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.0947" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_skip1" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip this notice&#xa;(next iteration)" vertex="1">
+          <mxGeometry height="80" width="120" x="835" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge5_no" edge="1" parent="t4_swim2_backend" source="t4_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_box2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-3" connectable="0" parent="t4_edge5_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.3782" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_box2" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check&lt;br&gt;existing_notice_date_and_time" vertex="1">
+          <mxGeometry height="90" width="170" x="1030" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge6" edge="1" parent="t4_swim2_backend" source="t4_box2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dec3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_dec3" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Date/Time&#xa;NULL?" vertex="1">
+          <mxGeometry height="120" width="120" x="1260" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge7_yes" edge="1" parent="t4_swim2_backend" source="t4_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_skip2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-4" connectable="0" parent="t4_edge7_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.2254" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_skip2" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip this notice&#xa;(next iteration)" vertex="1">
+          <mxGeometry height="80" width="120" x="1260" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge7_no" edge="1" parent="t4_swim2_backend" source="t4_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dec4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-5" connectable="0" parent="t4_edge7_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.3651" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_dec4" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;fontStyle=0" value="Date&lt;br&gt;Match?" vertex="1">
+          <mxGeometry height="125" width="130" x="1440" y="57.5" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge8_no" edge="1" parent="t4_swim2_backend" source="t4_dec4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_skip3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-6" connectable="0" parent="t4_edge8_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.2855" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_skip3" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip this notice&#xa;(next iteration)" vertex="1">
+          <mxGeometry height="80" width="120" x="1445" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge8_yes" edge="1" parent="t4_swim2_backend" source="t4_dec4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dec5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-7" connectable="0" parent="t4_edge8_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.4762" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_dec5" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;fontStyle=0" value="Hour (HH)&lt;br&gt;Match?" vertex="1">
+          <mxGeometry height="130" width="130" x="1630" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge9_no" edge="1" parent="t4_swim2_backend" source="t4_dec5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_skip4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-8" connectable="0" parent="t4_edge9_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.1829" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_skip4" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip this notice&#xa;(next iteration)" vertex="1">
+          <mxGeometry height="80" width="120" x="1635" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge9_yes" edge="1" parent="t4_swim2_backend" source="t4_dec5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dec6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-9" connectable="0" parent="t4_edge9_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.5556" y="-3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_dec6" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;fontStyle=0" value="Minute (MM)&lt;br&gt;Match?" vertex="1">
+          <mxGeometry height="130" width="130" x="1810" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge10_no" edge="1" parent="t4_swim2_backend" source="t4_dec6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_skip5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-10" connectable="0" parent="t4_edge10_no" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="0.1248" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_skip5" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip this notice&#xa;(next iteration)" vertex="1">
+          <mxGeometry height="80" width="120" x="1815" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge10_yes" edge="1" parent="t4_swim2_backend" source="t4_dec6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_box3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-11" connectable="0" parent="t4_edge10_yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.7778" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-13" edge="1" parent="t4_swim2_backend" source="t4_box3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="FGaE-hFd8C43YdbxxQB_-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_box3" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check Suspension" vertex="1">
+          <mxGeometry height="90" width="170" x="2090" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge11" edge="1" parent="t4_swim2_backend" source="t4_box3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dec7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_dec7" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="suspension_type?" vertex="1">
+          <mxGeometry height="120" width="120" x="2115" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge12_null" edge="1" parent="t4_swim2_backend" source="t4_dec7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="t4_dup_active">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-14" connectable="0" parent="t4_edge12_null" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Null" vertex="1">
+          <mxGeometry relative="1" x="-0.2335" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_dup_active" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&#xa;Active notice&#xa;(not suspended)" vertex="1">
+          <mxGeometry height="120" width="140" x="1950" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge12_ps" edge="1" parent="t4_swim2_backend" source="t4_dec7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dec8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-18" connectable="0" parent="t4_edge12_ps" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="PS" vertex="1">
+          <mxGeometry relative="1" x="-0.039" as="geometry">
+            <mxPoint y="-57" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_dec8" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="epr_reason?" vertex="1">
+          <mxGeometry height="120" width="120" x="2115" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge13_for" edge="1" parent="t4_swim2_backend" source="t4_dec8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="t4_dup_for">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-20" connectable="0" parent="t4_edge13_for" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="FOR" vertex="1">
+          <mxGeometry relative="1" x="-0.3079" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_dup_for" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&#xa;PS-FOR&#xa;(Foreign)" vertex="1">
+          <mxGeometry height="80" width="160" x="1930" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge13_ans" edge="1" parent="t4_swim2_backend" source="t4_dec8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dec9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-23" connectable="0" parent="t4_edge13_ans" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Other" vertex="1">
+          <mxGeometry relative="1" x="-0.2051" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_dec9" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="crs_reason?&#xa;(FP/PRA)" vertex="1">
+          <mxGeometry height="120" width="120" x="2300" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge16_fp" edge="1" parent="t4_swim2_backend" source="t4_dec9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dup_fp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-24" connectable="0" parent="t4_edge16_fp" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.1" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_dup_fp" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&#xa;PS-FP/PRA&#xa;(Paid)" vertex="1">
+          <mxGeometry height="80" width="140" x="2290" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge16_other" edge="1" parent="t4_swim2_backend" source="t4_dec9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_skip6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-25" connectable="0" parent="t4_edge16_other" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.4833" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_skip6" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f5f5f5;strokeColor=#666666;" value="Skip this notice&lt;br&gt;(next iteration)" vertex="1">
+          <mxGeometry height="90" width="170" x="2490" y="565" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge12_other" edge="1" parent="t4_swim2_backend" source="t4_dec7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_dup_other">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-15" connectable="0" parent="t4_edge12_other" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="TS" vertex="1">
+          <mxGeometry relative="1" x="-0.6292" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_dup_other" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="DUPLICATE:&lt;br&gt;TemporarySuspended" vertex="1">
+          <mxGeometry height="90" width="170" x="2350" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge17_1" edge="1" parent="t4_swim2_backend" source="t4_dup_active" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="t4_box_store">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2920" y="415" />
+            </Array>
+            <mxPoint x="2090" y="440" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_edge17_2" edge="1" parent="t4_swim2_backend" source="t4_dup_for" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_box_store">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2020" y="850" />
+              <mxPoint x="2930" y="850" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_edge17_4" edge="1" parent="t4_swim2_backend" source="t4_dup_fp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_box_store">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2620" y="770" />
+              <mxPoint x="2620" y="770" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_edge17_5" edge="1" parent="t4_swim2_backend" source="t4_dup_other" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_box_store">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_box_store" parent="t4_swim2_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fontStyle=0" value="Confirm Duplicate Notice" vertex="1">
+          <mxGeometry height="90" width="180" x="2830" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge18" edge="1" parent="t4_swim2_backend" source="t4_box_store" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_end_dup">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_end_dup" parent="t4_swim2_backend" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fontStyle=0" value="END&#xa;RETURN:&#xa;Duplicate Detected" vertex="1">
+          <mxGeometry height="120" width="160" x="3080" y="695" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge_skip1" edge="1" parent="t4_swim2_backend" source="t4_skip1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_loop_start">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t4_edge_skip2" edge="1" parent="t4_swim2_backend" source="t4_skip2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_loop_start">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1320" y="420" />
+              <mxPoint x="700" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_edge_skip3" edge="1" parent="t4_swim2_backend" source="t4_skip3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_loop_start">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1505" y="440" />
+              <mxPoint x="700" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_edge_skip4" edge="1" parent="t4_swim2_backend" source="t4_skip4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_loop_start">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1695" y="510" />
+              <mxPoint x="700" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_edge_skip5" edge="1" parent="t4_swim2_backend" source="t4_skip5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="t4_loop_start">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1875" y="460" />
+              <mxPoint x="700" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t4_edge_skip6" edge="1" parent="t4_swim2_backend" source="t4_skip6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;" target="t4_loop_start">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2575" y="510" />
+              <mxPoint x="700" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FGaE-hFd8C43YdbxxQB_-12" parent="t4_swim2_backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="- suspension_type&lt;br&gt;- epr_reason_of_suspension&lt;br&gt;- crs_reason_of_suspension" vertex="1">
+          <mxGeometry height="60" width="180" x="2270" y="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
