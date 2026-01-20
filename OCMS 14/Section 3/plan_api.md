@@ -148,20 +148,41 @@ WHERE FIN = '<fin_number>'
 
 | Field | Type | Description |
 | --- | --- | --- |
-| success | Boolean | True if suspension applied successfully |
-| noticeNo | String | Notice number |
-| errorCode | String | Error code if failed |
-| errorMessage | String | Error description if failed |
+| data.appCode | String | Application code (e.g., "OCMS-2000" for success) |
+| data.message | String | Response message |
+| noticeNo | String | Notice number (on success) |
+
+**Response Format (Success):**
+```json
+{
+  "data": {
+    "appCode": "OCMS-2000",
+    "message": "PS suspension applied successfully"
+  },
+  "noticeNo": "A12345678X"
+}
+```
+
+**Response Format (Error):**
+```json
+{
+  "data": {
+    "appCode": "OCMS-4001",
+    "message": "Invalid Notice Number"
+  }
+}
+```
 
 #### Error Codes
 
-| Error Code | Message | Scenario |
+| App Code | Message | Scenario |
 | --- | --- | --- |
-| OCMS-2001 | Success Notice already PS | Notice already has this PS code (idempotent) |
-| OCMS-4001 | Invalid Notice Number | Notice not found in database |
+| OCMS-2000 | PS suspension applied successfully | Success |
+| OCMS-2001 | Notice already has this PS code | Notice already has this PS code (idempotent - treated as success) |
 | OCMS-4000 | Suspension Source is missing | Source not provided |
+| OCMS-4001 | Invalid Notice Number | Notice not found in database |
 | OCMS-4003 | Paid/partially paid notices only allow APP, CFA, or VST | Cannot apply RIP/RP2 to paid notice |
-| OCMS-4007 | System error. Please inform Administrator | Unexpected system error |
+| OCMS-5000 | System error. Please inform Administrator | Unexpected system error |
 
 ---
 
@@ -196,13 +217,21 @@ WHERE FIN = '<fin_number>'
 
 ```sql
 -- Query notices with PS-RP2 applied today where current offender is deceased Hirer/Driver
-SELECT von.notice_no, ond.*
+SELECT
+    von.notice_no,
+    ond.name AS offender_name,
+    ond.id_no AS offender_id,
+    ond.owner_driver_indicator,
+    ond.life_status,
+    ond.date_of_death,
+    von.notice_date_and_time AS offence_date,
+    sn.date_of_suspension
 FROM ocms_suspended_notice sn
 JOIN ocms_valid_offence_notice von ON sn.notice_no = von.notice_no
 JOIN ocms_offence_notice_owner_driver ond ON von.notice_no = ond.notice_no
 WHERE sn.suspension_type = 'PS'
   AND sn.reason_of_suspension = 'RP2'
-  AND sn.reason_suspension_date = CURRENT_DATE
+  AND CAST(sn.date_of_suspension AS DATE) = CAST(GETDATE() AS DATE)
   AND sn.due_date_of_revival IS NULL
   AND ond.owner_driver_indicator IN ('H', 'D')
   AND ond.offender_indicator = 'Y'
@@ -379,3 +408,4 @@ WHERE sn.suspension_type = 'PS'
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on FD Section 4 and backend code analysis |
+| 1.1 | 19/01/2026 | Claude | Yi Jie compliance: Fixed SELECT * usage, aligned response format, fixed field name consistency |

@@ -4,8 +4,8 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="title" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=14;fontStyle=1" value="OCMS 14 Section 1 - Detecting Vehicle Registration Type: High Level Flow" vertex="1">
-          <mxGeometry height="30" width="600" x="40" y="10" as="geometry" />
+        <mxCell id="title" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=14;fontStyle=1" value="OCMS 14 Section 1 - Detecting Vehicle Registration Type: High Level Flow (v2.0)" vertex="1">
+          <mxGeometry height="30" width="700" x="40" y="10" as="geometry" />
         </mxCell>
         <mxCell id="swim_be" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="OCMS Admin API Intranet" vertex="1">
           <mxGeometry height="400" width="3800" x="20" y="50" as="geometry" />
@@ -52,8 +52,8 @@
         <mxCell id="e7" edge="1" parent="swim_be" source="be_p3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be_p4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="be_p4" parent="swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Store in ocms_valid_offence_notice.vehicle_registration_type" vertex="1">
-          <mxGeometry height="100" width="140" x="1124" y="130" as="geometry" />
+        <mxCell id="be_p4" parent="swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Store in ocms_valid_offence_notice.vehicle_registration_type&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;upd_user_id = ocmsiz_app_conn&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="160" x="1114" y="130" as="geometry" />
         </mxCell>
         <mxCell id="e8" edge="1" parent="swim_be" source="be_p4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be_p5">
           <mxGeometry relative="1" as="geometry" />
@@ -73,6 +73,9 @@
         <mxCell id="ref_fd" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" value="Refer to FD OCMS 14 Section 2 for business rules" vertex="1">
           <mxGeometry height="30" width="250" x="30" y="280" as="geometry" />
         </mxCell>
+        <mxCell id="note_audit" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" value="Audit User:&lt;div&gt;- Intranet: ocmsiz_app_conn&lt;/div&gt;&lt;div&gt;- Internet: ocmsez_app_conn&lt;/div&gt;&lt;div&gt;(Do NOT use SYSTEM)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="180" x="1100" y="260" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
@@ -81,11 +84,11 @@
       <root>
         <mxCell id="d2_0" />
         <mxCell id="d2_1" parent="d2_0" />
-        <mxCell id="d2_title" parent="d2_1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=14;fontStyle=1" value="OCMS 14 Section 1 - Detecting Vehicle Registration Type: Detailed Flow" vertex="1">
-          <mxGeometry height="30" width="600" x="40" y="10" as="geometry" />
+        <mxCell id="d2_title" parent="d2_1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=14;fontStyle=1" value="OCMS 14 Section 1 - Detecting Vehicle Registration Type: Detailed Flow (v2.0)" vertex="1">
+          <mxGeometry height="30" width="700" x="40" y="10" as="geometry" />
         </mxCell>
         <mxCell id="d2_swim_be" parent="d2_1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="OCMS Admin API Intranet" vertex="1">
-          <mxGeometry height="700" width="2300" x="20" y="50" as="geometry" />
+          <mxGeometry height="750" width="2500" x="20" y="50" as="geometry" />
         </mxCell>
         <mxCell id="d2_start" parent="d2_swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
           <mxGeometry height="60" width="100" x="30" y="200" as="geometry" />
@@ -118,181 +121,206 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_ret_x" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return &#39;X&#39;&lt;div&gt;(UPL Dummy)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="390" y="500" as="geometry" />
+          <mxGeometry height="60" width="120" x="390" y="510" as="geometry" />
         </mxCell>
-        <mxCell id="d2_e6" edge="1" parent="d2_swim_be" source="d2_d3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_err" value="no (Type O/E)">
+        <mxCell id="d2_e6" edge="1" parent="d2_swim_be" source="d2_d3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_d3a" value="no (Type O/E)">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="d2_err" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return ERROR&lt;div&gt;Type O/E not allow blank vehicle&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="550" y="360" as="geometry" />
+        <mxCell id="d2_d3a" parent="d2_swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="offenceType = &#39;O&#39; ?" vertex="1">
+          <mxGeometry height="80" width="80" x="570" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_e6a" edge="1" parent="d2_swim_be" source="d2_d3a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_err1" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_err1" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;strokeColor=#b85450;fillColor=#f8cecc;" value="Return Error&lt;div&gt;&lt;b&gt;OCMS-1401&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Vehicle number required&lt;/div&gt;&lt;div&gt;for Type O&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="550" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_e6b" edge="1" parent="d2_swim_be" source="d2_d3a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_err2" value="no (Type E)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_err2" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;strokeColor=#b85450;fillColor=#f8cecc;" value="Return Error&lt;div&gt;&lt;b&gt;OCMS-1402&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Vehicle number required&lt;/div&gt;&lt;div&gt;for Type E&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="120" x="700" y="350" as="geometry" />
         </mxCell>
         <mxCell id="d2_e7" edge="1" parent="d2_swim_be" source="d2_d2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_p1" value="no">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_p1" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Call LTA Checksum Validation" vertex="1">
-          <mxGeometry height="80" width="120" x="600" y="190" as="geometry" />
+          <mxGeometry height="80" width="120" x="880" y="190" as="geometry" />
         </mxCell>
         <mxCell id="d2_e8" edge="1" parent="d2_swim_be" source="d2_p1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="d2_api1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="d2_api1" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="LTA Library Call:&lt;div&gt;ValidateRegistrationNo.validate(vehicleNo)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Returns: boolean (true/false)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="220" x="550" y="50" as="geometry" />
+        <mxCell id="d2_api1" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="LTA Library Call:&lt;div&gt;ValidateRegistrationNo.validate(vehicleNo)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Returns: boolean (true/false)&lt;/div&gt;&lt;div&gt;On exception: log error, return false&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="220" x="830" y="50" as="geometry" />
         </mxCell>
         <mxCell id="d2_e9" edge="1" parent="d2_swim_be" source="d2_p1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_d4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_d4" parent="d2_swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="LTA validation = true ?" vertex="1">
-          <mxGeometry height="100" width="100" x="820" y="180" as="geometry" />
+          <mxGeometry height="100" width="100" x="1100" y="180" as="geometry" />
         </mxCell>
         <mxCell id="d2_e10" edge="1" parent="d2_swim_be" source="d2_d4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_ret_s1" value="yes">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_ret_s1" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return &#39;S&#39;&lt;div&gt;(Singapore/Local)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="810" y="340" as="geometry" />
+          <mxGeometry height="60" width="120" x="1090" y="340" as="geometry" />
         </mxCell>
         <mxCell id="d2_e11" edge="1" parent="d2_swim_be" source="d2_d4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_d5" value="no">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_d5" parent="d2_swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Is Diplomatic format?&lt;div&gt;(S + CC/CD/TC/TE)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="100" width="120" x="1020" y="180" as="geometry" />
+          <mxGeometry height="100" width="120" x="1300" y="180" as="geometry" />
         </mxCell>
         <mxCell id="d2_e12" edge="1" parent="d2_swim_be" source="d2_d5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_ret_d" value="yes">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_ret_d" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return &#39;D&#39;&lt;div&gt;(Diplomatic)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="1020" y="340" as="geometry" />
+          <mxGeometry height="60" width="120" x="1300" y="340" as="geometry" />
         </mxCell>
         <mxCell id="d2_note_dip" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="Diplomatic Suffixes:&lt;div&gt;CC = Consular Corps&lt;/div&gt;&lt;div&gt;CD = Corps Diplomatique&lt;/div&gt;&lt;div&gt;TC = Technical Corps&lt;/div&gt;&lt;div&gt;TE = Technical Embassy&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="160" x="1000" y="430" as="geometry" />
+          <mxGeometry height="80" width="160" x="1280" y="430" as="geometry" />
         </mxCell>
         <mxCell id="d2_e13" edge="1" parent="d2_swim_be" source="d2_d5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_d6" value="no">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_d6" parent="d2_swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Is Military format?&lt;div&gt;(MID/MINDEF)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="100" width="120" x="1240" y="180" as="geometry" />
+          <mxGeometry height="100" width="120" x="1520" y="180" as="geometry" />
         </mxCell>
         <mxCell id="d2_e14" edge="1" parent="d2_swim_be" source="d2_d6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_ret_i" value="yes">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_ret_i" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return &#39;I&#39;&lt;div&gt;(Military)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="1240" y="340" as="geometry" />
+          <mxGeometry height="60" width="120" x="1520" y="340" as="geometry" />
         </mxCell>
         <mxCell id="d2_note_mil" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="Military Patterns:&lt;div&gt;- Starts with MID&lt;/div&gt;&lt;div&gt;- Ends with MID&lt;/div&gt;&lt;div&gt;- Contains MINDEF&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70" width="160" x="1220" y="430" as="geometry" />
+          <mxGeometry height="70" width="160" x="1500" y="430" as="geometry" />
         </mxCell>
         <mxCell id="d2_e15" edge="1" parent="d2_swim_be" source="d2_d6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_p2" value="no">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_p2" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query CAS VIP_VEHICLE table" vertex="1">
-          <mxGeometry height="80" width="120" x="1460" y="190" as="geometry" />
+          <mxGeometry height="80" width="120" x="1740" y="190" as="geometry" />
         </mxCell>
         <mxCell id="d2_e16" edge="1" parent="d2_swim_be" source="d2_p2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="d2_db1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="d2_db1" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT vehicle_no&lt;div&gt;FROM VIP_VEHICLE&lt;/div&gt;&lt;div&gt;WHERE vehicle_no = ?&lt;/div&gt;&lt;div&gt;AND status = &#39;A&#39;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="180" x="1430" y="50" as="geometry" />
+        <mxCell id="d2_db1" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT vehicle_no&lt;div&gt;FROM VIP_VEHICLE&lt;/div&gt;&lt;div&gt;WHERE vehicle_no = ?&lt;/div&gt;&lt;div&gt;AND status = &#39;A&#39;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;(No SELECT *)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="180" x="1710" y="50" as="geometry" />
         </mxCell>
         <mxCell id="d2_e17" edge="1" parent="d2_swim_be" source="d2_p2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_d7">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_d7" parent="d2_swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Found in VIP DB with status=&#39;A&#39; ?" vertex="1">
-          <mxGeometry height="100" width="120" x="1680" y="180" as="geometry" />
+          <mxGeometry height="100" width="120" x="1960" y="180" as="geometry" />
         </mxCell>
         <mxCell id="d2_e18" edge="1" parent="d2_swim_be" source="d2_d7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_ret_v" value="yes">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_ret_v" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return &#39;V&#39;&lt;div&gt;(VIP)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="1680" y="340" as="geometry" />
+          <mxGeometry height="60" width="120" x="1960" y="340" as="geometry" />
         </mxCell>
         <mxCell id="d2_note_vip" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="VIP Status:&lt;div&gt;A = Active VIP Label&lt;/div&gt;&lt;div&gt;D = Defunct/Expired&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="140" x="1670" y="430" as="geometry" />
+          <mxGeometry height="60" width="140" x="1950" y="430" as="geometry" />
         </mxCell>
         <mxCell id="d2_e19" edge="1" parent="d2_swim_be" source="d2_d7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_d8" value="no">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_d8" parent="d2_swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Last character is letter (A-Z) ?" vertex="1">
-          <mxGeometry height="100" width="120" x="1900" y="180" as="geometry" />
+          <mxGeometry height="100" width="120" x="2180" y="180" as="geometry" />
         </mxCell>
         <mxCell id="d2_e20" edge="1" parent="d2_swim_be" source="d2_d8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_ret_s2" value="yes">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_ret_s2" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return &#39;S&#39;&lt;div&gt;(Local Fallback)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="1900" y="340" as="geometry" />
+          <mxGeometry height="60" width="120" x="2180" y="340" as="geometry" />
         </mxCell>
         <mxCell id="d2_e21" edge="1" parent="d2_swim_be" source="d2_d8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="d2_ret_f2" value="no">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="d2_ret_f2" parent="d2_swim_be" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return &#39;F&#39;&lt;div&gt;(Foreign Default)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="2120" y="200" as="geometry" />
+          <mxGeometry height="60" width="120" x="2370" y="200" as="geometry" />
         </mxCell>
         <mxCell id="d2_conn1" edge="1" parent="d2_swim_be" source="d2_ret_f1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="d2_end">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="250" y="600" />
+              <mxPoint x="250" y="650" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="d2_conn2" edge="1" parent="d2_swim_be" source="d2_ret_x" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="d2_end">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="450" y="600" />
+              <mxPoint x="450" y="650" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="d2_conn3" edge="1" parent="d2_swim_be" source="d2_err" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="d2_end">
+        <mxCell id="d2_conn3a" edge="1" parent="d2_swim_be" source="d2_err1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#b85450;" target="d2_end">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="610" y="600" />
+              <mxPoint x="610" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d2_conn3b" edge="1" parent="d2_swim_be" source="d2_err2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#b85450;" target="d2_end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="650" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="d2_conn4" edge="1" parent="d2_swim_be" source="d2_ret_s1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="d2_end">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="870" y="600" />
+              <mxPoint x="1150" y="650" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="d2_conn5" edge="1" parent="d2_swim_be" source="d2_ret_d" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="d2_end">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1080" y="600" />
+              <mxPoint x="1360" y="650" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="d2_conn6" edge="1" parent="d2_swim_be" source="d2_ret_i" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="d2_end">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1300" y="600" />
+              <mxPoint x="1580" y="650" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="d2_conn7" edge="1" parent="d2_swim_be" source="d2_ret_v" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="d2_end">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1740" y="600" />
+              <mxPoint x="2020" y="650" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="d2_conn8" edge="1" parent="d2_swim_be" source="d2_ret_s2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="d2_end">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="1960" y="600" />
+              <mxPoint x="2240" y="650" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="d2_conn9" edge="1" parent="d2_swim_be" source="d2_ret_f2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="d2_end">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="2180" y="600" />
+              <mxPoint x="2430" y="650" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="d2_end" parent="d2_swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
-          <mxGeometry height="60" width="100" x="1080" y="610" as="geometry" />
+          <mxGeometry height="60" width="100" x="1300" y="660" as="geometry" />
         </mxCell>
         <mxCell id="d2_ref_fd" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" value="Refer to FD OCMS 14 Section 2.3 for Process Flow of Vehicle Registration Type Check" vertex="1">
           <mxGeometry height="30" width="400" x="30" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_note_audit" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" value="Audit User Configuration:&lt;div&gt;- Intranet: cre_user_id/upd_user_id = ocmsiz_app_conn&lt;/div&gt;&lt;div&gt;- Internet: cre_user_id/upd_user_id = ocmsez_app_conn&lt;/div&gt;&lt;div&gt;- Do NOT use &#39;SYSTEM&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="280" x="30" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="d2_note_err" parent="d2_swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;rounded=0;" value="Error Response Format:&lt;div&gt;{&lt;/div&gt;&lt;div&gt;  &quot;data&quot;: {&lt;/div&gt;&lt;div&gt;    &quot;appCode&quot;: &quot;OCMS-1401&quot;,&lt;/div&gt;&lt;div&gt;    &quot;message&quot;: &quot;...&quot;&lt;/div&gt;&lt;div&gt;  }&lt;/div&gt;&lt;div&gt;}&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="180" x="30" y="540" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

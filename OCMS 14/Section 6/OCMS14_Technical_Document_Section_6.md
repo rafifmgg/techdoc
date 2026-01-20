@@ -13,6 +13,9 @@
 | Version | Updated By | Date | Changes |
 | --- | --- | --- | --- |
 | v1.0 | [Author Name] | 16/01/2026 | Document Initiation |
+| v1.1 | Claude | 19/01/2026 | Fixed Critical Issues: Replaced SYSTEM with ocmsiz_app_conn in all SQL statements |
+| v1.2 | Claude | 19/01/2026 | Added Appendix A (Sync Flag), Appendix E (Eligibility by Source) |
+| v1.3 | Claude | 19/01/2026 | Updated furnish field names to match Data Dictionary (txn_ref_no, furnish_id_no, etc.) |
 
 ---
 
@@ -58,6 +61,11 @@
 | 5.2.2 | Database Operations | [X] |
 | 5.2.3 | Success Outcome | [X] |
 | 5.2.4 | Error Handling | [X] |
+| A | Sync Flag Mechanism | [X] |
+| B | Suspension Type Reference | [X] |
+| C | Stage Transition Reference | [X] |
+| D | Allowed Functions Matrix | [X] |
+| E | Eligibility Scenarios by Source | [X] |
 
 ---
 
@@ -261,7 +269,7 @@ officer_authorising_suspension,
 due_date_of_revival, suspension_remarks,
 process_indicator, cre_date, cre_user_id)
 VALUES (:notice_no, CURRENT_TIMESTAMP,
-:sr_no, 'OCMS', 'TS', 'OLD', 'SYSTEM',
+:sr_no, 'OCMS', 'TS', 'OLD', 'ocmsiz_app_conn',
 CURRENT_DATE + 21, 'VIP OIC Investigation',
 'PROCESSED', CURRENT_TIMESTAMP,
 'ocmsiz_app_conn')
@@ -303,7 +311,7 @@ officer_authorising_suspension,
 due_date_of_revival, suspension_remarks,
 process_indicator, cre_date, cre_user_id)
 VALUES (:notice_no, CURRENT_TIMESTAMP,
-:sr_no, 'OCMS', 'TS', 'CLV', 'SYSTEM',
+:sr_no, 'OCMS', 'TS', 'CLV', 'ocmsiz_app_conn',
 :due_date, 'VIP CLV at CPC stage',
 'PROCESSED', CURRENT_TIMESTAMP,
 'ocmsiz_app_conn')
@@ -409,7 +417,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_suspended_notice | suspension_source | Source system (OCMS) |
 | Intranet | ocms_suspended_notice | suspension_type | PS |
 | Intranet | ocms_suspended_notice | reason_of_suspension | ANS (Advisory Notice Sent) |
-| Intranet | ocms_suspended_notice | officer_authorising_suspension | SYSTEM |
+| Intranet | ocms_suspended_notice | officer_authorising_suspension | ocmsiz_app_conn (auto) |
 | Intranet | ocms_suspended_notice | cre_date | Record creation timestamp |
 | Intranet | ocms_suspended_notice | cre_user_id | User who created record |
 
@@ -453,7 +461,7 @@ officer_authorising_suspension,
 cre_date, cre_user_id)
 VALUES
 (:notice_no, CURRENT_TIMESTAMP, :sr_no,
-'OCMS', 'PS', 'ANS', 'SYSTEM',
+'OCMS', 'PS', 'ANS', 'ocmsiz_app_conn',
 CURRENT_TIMESTAMP, 'ocmsiz_app_conn')
 ```
 
@@ -549,19 +557,23 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ### 3.2.2 Data Mapping
 
-| Zone | Database Table | Field Name | Description |
-| --- | --- | --- | --- |
-| Internet | eocms_furnish_application | application_id | Unique application identifier |
-| Internet | eocms_furnish_application | notice_no | Notice identifier |
-| Internet | eocms_furnish_application | furnish_type | DRIVER or HIRER |
-| Internet | eocms_furnish_application | id_type | NRIC, FIN, PASSPORT |
-| Internet | eocms_furnish_application | id_number | ID number |
-| Internet | eocms_furnish_application | name | Offender name |
-| Internet | eocms_furnish_application | contact_no | Contact number |
-| Internet | eocms_furnish_application | status | Application status |
-| Intranet | ocms_furnish_application | application_id | Synced application ID |
-| Intranet | ocms_furnish_application | notice_no | Notice identifier |
-| Intranet | ocms_furnish_application | status | Application status |
+| Zone | Database Table | Field Name | Type | Description |
+| --- | --- | --- | --- | --- |
+| Internet | eocms_furnish_application | txn_ref_no | varchar(30) | Unique application identifier (PK) |
+| Internet | eocms_furnish_application | notice_no | varchar(10) | Notice identifier |
+| Internet | eocms_furnish_application | hirer_driver_indicator | varchar(1) | D=Driver, H=Hirer |
+| Internet | eocms_furnish_application | furnish_id_type | varchar(1) | N=NRIC, F=FIN, P=Passport |
+| Internet | eocms_furnish_application | furnish_id_no | varchar(12) | ID number |
+| Internet | eocms_furnish_application | furnish_name | varchar(66) | Offender name |
+| Internet | eocms_furnish_application | furnish_tel_code | varchar(3) | Country code |
+| Internet | eocms_furnish_application | furnish_tel_no | varchar(12) | Contact number |
+| Internet | eocms_furnish_application | furnish_email_addr | varchar(320) | Email address |
+| Internet | eocms_furnish_application | status | varchar(20) | Application status |
+| Internet | eocms_furnish_application | is_sync | varchar(1) | Sync flag (default 'N') |
+| Intranet | ocms_furnish_application | txn_ref_no | varchar(30) | Synced application ID (PK) |
+| Intranet | ocms_furnish_application | notice_no | varchar(10) | Notice identifier |
+| Intranet | ocms_furnish_application | hirer_driver_indicator | varchar(1) | D=Driver, H=Hirer |
+| Intranet | ocms_furnish_application | status | varchar(20) | Application status |
 | Intranet | ocms_offence_notice_owner_driver | notice_no | Notice identifier |
 | Intranet | ocms_offence_notice_owner_driver | owner_driver_indicator | O=Owner, D=Driver, H=Hirer |
 | Intranet | ocms_offence_notice_owner_driver | id_type | NRIC, FIN, PASSPORT |
@@ -716,7 +728,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_suspended_notice | suspension_source | Source system (OCMS) |
 | Intranet | ocms_suspended_notice | suspension_type | TS |
 | Intranet | ocms_suspended_notice | reason_of_suspension | CLV |
-| Intranet | ocms_suspended_notice | officer_authorising_suspension | SYSTEM |
+| Intranet | ocms_suspended_notice | officer_authorising_suspension | ocmsiz_app_conn (auto) |
 | Intranet | ocms_suspended_notice | due_date_of_revival | Revival due date |
 | Intranet | ocms_suspended_notice | suspension_remarks | Additional remarks |
 | Intranet | ocms_suspended_notice | process_indicator | Processing status |
@@ -775,7 +787,7 @@ process_indicator, cre_date, cre_user_id)
 VALUES
 (:notice_no, CURRENT_TIMESTAMP,
 :next_sr_no, 'OCMS', 'TS', 'CLV',
-'SYSTEM', :calculated_due_date,
+'ocmsiz_app_conn', :calculated_due_date,
 'Auto TS-CLV at CPC stage', 'PROCESSED',
 CURRENT_TIMESTAMP, 'ocmsiz_app_conn')
 ```
@@ -1028,7 +1040,73 @@ WHERE sn.reason_of_suspension = 'CLV'
 
 ---
 
-# Appendix A – Suspension Type Reference
+# Appendix A – Sync Flag Mechanism
+
+## A.1 Overview
+
+The sync flag (`is_sync`) is used to track synchronization status between Intranet and Internet databases. This ensures data consistency across both environments.
+
+## A.2 Sync Flag Values
+
+| Value | Description | Action Required |
+| --- | --- | --- |
+| Y | Synchronized | No action needed |
+| N | Pending sync | Sync job will process |
+| F | Failed sync | Retry required |
+
+## A.3 Tables with Sync Flag
+
+| Zone | Table | Sync Flag Field | Sync Direction |
+| --- | --- | --- | --- |
+| Intranet | ocms_valid_offence_notice | is_sync | Intranet → Internet |
+| Intranet | ocms_offence_notice_owner_driver | is_sync | Intranet → Internet |
+| Intranet | ocms_suspended_notice | is_sync | Intranet → Internet |
+| Internet | eocms_furnish_application | is_sync | Internet → Intranet |
+
+## A.4 Sync Flow
+
+### Intranet to Internet Sync
+
+```
+1. Notice created/updated in Intranet
+2. Set is_sync = 'N' on affected record
+3. Sync cron job queries records where is_sync = 'N'
+4. Push data to Internet database
+5. On success: Set is_sync = 'Y'
+6. On failure: Set is_sync = 'F', log error
+7. Retry job picks up is_sync = 'F' records
+```
+
+### Internet to Intranet Sync (Furnish Application)
+
+```
+1. Furnish application submitted via eService
+2. Record created in eocms_furnish_application with is_sync = 'N'
+3. Sync cron job queries records where is_sync = 'N'
+4. Push data to Intranet (ocms_furnish_application)
+5. On success: Set is_sync = 'Y' in Internet
+6. On failure: Set is_sync = 'F', retry later
+```
+
+## A.5 Sync Flag Update Logic
+
+**When to set is_sync = 'N':**
+- New record inserted
+- Record updated (stage change, suspension applied, payment received)
+- Any field modification requiring internet sync
+
+**When to set is_sync = 'Y':**
+- Sync job successfully pushed data to target database
+- Manual sync confirmation
+
+**When to set is_sync = 'F':**
+- Sync job failed after all retries
+- Connection timeout to target database
+- Data validation failed at target
+
+---
+
+# Appendix B – Suspension Type Reference
 
 | Suspension Code | Type | Description | Payable | Furnishable | Terminal |
 | --- | --- | --- | --- | --- | --- |
@@ -1040,7 +1118,7 @@ WHERE sn.reason_of_suspension = 'CLV'
 
 ---
 
-# Appendix B – Stage Transition Reference
+# Appendix C – Stage Transition Reference
 
 | From Stage | To Stage | Trigger | Actions |
 | --- | --- | --- | --- |
@@ -1056,7 +1134,7 @@ WHERE sn.reason_of_suspension = 'CLV'
 
 ---
 
-# Appendix C – Allowed Functions Matrix (VIP Notices)
+# Appendix D – Allowed Functions Matrix (VIP Notices)
 
 | Notice Stage | eNotification | Payment | Furnish Driver | Comments |
 | --- | --- | --- | --- | --- |
@@ -1069,6 +1147,149 @@ WHERE sn.reason_of_suspension = 'CLV'
 | DN2 | No | Yes | No | Driver stage |
 | RR3/DR3 | No | Yes | No | Final reminder |
 | CPC (TS-CLV) | No | Yes | No | Under TS-CLV |
+
+---
+
+# Appendix E – Eligibility Scenarios by Source
+
+## E.1 Overview
+
+Different source systems have different permissions for VIP notice operations. This appendix documents the eligibility matrix for each source.
+
+## E.2 Source Systems
+
+| Source Code | Source Name | Zone | Description |
+| --- | --- | --- | --- |
+| SP | OCMS Staff Portal | Intranet | OIC operations |
+| PLUS | PLUS Staff Portal | Intranet | PLUS contractor operations |
+| ES | eService Portal | Internet | Public self-service |
+| CRON | Backend Cron | Intranet | Automated batch jobs |
+| AXS | AXS Kiosk | Internet | Payment terminals |
+
+## E.3 Eligibility Matrix by Source
+
+### E.3.1 Notice Operations
+
+| Operation | Staff Portal | PLUS Portal | eService | Cron | AXS |
+| --- | --- | --- | --- | --- | --- |
+| View VIP Notice | Yes | Yes | Yes (Own) | N/A | No |
+| Search VIP Notice | Yes | Yes | Yes (Own) | N/A | No |
+| Create Notice | No | No | No | Yes | No |
+| Edit Notice | Yes (Limited) | No | No | No | No |
+
+### E.3.2 Suspension Operations
+
+| Operation | Staff Portal | PLUS Portal | eService | Cron | AXS |
+| --- | --- | --- | --- | --- | --- |
+| Apply TS-OLD | Yes | No | No | Yes (Auto) | No |
+| Revive TS-OLD (Manual) | Yes | No | No | No | No |
+| Revive TS-OLD (Auto) | No | No | No | Yes | No |
+| Apply TS-CLV | Yes | No | No | Yes (Auto) | No |
+| Revive TS-CLV (Manual) | Yes | No | No | No | No |
+| Revive TS-CLV (Auto) | No | No | No | Yes | No |
+| Apply PS-FP | No | No | No | Yes (Auto) | No |
+| Apply PS-DBB | No | No | No | Yes (Auto) | No |
+| Apply PS-ANS | No | No | No | Yes (Auto) | No |
+
+### E.3.3 Payment Operations
+
+| Operation | Staff Portal | PLUS Portal | eService | Cron | AXS |
+| --- | --- | --- | --- | --- | --- |
+| Make Payment | No | No | Yes | No | Yes |
+| View Payment History | Yes | Yes | Yes (Own) | N/A | No |
+| Generate Receipt | Yes | No | Yes | No | Yes |
+
+### E.3.4 Furnish Operations
+
+| Operation | Staff Portal | PLUS Portal | eService | Cron | AXS |
+| --- | --- | --- | --- | --- | --- |
+| Submit Furnish | No | No | Yes (Owner) | No | No |
+| Review Furnish | Yes | No | No | No | No |
+| Approve Furnish | Yes | No | No | Yes (Auto) | No |
+| Reject Furnish | Yes | No | No | No | No |
+
+### E.3.5 Report Operations
+
+| Operation | Staff Portal | PLUS Portal | eService | Cron | AXS |
+| --- | --- | --- | --- | --- | --- |
+| Generate CV Report | Yes | No | No | Yes (Auto) | No |
+| View CV Report | Yes | No | No | N/A | No |
+| Download CV Report | Yes | No | No | N/A | No |
+
+### E.3.6 Vehicle Type Operations
+
+| Operation | Staff Portal | PLUS Portal | eService | Cron | AXS |
+| --- | --- | --- | --- | --- | --- |
+| View Vehicle Type | Yes | Yes | Yes | N/A | No |
+| Change V→S | Yes (OIC) | No | No | No | No |
+| Change S→V | No | No | No | No | No |
+
+## E.4 Stage-Based Eligibility
+
+### E.4.1 Furnish Eligibility by Stage
+
+| Stage | Staff Portal | eService | Furnish Type Allowed |
+| --- | --- | --- | --- |
+| NPA | No | No | None |
+| TS-OLD | No | No | None |
+| ROV | No | Yes | Driver/Hirer |
+| RD1 | No | Yes | Driver/Hirer (Owner only) |
+| DN1 | No | No | None |
+| RD2 | No | Yes | Driver/Hirer (Owner only) |
+| DN2 | No | No | None |
+| RR3/DR3 | No | No | None |
+| CPC (TS-CLV) | No | No | None |
+
+### E.4.2 Payment Eligibility by Stage
+
+| Stage | eService | AXS | Notes |
+| --- | --- | --- | --- |
+| NPA | Yes | Yes | VIP remains payable |
+| TS-OLD | Yes | Yes | VIP remains payable during investigation |
+| ROV | Yes | Yes | After revival |
+| RD1 | Yes | Yes | Reminder stage |
+| DN1 | Yes | Yes | Driver stage |
+| RD2 | Yes | Yes | Reminder stage |
+| DN2 | Yes | Yes | Driver stage |
+| RR3/DR3 | Yes | Yes | Final reminder |
+| CPC (TS-CLV) | Yes | Yes | VIP remains payable under TS-CLV |
+
+## E.5 Implementation Notes
+
+### E.5.1 Source Detection
+
+```
+Source detection logic:
+1. Check request header for source identifier
+2. Staff Portal: source_code = 'SP', zone = 'INTRANET'
+3. PLUS Portal: source_code = 'PLUS', zone = 'INTRANET'
+4. eService: source_code = 'ES', zone = 'INTERNET'
+5. Cron: source_code = 'CRON', zone = 'INTRANET'
+6. AXS: source_code = 'AXS', zone = 'INTERNET'
+```
+
+### E.5.2 Eligibility Check Flow
+
+```
+1. Identify source system (SP/PLUS/ES/CRON/AXS)
+2. Identify operation requested
+3. Check eligibility matrix for source + operation
+4. IF not eligible:
+   - Return error: "Operation not allowed for this source"
+   - Error code: OCMS-4030
+5. IF eligible:
+   - Check stage-based eligibility (if applicable)
+   - Proceed with operation
+```
+
+### E.5.3 Error Codes for Eligibility
+
+| Error Code | Message | Scenario |
+| --- | --- | --- |
+| OCMS-4030 | Operation not allowed for this source | Source not in eligibility matrix |
+| OCMS-4031 | Operation not allowed at this stage | Stage restriction |
+| OCMS-4032 | Furnish not allowed for this user | Non-owner attempting furnish |
+| OCMS-4033 | Payment channel not available | Payment via restricted channel |
 
 ---
 

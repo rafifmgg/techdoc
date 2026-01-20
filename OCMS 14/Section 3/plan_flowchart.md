@@ -343,14 +343,14 @@ SELECT
     ond.id_no AS offender_id,
     ond.owner_driver_indicator,
     ond.date_of_death,
-    sn.reason_suspension_date AS suspension_date,
+    sn.date_of_suspension AS suspension_date,
     von.notice_date_and_time AS offence_date
 FROM ocms_suspended_notice sn
 JOIN ocms_valid_offence_notice von ON sn.notice_no = von.notice_no
 JOIN ocms_offence_notice_owner_driver ond ON von.notice_no = ond.notice_no
 WHERE sn.suspension_type = 'PS'
   AND sn.reason_of_suspension = 'RP2'
-  AND sn.reason_suspension_date = CURRENT_DATE
+  AND CAST(sn.date_of_suspension AS DATE) = CAST(GETDATE() AS DATE)
   AND sn.due_date_of_revival IS NULL
   AND ond.owner_driver_indicator IN ('H', 'D')
   AND ond.offender_indicator = 'Y'
@@ -367,7 +367,7 @@ ORDER BY von.notice_no
 | Offender ID | ond.id_no | NRIC/FIN of deceased |
 | Type | ond.owner_driver_indicator | H (Hirer) or D (Driver) |
 | Date of Death | ond.date_of_death | When offender died |
-| Suspension Date | sn.reason_suspension_date | When PS-RP2 applied |
+| Suspension Date | sn.date_of_suspension | When PS-RP2 applied |
 | Offence Date | von.notice_date_and_time | Original offence date |
 
 ---
@@ -594,3 +594,4 @@ For suspension operations, include payload boxes with:
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on plan_api.md and plan_condition.md |
+| 1.1 | 19/01/2026 | Claude | Yi Jie compliance: Fixed field name consistency (reason_suspension_date → date_of_suspension) |

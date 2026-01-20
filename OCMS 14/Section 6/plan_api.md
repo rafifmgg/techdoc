@@ -59,18 +59,26 @@ This document defines the API specifications for VIP Vehicle Notice Processing i
 
 | Attribute | Value |
 | --- | --- |
-| Method | GET |
-| URL | `/api/v1/cas/vip-vehicle/{vehicleNo}` |
+| Method | POST |
+| URL | `/api/v1/cas/vip-vehicle/check` |
 | Authentication | Internal Service |
 | Purpose | Check if vehicle has valid VIP Parking Label |
 
 #### Request
 
-**Path Parameters:**
+**Request Body:**
 
-| Parameter | Type | Required | Description |
-| --- | --- | --- | --- |
-| vehicleNo | string | Yes | Vehicle number to check |
+```json
+{
+  "vehicleNo": "SBA1234A"
+}
+```
+
+**Request Body Schema:**
+
+| Field | Type | Required | Validation | Description |
+| --- | --- | --- | --- | --- |
+| vehicleNo | string | Yes | max: 14 chars | Vehicle number to check |
 
 #### Response
 
@@ -78,8 +86,9 @@ This document defines the API specifications for VIP Vehicle Notice Processing i
 
 ```json
 {
-  "success": true,
   "data": {
+    "appCode": "OCMS-2000",
+    "message": "Success",
     "vehicleNo": "SBA1234A",
     "isVipVehicle": true,
     "vipLabelStatus": "ACTIVE",
@@ -90,12 +99,25 @@ This document defines the API specifications for VIP Vehicle Notice Processing i
 
 **Response Schema:**
 
-| Field | Type | Description |
-| --- | --- | --- |
-| vehicleNo | string | Vehicle number |
-| isVipVehicle | boolean | True if vehicle has valid VIP label |
-| vipLabelStatus | string | ACTIVE / EXPIRED / CANCELLED |
-| labelExpiryDate | date | VIP label expiry date |
+| Field | Type | Description | Source |
+| --- | --- | --- | --- |
+| appCode | string | Application response code | System generated |
+| message | string | Response message | System generated |
+| vehicleNo | string | Vehicle number | Request input |
+| isVipVehicle | boolean | True if vehicle has valid VIP label | Derived from vip_vehicle.status |
+| vipLabelStatus | string | ACTIVE / EXPIRED / CANCELLED | vip_vehicle.status |
+| labelExpiryDate | date | VIP label expiry date | vip_vehicle.label_expiry_date |
+
+**Failure Response:**
+
+```json
+{
+  "data": {
+    "appCode": "OCMS-5000",
+    "message": "Service unavailable. Please try again later."
+  }
+}
+```
 
 #### [ASSUMPTION]
 CAS database connection is temporarily disabled. When FOMS goes live, this will query FOMS instead of CAS.
@@ -143,14 +165,25 @@ CAS database connection is temporarily disabled. When FOMS goes live, this will 
 
 ```json
 {
-  "success": true,
-  "message": "Suspension revived successfully",
   "data": {
+    "appCode": "OCMS-2000",
+    "message": "Suspension revived successfully",
     "noticeNo": "500500303J",
     "previousSuspension": "TS-OLD",
     "revivalDate": "2026-01-15T10:30:00Z",
     "nextProcessingStage": "ROV",
     "nextProcessingDate": "2026-01-15"
+  }
+}
+```
+
+**Failure Response:**
+
+```json
+{
+  "data": {
+    "appCode": "OCMS-4004",
+    "message": "Notice not found"
   }
 }
 ```
@@ -191,7 +224,7 @@ CAS database connection is temporarily disabled. When FOMS goes live, this will 
 ```json
 {
   "suspensionSource": "OCMS",
-  "officerAuthorising": "SYSTEM",
+  "officerAuthorising": "ocmsiz_app_conn",
   "suspensionRemarks": "Auto TS-CLV at end of RR3 stage"
 }
 ```
@@ -202,14 +235,25 @@ CAS database connection is temporarily disabled. When FOMS goes live, this will 
 
 ```json
 {
-  "success": true,
-  "message": "TS-CLV suspension applied successfully",
   "data": {
+    "appCode": "OCMS-2000",
+    "message": "TS-CLV suspension applied successfully",
     "noticeNo": "500500303J",
     "suspensionType": "TS",
     "reasonOfSuspension": "CLV",
     "suspensionDate": "2026-01-15T23:59:59Z",
     "dueRevivalDate": "2026-02-14T23:59:59Z"
+  }
+}
+```
+
+**Failure Response:**
+
+```json
+{
+  "data": {
+    "appCode": "VIP-004",
+    "message": "Invalid suspension state for this operation"
   }
 }
 ```
@@ -250,14 +294,13 @@ CAS database connection is temporarily disabled. When FOMS goes live, this will 
 
 ```json
 {
-  "furnishType": "DRIVER",
-  "particulars": {
-    "idType": "NRIC",
-    "idNumber": "S1234567A",
-    "name": "JOHN DOE",
-    "contactNo": "91234567",
-    "email": "john@example.com"
-  },
+  "hirerDriverIndicator": "D",
+  "furnishIdType": "N",
+  "furnishIdNo": "S1234567A",
+  "furnishName": "JOHN DOE",
+  "furnishTelCode": "65",
+  "furnishTelNo": "91234567",
+  "furnishEmailAddr": "john@example.com",
   "supportingDocuments": [
     {
       "docType": "RENTAL_AGREEMENT",
@@ -270,14 +313,16 @@ CAS database connection is temporarily disabled. When FOMS goes live, this will 
 
 **Request Body Schema:**
 
-| Field | Type | Required | Validation | Description |
-| --- | --- | --- | --- | --- |
-| furnishType | string | Yes | Enum: DRIVER, HIRER | Type of furnish |
-| particulars.idType | string | Yes | Enum: NRIC, FIN, PASSPORT | ID type |
-| particulars.idNumber | string | Yes | Pattern validation | ID number |
-| particulars.name | string | Yes | max: 100 chars | Full name |
-| particulars.contactNo | string | No | Pattern: 8 digits | Contact number |
-| supportingDocuments | array | No | max: 5 files | Supporting documents |
+| Field | Type | Required | Validation | DB Field | Description |
+| --- | --- | --- | --- | --- | --- |
+| hirerDriverIndicator | string | Yes | Enum: D, H | hirer_driver_indicator | D=Driver, H=Hirer |
+| furnishIdType | string | Yes | Enum: N, F, P | furnish_id_type | N=NRIC, F=FIN, P=Passport |
+| furnishIdNo | string | Yes | max: 12 chars | furnish_id_no | ID number |
+| furnishName | string | Yes | max: 66 chars | furnish_name | Full name |
+| furnishTelCode | string | No | max: 3 chars | furnish_tel_code | Country code |
+| furnishTelNo | string | No | max: 12 chars | furnish_tel_no | Contact number |
+| furnishEmailAddr | string | No | max: 320 chars | furnish_email_addr | Email address |
+| supportingDocuments | array | No | max: 5 files | (separate table) | Supporting documents |
 
 #### Response
 
@@ -285,13 +330,31 @@ CAS database connection is temporarily disabled. When FOMS goes live, this will 
 
 ```json
 {
-  "success": true,
-  "message": "Furnish application submitted successfully",
   "data": {
+    "appCode": "OCMS-2000",
+    "message": "Furnish application submitted successfully",
     "noticeNo": "500500303J",
-    "applicationId": "FA20260115001",
-    "status": "PENDING_APPROVAL",
+    "txnRefNo": "FA20260115001",
+    "status": "PENDING",
     "submittedDate": "2026-01-15T10:30:00Z"
+  }
+}
+```
+
+**Response Field Mapping:**
+
+| Response Field | DB Field | Source |
+| --- | --- | --- |
+| txnRefNo | txn_ref_no | Generated sequence |
+| status | status | Default: PENDING |
+
+**Failure Response:**
+
+```json
+{
+  "data": {
+    "appCode": "OCMS-4010",
+    "message": "Furnish not allowed at this stage"
   }
 }
 ```
@@ -617,7 +680,178 @@ CSV file with notice details for letter printing.
 
 ---
 
-## 5. Error Handling
+## 5. Token Handling and Retry Mechanism
+
+### 5.1 Token Expiry Handling
+
+All external API integrations (LTA VRLS, MHA, DataHive) must implement token refresh handling.
+
+| Attribute | Value |
+| --- | --- |
+| Token Type | Bearer Token (OAuth 2.0) |
+| Token Expiry | Configurable per service |
+| Refresh Strategy | Auto refresh on expiry |
+
+#### Token Refresh Flow
+
+```
+1. Make API call with current token
+2. IF response = 401 (Unauthorized/Token Expired):
+   a. Request new token from auth service
+   b. Store new token in cache
+   c. Retry original request with new token
+   d. Continue processing
+3. NEVER stop processing due to token expiry
+4. Log token refresh events for monitoring
+```
+
+#### Implementation Notes
+
+- Token refresh MUST be automatic and transparent
+- Processing MUST continue after token refresh
+- System should NOT stop or fail due to token expiry
+- Failed token refresh after 3 attempts: Log error and notify admin
+
+### 5.2 API Retry Mechanism
+
+All external API calls must implement retry mechanism with email alert.
+
+| Attribute | Value |
+| --- | --- |
+| Max Retries | 3 |
+| Retry Interval | Exponential backoff (1s, 2s, 4s) |
+| Alert Trigger | After all retries exhausted |
+| Alert Method | Email notification |
+
+#### Retry Flow
+
+```
+1. Make API call
+2. IF connection failure or timeout:
+   a. Retry 1: Wait 1 second, retry
+   b. Retry 2: Wait 2 seconds, retry
+   c. Retry 3: Wait 4 seconds, retry
+3. IF all retries fail:
+   a. Stop processing for this record
+   b. Trigger email alert to admin
+   c. Log error with full details
+   d. Continue with next record (if batch processing)
+```
+
+#### Email Alert Configuration
+
+| Attribute | Value |
+| --- | --- |
+| Recipients | Configured admin list (from parameter table) |
+| Subject | `[OCMS Alert] External API Failure - {API_NAME}` |
+| Body Content | API name, error details, timestamp, affected record(s) |
+| Template | Stored in `ocms_template_store` |
+
+#### Error Scenarios Triggering Email
+
+| Scenario | API | Action |
+| --- | --- | --- |
+| Connection Timeout | LTA VRLS | Retry 3x, then email alert |
+| Connection Timeout | MHA | Retry 3x, then email alert |
+| Connection Timeout | DataHive | Retry 3x, then email alert |
+| Authentication Failed | Any | Retry token refresh 3x, then email alert |
+| Service Unavailable (503) | Any | Retry 3x, then email alert |
+
+---
+
+## 6. Batch Job Configuration
+
+### 6.1 Shedlock Naming Convention
+
+All batch jobs must follow the Shedlock naming convention for distributed lock management.
+
+#### Naming Pattern
+
+| Type | Pattern | Example |
+| --- | --- | --- |
+| File/Report Operations | `[action]_[subject]_[suffix]` | `generate_report_cvnotices` |
+| API/Other Operations | `[action]_[subject]` | `sync_payment` |
+| Special Cases | `[action]_[subject][term]` | `process_photosUpload` |
+
+#### Batch Job Shedlock Names
+
+| Job Name | Shedlock Name | Schedule | Type |
+| --- | --- | --- | --- |
+| Auto Revival TS-OLD | `revive_tsold_expired` | Daily 00:00 | API/Other |
+| Prepare RD1 for MHA/DH | `prepare_rd1_mhadh` | Daily EOD | API/Other |
+| Prepare RD2 for MHA/DH | `prepare_rd2_mhadh` | Daily EOD | API/Other |
+| Prepare RR3 for MHA/DH | `prepare_rr3_mhadh` | Daily EOD | API/Other |
+| Apply TS-CLV at CPC | `apply_tsclv_cpc` | Daily EOD | API/Other |
+| Auto Re-apply TS-CLV | `reapply_tsclv_expired` | Daily 00:00 | API/Other |
+| Generate CV Report | `generate_report_cvnotices` | Daily (TBD) | File/Report |
+| AN Letter Generation | `generate_letter_advisory` | Daily EOD | File/Report |
+
+### 6.2 Batch Job Tracking
+
+All batch jobs must implement start time recording for monitoring and recovery.
+
+#### Tracking Requirements
+
+| Attribute | Description |
+| --- | --- |
+| Start Time | Record immediately when job starts |
+| End Time | Record upon job completion |
+| Status | RUNNING / COMPLETED / FAILED |
+| Records Processed | Count of processed records |
+| Records Failed | Count of failed records |
+| Error Details | Last error message if failed |
+
+#### Tracking Flow
+
+```
+1. Job Starts:
+   - Record start_time = CURRENT_TIMESTAMP
+   - Record status = 'RUNNING'
+   - Record job_name, schedule_time
+
+2. During Processing:
+   - Update records_processed count periodically
+   - Update records_failed count on errors
+
+3. Job Completes:
+   - Record end_time = CURRENT_TIMESTAMP
+   - Record status = 'COMPLETED' or 'FAILED'
+   - Calculate duration = end_time - start_time
+
+4. Benefits:
+   - Identify jobs that started but didn't end (stuck)
+   - Identify jobs that didn't start at all
+   - Monitor long-running jobs
+   - Enable job recovery
+```
+
+### 6.3 Batch Job Archival
+
+| Attribute | Value |
+| --- | --- |
+| Retention Period | 3 months |
+| Archival Schedule | Monthly cleanup job |
+| Archival Action | Delete records older than 3 months |
+
+### 6.4 Logging Guidelines
+
+| Job Type | Logging Destination | Details |
+| --- | --- | --- |
+| Frequent Sync Jobs | Application logs only | Error messages, no batch table |
+| Standard Batch Jobs | Batch table + Application logs | Full tracking |
+| Report Generation | Batch table + Application logs | Full tracking |
+
+**Frequent Sync Jobs (Application Logs Only):**
+- Auto Re-apply TS-CLV (runs daily, high frequency)
+
+**Standard Batch Jobs (Full Tracking):**
+- Generate Classified Vehicle Report
+- AN Letter Generation
+- Stage transition jobs
+
+---
+
+## 7. Error Handling
 
 ### Error Codes
 
@@ -634,7 +868,7 @@ CSV file with notice details for letter printing.
 
 ---
 
-## 6. Data Mapping
+## 8. Data Mapping
 
 ### Request to Database
 
@@ -648,7 +882,7 @@ CSV file with notice details for letter printing.
 
 ---
 
-## 7. Assumptions Log
+## 9. Assumptions Log
 
 | ID | Assumption | Reason | Impact |
 | --- | --- | --- | --- |
@@ -659,8 +893,9 @@ CSV file with notice details for letter printing.
 
 ---
 
-## 8. Changelog
+## 10. Changelog
 
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version |
+| 1.1 | 19/01/2026 | Claude | Fixed Critical Issues: Changed GET to POST, updated response format, added token handling, retry mechanism, Shedlock naming, batch job tracking |

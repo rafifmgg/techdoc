@@ -10,6 +10,7 @@
 | Created Date | 15/01/2026 |
 | Last Updated | 15/01/2026 |
 | Status | Draft |
+| Revision | v1.1 - Fix SELECT *, add token refresh, Shedlock naming |
 | FD Reference | OCMS 14 - Section 6 |
 | TD Reference | OCMS 14 - Section 5 |
 
@@ -196,7 +197,10 @@ THEN return "D" (Diplomatic)
 #### Query Criteria for AN Letter Generation
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type, an_flag,
+       last_processing_stage, next_processing_stage, next_processing_date,
+       suspension_type, epr_reason_of_suspension
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'D'
   AND an_flag = 'Y'
   AND last_processing_stage = 'NPA'
@@ -205,6 +209,8 @@ WHERE vehicle_registration_type = 'D'
   AND suspension_type IS NULL
   AND epr_reason_of_suspension IS NULL
 ```
+
+**Note:** Do not use `SELECT *`. Always specify only the fields required for the operation.
 
 #### Output
 
@@ -347,13 +353,18 @@ WHERE vehicle_registration_type = 'D'
 | Attribute | Value |
 | --- | --- |
 | Type | CRON Job |
+| Shedlock Name | `process_rov_dip` |
 | Schedule | End of day |
 | Purpose | Process LTA/MHA/DataHive checks, prepare for RD1 |
+| Job Tracking | Record start time immediately when job starts |
 
 #### Query Criteria
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage, next_processing_date,
+       suspension_type, owner_id_type, owner_id_no
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'D'
   AND last_processing_stage = 'NPA'
   AND next_processing_stage = 'ROV'
@@ -375,13 +386,18 @@ WHERE vehicle_registration_type = 'D'
 | Attribute | Value |
 | --- | --- |
 | Type | CRON Job |
+| Shedlock Name | `prepare_rd1_dip` |
 | Schedule | End of day |
 | Purpose | Generate RD1 Reminder Letter |
+| Job Tracking | Record start time immediately when job starts |
 
 #### Query Criteria
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage, next_processing_date,
+       suspension_type, owner_name, owner_address
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'D'
   AND last_processing_stage = 'ROV'
   AND next_processing_stage = 'RD1'
@@ -402,13 +418,18 @@ WHERE vehicle_registration_type = 'D'
 | Attribute | Value |
 | --- | --- |
 | Type | CRON Job |
+| Shedlock Name | `prepare_rd2_dip` |
 | Schedule | End of RD1 stage |
 | Purpose | Generate RD2 Reminder Letter |
+| Job Tracking | Record start time immediately when job starts |
 
 #### Query Criteria
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage, next_processing_date,
+       suspension_type, crs_reason_of_suspension, owner_name, owner_address
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'D'
   AND last_processing_stage = 'RD1'
   AND next_processing_stage = 'RD2'
@@ -513,12 +534,18 @@ WHERE vehicle_registration_type = 'D'
 #### Query for PS-DIP Application
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage,
+       suspension_type, epr_reason_of_suspension, crs_reason_of_suspension,
+       payment_status, outstanding_amount
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'D'
   AND crs_reason_of_suspension IS NULL
   AND last_processing_stage IN ('RD2', 'DN2')
   AND next_processing_stage IN ('RR3', 'DR3')
 ```
+
+**Note:** Do not use `SELECT *`. Always specify only the fields required for the operation.
 
 #### Update Fields - ocms_valid_offence_notice
 
@@ -559,13 +586,18 @@ WHERE vehicle_registration_type = 'D'
 | Attribute | Value |
 | --- | --- |
 | Type | CRON Job |
+| Shedlock Name | `recheck_dip_mid_for` |
 | Schedule | Daily at 11:59 PM |
 | Purpose | Re-apply PS-DIP if accidentally revived |
+| Job Tracking | Record start time immediately when job starts |
 
 #### Query Criteria
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage,
+       suspension_type, epr_reason_of_suspension
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type IN ('D', 'I', 'F')
   AND last_processing_stage IN ('RD2', 'DN2')
   AND suspension_type IS NULL
@@ -645,16 +677,33 @@ WHERE vehicle_registration_type IN ('D', 'I', 'F')
 
 ## 16. CRON Jobs Summary
 
-| Job Name | Schedule | Purpose |
+| Job Name | Shedlock Name | Schedule | Purpose |
+| --- | --- | --- | --- |
+| ProcessROVJob | `process_rov_dip` | End of day | LTA/MHA/DataHive checks |
+| PrepareForRD1Job | `prepare_rd1_dip` | End of day | Process ROV → RD1 |
+| PrepareForRD2Job | `prepare_rd2_dip` | End of RD1 | Process RD1 → RD2 |
+| PrepareForDN1Job | `prepare_dn1_dip` | End of day | Process furnished notices → DN1 |
+| PrepareForDN2Job | `prepare_dn2_dip` | End of DN1 | Process DN1 → DN2 |
+| DipMidForRecheckJob | `recheck_dip_mid_for` | 11:59 PM daily | Re-apply PS-DIP at RD2/DN2 |
+| ANLetterGenerationJob | `generate_an_letter` | End of day | Generate AN Letters |
+| SuspendDIPNoticesJob | `suspend_dip_notices` | End of RD2/DN2 | Apply PS-DIP suspension |
+
+### Shedlock Naming Convention
+
+| Type | Pattern | Example |
 | --- | --- | --- |
-| ProcessROVJob | End of day | LTA/MHA/DataHive checks |
-| PrepareForRD1Job | End of day | Process ROV → RD1 |
-| PrepareForRD2Job | End of RD1 | Process RD1 → RD2 |
-| PrepareForDN1Job | End of day | Process furnished notices → DN1 |
-| PrepareForDN2Job | End of DN1 | Process DN1 → DN2 |
-| DipMidForRecheckJob | 11:59 PM daily | Re-apply PS-DIP at RD2/DN2 |
-| ANLetterGenerationJob | End of day | Generate AN Letters |
-| SuspendDIPNoticesJob | End of RD2/DN2 | Apply PS-DIP suspension |
+| File/Report | `[action]_[subject]_[suffix]` | `generate_report_daily` |
+| API/Other | `[action]_[subject]` | `sync_payment` |
+| Special | `[action]_[subject][term]` | `process_photosUpload` |
+
+### Batch Job Standards
+
+| Standard | Value | Description |
+| --- | --- | --- |
+| Job Tracking | Record start time immediately | When job starts, log start time first |
+| Memory Safety | Break up process | Don't wait until job ends to log |
+| Archival Period | **3 months** | Batch job records deleted after 3 months |
+| Failure Detection | Identify stuck jobs | Can identify jobs that started but didn't end |
 
 ---
 

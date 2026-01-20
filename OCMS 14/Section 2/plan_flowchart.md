@@ -301,8 +301,8 @@ The Technical Flowchart will contain the following tabs/sections:
 │                    └───────────────┘       Yes/│\No                        │
 │                                               │  │                          │
 │  Query:                                  ┌────┘  └────┐                     │
-│  parameter_code = 'NPA'                  │            │                     │
-│  parameter_id = 'ENF'                    ▼            ▼                     │
+│  parameter_id = 'FOR'                        │            │                     │
+│  code = 'NPA'                      ▼            ▼                     │
 │                                    ┌───────────┐ ┌───────────┐             │
 │                                    │ Calculate │ │ Retry 1x  │             │
 │                                    │ Date:     │ └─────┬─────┘             │

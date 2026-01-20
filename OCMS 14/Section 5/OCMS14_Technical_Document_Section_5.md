@@ -18,6 +18,8 @@ refer to FD instead of duplicating content.
 | Version | Updated By | Date | Changes |
 | --- | --- | --- | --- |
 | v1.0 | Claude | 15/01/2026 | Document Initiation - Section 5 |
+| v1.1 | Claude | 19/01/2026 | Fix SELECT *, add token refresh, Shedlock naming, batch job standards |
+| v1.2 | Claude | 20/01/2026 | Fix table name: ocms_offence_notice_owner_driver_addr; Fix suspension_source to 4-char code (align with data dictionary) |
 
 ---
 
@@ -35,6 +37,10 @@ refer to FD instead of duplicating content.
 | 5.4 | Advisory Notice (AN) Sub-flow | 12 |
 | 5.5 | Furnish Driver/Hirer Sub-flow | 14 |
 | 5.6 | PS-DIP Suspension Flow | 17 |
+| Appendix A | Flowchart Reference | 20 |
+| Appendix B | Related Documents | 20 |
+| Appendix C | Glossary | 21 |
+| Appendix D | CRON Job Standards | 21 |
 
 ---
 
@@ -203,7 +209,7 @@ All 5 conditions must match an existing notice to trigger PS-DBB:
 | DBB Check | SELECT | ocms_valid_offence_notice | Query by 5 DBB criteria |
 | Create Notice | INSERT | ocms_valid_offence_notice | Insert notice at NPA stage, next_stage=ROV |
 | Create Notice | INSERT | ocms_offence_notice_owner_driver | Insert owner details from LTA |
-| Create Notice | INSERT | ocms_offence_notice_owner_driver_address | Insert address from MHA/DH |
+| Create Notice | INSERT | ocms_offence_notice_owner_driver_addr | Insert address from MHA/DH |
 | Create Notice | INSERT | ocms_offence_notice_detail | Insert notice details |
 | ROV Stage | UPDATE | ocms_valid_offence_notice | Set last_stage='ROV', next_stage='RD1' |
 | Update RD1 | UPDATE | ocms_valid_offence_notice | Set last_processing_stage = 'RD1' |
@@ -222,7 +228,9 @@ All 5 conditions must match an existing notice to trigger PS-DBB:
 | System | LTA VRLS |
 | Purpose | Get vehicle ownership details |
 | Stage | ROV |
+| Token Handling | If token expired, auto refresh and continue processing |
 | Retry | 3 times on failure |
+| Alert | Send email alert after all retries fail |
 | Fallback | Continue with available data |
 
 #### MHA (Address Verification)
@@ -233,7 +241,9 @@ All 5 conditions must match an existing notice to trigger PS-DBB:
 | System | MHA |
 | Purpose | Verify owner identity, get latest address |
 | Stage | ROV, before RD2 |
+| Token Handling | If token expired, auto refresh and continue processing |
 | Retry | 3 times on failure |
+| Alert | Send email alert after all retries fail |
 | Fallback | Continue with LTA data |
 
 #### DataHive (Profile Lookup)
@@ -244,7 +254,9 @@ All 5 conditions must match an existing notice to trigger PS-DBB:
 | System | DataHive |
 | Purpose | Get FIN details, company profile |
 | Stage | ROV, before RD2 |
+| Token Handling | If token expired, auto refresh and continue processing |
 | Retry | 3 times on failure |
+| Alert | Send email alert after all retries fail |
 | Fallback | Continue with available data |
 
 #### TOPPAN SFTP (Letter Generation)
@@ -273,9 +285,9 @@ All 5 conditions must match an existing notice to trigger PS-DBB:
 | Intranet | ocms_valid_offence_notice | epr_reason_of_suspension | DIP for diplomatic suspension |
 | Intranet | ocms_offence_notice_owner_driver | name | Owner name from LTA |
 | Intranet | ocms_offence_notice_owner_driver | id_no | Owner ID from LTA |
-| Intranet | ocms_offence_notice_owner_driver_address | postal_code | Address from MHA/DataHive |
+| Intranet | ocms_offence_notice_owner_driver_addr | postal_code | Address from MHA/DataHive |
 | Intranet | ocms_suspended_notice | reason_of_suspension | DIP / ANS / DBB / FP |
-| Intranet | ocms_suspended_notice | suspension_source | ocmsiz_app_conn (Intranet) |
+| Intranet | ocms_suspended_notice | suspension_source | OCMS (4-char code) |
 | Internet | eocms_valid_offence_notice | - | Synced copy for eService portal |
 
 #### Input Parameters
@@ -508,12 +520,18 @@ NOTE: Due to page size limit, the full-sized image is appended.
 ### Query Criteria
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage,
+       suspension_type, epr_reason_of_suspension, crs_reason_of_suspension,
+       payment_status, outstanding_amount
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'D'
   AND crs_reason_of_suspension IS NULL
   AND last_processing_stage IN ('RD2', 'DN2')
   AND next_processing_stage IN ('RR3', 'DR3')
 ```
+
+**Note:** Do not use `SELECT *`. Always specify only the fields required for the operation.
 
 ### Database Operations
 
@@ -532,7 +550,7 @@ WHERE vehicle_registration_type = 'D'
 | suspension_type | 'PS' | Constant |
 | reason_of_suspension | 'DIP' | Constant (Diplomatic) |
 | date_of_suspension | NOW() | System timestamp |
-| suspension_source | 'ocmsiz_app_conn' | Constant (Intranet user) |
+| suspension_source | 'OCMS' | Constant (4-char source code) |
 | cre_user_id | 'ocmsiz_app_conn' | Constant (NOT 'SYSTEM') |
 | cre_date | NOW() | System timestamp |
 | sr_no | Running number | SQL Server Sequence |
@@ -587,7 +605,7 @@ Request:
   "noticeNo": "A1234567890",
   "suspensionType": "PS",
   "reasonOfSuspension": "DIP",
-  "suspensionSource": "ocmsiz_app_conn",
+  "suspensionSource": "OCMS",
   "suspensionRemarks": "Diplomatic Vehicle",
   "officerAuthorisingSuspension": "SYSTEM"
 }
@@ -654,6 +672,49 @@ The technical flowchart for this section is available in:
 | VRLS | Vehicle Registration Licensing System (LTA) |
 | MHA | Ministry of Home Affairs |
 | TOPPAN | Printing vendor |
+
+---
+
+## Appendix D: CRON Job Standards
+
+### Shedlock Naming Convention
+
+| Job Name | Shedlock Name | Schedule | Purpose |
+| --- | --- | --- | --- |
+| ProcessROVJob | `process_rov_dip` | End of day | LTA/MHA/DataHive checks |
+| PrepareForRD1Job | `prepare_rd1_dip` | End of day | Process ROV → RD1 |
+| PrepareForRD2Job | `prepare_rd2_dip` | End of RD1 | Process RD1 → RD2 |
+| PrepareForDN1Job | `prepare_dn1_dip` | End of day | Process furnished notices → DN1 |
+| PrepareForDN2Job | `prepare_dn2_dip` | End of DN1 | Process DN1 → DN2 |
+| DipMidForRecheckJob | `recheck_dip_mid_for` | 11:59 PM daily | Re-apply PS-DIP at RD2/DN2 |
+| ANLetterGenerationJob | `generate_an_letter` | End of day | Generate AN Letters |
+| SuspendDIPNoticesJob | `suspend_dip_notices` | End of RD2/DN2 | Apply PS-DIP suspension |
+
+### Naming Pattern
+
+| Type | Pattern | Example |
+| --- | --- | --- |
+| File/Report | `[action]_[subject]_[suffix]` | `generate_report_daily` |
+| API/Other | `[action]_[subject]` | `sync_payment` |
+| Special | `[action]_[subject][term]` | `process_photosUpload` |
+
+### Batch Job Standards
+
+| Standard | Value | Description |
+| --- | --- | --- |
+| Job Tracking | Record start time immediately | When job starts, log start time first |
+| Memory Safety | Break up process | Don't wait until job ends to log |
+| Archival Period | **3 months** | Batch job records deleted after 3 months |
+| Failure Detection | Identify stuck jobs | Can identify jobs that started but didn't end |
+
+### External API Integration Standards
+
+| Standard | Value |
+| --- | --- |
+| Token Handling | If token expired, auto refresh and continue processing |
+| Retry Mechanism | Retry 3 times on connection failure |
+| Alert | Send email alert after all retries fail |
+| Fallback | Continue processing with available data |
 
 ---
 

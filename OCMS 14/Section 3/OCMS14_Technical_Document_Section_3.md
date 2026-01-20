@@ -19,6 +19,8 @@ refer to FD instead of duplicating content.
 | --- | --- | --- | --- |
 | v1.0 | Claude | 16/01/2026 | Document Initiation - Section 3 (Deceased Offenders) |
 | v1.1 | Claude | 18/01/2026 | Added API Specification tables per template format (Section 3.3.2, 3.5.1) |
+| v1.2 | Claude | 19/01/2026 | Yi Jie compliance fixes: Added batch job tracking section, Shedlock naming, aligned API response format with guidelines |
+| v1.3 | Claude | 19/01/2026 | Data Dictionary compliance: Fixed ins_user_id→cre_user_id, offence_date→notice_date_and_time, removed non-existent current_offender_id, SQL Server syntax (GETDATE) |
 
 ---
 
@@ -112,6 +114,29 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | date_of_death >= offence_date | PS-RIP | Motorist Deceased On or After Offence Date |
 | date_of_death < offence_date | PS-RP2 | Motorist Deceased Before Offence Date |
 
+### Batch Job Configuration
+
+**Shedlock Job Configuration:**
+
+| Attribute | Value |
+| --- | --- |
+| Job Name | apply_deceased_suspension |
+| Naming Convention | `[action]_[subject]` (API/other operations) |
+| Schedule | Real-time (triggered by MHA/DataHive response) |
+| Lock Duration | N/A (event-driven, not scheduled) |
+
+**Job Tracking:**
+
+| Tracking Aspect | Implementation |
+| --- | --- |
+| Logging Type | Application logs only (frequent sync job) |
+| Start Time Recording | Record start time immediately when processing begins |
+| Error Logging | Log to application logs with notice_no and error details |
+| Stuck Job Detection | Track notices with life_status='D' but no PS applied |
+| Metrics | Count of RIP/RP2 suspensions applied per day |
+
+**Note:** This is a frequent sync operation triggered by MHA/DataHive responses. Per Yi Jie guideline, frequent sync jobs should NOT log to batch job table - use application logs only for error messages.
+
 ---
 
 ### 3.3.1 External System Integration
@@ -175,8 +200,8 @@ WHERE FIN = '<fin_number>'
 | Trigger | Auto-triggered by CRON when deceased offender detected |
 | Header | N/A (Internal service call) |
 | Payload | `{ "noticeNo": "A12345678X", "suspensionSource": "CRON", "reasonOfSuspension": "RIP", "officerAuthorisingSuspension": "SYSTEM" }` |
-| Response | `{ "appCode": 0, "appMessage": "SUCCESS", "noticeNo": "A12345678X" }` |
-| Response Failure | `{ "appCode": 4001, "appMessage": "Invalid Notice Number" }` |
+| Response | `{ "data": { "appCode": "OCMS-2000", "message": "PS suspension applied successfully" }, "noticeNo": "A12345678X" }` |
+| Response Failure | `{ "data": { "appCode": "OCMS-4001", "message": "Invalid Notice Number" } }` |
 
 #### Request Parameters
 
@@ -203,8 +228,10 @@ WHERE FIN = '<fin_number>'
 
 ```json
 {
-  "appCode": 0,
-  "appMessage": "SUCCESS",
+  "data": {
+    "appCode": "OCMS-2000",
+    "message": "PS suspension applied successfully"
+  },
   "noticeNo": "A12345678X"
 }
 ```
@@ -213,8 +240,10 @@ WHERE FIN = '<fin_number>'
 
 ```json
 {
-  "appCode": 4001,
-  "appMessage": "Invalid Notice Number"
+  "data": {
+    "appCode": "OCMS-4001",
+    "message": "Invalid Notice Number"
+  }
 }
 ```
 
@@ -240,7 +269,7 @@ WHERE FIN = '<fin_number>'
 | Intranet | ocms_suspended_notice | date_of_suspension | Timestamp when suspension applied |
 | Intranet | ocms_suspended_notice | due_date_of_revival | NULL (PS never auto-revives) |
 | Intranet | ocms_suspended_notice | officer_authorising_suspension | 'SYSTEM' for auto-suspension |
-| Intranet | ocms_suspended_notice | ins_user_id | Audit user: 'ocmsiz_app_conn' |
+| Intranet | ocms_suspended_notice | cre_user_id | Audit user: 'ocmsiz_app_conn' |
 
 **Audit User Note:** All database operations use `ocmsiz_app_conn` as the audit user for intranet database writes.
 
@@ -327,7 +356,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_suspended_notice | date_of_suspension | Must be today |
 | Intranet | ocms_suspended_notice | due_date_of_revival | Must be NULL |
 | Intranet | ocms_valid_offence_notice | notice_no | Notice number |
-| Intranet | ocms_valid_offence_notice | offence_date | Offence date for report |
+| Intranet | ocms_valid_offence_notice | notice_date_and_time | Offence date/time for report |
 | Intranet | ocms_offence_notice_owner_driver | name | Offender name |
 | Intranet | ocms_offence_notice_owner_driver | id_no | Offender ID (NRIC/FIN) |
 | Intranet | ocms_offence_notice_owner_driver | owner_driver_indicator | Must be 'H' or 'D' |
@@ -345,7 +374,7 @@ SELECT
   ond.owner_driver_indicator,
   ond.life_status,
   ond.date_of_death,
-  von.offence_date,
+  von.notice_date_and_time AS offence_date,
   sn.date_of_suspension
 FROM ocms_suspended_notice sn
 JOIN ocms_valid_offence_notice von
@@ -354,7 +383,7 @@ JOIN ocms_offence_notice_owner_driver ond
   ON von.notice_no = ond.notice_no
 WHERE sn.suspension_type = 'PS'
   AND sn.reason_of_suspension = 'RP2'
-  AND TRUNC(sn.date_of_suspension) = TRUNC(SYSDATE)
+  AND CAST(sn.date_of_suspension AS DATE) = CAST(GETDATE() AS DATE)
   AND sn.due_date_of_revival IS NULL
   AND ond.owner_driver_indicator IN ('H', 'D')
   AND ond.offender_indicator = 'Y'
@@ -373,7 +402,7 @@ WHERE sn.suspension_type = 'PS'
 | Type | ond.owner_driver_indicator | H (Hirer) or D (Driver) |
 | Date of Death | ond.date_of_death | Date of death |
 | Suspension Date | sn.date_of_suspension | Date PS-RP2 was applied |
-| Offence Date | von.offence_date | Original offence date |
+| Offence Date | von.notice_date_and_time | Original offence date/time |
 
 ---
 
@@ -439,8 +468,8 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Source | OCMS Staff Portal (Manual action by OIC) |
 | Header | `{ "Authorization": "Bearer [token]", "Content-Type": "application/json" }` |
 | Payload | `{ "noticeNo": "A12345678X", "revivalReason": "Redirect to correct offender", "officerAuthorisingRevival": "OIC001" }` |
-| Response | `{ "appCode": 0, "appMessage": "PS Revival successful", "noticeNo": "A12345678X" }` |
-| Response Failure | `{ "appCode": 4001, "appMessage": "Notice does not have active PS-RIP/RP2" }` |
+| Response | `{ "data": { "appCode": "OCMS-2000", "message": "PS Revival successful" }, "noticeNo": "A12345678X" }` |
+| Response Failure | `{ "data": { "appCode": "OCMS-4001", "message": "Notice does not have active PS-RIP/RP2" } }` |
 
 #### Request Parameters
 
@@ -464,8 +493,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ```json
 {
-  "appCode": 0,
-  "appMessage": "PS Revival successful",
+  "data": {
+    "appCode": "OCMS-2000",
+    "message": "PS Revival successful"
+  },
   "noticeNo": "A12345678X"
 }
 ```
@@ -474,8 +505,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ```json
 {
-  "appCode": 4001,
-  "appMessage": "Notice does not have active PS-RIP/RP2"
+  "data": {
+    "appCode": "OCMS-4001",
+    "message": "Notice does not have active PS-RIP/RP2"
+  }
 }
 ```
 
@@ -495,7 +528,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_valid_offence_notice | suspension_type | Set to NULL after revival |
 | Intranet | ocms_valid_offence_notice | epr_reason_of_suspension | Set to NULL after revival |
 | Intranet | ocms_valid_offence_notice | last_processing_stage | Set to 'RD1' or 'DN1' |
-| Intranet | ocms_valid_offence_notice | current_offender_id | Updated to new offender ID |
+| Intranet | ocms_offence_notice_owner_driver | offender_indicator | Set to 'Y' for new current offender |
 | Intranet | ocms_valid_offence_notice | upd_date | Record update timestamp |
 | Intranet | ocms_valid_offence_notice | upd_user_id | Audit user: 'ocmsiz_app_conn' |
 | Intranet | ocms_offence_notice_owner_driver | (all fields) | New offender details |
