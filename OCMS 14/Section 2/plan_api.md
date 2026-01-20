@@ -273,12 +273,19 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | Method | GET |
 | Direction | OCMS → REPCCS |
 | Purpose | Get car park codes and names |
+| API Owner | REPCCS (External System) |
+
+> **Note on HTTP Method:** This API uses GET method as an **exception** to Yi Jie Guideline #8 (All APIs must use POST).
+> - **Reason:** This is an existing REPCCS external API that OCMS consumes. OCMS does not control the API design.
+> - **Risk Mitigation:** No sensitive data is passed in the request (read-only lookup).
+> - **Alternative:** If REPCCS updates their API to support POST, OCMS should migrate accordingly.
 
 #### Usage
 
 - Called during vHub notice preparation
 - Retrieves full list of car park codes
 - Used to populate location/car park name in vHub payload
+- Read-only operation (no data modification)
 
 #### Retry Logic
 
@@ -287,6 +294,8 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | 1 | Immediate |
 | 2 | 1 second |
 | 3 | 1 second |
+
+> **Yi Jie Compliant:** Retry 3 times before failing (per Guideline #13).
 
 ---
 

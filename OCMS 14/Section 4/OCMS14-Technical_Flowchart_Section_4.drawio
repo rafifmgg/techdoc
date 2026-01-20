@@ -1,5 +1,5 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.2" pages="5">
-  <diagram id="Section4_High_Level" name="Section_4_High_Level">
+  <diagram id="Section4_High_Level" name="4.2 High Level Flow">
     <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="1600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
@@ -99,7 +99,7 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="Section4_Type_OE" name="Section_4_MID_Type_O_E">
+  <diagram id="Section4_Type_OE" name="4.3 Type O and E Processing">
     <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
@@ -245,7 +245,7 @@
         <mxCell id="OE_db_susp" parent="OE_swim_api" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;INSERT ocms_suspended_notice:&lt;/b&gt;&lt;br&gt;notice_no, date_of_suspension = NOW(),&lt;br&gt;sr_no = (running number),&lt;br&gt;suspension_type = &#39;PS&#39;,&lt;br&gt;reason_of_suspension = &#39;MID&#39;,&lt;br&gt;suspension_source = &#39;OCMS&#39;,&lt;br&gt;officer_authorising_suspension = &#39;SYSTEM&#39;,&lt;br&gt;due_date_of_revival = NULL,&lt;br&gt;process_indicator = &#39;DipMidForRecheckJob&#39;" vertex="1">
           <mxGeometry height="180" width="260" x="2550" y="220" as="geometry" />
         </mxCell>
-        <mxCell id="OE_dbb_query" parent="OE_swim_api" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Double Booking Check Query:&lt;/b&gt;&lt;br&gt;SELECT * FROM ocms_valid_offence_notice&lt;br&gt;WHERE vehicle_no = :vehicleNo&lt;br&gt;AND notice_date_and_time = :noticeDateTime&lt;br&gt;AND computer_rule_code = :ruleCode&lt;br&gt;AND (parking_lot_no = :lotNo OR&lt;br&gt;     (parking_lot_no IS NULL AND :lotNo IS NULL))&lt;br&gt;AND pp_code = :ppCode" vertex="1">
+        <mxCell id="OE_dbb_query" parent="OE_swim_api" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Double Booking Check Query:&lt;/b&gt;&lt;br&gt;SELECT notice_no, vehicle_no,&lt;br&gt;notice_date_and_time, computer_rule_code,&lt;br&gt;parking_lot_no, pp_code&lt;br&gt;FROM ocms_valid_offence_notice&lt;br&gt;WHERE vehicle_no = :vehicleNo&lt;br&gt;AND notice_date_and_time = :noticeDateTime&lt;br&gt;AND computer_rule_code = :ruleCode&lt;br&gt;AND (parking_lot_no = :lotNo OR&lt;br&gt;     (parking_lot_no IS NULL AND :lotNo IS NULL))&lt;br&gt;AND pp_code = :ppCode" vertex="1">
           <mxGeometry height="160" width="280" x="120" y="210" as="geometry" />
         </mxCell>
         <mxCell id="OE_dbb_edge" edge="1" parent="OE_swim_api" source="OE_dup_check" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="OE_dbb_query">
@@ -281,7 +281,7 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="Section4_AN_Subflow" name="Section_4_MID_AN_Subflow">
+  <diagram id="Section4_AN_Subflow" name="4.4 AN Sub-flow">
     <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3500" pageHeight="1400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
@@ -354,7 +354,7 @@
         <mxCell id="AN_query_box" parent="AN_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;SELECT ocms_valid_offence_notice:&lt;/b&gt;&lt;br&gt;notice_no, vehicle_no, an_flag,&lt;br&gt;last_processing_stage, next_processing_stage,&lt;br&gt;next_processing_date, suspension_type,&lt;br&gt;epr_reason_of_suspension&lt;br&gt;&lt;br&gt;&lt;b&gt;WHERE:&lt;/b&gt;&lt;br&gt;vehicle_registration_type = &#39;I&#39;&lt;br&gt;AND an_flag = &#39;Y&#39;&lt;br&gt;AND last_processing_stage = &#39;NPA&#39;&lt;br&gt;AND next_processing_stage = &#39;RD1&#39;&lt;br&gt;AND next_processing_date &amp;lt;= CURRENT_DATE&lt;br&gt;AND suspension_type IS NULL&lt;br&gt;AND epr_reason_of_suspension IS NULL" vertex="1">
           <mxGeometry height="260" width="280" x="140" y="210" as="geometry" />
         </mxCell>
-        <mxCell id="AN_update_box" parent="AN_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;UPDATE ocms_valid_offence_notice:&lt;/b&gt;&lt;br&gt;SET suspension_type = &#39;PS&#39;,&lt;br&gt;    epr_reason_of_suspension = &#39;ANS&#39;,&lt;br&gt;    epr_date_of_suspension = NOW(),&lt;br&gt;    last_processing_stage = &#39;RD1&#39;,&lt;br&gt;    upd_date = NOW(), upd_user_id = &#39;SYSTEM&#39;&lt;br&gt;&lt;br&gt;&lt;b&gt;INSERT ocms_suspended_notice:&lt;/b&gt;&lt;br&gt;notice_no, date_of_suspension = NOW(),&lt;br&gt;sr_no, suspension_type = &#39;PS&#39;,&lt;br&gt;reason_of_suspension = &#39;ANS&#39;,&lt;br&gt;suspension_source = &#39;OCMS&#39;,&lt;br&gt;officer_authorising_suspension = &#39;SYSTEM&#39;,&lt;br&gt;process_indicator = &#39;ANLetterGenerationJob&#39;" vertex="1">
+        <mxCell id="AN_update_box" parent="AN_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;UPDATE ocms_valid_offence_notice:&lt;/b&gt;&lt;br&gt;SET suspension_type = &#39;PS&#39;,&lt;br&gt;    epr_reason_of_suspension = &#39;ANS&#39;,&lt;br&gt;    epr_date_of_suspension = NOW(),&lt;br&gt;    last_processing_stage = &#39;RD1&#39;,&lt;br&gt;    upd_date = NOW(), upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;br&gt;&lt;br&gt;&lt;b&gt;INSERT ocms_suspended_notice:&lt;/b&gt;&lt;br&gt;notice_no, date_of_suspension = NOW(),&lt;br&gt;sr_no, suspension_type = &#39;PS&#39;,&lt;br&gt;reason_of_suspension = &#39;ANS&#39;,&lt;br&gt;suspension_source = &#39;OCMS&#39;,&lt;br&gt;officer_authorising_suspension = &#39;SYSTEM&#39;,&lt;br&gt;process_indicator = &#39;ANLetterGenerationJob&#39;" vertex="1">
           <mxGeometry height="260" width="280" x="1102" y="210" as="geometry" />
         </mxCell>
         <mxCell id="AN_swim_ext" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;startSize=30;" value="External System (TOPPAN)" vertex="1">
@@ -369,7 +369,7 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="Section4_Furnish" name="Section_4_MID_Furnish_Subflow">
+  <diagram id="Section4_Furnish" name="4.5 Furnish Sub-flow">
     <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="1600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
@@ -488,7 +488,7 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="Section4_PS_MID" name="Section_4_MID_PS_Suspension">
+  <diagram id="Section4_PS_MID" name="4.6 PS-MID Suspension">
     <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3500" pageHeight="1400" math="0" shadow="0">
       <root>
         <mxCell id="0" />
@@ -565,13 +565,13 @@
         <mxCell id="PS_query_box" parent="PS_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;SELECT ocms_valid_offence_notice:&lt;/b&gt;&lt;br&gt;notice_no, vehicle_no,&lt;br&gt;vehicle_registration_type,&lt;br&gt;last_processing_stage, next_processing_stage,&lt;br&gt;suspension_type, crs_reason_of_suspension&lt;br&gt;&lt;br&gt;&lt;b&gt;WHERE:&lt;/b&gt;&lt;br&gt;vehicle_registration_type = &#39;I&#39;&lt;br&gt;AND crs_reason_of_suspension IS NULL&lt;br&gt;AND last_processing_stage IN (&#39;RD2&#39;, &#39;DN2&#39;)&lt;br&gt;AND next_processing_stage IN (&#39;RR3&#39;, &#39;DR3&#39;)" vertex="1">
           <mxGeometry height="220" width="280" x="140" y="200" as="geometry" />
         </mxCell>
-        <mxCell id="PS_von_box" parent="PS_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;UPDATE ocms_valid_offence_notice:&lt;/b&gt;&lt;br&gt;SET suspension_type = &#39;PS&#39;,&lt;br&gt;    epr_reason_of_suspension = &#39;MID&#39;,&lt;br&gt;    epr_date_of_suspension = NOW(),&lt;br&gt;    upd_date = NOW(),&lt;br&gt;    upd_user_id = &#39;SYSTEM&#39;&lt;br&gt;&lt;br&gt;&lt;b&gt;WHERE:&lt;/b&gt;&lt;br&gt;notice_no = :noticeNo" vertex="1">
+        <mxCell id="PS_von_box" parent="PS_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;UPDATE ocms_valid_offence_notice:&lt;/b&gt;&lt;br&gt;SET suspension_type = &#39;PS&#39;,&lt;br&gt;    epr_reason_of_suspension = &#39;MID&#39;,&lt;br&gt;    epr_date_of_suspension = NOW(),&lt;br&gt;    upd_date = NOW(),&lt;br&gt;    upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;br&gt;&lt;br&gt;&lt;b&gt;WHERE:&lt;/b&gt;&lt;br&gt;notice_no = :noticeNo" vertex="1">
           <mxGeometry height="180" width="260" x="760" y="200" as="geometry" />
         </mxCell>
-        <mxCell id="PS_susp_box" parent="PS_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;INSERT ocms_suspended_notice:&lt;/b&gt;&lt;br&gt;notice_no (PK),&lt;br&gt;date_of_suspension = NOW() (PK),&lt;br&gt;sr_no = (running number) (PK),&lt;br&gt;suspension_type = &#39;PS&#39;,&lt;br&gt;reason_of_suspension = &#39;MID&#39;,&lt;br&gt;suspension_source = &#39;OCMS&#39;,&lt;br&gt;officer_authorising_suspension = &#39;SYSTEM&#39;,&lt;br&gt;due_date_of_revival = NULL (Permanent),&lt;br&gt;suspension_remarks = NULL,&lt;br&gt;process_indicator = &#39;DipMidForRecheckJob&#39;,&lt;br&gt;cre_date = NOW(), cre_user_id = &#39;SYSTEM&#39;" vertex="1">
+        <mxCell id="PS_susp_box" parent="PS_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;INSERT ocms_suspended_notice:&lt;/b&gt;&lt;br&gt;notice_no (PK),&lt;br&gt;date_of_suspension = NOW() (PK),&lt;br&gt;sr_no = (running number) (PK),&lt;br&gt;suspension_type = &#39;PS&#39;,&lt;br&gt;reason_of_suspension = &#39;MID&#39;,&lt;br&gt;suspension_source = &#39;OCMS&#39;,&lt;br&gt;officer_authorising_suspension = &#39;SYSTEM&#39;,&lt;br&gt;due_date_of_revival = NULL (Permanent),&lt;br&gt;suspension_remarks = NULL,&lt;br&gt;process_indicator = &#39;DipMidForRecheckJob&#39;,&lt;br&gt;cre_date = NOW(), cre_user_id = &#39;ocmsiz_app_conn&#39;" vertex="1">
           <mxGeometry height="240" width="260" x="1330" y="200" as="geometry" />
         </mxCell>
-        <mxCell id="PS_evon_box" parent="PS_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;UPDATE eocms_valid_offence_notice:&lt;/b&gt;&lt;br&gt;(Internet DB - Sync from Intranet)&lt;br&gt;&lt;br&gt;SET suspension_type = &#39;PS&#39;,&lt;br&gt;    epr_reason_of_suspension = &#39;MID&#39;,&lt;br&gt;    epr_date_of_suspension = NOW(),&lt;br&gt;    is_sync = &#39;N&#39;,&lt;br&gt;    upd_date = NOW(),&lt;br&gt;    upd_user_id = &#39;SYSTEM&#39;" vertex="1">
+        <mxCell id="PS_evon_box" parent="PS_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;UPDATE eocms_valid_offence_notice:&lt;/b&gt;&lt;br&gt;(Internet DB - Sync from Intranet)&lt;br&gt;&lt;br&gt;SET suspension_type = &#39;PS&#39;,&lt;br&gt;    epr_reason_of_suspension = &#39;MID&#39;,&lt;br&gt;    epr_date_of_suspension = NOW(),&lt;br&gt;    is_sync = &#39;N&#39;,&lt;br&gt;    upd_date = NOW(),&lt;br&gt;    upd_user_id = &#39;ocmsiz_app_conn&#39;" vertex="1">
           <mxGeometry height="180" width="260" x="1045" y="200" as="geometry" />
         </mxCell>
         <mxCell id="PS_info" parent="PS_swim_cron" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;PS-MID Suspension Rules:&lt;/b&gt;&lt;br&gt;• Payment Allowed: Yes (eService/AXS)&lt;br&gt;• Furnish Allowed: No&lt;br&gt;• Revival Date: NULL (Permanent)&lt;br&gt;• Court Escalation: Blocked" vertex="1">

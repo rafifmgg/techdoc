@@ -178,7 +178,10 @@ THEN return "I" (Military)
 #### Query Criteria for AN Letter Generation
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       an_flag, last_processing_stage, next_processing_stage,
+       next_processing_date, offence_notice_type
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'I'
   AND an_flag = 'Y'
   AND last_processing_stage = 'NPA'
@@ -307,7 +310,10 @@ WHERE vehicle_registration_type = 'I'
 #### Query for PS-MID Application
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage,
+       suspension_type, crs_reason_of_suspension
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'I'
   AND crs_reason_of_suspension IS NULL
   AND last_processing_stage IN ('RD2', 'DN2')
@@ -345,7 +351,10 @@ WHERE vehicle_registration_type = 'I'
 #### Query Criteria
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       last_processing_stage, next_processing_stage,
+       suspension_type, epr_reason_of_suspension
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type IN ('D', 'I', 'F')
   AND last_processing_stage IN ('RD2', 'DN2')
   AND suspension_type IS NULL

@@ -19,6 +19,8 @@ refer to FD instead of duplicating content.
 | --- | --- | --- | --- |
 | v1.0 | Claude | 15/01/2026 | Document Initiation - Section 4 |
 | v1.1 | Claude | 18/01/2026 | Updated queries and database operations based on data dictionary |
+| v1.2 | Claude | 19/01/2026 | Yi Jie Review Fixes: (1) Replaced SELECT * with specific fields, (2) Added API response format standards, (3) Added eligibility scenarios by source, (4) Fixed flowchart references, (5) Added sync flag documentation, (6) Clarified batch job logging approach, (7) Added push mechanism details, (8) Documented sequential/parallel error flow |
+| v1.3 | Claude | 19/01/2026 | Data Dictionary Alignment: (1) Fixed table name ocms_offence_notice_owner_driver_addr, (2) Fixed computer_rule_code type to integer, (3) Marked sync flag fields as [NEW FIELD] for database schema |
 
 ---
 
@@ -57,10 +59,13 @@ refer to FD instead of duplicating content.
 
 ## 4.2 High Level Flow
 
-<!-- Insert flow diagram here -->
-![High Level Flow](./images/section4-high-level-flow.png)
+<!--
+FLOWCHART REFERENCE:
+File: OCMS14-Technical_Flowchart_Section_4.drawio
+Tab: 4.2 High Level Flow
+-->
 
-NOTE: Due to page size limit, the full-sized image is appended.
+> **Diagram:** Refer to `OCMS14-Technical_Flowchart_Section_4.drawio` → Tab "4.2 High Level Flow"
 
 | Step | Description | Brief Description |
 | --- | --- | --- |
@@ -95,14 +100,70 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | DataHive | FIN/company profile | Not applicable for military entity |
 | ENA | Electronic notification | Military vehicles skip ENA stage |
 
+### API Response Format Standards
+
+All internal service responses follow the standard OCMS API format:
+
+#### Success Response
+```json
+{
+  "data": {
+    "appCode": "OCMS-2000",
+    "message": "Notice created successfully"
+  }
+}
+```
+
+#### Error Response
+```json
+{
+  "data": {
+    "appCode": "OCMS-5001",
+    "message": "Duplicate notice number detected"
+  }
+}
+```
+
+#### List Response (with Pagination)
+```json
+{
+  "total": 150,
+  "limit": 10,
+  "skip": 0,
+  "data": [
+    {
+      "noticeNo": "500500303J",
+      "vehicleNo": "MID2221",
+      "lastProcessingStage": "RD1"
+    }
+  ]
+}
+```
+
+#### Common App Codes for Military Vehicle Processing
+
+| App Code | Description |
+| --- | --- |
+| OCMS-2000 | Success |
+| OCMS-5001 | Duplicate notice number |
+| OCMS-5002 | Invalid vehicle number format |
+| OCMS-5003 | Missing mandatory fields |
+| OCMS-5004 | Double booking detected (PS-DBB applied) |
+| OCMS-5005 | Notice already suspended |
+| OCMS-5010 | SFTP connection failed |
+| OCMS-5011 | Letter generation failed |
+
 ---
 
 ## 4.3 Type O & E Processing Flow
 
-<!-- Insert flow diagram here -->
-![Type O & E Processing Flow](./images/section4-type-o-e-flow.png)
+<!--
+FLOWCHART REFERENCE:
+File: OCMS14-Technical_Flowchart_Section_4.drawio
+Tab: 4.3 Type O & E Processing Flow
+-->
 
-NOTE: Due to page size limit, the full-sized image is appended.
+> **Diagram:** Refer to `OCMS14-Technical_Flowchart_Section_4.drawio` → Tab "4.3 Type O & E Processing"
 
 | Step | Description | Brief Description |
 | --- | --- | --- |
@@ -182,7 +243,10 @@ All 5 conditions must match an existing notice to trigger PS-DBB:
 #### Double Booking Check Query
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, notice_date_and_time,
+       computer_rule_code, parking_lot_no, pp_code,
+       last_processing_stage, suspension_type
+FROM ocms_valid_offence_notice
 WHERE vehicle_no = :vehicleNo
   AND notice_date_and_time = :noticeDateTime
   AND computer_rule_code = :ruleCode
@@ -207,7 +271,7 @@ WHERE vehicle_no = :vehicleNo
 | DBB Check | SELECT | ocms_valid_offence_notice | Query by 5 DBB criteria |
 | Create Notice | INSERT | ocms_valid_offence_notice | Insert notice at NPA stage |
 | Create Notice | INSERT | ocms_offence_notice_owner_driver | Insert MINDEF owner details |
-| Create Notice | INSERT | ocms_offence_notice_owner_driver_address | Insert MINDEF address |
+| Create Notice | INSERT | ocms_offence_notice_owner_driver_addr | Insert MINDEF address |
 | Create Notice | INSERT | ocms_offence_notice_detail | Insert notice details |
 | Update RD1 | UPDATE | ocms_valid_offence_notice | Set last_processing_stage = 'RD1' |
 | Update RD2 | UPDATE | ocms_valid_offence_notice | Set last_processing_stage = 'RD2' |
@@ -305,9 +369,99 @@ WHERE vehicle_no = :vehicleNo
 | Intranet | ocms_valid_offence_notice | epr_reason_of_suspension | MID for military suspension |
 | Intranet | ocms_offence_notice_owner_driver | name | MINDEF (hardcoded) |
 | Intranet | ocms_offence_notice_owner_driver | id_no | T08GA0011B (hardcoded) |
-| Intranet | ocms_offence_notice_owner_driver_address | postal_code | 688248 (hardcoded) |
+| Intranet | ocms_offence_notice_owner_driver_addr | postal_code | 688248 (hardcoded) |
 | Intranet | ocms_suspended_notice | reason_of_suspension | MID / ANS / DBB / FP |
 | Internet | eocms_valid_offence_notice | - | Synced copy for eService portal |
+
+#### Sync Flag Documentation
+
+**[NEW FIELD]** The sync mechanism fields below are new fields to be added to the database schema for this feature.
+
+The sync mechanism uses flags in both Intranet and Internet databases to track synchronization status:
+
+##### Intranet Sync Flags (ocms_valid_offence_notice) [NEW FIELD]
+
+| Field | Type | Description | Values |
+| --- | --- | --- | --- |
+| sync_to_internet | varchar(1) | Mark notice for Internet sync | Y = Needs sync, N = Synced |
+| sync_timestamp | datetime2(7) | Last successful sync time | Timestamp |
+
+##### Internet Sync Flags (eocms_valid_offence_notice)
+
+| Field | Type | Description | Values |
+| --- | --- | --- | --- |
+| is_sync | varchar(1) | Mark record for Intranet sync | Y = Synced, N = Needs sync |
+| sync_timestamp | datetime2(7) | Last successful sync time | Timestamp |
+
+##### Sync Flow Logic
+
+| Direction | Trigger | Sync Flag Update |
+| --- | --- | --- |
+| Intranet → Internet | Notice created/updated | Set `sync_to_internet = 'Y'`, CRON picks up and syncs, then set `sync_to_internet = 'N'` |
+| Internet → Intranet | Furnish submitted | Set `is_sync = 'N'`, CRON picks up and syncs, then set `is_sync = 'Y'` |
+
+##### Sync Failure Handling
+
+| Scenario | Action | Flag State |
+| --- | --- | --- |
+| Sync success | Clear flag | `sync_to_internet = 'N'` or `is_sync = 'Y'` |
+| Sync failure | Keep flag, retry | Flag remains, picked up by next CRON |
+| Multiple failures | Alert OIC | Flag remains, logged for manual review |
+
+#### Push/Sync Mechanism Details
+
+This section clarifies how data is pushed/synced between Intranet and Internet zones.
+
+##### Intranet → Internet Sync (Notice Data)
+
+| Attribute | Value |
+| --- | --- |
+| Mechanism | **CRON Job + Direct Database Write** |
+| Job Name | NoticeSyncJob |
+| Frequency | Every 5 minutes |
+| Connection | Intranet DB reads from ocms_valid_offence_notice, writes to eocms_valid_offence_notice |
+| Authentication | Database connection credentials (not API) |
+
+**Process Flow:**
+1. CRON job runs on Intranet server
+2. Query records where `sync_to_internet = 'Y'`
+3. Direct INSERT/UPDATE to Internet database (eocms_valid_offence_notice)
+4. On success: Set `sync_to_internet = 'N'`
+5. On failure: Log error, retry in next cycle
+
+##### Internet → Intranet Sync (Furnish Data)
+
+| Attribute | Value |
+| --- | --- |
+| Mechanism | **CRON Job + Direct Database Read** |
+| Job Name | FurnishSyncJob |
+| Frequency | Every 5 minutes |
+| Connection | Intranet DB reads from eocms_furnish_application, writes to ocms_furnish_application |
+| Authentication | Database connection credentials (not API) |
+
+**Process Flow:**
+1. CRON job runs on Intranet server
+2. Query records where `is_sync = 'N'` from Internet database
+3. Direct INSERT to Intranet database (ocms_furnish_application)
+4. On success: Update Internet record `is_sync = 'Y'`
+5. On failure: Log error, retry in next cycle
+
+##### Why Direct Database (Not API)?
+
+| Reason | Description |
+| --- | --- |
+| Performance | Direct DB is faster for bulk sync operations |
+| Simplicity | No API layer overhead |
+| Security | Database connection is within controlled network |
+| Reliability | No HTTP timeout issues |
+
+##### Retry Mechanism
+
+| Scenario | Retry Count | Action After Max Retry |
+| --- | --- | --- |
+| Database connection failure | 3 times | Log error, send email alert, wait for next CRON cycle |
+| Record insert/update failure | 3 times per record | Skip record, log error, continue with next record |
+| Timeout | 1 time | Abort current batch, retry full batch in next cycle |
 
 #### Input Parameters
 
@@ -317,7 +471,7 @@ WHERE vehicle_no = :vehicleNo
 | vehicle_no | String | Vehicle number (MID/MINDEF pattern) | Raw offence data |
 | vehicle_registration_type | String | Must be 'I' for this flow | Detection result |
 | offence_notice_type | String | O (On-street), E (ERP), U (UPL) | Raw offence data |
-| computer_rule_code | String | Offence rule code | Raw offence data |
+| computer_rule_code | integer | Offence rule code | Raw offence data |
 | pp_code | String | Car park code | Raw offence data |
 | parking_lot_no | String | Parking lot number (optional) | Raw offence data |
 | notice_date_and_time | DateTime | Date and time of offence | Raw offence data |
@@ -340,6 +494,42 @@ WHERE vehicle_no = :vehicleNo
 | PS-ANS | suspension_type='PS', reason='ANS' | Permanent Suspension - Advisory Notice |
 | PS-DBB | suspension_type='PS', reason='DBB' | Permanent Suspension - Double Booking |
 | PS-FP | suspension_type='PS', reason='FP' | Permanent Suspension - Full Payment |
+
+#### Eligibility Scenarios by Source
+
+The following matrix defines which actions are allowed from different system sources for Military Vehicle notices:
+
+##### Action Permissions by Source
+
+| Action | OCMS Staff Portal | PLUS Staff Portal | eService Portal | Backend CRON |
+| --- | --- | --- | --- | --- |
+| View Notice | ✅ Yes | ✅ Yes (Read-only) | ✅ Yes (Own notice) | N/A |
+| Create Notice | ✅ Yes | ❌ No | ❌ No | ✅ Yes (Batch) |
+| Update Notice | ✅ Yes | ❌ No | ❌ No | ✅ Yes (Stage) |
+| Make Payment | ✅ Yes | ❌ No | ✅ Yes (AXS/eService) | ❌ No |
+| Furnish Driver/Hirer | ✅ Yes | ❌ No | ✅ Yes | ❌ No |
+| Apply PS-MID | ✅ Yes (Manual) | ❌ No | ❌ No | ✅ Yes (Auto) |
+| Revive PS-MID | ✅ Yes (OIC only) | ❌ No | ❌ No | ❌ No |
+| Apply TS on PS-MID | ✅ Yes | ❌ No | ❌ No | ❌ No |
+| Generate Letters | ✅ Yes (Trigger) | ❌ No | ❌ No | ✅ Yes (Scheduled) |
+
+##### Validation Rules by Source
+
+| Source | Pre-validation | Post-validation |
+| --- | --- | --- |
+| **OCMS Staff Portal** | User role check, notice ownership | Audit trail logged with staff ID |
+| **PLUS Staff Portal** | Read-only access, no write operations | N/A |
+| **eService Portal** | ID verification, notice must belong to user | Payment confirmation, receipt generation |
+| **Backend CRON** | Job schedule validation, lock check | Batch completion status, error logging |
+
+##### Source-Specific Implementation Notes
+
+| Source | Zone | Database User | Notes |
+| --- | --- | --- | --- |
+| OCMS Staff Portal | Intranet | ocmsiz_app_conn | Full access for authorized staff |
+| PLUS Staff Portal | Intranet | ocmsiz_app_conn | View-only, query via API |
+| eService Portal | Internet | ocmsez_app_conn | Public access, limited actions |
+| Backend CRON | Intranet | ocmsiz_app_conn | System automation |
 
 ---
 
@@ -373,14 +563,102 @@ WHERE vehicle_no = :vehicleNo
 | MID-DBB-001 | All 5 DBB criteria match existing notice | Apply PS-DBB, stop processing |
 | MID-LTR-001 | SFTP transfer fails | Queue for retry in next CRON cycle |
 
+#### Sequential vs Parallel Processing
+
+This section clarifies whether database operations are sequential or parallel, and what happens when one operation fails.
+
+##### Notice Creation - Sequential Processing (Transaction)
+
+All operations during notice creation are **SEQUENTIAL** within a single database transaction:
+
+| Step | Operation | Table | If Fails |
+| --- | --- | --- | --- |
+| 1 | INSERT | ocms_valid_offence_notice (VON) | **Rollback all**, return error |
+| 2 | INSERT | ocms_offence_notice_owner_driver (ONOD) | **Rollback all**, return error |
+| 3 | INSERT | ocms_offence_notice_owner_driver_addr (ONOD_ADDR) | **Rollback all**, return error |
+| 4 | INSERT | ocms_offence_notice_detail (OND) | **Rollback all**, return error |
+
+**Important:**
+- Parent table (VON) must be inserted first
+- If ONOD insert fails, VON is rolled back
+- If ONOD_ADDR insert fails, both VON and ONOD are rolled back
+- All or nothing - either all inserts succeed or all fail
+
+##### Stage Update - Sequential Processing
+
+Stage updates are also **SEQUENTIAL**:
+
+| Step | Operation | Table | If Fails |
+| --- | --- | --- | --- |
+| 1 | UPDATE | ocms_valid_offence_notice (VON) | Rollback, log error, retry |
+| 2 | UPDATE | eocms_valid_offence_notice (eVON) | Log error, mark for sync retry |
+
+**Note:** eVON update failure does NOT rollback VON update. Sync is eventually consistent.
+
+##### PS-MID Application - Sequential Processing (Transaction)
+
+| Step | Operation | Table | If Fails |
+| --- | --- | --- | --- |
+| 1 | UPDATE | ocms_valid_offence_notice (VON) | **Rollback all**, log error |
+| 2 | INSERT | ocms_suspended_notice (SN) | **Rollback all**, log error |
+| 3 | UPDATE | eocms_valid_offence_notice (eVON) | Log error, mark for sync |
+
+**Note:** Steps 1 and 2 are in same transaction. Step 3 (Internet sync) is separate and eventually consistent.
+
+##### Batch Processing - Per-Record Processing
+
+CRON jobs process records **INDEPENDENTLY** (not in single transaction):
+
+| Scenario | Behavior |
+| --- | --- |
+| Record 1 succeeds | Continue to Record 2 |
+| Record 2 fails | Log error, **continue** to Record 3 |
+| Record 3 succeeds | Continue to Record 4 |
+
+**Important:** One record failure does NOT stop processing of other records.
+
+##### Error Response Summary
+
+| Operation Type | Processing | On Failure |
+| --- | --- | --- |
+| Notice Creation | Sequential (single transaction) | Rollback all, return error |
+| Stage Update | Sequential | Rollback Intranet, sync later |
+| PS-MID Apply | Sequential (VON+SN transaction) | Rollback VON+SN, sync later |
+| CRON Batch | Per-record independent | Log error, continue next record |
+| Sync Job | Per-record independent | Flag for retry, continue next |
+
+##### Error Response Format
+
+When an error occurs, return standard error response:
+
+```json
+{
+  "data": {
+    "appCode": "OCMS-5001",
+    "message": "Notice creation failed: Duplicate notice number detected"
+  }
+}
+```
+
+| App Code | Error Type | Recovery Action |
+| --- | --- | --- |
+| OCMS-5001 | Duplicate notice | Check existing notice, no retry |
+| OCMS-5002 | Invalid data | Fix input data, retry |
+| OCMS-5003 | DB error | Auto-retry 3 times, then manual |
+| OCMS-5004 | DBB detected | No retry (PS-DBB applied) |
+| OCMS-5010 | SFTP error | Auto-retry in next CRON cycle |
+
 ---
 
 ## 4.4 Advisory Notice (AN) Sub-flow
 
-<!-- Insert flow diagram here -->
-![Advisory Notice Sub-flow](./images/section4-an-subflow.png)
+<!--
+FLOWCHART REFERENCE:
+File: OCMS14-Technical_Flowchart_Section_4.drawio
+Tab: 4.4 Advisory Notice Sub-flow
+-->
 
-NOTE: Due to page size limit, the full-sized image is appended.
+> **Diagram:** Refer to `OCMS14-Technical_Flowchart_Section_4.drawio` → Tab "4.4 AN Sub-flow"
 
 | Step | Description | Brief Description |
 | --- | --- | --- |
@@ -409,7 +687,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 ### AN Query
 
 ```sql
-SELECT * FROM ocms_valid_offence_notice
+SELECT notice_no, vehicle_no, vehicle_registration_type,
+       an_flag, last_processing_stage, next_processing_stage,
+       next_processing_date, offence_notice_type
+FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'I'
   AND an_flag = 'Y'
   AND last_processing_stage = 'NPA'
@@ -459,10 +740,13 @@ WHERE notice_no = :noticeNo
 
 ## 4.5 Furnish Driver/Hirer Sub-flow
 
-<!-- Insert flow diagram here -->
-![Furnish Driver/Hirer Sub-flow](./images/section4-furnish-subflow.png)
+<!--
+FLOWCHART REFERENCE:
+File: OCMS14-Technical_Flowchart_Section_4.drawio
+Tab: 4.5 Furnish Driver/Hirer Sub-flow
+-->
 
-NOTE: Due to page size limit, the full-sized image is appended.
+> **Diagram:** Refer to `OCMS14-Technical_Flowchart_Section_4.drawio` → Tab "4.5 Furnish Sub-flow"
 
 | Step | Description | Brief Description |
 | --- | --- | --- |
@@ -593,10 +877,13 @@ WHERE notice_no = :noticeNo
 
 ## 4.6 PS-MID Suspension Flow
 
-<!-- Insert flow diagram here -->
-![PS-MID Suspension Flow](./images/section4-ps-mid-flow.png)
+<!--
+FLOWCHART REFERENCE:
+File: OCMS14-Technical_Flowchart_Section_4.drawio
+Tab: 4.6 PS-MID Suspension Flow
+-->
 
-NOTE: Due to page size limit, the full-sized image is appended.
+> **Diagram:** Refer to `OCMS14-Technical_Flowchart_Section_4.drawio` → Tab "4.6 PS-MID Suspension"
 
 | Step | Description | Brief Description |
 | --- | --- | --- |
@@ -775,6 +1062,50 @@ WHERE vehicle_registration_type IN ('D', 'I', 'F')
 | ANLetterGenerationJob | End of day | Generate AN Letters |
 | SuspendMIDNoticesJob | End of RD2/DN2 | Apply PS-MID suspension |
 | FurnishSyncJob | Scheduled | Sync furnish data Internet → Intranet |
+
+#### CRON Job Logging Approach
+
+Per Yi Jie guidelines, logging approach differs by job frequency:
+
+| Job Name | Frequency | Log To | Reason |
+| --- | --- | --- | --- |
+| PrepareForRD1Job | Daily | Batch Job Table | Daily job, track completion status |
+| PrepareForRD2Job | Daily | Batch Job Table | Daily job, track completion status |
+| PrepareForDN1Job | Daily | Batch Job Table | Daily job, track completion status |
+| PrepareForDN2Job | Daily | Batch Job Table | Daily job, track completion status |
+| DipMidForRecheckJob | Daily | Batch Job Table | Daily job, track completion status |
+| ANLetterGenerationJob | Daily | Batch Job Table | Daily job, track completion status |
+| SuspendMIDNoticesJob | Daily | Batch Job Table | Daily job, track completion status |
+| **FurnishSyncJob** | **Frequent** | **Application Logs Only** | **High frequency sync, no batch table logging** |
+| **NoticeSyncJob** | **Frequent** | **Application Logs Only** | **High frequency sync, no batch table logging** |
+
+##### Batch Job Table Logging
+
+For daily jobs, record to `ocms_batch_job_log`:
+
+| Field | Description |
+| --- | --- |
+| job_name | Shedlock job name |
+| start_time | Job start timestamp (record immediately when job starts) |
+| end_time | Job completion timestamp |
+| status | SUCCESS / FAILED / RUNNING |
+| records_processed | Count of records processed |
+| error_message | Error details if failed |
+
+**Important:** Record `start_time` immediately when job starts to identify:
+- Jobs that started but didn't end (timeout/stuck)
+- Jobs that didn't start at all
+- Long running jobs
+
+##### Application Log Only (Frequent Sync Jobs)
+
+For high-frequency sync jobs (FurnishSyncJob, NoticeSyncJob):
+- Log to application logs only (not batch table)
+- Log format: `[TIMESTAMP] [JOB_NAME] [LEVEL] [MESSAGE]`
+- Log error messages for failed sync attempts
+- No batch table entry created
+
+**Archival:** Batch job table records are deleted after 3 months.
 
 ### E. Reference Documents
 

@@ -167,13 +167,17 @@ THEN ALLOW (no PS revival, no notification)
 | C031 | Updated Outstanding FOR | same as C030 + last_update_date | C030 AND (pp_code OR composition_amount OR suspension changed in last 24h) |
 | C032 | Revived Outstanding | same as C030 + previous_status | Previously sent as 'C' or 'S', now revived and unpaid |
 
-```
--- Outstanding Notice Query
-SELECT * FROM ocms_valid_offence_notice
+```sql
+-- Outstanding Notice Query (Field names per Data Dictionary)
+SELECT notice_no, vehicle_no, notice_date_and_time, computer_rule_code,
+       pp_code, vehicle_category, composition_amount, administration_fee,
+       suspension_type, epr_reason_of_suspension, amount_paid,
+       vhub_sent_flag  -- [NEW FIELD] proposed for OCMS 14
+FROM ocms_valid_offence_notice
 WHERE suspension_type = 'PS'
 AND epr_reason_of_suspension = 'FOR'
 AND amount_paid = 0
-AND offence_date_and_time <= DATEADD(day, -@FOR_days, GETDATE())
+AND notice_date_and_time <= DATEADD(day, -@FOR_days, GETDATE())
 ```
 
 ---
@@ -184,9 +188,13 @@ AND offence_date_and_time <= DATEADD(day, -@FOR_days, GETDATE())
 | --- | --- | --- | --- |
 | C040 | Newly Paid FOR | amount_paid, payment_date | amount_paid > 0 AND payment_date >= (today - 24 hours) AND previously_sent_to_vhub = 'Y' |
 
-```
--- Settled Notice Query
-SELECT * FROM ocms_valid_offence_notice
+```sql
+-- Settled Notice Query (Field names per Data Dictionary)
+SELECT notice_no, vehicle_no, notice_date_and_time, computer_rule_code,
+       pp_code, vehicle_category, composition_amount, administration_fee,
+       amount_paid, payment_date,
+       vhub_sent_flag  -- [NEW FIELD] proposed for OCMS 14
+FROM ocms_valid_offence_notice
 WHERE epr_reason_of_suspension = 'FOR'
 AND amount_paid > 0
 AND payment_date >= DATEADD(hour, -24, GETDATE())
@@ -202,17 +210,19 @@ AND payment_date >= DATEADD(hour, -24, GETDATE())
 | C051 | PS Applied Today | epr_reason_of_suspension, suspension_date | epr_reason_of_suspension != 'FOR' AND suspension_date = today AND previously_sent_to_vhub = 'Y' |
 | C052 | Scheduled for Archive | archive_date | archive_date = tomorrow AND previously_sent_to_vhub = 'Y' |
 
-```
--- Cancelled Notice Query (TS/PS today)
-SELECT * FROM ocms_valid_offence_notice
+```sql
+-- Cancelled Notice Query (TS/PS today) - Field names per Data Dictionary
+SELECT notice_no, vehicle_no, notice_date_and_time, computer_rule_code,
+       pp_code, vehicle_category, composition_amount, administration_fee,
+       suspension_type, epr_reason_of_suspension, epr_date_of_suspension,
+       vhub_sent_flag  -- [NEW FIELD] proposed for OCMS 14
+FROM ocms_valid_offence_notice
 WHERE (
     (suspension_type = 'TS' AND CAST(epr_date_of_suspension AS DATE) = CAST(GETDATE() AS DATE))
     OR
     (suspension_type = 'PS' AND epr_reason_of_suspension != 'FOR' AND CAST(epr_date_of_suspension AS DATE) = CAST(GETDATE() AS DATE))
-    OR
-    (CAST(archive_date AS DATE) = CAST(DATEADD(day, 1, GETDATE()) AS DATE))
 )
-AND vhub_sent_flag = 'Y'
+AND vhub_sent_flag = 'Y'  -- [NEW FIELD]
 ```
 
 ---
@@ -229,13 +239,14 @@ AND vhub_sent_flag = 'Y'
 | --- | --- | --- |
 | C060 | Eligible for REPCCS/CES | suspension_type = 'PS' AND epr_reason_of_suspension = 'FOR' AND amount_paid = 0 AND offence_date_and_time <= (current_date - FOR_days) |
 
-```
--- Listed Vehicle Query
-SELECT * FROM ocms_valid_offence_notice
+```sql
+-- Listed Vehicle Query (Field names per Data Dictionary)
+SELECT vehicle_no, notice_date_and_time, computer_rule_code, pp_code, composition_amount
+FROM ocms_valid_offence_notice
 WHERE suspension_type = 'PS'
 AND epr_reason_of_suspension = 'FOR'
 AND amount_paid = 0
-AND offence_date_and_time <= DATEADD(day, -@FOR_days, GETDATE())
+AND notice_date_and_time <= DATEADD(day, -@FOR_days, GETDATE())
 ```
 
 ---
@@ -252,14 +263,16 @@ AND offence_date_and_time <= DATEADD(day, -@FOR_days, GETDATE())
 | --- | --- | --- | --- |
 | C070 | Eligible for Admin Fee | suspension_type, epr_reason_of_suspension, amount_paid, offence_date, admin_fee_applied | suspension_type = 'PS' AND epr_reason_of_suspension = 'FOR' AND amount_paid = 0 AND offence_date <= (today - FOD_days) AND admin_fee_applied = 'N' |
 
-```
--- Admin Fee Eligibility Query
-SELECT * FROM ocms_valid_offence_notice
+```sql
+-- Admin Fee Eligibility Query (Field names per Data Dictionary)
+SELECT notice_no, composition_amount, administration_fee, amount_paid,
+       notice_date_and_time, suspension_type, epr_reason_of_suspension
+FROM ocms_valid_offence_notice
 WHERE suspension_type = 'PS'
 AND epr_reason_of_suspension = 'FOR'
 AND amount_paid = 0
-AND offence_date_and_time <= DATEADD(day, -@FOD_days, GETDATE())
-AND (admin_fee IS NULL OR admin_fee = 0)
+AND notice_date_and_time <= DATEADD(day, -@FOD_days, GETDATE())
+AND (administration_fee IS NULL OR administration_fee = 0)
 ```
 
 #### Admin Fee Application

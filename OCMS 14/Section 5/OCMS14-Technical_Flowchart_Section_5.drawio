@@ -684,7 +684,7 @@
         <mxCell id="PS_x2" edge="1" parent="PS_swim_backend" source="PS_update" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="PS_db_update">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="PS_db_insert" parent="PS_swim_backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;INSERT: ocms_suspended_notice&lt;/b&gt;&lt;br&gt;&lt;br&gt;notice_no, suspension_type=&#39;PS&#39;,&lt;br&gt;reason_of_suspension=&#39;DIP&#39;,&lt;br&gt;date_of_suspension=NOW(),&lt;br&gt;suspension_source=&#39;ocmsiz_app_conn&#39;" vertex="1">
+        <mxCell id="PS_db_insert" parent="PS_swim_backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;INSERT: ocms_suspended_notice&lt;/b&gt;&lt;br&gt;&lt;br&gt;notice_no, suspension_type=&#39;PS&#39;,&lt;br&gt;reason_of_suspension=&#39;DIP&#39;,&lt;br&gt;date_of_suspension=NOW(),&lt;br&gt;suspension_source=&#39;OCMS&#39;" vertex="1">
           <mxGeometry height="130" width="220" x="890" y="350" as="geometry" />
         </mxCell>
         <mxCell id="PS_x3" edge="1" parent="PS_swim_backend" source="PS_insert" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="PS_db_insert">
@@ -705,10 +705,10 @@
         <mxCell id="PS_api_title" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontStyle=1" value="&lt;b&gt;POST /ocms/v1/suspension/apply&lt;/b&gt;" vertex="1">
           <mxGeometry height="20" width="250" x="390" y="647" as="geometry" />
         </mxCell>
-        <mxCell id="PS_api_payload" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;fontFamily=Courier New;fontSize=10;" value="&lt;b&gt;Request:&lt;/b&gt;&lt;br&gt;{&lt;br&gt;  &quot;noticeNo&quot;: &quot;A1234567890&quot;,&lt;br&gt;  &quot;suspensionType&quot;: &quot;PS&quot;,&lt;br&gt;  &quot;reasonOfSuspension&quot;: &quot;DIP&quot;,&lt;br&gt;  &quot;suspensionSource&quot;: &quot;ocmsiz_app_conn&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;&lt;b&gt;Response:&lt;/b&gt;&lt;br&gt;{ &quot;appCode&quot;: &quot;OCMS-2000&quot;, &quot;message&quot;: &quot;PS Success&quot; }" vertex="1">
+        <mxCell id="PS_api_payload" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;fontFamily=Courier New;fontSize=10;" value="&lt;b&gt;Request:&lt;/b&gt;&lt;br&gt;{&lt;br&gt;  &quot;noticeNo&quot;: &quot;A1234567890&quot;,&lt;br&gt;  &quot;suspensionType&quot;: &quot;PS&quot;,&lt;br&gt;  &quot;reasonOfSuspension&quot;: &quot;DIP&quot;,&lt;br&gt;  &quot;suspensionSource&quot;: &quot;OCMS&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;&lt;b&gt;Response:&lt;/b&gt;&lt;br&gt;{ &quot;appCode&quot;: &quot;OCMS-2000&quot;, &quot;message&quot;: &quot;PS Success&quot; }" vertex="1">
           <mxGeometry height="160" width="300" x="390" y="671" as="geometry" />
         </mxCell>
-        <mxCell id="PS_data_source" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;Data Source Attribution:&lt;/b&gt;&lt;br&gt;&lt;br&gt;• notice_no → ocms_valid_offence_notice.notice_no&lt;br&gt;• suspension_type → Constant: &#39;PS&#39;&lt;br&gt;• reason_of_suspension → Constant: &#39;DIP&#39;&lt;br&gt;• suspension_source → Constant: &#39;ocmsiz_app_conn&#39;" vertex="1">
+        <mxCell id="PS_data_source" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;Data Source Attribution:&lt;/b&gt;&lt;br&gt;&lt;br&gt;• notice_no → ocms_valid_offence_notice.notice_no&lt;br&gt;• suspension_type → Constant: &#39;PS&#39;&lt;br&gt;• reason_of_suspension → Constant: &#39;DIP&#39;&lt;br&gt;• suspension_source → Constant: &#39;OCMS&#39;" vertex="1">
           <mxGeometry height="120" width="300" x="720" y="641" as="geometry" />
         </mxCell>
       </root>
