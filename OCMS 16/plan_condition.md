@@ -101,7 +101,7 @@ ELSE return "Missing data"
 | Description | Check if notice number exists in ocms_valid_offence_notice table |
 | Trigger | After mandatory data validation passes |
 | Input | noticeNo |
-| Logic | SELECT * FROM ocms_valid_offence_notice WHERE notice_no = :noticeNo |
+| Logic | SELECT notice_no, crs_reason_of_suspension, computer_rule_code, last_processing_stage, composition_amount, suspension_type, epr_reason_of_suspension, amount_payable FROM ocms_valid_offence_notice WHERE notice_no = :noticeNo |
 | Output | Proceed to payment status check |
 | Else | Return HTTP 404 with message "Notice not found" |
 

@@ -102,6 +102,26 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Validate Request Format | OCMS checks if the API request data is complete and valid. If the request is invalid, OCMS responds to PLUS with "Invalid format" and ends the process | Format validation |
 | Check Mandatory Data | OCMS checks whether all required fields are present. If data is missing, OCMS responds to PLUS with "Missing data" and ends the process | Mandatory field check |
 | Query Notice | OCMS queries the notice by notice_no from ocms_valid_offence_notice table | Database lookup |
+
+#### Database Query for Notice Lookup
+
+```sql
+SELECT
+  notice_no,
+  crs_reason_of_suspension,
+  computer_rule_code,
+  last_processing_stage,
+  composition_amount,
+  suspension_type,
+  epr_reason_of_suspension,
+  amount_payable,
+  epr_date_of_suspension,
+  due_date_of_revival
+FROM ocms_valid_offence_notice
+WHERE notice_no = :noticeNo
+```
+
+**Note:** Never use `SELECT *` in production code. Always specify only the fields needed for the operation.
 | Check Notice Exists | If notice is not found, OCMS responds to PLUS with "Notice not found" and ends the process | Existence check |
 | Check Already Reduced | If notice already has TS-RED status, OCMS returns "Reduction Success" (idempotent response) without making changes | Idempotency check |
 | Check Payment Status | OCMS checks the CRS Reason of Suspension field. If the value is "FP" or "PRA", the notice has been paid and OCMS responds with "Notice has been paid" | Payment validation |
@@ -151,24 +171,78 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 **Request Field Description:**
 
-| Field | Type | Required | Description |
-| --- | --- | --- | --- |
-| noticeNo | string | Yes | Notice number to be reduced |
-| amountReduced | decimal | Yes | The amount reduced from the original composition amount |
-| amountPayable | decimal | Yes | The new amount payable after reduction |
-| dateOfReduction | datetime | Yes | Date and time when reduction is applied (format: yyyy-MM-dd'T'HH:mm:ss) |
-| expiryDateOfReduction | datetime | Yes | Expiry date of the reduction offer / due date of revival |
-| reasonOfReduction | string | Yes | Reason for the reduction |
-| authorisedOfficer | string | Yes | Officer authorizing the reduction |
-| suspensionSource | string | Yes | Source system code (e.g., "005" for PLUS) |
-| remarks | string | No | Optional remarks for the reduction |
+| Field | Type | Max Length | Required | Nullable | Description |
+| --- | --- | --- | --- | --- | --- |
+| noticeNo | string | 20 | Yes | No | Notice number to be reduced (Pattern: 9 digits + 1 uppercase letter) |
+| amountReduced | decimal(10,2) | - | Yes | No | The amount reduced from the original composition amount |
+| amountPayable | decimal(10,2) | - | Yes | No | The new amount payable after reduction |
+| dateOfReduction | datetime | - | Yes | No | Date and time when reduction is applied (Format: yyyy-MM-dd'T'HH:mm:ss, Timezone: SGT) |
+| expiryDateOfReduction | datetime | - | Yes | No | Expiry date of the reduction offer / due date of revival (Format: yyyy-MM-dd'T'HH:mm:ss, Timezone: SGT) |
+| reasonOfReduction | string | 100 | Yes | No | Reason for the reduction |
+| authorisedOfficer | string | 50 | Yes | No | Officer authorizing the reduction |
+| suspensionSource | string | 10 | Yes | No | Source system code (e.g., "005" for PLUS) |
+| remarks | string | 200 | No | Yes | Optional remarks for the reduction (max 200 chars per data dictionary) |
+
+#### Date/Time Format Specification
+
+**Format:** `yyyy-MM-dd'T'HH:mm:ss`
+
+**Timezone:** All dates and times are in **Singapore Time (SGT, UTC+8)**
+
+**Examples:**
+- `2025-08-01T19:00:02` → 1 August 2025, 7:00:02 PM SGT
+- `2025-08-15T00:00:00` → 15 August 2025, 12:00:00 AM SGT
+
+**Note:** Do not include timezone offset in the timestamp string. All times are implicitly SGT.
+
+#### Authentication and Token Handling
+
+**Authentication:** Bearer token passed in Authorization header
+
+**Token Expiry Handling:**
+- If token is expired or invalid (HTTP 401 response)
+- PLUS system is responsible for refreshing the token using refresh token flow
+- PLUS should retry the request with the new token
+- Processing continues seamlessly (not stopped due to token expiry)
+
+**Token Refresh Responsibility:** PLUS system (caller)
+
+#### Retry Policy and Error Handling
+
+**PLUS System Retry Strategy:**
+
+PLUS system should implement retry logic for transient failures:
+
+| Scenario | Retry? | Strategy |
+| --- | --- | --- |
+| HTTP 500 (Internal Server Error) | Yes | 3 retries with exponential backoff |
+| HTTP 503 (Service Unavailable) | Yes | 3 retries with exponential backoff |
+| Connection Timeout | Yes | 3 retries with exponential backoff |
+| Connection Refused | Yes | 3 retries with exponential backoff |
+| HTTP 400 (Bad Request) | No | Business validation error - do not retry |
+| HTTP 404 (Not Found) | No | Notice doesn't exist - do not retry |
+| HTTP 409 (Conflict) | No | Business rule violation - do not retry |
+
+**Retry Backoff Schedule:**
+- 1st retry: Wait 1 second
+- 2nd retry: Wait 2 seconds (exponential)
+- 3rd retry: Wait 4 seconds (exponential)
+- After 3 failures: Alert PLUS operations team via email
+
+**OCMS Responsibility:**
+- OCMS API is synchronous (request-response pattern)
+- No server-side retry mechanism
+- OCMS logs all requests and errors for troubleshooting
+- OCMS returns appropriate HTTP status codes for caller to decide retry behavior
 
 **Success Response (HTTP 200):**
 
 ```json
 {
-  "appCode": "OCMS-2000",
-  "message": "Reduction Success"
+  "data": {
+    "appCode": "OCMS-2000",
+    "message": "Reduction Success"
+  }
 }
 ```
 
@@ -176,13 +250,13 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 | HTTP Status | Response | Description |
 | --- | --- | --- |
-| 400 | `{ "appCode": "OCMS-4000", "message": "Invalid format" }` | Request data is incomplete or has invalid structure |
-| 400 | `{ "appCode": "OCMS-4000", "message": "Missing data" }` | Mandatory fields are missing |
-| 404 | `{ "appCode": "OCMS-4004", "message": "Notice not found" }` | Notice number does not exist in OCMS |
-| 409 | `{ "appCode": "OCMS-4090", "message": "Notice has been paid" }` | Notice has already been fully paid |
-| 409 | `{ "appCode": "OCMS-4091", "message": "Notice is not eligible" }` | Notice does not meet eligibility criteria |
-| 500 | `{ "appCode": "OCMS-5000", "message": "Reduction fail" }` | Database update failed or internal error |
-| 503 | `{ "appCode": "OCMS-5001", "message": "System unavailable" }` | OCMS backend cannot access database |
+| 400 | `{ "data": { "appCode": "OCMS-4000", "message": "Invalid format" } }` | Request data is incomplete or has invalid structure |
+| 400 | `{ "data": { "appCode": "OCMS-4000", "message": "Missing data" } }` | Mandatory fields are missing |
+| 404 | `{ "data": { "appCode": "OCMS-4004", "message": "Notice not found" } }` | Notice number does not exist in OCMS |
+| 409 | `{ "data": { "appCode": "OCMS-4090", "message": "Notice has been paid" } }` | Notice has already been fully paid |
+| 409 | `{ "data": { "appCode": "OCMS-4091", "message": "Notice is not eligible" } }` | Notice does not meet eligibility criteria |
+| 500 | `{ "data": { "appCode": "OCMS-5000", "message": "Reduction fail" } }` | Database update failed or internal error |
+| 503 | `{ "data": { "appCode": "OCMS-5001", "message": "System unavailable" } }` | OCMS backend cannot access database |
 
 ### 2.2.2 Data Mapping
 
@@ -212,7 +286,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Intranet | ocms_reduced_offence_amount | amount_payable |
 | Intranet | ocms_reduced_offence_amount | reason_of_reduction |
 | Intranet | ocms_reduced_offence_amount | expiry_date |
-| Intranet | ocms_reduced_offence_amount | officer_authorising_reduction |
+| Intranet | ocms_reduced_offence_amount | authorised_officer |
 | Intranet | ocms_reduced_offence_amount | remarks |
 | Internet | eocms_valid_offence_notice | notice_no (WHERE clause) |
 | Internet | eocms_valid_offence_notice | suspension_type |
@@ -222,22 +296,45 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 #### Request to Database Field Mapping
 
-| Request Field | Database Field | Value/Transformation |
-| --- | --- | --- |
-| noticeNo | notice_no | Direct mapping (WHERE clause) |
-| amountPayable | amount_payable | Direct mapping |
-| dateOfReduction | epr_date_of_suspension, date_of_suspension, date_of_reduction | Direct mapping |
-| expiryDateOfReduction | due_date_of_revival, expiry_date | Direct mapping |
-| reasonOfReduction | reason_of_reduction | Direct mapping |
-| authorisedOfficer | officer_authorising_suspension, officer_authorising_reduction | Direct mapping |
-| suspensionSource | suspension_source | Direct mapping |
-| amountReduced | amount_reduced | Direct mapping |
-| remarks | suspension_remarks, remarks | Direct mapping |
-| - | suspension_type | Fixed: "TS" |
-| - | epr_reason_of_suspension, reason_of_suspension | Fixed: "RED" |
-| - | sr_no | Auto-generated (SQL Server sequence) |
+| Request Field | Database Field | Value/Transformation | Source |
+| --- | --- | --- | --- |
+| noticeNo | notice_no | Direct mapping (WHERE clause) | API request payload from PLUS |
+| amountPayable | amount_payable | Direct mapping | API request payload from PLUS |
+| dateOfReduction | epr_date_of_suspension, date_of_suspension, date_of_reduction | Direct mapping | API request payload from PLUS |
+| expiryDateOfReduction | due_date_of_revival, expiry_date | Direct mapping | API request payload from PLUS |
+| reasonOfReduction | reason_of_reduction | Direct mapping | API request payload from PLUS |
+| authorisedOfficer | officer_authorising_suspension, authorised_officer | Direct mapping | API request payload from PLUS |
+| suspensionSource | suspension_source | Direct mapping | API request payload from PLUS |
+| amountReduced | amount_reduced | Direct mapping | API request payload from PLUS |
+| remarks | suspension_remarks (max 200), remarks (max 200) | Direct mapping | API request payload from PLUS |
+| - | suspension_type | Fixed: "TS" | System constant (Temporary Suspension) |
+| - | epr_reason_of_suspension, reason_of_suspension | Fixed: "RED" | System constant (Pay Reduced Amount) |
+| - | sr_no | Auto-generated | Application-level: MAX(sr_no) + 1 per notice |
+| - | cre_user_id | Database user | Connection pool user: ocmsiz_app_conn |
+| - | upd_user_id | Database user | Connection pool user: ocmsiz_app_conn |
+| - | cre_dtm | Current timestamp | System-generated timestamp |
+| - | upd_dtm | Current timestamp | System-generated timestamp |
 
 **Note:** The due_date_of_revival field does NOT exist in the Internet database schema. Only 4 fields are synced to Internet.
+
+#### Audit User Fields
+
+All database insert and update operations must use the following audit user values:
+
+| Field | Value | Zone | Notes |
+| --- | --- | --- | --- |
+| cre_user_id | ocmsiz_app_conn | Intranet | Database connection pool user (NOT literal string "SYSTEM") |
+| upd_user_id | ocmsiz_app_conn | Intranet | Database connection pool user (NOT literal string "SYSTEM") |
+| cre_dtm | CURRENT_TIMESTAMP | Both | System-generated timestamp |
+| upd_dtm | CURRENT_TIMESTAMP | Both | System-generated timestamp |
+
+**Important:** Never use the string "SYSTEM" for user ID fields. Use the database connection pool user name.
+
+**Applies to tables:**
+- ocms_valid_offence_notice (UPDATE)
+- ocms_suspended_notice (INSERT)
+- ocms_reduced_offence_amount (INSERT)
+- eocms_valid_offence_notice (UPDATE)
 
 ### 2.2.3 Success Outcome
 
@@ -305,6 +402,218 @@ If any step fails, the entire transaction is rolled back and "Reduction fail" is
 #### Idempotency
 
 If a notice already has TS-RED status (suspension_type='TS' AND epr_reason_of_suspension='RED'), the API returns "Reduction Success" without making any changes. This prevents duplicate reductions from retried requests.
+
+## 2.3 Implementation Guidance
+
+### 2.3.1 Transaction Management
+
+**Transaction Isolation Level:** `READ_COMMITTED`
+
+**Transaction Scope:**
+All database operations (Update VON, Insert SN, Insert ROA, Update eVON) must execute within a single transaction to ensure data consistency.
+
+**Pseudo-code Pattern:**
+```
+BEGIN TRANSACTION (isolation=READ_COMMITTED, timeout=30 seconds)
+  Step 1: UPDATE ocms_valid_offence_notice
+  Step 2: INSERT INTO ocms_suspended_notice
+  Step 3: INSERT INTO ocms_reduced_offence_amount
+  Step 4: UPDATE eocms_valid_offence_notice
+
+  IF all steps successful THEN
+    COMMIT TRANSACTION
+  ELSE
+    ROLLBACK TRANSACTION
+    Return HTTP 500 "Reduction fail"
+  END IF
+END TRANSACTION
+```
+
+**Rollback Strategy:**
+- If ANY step fails → Rollback ALL changes
+- Log error with full context (notice_no, step failed, error message)
+- Return HTTP 500 with appCode OCMS-5000
+
+### 2.3.2 Concurrency Control
+
+**Scenario:** Two PLUS officers attempt to reduce the same notice simultaneously.
+
+**Solution:** Optimistic Locking using version field or timestamp
+
+**Implementation Pattern:**
+```sql
+UPDATE ocms_valid_offence_notice
+SET suspension_type = 'TS',
+    epr_reason_of_suspension = 'RED',
+    amount_payable = :amountPayable,
+    upd_dtm = CURRENT_TIMESTAMP,
+    version = version + 1  -- Optimistic lock increment
+WHERE notice_no = :noticeNo
+  AND version = :expectedVersion  -- Check version hasn't changed
+```
+
+If concurrent update detected (0 rows updated):
+- Return HTTP 409 "Reduction fail - concurrent modification detected"
+- PLUS should retry the request with fresh data
+
+### 2.3.3 Idempotency Implementation
+
+**Check Strategy:**
+- Combine idempotency check with initial notice lookup (single query)
+- Check: `suspension_type = 'TS' AND epr_reason_of_suspension = 'RED'`
+- If TRUE → Return success immediately (no database changes)
+- If FALSE → Continue with validation and processing
+
+**Performance Optimization:**
+No separate query needed - idempotency check uses data already loaded for validation.
+
+### 2.3.4 Error Logging Requirements
+
+**For Each Error Scenario, Log:**
+
+| Error Type | Log Level | Log Content |
+| --- | --- | --- |
+| Invalid Format | WARN | Sanitized request payload, validation errors |
+| Missing Data | WARN | Missing field names |
+| Notice Not Found | INFO | notice_no attempted |
+| Notice Paid | INFO | notice_no, CRS reason value |
+| Not Eligible | INFO | notice_no, computer_rule_code, last_processing_stage |
+| Database Error | ERROR | Full exception stack trace, SQL statement, parameters |
+| Rollback | CRITICAL | Transaction details, which step failed, notice_no |
+
+**Log Format:**
+```
+[timestamp] [level] [correlation-id] [notice_no] [message]
+```
+
+### 2.3.5 Performance Requirements
+
+| Metric | Requirement |
+| --- | --- |
+| Response Time (95th percentile) | < 3 seconds |
+| Response Time (99th percentile) | < 5 seconds |
+| API Timeout | 30 seconds |
+| Concurrent Requests Capacity | 100 requests/second |
+| Database Connection Pool | Min: 5, Max: 20 connections |
+
+### 2.3.6 Validation Execution Order
+
+**Optimize for fail-fast approach (cheapest checks first):**
+
+```
+1. Request format validation (fail fast - no DB hit)
+   ↓
+2. Mandatory data check (fail fast - no DB hit)
+   ↓
+3. Database lookup (expensive - single query loads all needed data)
+   ↓
+4. Idempotency check (free - data already loaded)
+   ↓
+5. Payment status check (free - data already loaded)
+   ↓
+6. Eligibility check (free - data already loaded)
+   ↓
+7. Amount/date validation (cheap - calculation only)
+   ↓
+8. Database transaction (most expensive - only if all validations pass)
+```
+
+### 2.3.7 Database Connection Strategy
+
+**Intranet Zone:**
+- Connection Pool User: `ocmsiz_app_conn`
+- Schema: OCMS Intranet
+- Tables: ocms_valid_offence_notice, ocms_suspended_notice, ocms_reduced_offence_amount
+
+**Internet Zone:**
+- Connection Pool User: `ocmsez_app_conn`
+- Schema: OCMS Internet
+- Tables: eocms_valid_offence_notice
+
+**Note:** Both connections must participate in the same distributed transaction to ensure atomicity.
+
+### 2.3.8 Field Constraints and Validation
+
+| Field | Data Type | Max Length | Nullable | Default | Validation Rule |
+| --- | --- | --- | --- | --- | --- |
+| noticeNo | VARCHAR | 20 | No | - | Pattern: `[0-9]{9}[A-Z]` (9 digits + 1 uppercase letter) |
+| amountReduced | DECIMAL | (10,2) | No | - | Must be > 0 and <= composition_amount |
+| amountPayable | DECIMAL | (10,2) | No | - | Must be >= 0 |
+| dateOfReduction | DATETIME | - | No | - | Valid datetime format |
+| expiryDateOfReduction | DATETIME | - | No | - | Must be > dateOfReduction |
+| reasonOfReduction | VARCHAR | 100 | No | - | Not blank, trimmed |
+| authorisedOfficer | VARCHAR | 50 | No | - | Not blank, trimmed |
+| suspensionSource | VARCHAR | 10 | No | - | Not blank (e.g., "005" for PLUS) |
+| remarks | VARCHAR | 500 | Yes | NULL | Optional, trimmed if provided |
+
+### 2.3.9 Integration Testing Approach
+
+**Test Environment Setup:**
+1. Intranet database with test data
+2. Internet database with corresponding test data
+3. APIM gateway configured for UAT environment
+4. Test PLUS account with valid authentication token
+
+**Key Test Scenarios:**
+- **Happy Path:** Eligible notice (code 30305, stage NPA), reduction applied successfully
+- **Idempotency:** Call API twice with identical payload, both return success
+- **Concurrency:** Two threads reduce same notice simultaneously
+- **Payment Check:** Notice with CRS="FP", should reject
+- **Eligibility:** Test various rule code + stage combinations
+- **Rollback:** Force database error during Step 3, verify all steps rolled back
+- **Performance:** Load test with 100 concurrent requests
+
+**Sample Test Data:**
+```json
+{
+  "noticeNo": "500500303J",
+  "amountReduced": 55.00,
+  "amountPayable": 15.00,
+  "dateOfReduction": "2025-08-01T19:00:02",
+  "expiryDateOfReduction": "2025-08-15T00:00:00",
+  "reasonOfReduction": "RED",
+  "authorisedOfficer": "TESTUSER",
+  "suspensionSource": "005",
+  "remarks": "Test reduction for automation"
+}
+```
+
+### 2.3.10 Serial Number Generation Strategy
+
+**Sequence Generation Method:**
+
+The `sr_no` field (serial number) for both `ocms_suspended_notice` and `ocms_reduced_offence_amount` tables is generated using an **application-level sequence strategy** rather than database-level sequences.
+
+**Implementation:**
+```sql
+-- Query to get next serial number for a notice
+SELECT MAX(sr_no) FROM ocms_suspended_notice WHERE notice_no = :noticeNo
+-- Result: maxSrNo
+-- Next sr_no = maxSrNo + 1 (or 1 if no records exist)
+```
+
+**Key Characteristics:**
+1. **Notice-Scoped:** Serial numbers are unique per notice (not globally unique)
+2. **Shared Value:** The same `sr_no` value is used in both `ocms_suspended_notice` and `ocms_reduced_offence_amount` for a single reduction transaction
+3. **Application-Controlled:** Generated by the application layer before database insert
+
+**Rationale:**
+- **Notice-Specific Numbering:** Each notice maintains its own sequence of suspension/reduction records (sr_no starts at 1 for each notice)
+- **Simpler Implementation:** Application-level MAX+1 is simpler than managing per-notice database sequences
+- **Transaction Safety:** Generated within the same transaction as the inserts, ensuring consistency
+- **Adequate Performance:** For the expected volume (few records per notice), MAX+1 query performance is acceptable
+
+**Concurrency Consideration:**
+- The entire reduction process is wrapped in a transaction with optimistic locking on `ocms_valid_offence_notice`
+- Concurrent reductions for the same notice will be serialized by the optimistic lock, preventing duplicate sr_no values
+
+**Example:**
+```
+Notice 500500303J:
+- First reduction: sr_no = 1 (both in suspended_notice and reduced_offence_amount)
+- Second reduction: sr_no = 2 (both tables)
+- Third reduction: sr_no = 3 (both tables)
+```
 
 ---
 

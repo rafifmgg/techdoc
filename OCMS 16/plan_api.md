@@ -63,17 +63,19 @@ This API allows the PLUS system to request a reduction of the composition amount
 
 **Request Body Schema:**
 
-| Field | Type | Required | Validation | Description |
-| --- | --- | --- | --- | --- |
-| noticeNo | string | Yes | Not blank | Notice number to be reduced |
-| amountReduced | decimal | Yes | Positive value, <= original composition amount | The amount reduced from the original composition amount |
-| amountPayable | decimal | Yes | amountPayable = originalAmount - amountReduced, >= 0 | The new amount payable after reduction |
-| dateOfReduction | datetime | Yes | Format: yyyy-MM-dd'T'HH:mm:ss | Date and time when reduction is applied |
-| expiryDateOfReduction | datetime | Yes | Format: yyyy-MM-dd'T'HH:mm:ss, must be after dateOfReduction | Expiry date of the reduction offer (due date of revival) |
-| reasonOfReduction | string | Yes | Not blank | Reason for the reduction |
-| authorisedOfficer | string | Yes | Not blank | Officer authorizing the reduction (cre_user_id from PLUS) |
-| suspensionSource | string | Yes | Not blank | Source system code (e.g., "005" for PLUS) |
-| remarks | string | No | - | Optional remarks for the reduction |
+| Field | Type | Max Length | Required | Nullable | Validation | Description |
+| --- | --- | --- | --- | --- | --- | --- |
+| noticeNo | string | 20 | Yes | No | Not blank, Pattern: [0-9]{9}[A-Z] | Notice number to be reduced |
+| amountReduced | decimal(10,2) | - | Yes | No | Positive value, <= original composition amount | The amount reduced from the original composition amount |
+| amountPayable | decimal(10,2) | - | Yes | No | amountPayable = originalAmount - amountReduced, >= 0 | The new amount payable after reduction |
+| dateOfReduction | datetime | - | Yes | No | Format: yyyy-MM-dd'T'HH:mm:ss (SGT) | Date and time when reduction is applied |
+| expiryDateOfReduction | datetime | - | Yes | No | Format: yyyy-MM-dd'T'HH:mm:ss (SGT), must be after dateOfReduction | Expiry date of the reduction offer (due date of revival) |
+| reasonOfReduction | string | 100 | Yes | No | Not blank, trimmed | Reason for the reduction |
+| authorisedOfficer | string | 50 | Yes | No | Not blank, trimmed | Officer authorizing the reduction (cre_user_id from PLUS) |
+| suspensionSource | string | 10 | Yes | No | Not blank | Source system code (e.g., "005" for PLUS) |
+| remarks | string | 200 | No | Yes | - | Optional remarks for the reduction (max 200 chars per data dictionary) |
+
+**Timezone Note:** All datetime fields use Singapore Time (SGT, UTC+8). Do not include timezone offset in the string.
 
 **Reference:** FD Section 2.3.1 - PLUS Backend requests parameter data via API call
 
@@ -83,8 +85,10 @@ This API allows the PLUS system to request a reduction of the composition amount
 
 ```json
 {
-  "success": true,
-  "message": "Reduction Success"
+  "data": {
+    "appCode": "OCMS-2000",
+    "message": "Reduction Success"
+  }
 }
 ```
 
@@ -93,56 +97,70 @@ This API allows the PLUS system to request a reduction of the composition amount
 **400 Bad Request - Invalid Format:**
 ```json
 {
-  "success": false,
-  "message": "Invalid format"
+  "data": {
+    "appCode": "OCMS-4000",
+    "message": "Invalid format"
+  }
 }
 ```
 
 **400 Bad Request - Missing Data:**
 ```json
 {
-  "success": false,
-  "message": "Missing data"
+  "data": {
+    "appCode": "OCMS-4000",
+    "message": "Missing data"
+  }
 }
 ```
 
 **404 Not Found - Notice Not Found:**
 ```json
 {
-  "success": false,
-  "message": "Notice not found"
+  "data": {
+    "appCode": "OCMS-4004",
+    "message": "Notice not found"
+  }
 }
 ```
 
 **409 Conflict - Notice Has Been Paid:**
 ```json
 {
-  "success": false,
-  "message": "Notice has been paid"
+  "data": {
+    "appCode": "OCMS-4090",
+    "message": "Notice has been paid"
+  }
 }
 ```
 
 **409 Conflict - Notice Not Eligible:**
 ```json
 {
-  "success": false,
-  "message": "Notice is not eligible"
+  "data": {
+    "appCode": "OCMS-4091",
+    "message": "Notice is not eligible"
+  }
 }
 ```
 
 **500 Internal Server Error - Reduction Fail:**
 ```json
 {
-  "success": false,
-  "message": "Reduction fail"
+  "data": {
+    "appCode": "OCMS-5000",
+    "message": "Reduction fail"
+  }
 }
 ```
 
 **503 Service Unavailable:**
 ```json
 {
-  "success": false,
-  "message": "System unavailable"
+  "data": {
+    "appCode": "OCMS-5001",
+    "message": "System unavailable"
+  }
 }
 ```
 
@@ -172,48 +190,52 @@ This API allows the PLUS system to request a reduction of the composition amount
 
 ### 4.1 Request to Intranet Database - ocms_valid_offence_notice (UPDATE)
 
-| API Field | Database Field | Transformation |
-| --- | --- | --- |
-| noticeNo | notice_no | Used for lookup (WHERE clause) |
-| amountPayable | amount_payable | Direct mapping |
-| dateOfReduction | epr_date_of_suspension | Direct mapping |
-| expiryDateOfReduction | due_date_of_revival | Direct mapping |
-| - | suspension_type | Set to "TS" (Temporary Suspension) |
-| - | epr_reason_of_suspension | Set to "RED" (Pay Reduced Amount) |
+| API Field | Database Field | Transformation | Source |
+| --- | --- | --- | --- |
+| noticeNo | notice_no | Used for lookup (WHERE clause) | API request payload from PLUS |
+| amountPayable | amount_payable | Direct mapping | API request payload from PLUS |
+| dateOfReduction | epr_date_of_suspension | Direct mapping | API request payload from PLUS |
+| expiryDateOfReduction | due_date_of_revival | Direct mapping | API request payload from PLUS |
+| - | suspension_type | Set to "TS" (Temporary Suspension) | System constant |
+| - | epr_reason_of_suspension | Set to "RED" (Pay Reduced Amount) | System constant |
+| - | cre_user_id | Database connection user | Connection pool: ocmsiz_app_conn |
+| - | upd_user_id | Database connection user | Connection pool: ocmsiz_app_conn |
 
 **Reference:** FD Section 3.4.1
 
 ### 4.2 Request to Intranet Database - ocms_suspended_notice (INSERT)
 
-| API Field | Database Field | Transformation |
-| --- | --- | --- |
-| noticeNo | notice_no | Direct mapping |
-| dateOfReduction | date_of_suspension | Direct mapping |
-| - | sr_no | Auto-generated (next sequence for this notice) |
-| suspensionSource | suspension_source | Direct mapping (e.g., "PLUS") |
-| - | suspension_type | Set to "TS" |
-| - | reason_of_suspension | Set to "RED" |
-| authorisedOfficer | officer_authorising_suspension | Direct mapping |
-| expiryDateOfReduction | due_date_of_revival | Direct mapping |
-| reasonOfReduction | suspension_remarks | Direct mapping |
+| API Field | Database Field | Transformation | Source |
+| --- | --- | --- | --- |
+| noticeNo | notice_no | Direct mapping | API request payload from PLUS |
+| dateOfReduction | date_of_suspension | Direct mapping | API request payload from PLUS |
+| - | sr_no | Auto-generated | Application-level: MAX(sr_no) + 1 per notice |
+| suspensionSource | suspension_source | Direct mapping | API request payload from PLUS |
+| - | suspension_type | Set to "TS" | System constant |
+| - | reason_of_suspension | Set to "RED" | System constant |
+| authorisedOfficer | officer_authorising_suspension | Direct mapping | API request payload from PLUS |
+| expiryDateOfReduction | due_date_of_revival | Direct mapping | API request payload from PLUS |
+| reasonOfReduction | suspension_remarks | Direct mapping | API request payload from PLUS |
+| - | cre_user_id | Database connection user | Connection pool: ocmsiz_app_conn |
 
 **Reference:** FD Section 3.4.2
 
 ### 4.3 Request to Intranet Database - ocms_reduced_offence_amount (INSERT)
 
-| API Field | Database Field | Transformation |
-| --- | --- | --- |
-| noticeNo | notice_no | Direct mapping |
-| dateOfReduction | date_of_reduction | Direct mapping |
-| - | sr_no | Same as suspended_notice sr_no |
-| amountReduced | amount_reduced | Direct mapping |
-| amountPayable | amount_payable | This is the amount BEFORE reduction (original) |
-| reasonOfReduction | reason_of_reduction | Direct mapping |
-| expiryDateOfReduction | expiry_date | Direct mapping |
-| authorisedOfficer | officer_authorising_reduction | Direct mapping |
-| remarks | remarks | Direct mapping |
+| API Field | Database Field | Transformation | Source |
+| --- | --- | --- | --- |
+| noticeNo | notice_no | Direct mapping | API request payload from PLUS |
+| dateOfReduction | date_of_reduction | Direct mapping | API request payload from PLUS |
+| - | sr_no | Same as suspended_notice sr_no | Application-level: MAX(sr_no) + 1 per notice |
+| amountReduced | amount_reduced | Direct mapping | API request payload from PLUS |
+| amountPayable | amount_payable | Original amount BEFORE reduction | Calculated from VON.composition_amount |
+| reasonOfReduction | reason_of_reduction | Direct mapping | API request payload from PLUS |
+| expiryDateOfReduction | expiry_date | Direct mapping | API request payload from PLUS |
+| authorisedOfficer | authorised_officer | Direct mapping | API request payload from PLUS | API request payload from PLUS |
+| remarks | remarks | Direct mapping | API request payload from PLUS |
+| - | cre_user_id | Database connection user | Connection pool: ocmsiz_app_conn |
 
-**Note:** The `amount_payable` in this table refers to the original amount before reduction, per FD Section 3.4.3.
+**Note:** The `amount_payable` in this table refers to the original composition amount before reduction, per FD Section 3.4.3.
 
 **Reference:** FD Section 3.4.3
 
@@ -325,6 +347,50 @@ All database operations are wrapped in a single transaction:
 - This prevents duplicate reductions from retried requests
 
 **Reference:** FD Section 3.3 - Partial Update scenario
+
+---
+
+## 8. Authentication and Retry Policy
+
+### 8.1 Token Handling
+
+**Authentication Method:** Bearer token in Authorization header
+
+**Token Expiry Handling:**
+- If token expires or becomes invalid (HTTP 401)
+- PLUS system refreshes token using refresh token flow
+- PLUS retries the request with new token
+- Processing continues seamlessly
+
+**Responsibility:** PLUS system (caller handles token refresh)
+
+### 8.2 Retry Policy
+
+**PLUS System Should Retry:**
+
+| Error Scenario | Retry Strategy |
+| --- | --- |
+| HTTP 500 (Internal Server Error) | Retry 3 times with exponential backoff (1s, 2s, 4s) |
+| HTTP 503 (Service Unavailable) | Retry 3 times with exponential backoff |
+| Connection Timeout | Retry 3 times with exponential backoff |
+| Connection Refused | Retry 3 times with exponential backoff |
+
+**PLUS System Should NOT Retry:**
+
+| Error Scenario | Reason |
+| --- | --- |
+| HTTP 400 (Bad Request) | Business validation error - fix request data |
+| HTTP 404 (Not Found) | Notice doesn't exist - no point retrying |
+| HTTP 409 (Conflict) | Business rule violation - fix eligibility |
+
+**After 3 Failed Retries:**
+- Alert PLUS operations team via email
+- Log incident for investigation
+
+**OCMS Behavior:**
+- OCMS API is synchronous (no server-side retry)
+- OCMS logs all requests for troubleshooting
+- OCMS returns appropriate HTTP status for retry decision
 
 ---
 

@@ -301,7 +301,7 @@ Based on CLAUDE.md guidelines and reference flowcharts, the Technical Flowchart 
 | 2 | Backend | Process | Receive Request | OCMS Backend receives the reduction request | 3 |
 | 3 | Backend | Decision | Data format correct? | Check if JSON structure and data types are valid | Yes→4, No→E1 |
 | 4 | Backend | Decision | Mandatory data present? | Check all required fields are provided | Yes→5, No→E2 |
-| 5 | Backend | Process | Query Notice | SELECT FROM ocms_valid_offence_notice WHERE notice_no = ? | 6 |
+| 5 | Backend | Process | Query Notice | SELECT notice_no, crs_reason_of_suspension, computer_rule_code, last_processing_stage, composition_amount, suspension_type, epr_reason_of_suspension, amount_payable FROM ocms_valid_offence_notice WHERE notice_no = ? | 6 |
 | 6 | Backend | Decision | Notice exists? | Check if notice was found in database | Yes→7, No→E3 |
 | 7 | Backend | Decision | Already reduced (TS-RED)? | Check suspension_type="TS" AND epr_reason="RED" | Yes→S1, No→8 |
 | 8 | Backend | Decision | Notice paid? | Check if CRS reason = "FP" or "PRA" | Yes→E4, No→9 |
@@ -345,7 +345,7 @@ Based on CLAUDE.md guidelines and reference flowcharts, the Technical Flowchart 
 
 | Step | Operation | Table | Zone | Fields | Notes |
 | --- | --- | --- | --- | --- | --- |
-| 5 | SELECT | ocms_valid_offence_notice | Intranet | notice_no, crs_reason_of_suspension, computer_rule_code, last_processing_stage, composition_amount, suspension_type, epr_reason_of_suspension | Load notice for validation |
+| 5 | SELECT | ocms_valid_offence_notice | Intranet | notice_no, crs_reason_of_suspension, computer_rule_code, last_processing_stage, composition_amount, suspension_type, epr_reason_of_suspension, amount_payable, epr_date_of_suspension, due_date_of_revival | Load notice for validation (never use SELECT *) |
 | 15 | UPDATE | ocms_valid_offence_notice | Intranet | suspension_type='TS', epr_reason_of_suspension='RED', amount_payable, epr_date_of_suspension, due_date_of_revival | Apply reduction |
 | 16 | INSERT | ocms_suspended_notice | Intranet | notice_no, date_of_suspension, sr_no, suspension_source, suspension_type, reason_of_suspension, officer_authorising_suspension, due_date_of_revival, suspension_remarks | Record suspension |
 | 17 | INSERT | ocms_reduced_offence_amount | Intranet | notice_no, date_of_reduction, sr_no, amount_reduced, amount_payable, reason_of_reduction, expiry_date, officer_authorising_reduction, remarks | Log reduction |
@@ -387,30 +387,32 @@ POST /v1/plus-apply-reduction
 HTTP 200 OK
 
 {
-  "success": true,
-  "message": "Reduction Success"
+  "data": {
+    "appCode": "OCMS-2000",
+    "message": "Reduction Success"
+  }
 }
 ```
 
 **Error Response Examples:**
 ```
 HTTP 400 Bad Request
-{ "success": false, "message": "Invalid format" }
+{ "data": { "appCode": "OCMS-4000", "message": "Invalid format" } }
 
 HTTP 400 Bad Request
-{ "success": false, "message": "Missing data" }
+{ "data": { "appCode": "OCMS-4000", "message": "Missing data" } }
 
 HTTP 404 Not Found
-{ "success": false, "message": "Notice not found" }
+{ "data": { "appCode": "OCMS-4004", "message": "Notice not found" } }
 
 HTTP 409 Conflict
-{ "success": false, "message": "Notice has been paid" }
+{ "data": { "appCode": "OCMS-4090", "message": "Notice has been paid" } }
 
 HTTP 409 Conflict
-{ "success": false, "message": "Notice is not eligible" }
+{ "data": { "appCode": "OCMS-4091", "message": "Notice is not eligible" } }
 
 HTTP 500 Internal Server Error
-{ "success": false, "message": "Reduction fail" }
+{ "data": { "appCode": "OCMS-5000", "message": "Reduction fail" } }
 ```
 
 ---
