@@ -532,7 +532,7 @@ WHERE vehicle_registration_type = 'V'
 **Type V Notices:**
 ```sql
 SELECT * FROM ocms_valid_offence_notice von
-JOIN vip_vehicle vv ON von.vehicle_no = vv.vehicle_no
+JOIN ocms_vip vv ON von.vehicle_no = vv.vehicle_no
 WHERE vv.status = 'ACTIVE'
 ```
 
@@ -560,6 +560,65 @@ Excel report with 3 sheets:
 | Subject | Classified Vehicle Notices Report - {date} |
 | Body | Summary counts |
 | Attachment | Excel report file |
+
+---
+
+### 3.7 VIP Vehicle Sync from CAS Cron
+
+| Attribute | Value |
+| --- | --- |
+| Job Name | Sync VIP Vehicles from CAS |
+| Schedule | Daily at 01:00 (TBD) |
+| Purpose | Synchronize VIP vehicle data from CAS to OCMS |
+
+#### Flow
+
+1. Connect to CAS database
+2. Query active VIP vehicles from CAS
+3. For each VIP vehicle:
+   - Check if exists in ocms_vip
+   - If exists → Update record
+   - If not exists → Insert new record
+4. Log completion status
+
+#### Query CAS
+
+```sql
+SELECT vehicle_no, vip_label_status, label_expiry_date
+FROM CAS.vip_vehicle
+WHERE status = 'ACTIVE'
+```
+
+#### Insert/Update OCMS
+
+```sql
+-- Insert new record
+INSERT INTO ocms_vip (
+    vehicle_no, description, status,
+    cre_date, cre_user_id, upd_date, upd_user_id
+)
+VALUES (
+    :vehicle_no, :description, 'ACTIVE',
+    CURRENT_TIMESTAMP, 'ocmsiz_app_conn',
+    CURRENT_TIMESTAMP, 'ocmsiz_app_conn'
+)
+
+-- Update existing record
+UPDATE ocms_vip
+SET description = :description,
+    status = :status,
+    upd_date = CURRENT_TIMESTAMP,
+    upd_user_id = 'ocmsiz_app_conn'
+WHERE vehicle_no = :vehicle_no
+```
+
+#### Error Handling
+
+| Scenario | Action |
+| --- | --- |
+| CAS connection failed | Retry 3x with exponential backoff, email alert |
+| No VIP found | Log warning, complete job |
+| Insert failed | Log error, retry individual record |
 
 ---
 
@@ -785,6 +844,7 @@ All batch jobs must follow the Shedlock naming convention for distributed lock m
 | Auto Re-apply TS-CLV | `reapply_tsclv_expired` | Daily 00:00 | API/Other |
 | Generate CV Report | `generate_report_cvnotices` | Daily (TBD) | File/Report |
 | AN Letter Generation | `generate_letter_advisory` | Daily EOD | File/Report |
+| VIP Vehicle Sync from CAS | `sync_vip_vehicle_cas` | Daily 01:00 | API/Other |
 
 ### 6.2 Batch Job Tracking
 
@@ -899,3 +959,4 @@ All batch jobs must implement start time recording for monitoring and recovery.
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version |
 | 1.1 | 19/01/2026 | Claude | Fixed Critical Issues: Changed GET to POST, updated response format, added token handling, retry mechanism, Shedlock naming, batch job tracking |
+| 1.2 | 20/01/2026 | Claude | Added Section 3.7 VIP Vehicle Sync from CAS; Updated CV Report to use ocms_vip; Added Shedlock name sync_vip_vehicle_cas |

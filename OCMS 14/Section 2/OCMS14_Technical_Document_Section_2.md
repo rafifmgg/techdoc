@@ -11,6 +11,8 @@ NCS Pte Ltd
 | Version | Updated By | Date | Changes |
 | --- | --- | --- | --- |
 | v1.0 | Claude | 16/01/2026 | Document Initiation |
+| v1.1 | Claude | 19/01/2026 | Data Dictionary alignment, Yi Jie review fixes |
+| v1.2 | Claude | 20/01/2026 | Code comparison alignment - updated parameter naming, Shedlock names, added code status notes |
 
 ---
 
@@ -80,16 +82,19 @@ NCS Pte Ltd
 
 ### CRON Job Schedule Summary
 
-| # | CRON Job | Time | CRON Expression | Shedlock Name |
-| --- | --- | --- | --- | --- |
-| 1 | Admin Fee Processing | 01:00 AM | `0 0 1 * * ?` | admin_fee_processing |
-| 2 | vHub Update Violation API | 02:00 AM | `0 0 2 * * ?` | vhub_update_violation_api |
-| 3 | vHub SFTP Create/Update | 03:00 AM | `0 0 3 * * ?` | vhub_sftp_create_update |
-| 4 | REPCCS Listed Vehicle | 04:00 AM | `0 0 4 * * ?` | gen_rep_listed_vehicle |
-| 5 | CES EHT Tagged Vehicle | 04:30 AM | `0 30 4 * * ?` | gen_ces_tagged_vehicle |
-| 6 | Batch Job Stuck Detection | Every 30 min | `0 */30 * * * ?` | batch_job_stuck_detection |
+| # | CRON Job | Time | CRON Expression | Shedlock Name | Code Status |
+| --- | --- | --- | --- | --- | --- |
+| 1 | Admin Fee Processing | 01:00 AM | `0 0 1 * * ?` | `apply_admin_fee` | EXISTS (03:00 AM in code) |
+| 2 | vHub Update Violation API | 02:00 AM | `0 0 2 * * ?` | `sync_vhub_violation` | **[NEW DEV REQUIRED]** |
+| 3 | vHub SFTP Create/Update | 03:00 AM | `0 0 3 * * ?` | `generate_vhub_sftp_file` | **[NEW DEV REQUIRED]** |
+| 4 | REPCCS Listed Vehicle | 04:00 AM | `0 0 4 * * ?` | `generate_rep_listed_vehicle` | EXISTS (00:10 AM in code) |
+| 5 | CES EHT Tagged Vehicle | 04:30 AM | `0 30 4 * * ?` | `generate_ces_tagged_vehicle` | EXISTS (00:01 AM in code) |
+| 6 | Batch Job Stuck Detection | Every 30 min | `0 */30 * * * ?` | `detect_batch_job_stuck` | **[NEW DEV REQUIRED]** |
 
-> **Note:** All CRON timings are suggested values and need to be confirmed with Operations team.
+> **Note:**
+> - All CRON timings are suggested values and need to be confirmed with Operations team.
+> - **[NEW DEV REQUIRED]** = Feature does not exist in current codebase and needs to be developed.
+> - Actual code CRON timing differs from proposed timing - confirm with Operations.
 
 ### System Actors & User Roles
 
@@ -158,6 +163,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ## 2.3 vHub Update Violation API Interface
 
+> **[NEW DEVELOPMENT REQUIRED]**
+> This feature does NOT exist in the current codebase and needs to be developed from scratch.
+> See `CODE_COMPARISON_REPORT.md` for full comparison details.
+
 ### CRON Job Specification
 
 | Attribute | Value |
@@ -167,8 +176,9 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | CRON Expression | `0 0 2 * * ?` (Daily at 02:00 AM) |
 | Frequency | Daily |
 | Purpose | Send FOR notices to vHub via REST API |
-| Shedlock Name | vhub_update_violation_api |
+| Shedlock Name | `sync_vhub_violation` |
 | Lock Duration | 2 hours (max) |
+| **Code Status** | **[NEW DEV REQUIRED]** |
 
 > **Note:** CRON timing to be confirmed with Operations team. Suggested 02:00 AM to avoid peak hours.
 
@@ -270,7 +280,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Step | Description | Brief Description |
 | --- | --- | --- |
 | Start | Sub-flow entry point | Begin parameter retrieval |
-| Query ocms_parameter | Query table for FOR value | param_id = 'FOR', param_code = 'NPA' |
+| Query ocms_parameter | Query table for FOR value | parameter_id = 'PERIOD', code = 'FOR' |
 | Parameter found? | Decision: Check if parameter exists | Verify configuration |
 | Throw error | Stop processing if parameter not found | Critical configuration missing |
 | Calculate date | Today minus FOR days | Determine cutoff date |
@@ -283,8 +293,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | --- | --- |
 | Table | ocms_parameter |
 | Zone | Intranet |
-| Fields | param_value |
-| Condition | param_id = 'FOR' AND param_code = 'NPA' |
+| Fields | value |
+| Condition | parameter_id = 'PERIOD' AND code = 'FOR' |
+
+> **Code Reference:** This parameter lookup matches existing code in `OcmsValidOffenceNoticeRepository.java:204-207`
 
 ---
 
@@ -767,18 +779,18 @@ Error response:
 
 **Legend:** DD = Exists in Data Dictionary
 
-**Query Example:**
+**Query Example (Per Existing Code):**
 ```sql
-SELECT value
+SELECT CAST(value AS INT)
 FROM ocms_parameter
-WHERE parameter_id = 'FOR' AND code = 'NPA'
+WHERE parameter_id = 'PERIOD' AND code = 'FOR'
 ```
 
 ---
 
 ### 2.3.7 Success Outcome
 
-- FOR parameter value is successfully retrieved from ocms_parameter.
+- FOR parameter value is successfully retrieved from ocms_parameter (parameter_id='PERIOD', code='FOR').
 - Settled, Cancelled, and Outstanding notice lists are successfully prepared.
 - All records are successfully sent to vHub API.
 - API responses are processed and stored in ocms_offence_avss.
@@ -793,7 +805,7 @@ WHERE parameter_id = 'FOR' AND code = 'NPA'
 
 | Error Scenario | Definition | Brief Description |
 | --- | --- | --- |
-| FOR parameter not found | param_id = 'FOR' not in ocms_parameter | Stop processing, throw error |
+| FOR parameter not found | parameter_id = 'PERIOD', code = 'FOR' not in ocms_parameter | Stop processing, throw error |
 | REPCCS API failure | Unable to get car park list | Retry 3 times (immediate, 1s, 1s) |
 | Database query timeout | Query takes too long | Retry 1 time, log error |
 
@@ -896,6 +908,10 @@ WHERE parameter_id = 'FOR' AND code = 'NPA'
 
 ## 2.4 vHub SFTP Interface
 
+> **[NEW DEVELOPMENT REQUIRED]**
+> This feature does NOT exist in the current codebase and needs to be developed from scratch.
+> See `CODE_COMPARISON_REPORT.md` for full comparison details.
+
 ### CRON Job Specification
 
 | Attribute | Value |
@@ -905,8 +921,9 @@ WHERE parameter_id = 'FOR' AND code = 'NPA'
 | CRON Expression | `0 0 3 * * ?` (Daily at 03:00 AM) |
 | Frequency | Daily |
 | Purpose | Send FOR notices to vHub via SFTP (backup/reconciliation) |
-| Shedlock Name | vhub_sftp_create_update |
+| Shedlock Name | `generate_vhub_sftp_file` |
 | Lock Duration | 1 hour (max) |
+| **Code Status** | **[NEW DEV REQUIRED]** |
 
 > **Note:** CRON timing to be confirmed with Operations team. Suggested 03:00 AM (after API job completes).
 
@@ -973,6 +990,10 @@ WHERE parameter_id = 'FOR' AND code = 'NPA'
 
 ## 2.5 REPCCS Listed Vehicles Interface
 
+> **[EXISTS IN CODE]**
+> This feature exists in `RepccsShedulerGeneratingFiles.java` and `RepccsListedVehOcmsToRepccsServiceImpl.java`.
+> See `CODE_COMPARISON_REPORT.md` for differences between doc and code.
+
 ### CRON Job Specification
 
 | Attribute | Value |
@@ -982,10 +1003,13 @@ WHERE parameter_id = 'FOR' AND code = 'NPA'
 | CRON Expression | `0 0 4 * * ?` (Daily at 04:00 AM) |
 | Frequency | Daily |
 | Purpose | Send listed vehicles to REPCCS for car park enforcement |
-| Shedlock Name | gen_rep_listed_vehicle |
+| Shedlock Name | `generate_rep_listed_vehicle` |
 | Lock Duration | 30 minutes (max) |
+| **Code Status** | EXISTS (code runs at 00:10 AM) |
 
-> **Note:** CRON timing to be confirmed with Operations team. Suggested 04:00 AM.
+> **Note:**
+> - CRON timing to be confirmed with Operations team. Suggested 04:00 AM.
+> - Current code runs at 00:10 AM - timing needs alignment.
 
 ### Flow Description
 
@@ -1058,6 +1082,10 @@ WHERE parameter_id = 'FOR' AND code = 'NPA'
 
 ## 2.6 CES EHT Tagged Vehicles Interface
 
+> **[EXISTS IN CODE]**
+> This feature exists in `CesSchedulerGeneratingFiles.java` and related CES services.
+> See `CODE_COMPARISON_REPORT.md` for differences between doc and code.
+
 ### CRON Job Specification
 
 | Attribute | Value |
@@ -1067,10 +1095,13 @@ WHERE parameter_id = 'FOR' AND code = 'NPA'
 | CRON Expression | `0 30 4 * * ?` (Daily at 04:30 AM) |
 | Frequency | Daily |
 | Purpose | Send tagged vehicles to CES EHT for Certis enforcement |
-| Shedlock Name | gen_ces_tagged_vehicle |
+| Shedlock Name | `generate_ces_tagged_vehicle` |
 | Lock Duration | 30 minutes (max) |
+| **Code Status** | EXISTS (code runs at 00:01 AM) |
 
-> **Note:** CRON timing to be confirmed with Operations team. Suggested 04:30 AM.
+> **Note:**
+> - CRON timing to be confirmed with Operations team. Suggested 04:30 AM.
+> - Current code runs at 00:01 AM - timing needs alignment.
 
 ### Flow Description
 
@@ -1132,6 +1163,10 @@ WHERE parameter_id = 'FOR' AND code = 'NPA'
 
 ## 2.7 Admin Fee Processing
 
+> **[EXISTS IN CODE]**
+> This feature exists in `AdminFeeJob.java`, `AdminFeeServiceImpl.java`, and `AdminFeeHelper.java`.
+> See `CODE_COMPARISON_REPORT.md` for differences between doc and code.
+
 ### CRON Job Specification
 
 | Attribute | Value |
@@ -1141,10 +1176,13 @@ WHERE parameter_id = 'FOR' AND code = 'NPA'
 | CRON Expression | `0 0 1 * * ?` (Daily at 01:00 AM) |
 | Frequency | Daily |
 | Purpose | Add admin fee to unpaid FOR notices |
-| Shedlock Name | admin_fee_processing |
+| Shedlock Name | `apply_admin_fee` |
 | Lock Duration | 30 minutes (max) |
+| **Code Status** | EXISTS (code runs at 03:00 AM) |
 
-> **Note:** CRON timing to be confirmed with Operations team. Suggested 01:00 AM (before vHub API job).
+> **Note:**
+> - CRON timing to be confirmed with Operations team. Suggested 01:00 AM (before vHub API job).
+> - Current code runs at 03:00 AM - timing needs alignment.
 
 ### Flow Description
 

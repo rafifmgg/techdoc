@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.2" pages="6">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.3.3" pages="7">
   <diagram id="vip-high-level" name="VIP_High_Level">
     <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3500" pageHeight="1200" math="0" shadow="0">
       <root>
@@ -560,6 +560,9 @@
         <mxCell id="clv-start" parent="clv-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="CRON Start" vertex="1">
           <mxGeometry height="40" width="100" x="40" y="100" as="geometry" />
         </mxCell>
+        <mxCell id="clv-shedlock" parent="clv-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;Apply TS-CLV at CPC Cron&lt;/b&gt;&lt;div&gt;- Schedule: Daily EOD&lt;/div&gt;&lt;div&gt;- Shedlock: apply_tsclv_cpc&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="40" y="160" as="geometry" />
+        </mxCell>
         <mxCell id="clv-e1" edge="1" parent="clv-cron" source="clv-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="clv-2">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="176" y="120" as="sourcePoint" />
@@ -628,14 +631,14 @@
         <mxCell id="clv-end" parent="clv-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
           <mxGeometry height="40" width="80" x="1370" y="100" as="geometry" />
         </mxCell>
-        <mxCell id="clv-note" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Auto Re-apply TS-CLV Cron&lt;/b&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Query:&lt;/div&gt;&lt;div&gt;SELECT notice_no, vehicle_registration_type,&lt;/div&gt;&lt;div&gt;last_processing_stage, suspension_type,&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension, due_date_of_revival&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;V&#39;&lt;/div&gt;&lt;div&gt;AND last_processing_stage = &#39;CPC&#39;&lt;/div&gt;&lt;div&gt;AND suspension_type = &#39;TS&#39;&lt;/div&gt;&lt;div&gt;AND epr_reason_of_suspension = &#39;CLV&#39;&lt;/div&gt;&lt;div&gt;AND due_date_of_revival &amp;lt;= CURRENT_DATE&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Actions:&lt;/div&gt;&lt;div&gt;1. Create revival record&lt;/div&gt;&lt;div&gt;2. Re-apply TS-CLV with new due_date&lt;/div&gt;&lt;div&gt;3. Create new suspension record&lt;/div&gt;" vertex="1">
+        <mxCell id="clv-note" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="&lt;b&gt;Auto Re-apply TS-CLV Cron&lt;/b&gt;&lt;div&gt;&lt;b&gt;Shedlock:&lt;/b&gt; reapply_tsclv_expired&lt;/div&gt;&lt;div&gt;&lt;b&gt;Schedule:&lt;/b&gt; Daily 00:00&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Query:&lt;/div&gt;&lt;div&gt;SELECT notice_no, vehicle_registration_type,&lt;/div&gt;&lt;div&gt;last_processing_stage, suspension_type,&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension, due_date_of_revival&lt;/div&gt;&lt;div&gt;FROM ocms_valid_offence_notice&lt;/div&gt;&lt;div&gt;WHERE vehicle_registration_type = &#39;V&#39;&lt;/div&gt;&lt;div&gt;AND last_processing_stage = &#39;CPC&#39;&lt;/div&gt;&lt;div&gt;AND suspension_type = &#39;TS&#39;&lt;/div&gt;&lt;div&gt;AND epr_reason_of_suspension = &#39;CLV&#39;&lt;/div&gt;&lt;div&gt;AND due_date_of_revival &amp;lt;= CURRENT_DATE&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Actions:&lt;/div&gt;&lt;div&gt;1. Create revival record&lt;/div&gt;&lt;div&gt;2. Re-apply TS-CLV with new due_date&lt;/div&gt;&lt;div&gt;3. Create new suspension record&lt;/div&gt;" vertex="1">
           <mxGeometry height="260" width="300" x="40" y="610" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="vip-report" name="VIP_Classified_Report">
-    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4500" pageHeight="1500" math="0" shadow="0">
+    <mxGraphModel dx="1141" dy="718" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4500" pageHeight="1500" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -645,18 +648,21 @@
         <mxCell id="rpt-start" parent="rpt-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="CRON Start" vertex="1">
           <mxGeometry height="40" width="100" x="40" y="100" as="geometry" />
         </mxCell>
+        <mxCell id="rpt-shedlock" parent="rpt-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CRON Schedule:&lt;/b&gt;&lt;div&gt;- Schedule: Daily (TBD)&lt;/div&gt;&lt;div&gt;- Shedlock: generate_report_cvnotices&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="220" x="40" y="160" as="geometry" />
+        </mxCell>
         <mxCell id="rpt-e1" edge="1" parent="rpt-cron" source="rpt-start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="rpt-2">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="171" y="120" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rpt-2" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Active VIP Vehicles from CAS" vertex="1">
+        <mxCell id="rpt-2" parent="rpt-cron" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Active VIP Vehicles from ocms_vip" vertex="1">
           <mxGeometry height="80" width="100" x="221" y="80" as="geometry" />
         </mxCell>
         <mxCell id="rpt-e2-db" edge="1" parent="rpt-cron" source="rpt-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="rpt-query-cas">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="rpt-query-cas" parent="rpt-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT vehicle_no, vip_label_status,&lt;div&gt;label_expiry_date&lt;/div&gt;&lt;div&gt;FROM vip_vehicle&lt;/div&gt;&lt;div&gt;WHERE status = &#39;ACTIVE&#39;&lt;/div&gt;" vertex="1">
+        <mxCell id="rpt-query-cas" parent="rpt-cron" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT vehicle_no, vip_label_status,&lt;div&gt;label_expiry_date&lt;/div&gt;&lt;div&gt;FROM ocms_vip&lt;/div&gt;&lt;div&gt;WHERE status = &#39;ACTIVE&#39;&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="210" x="166" y="210" as="geometry" />
         </mxCell>
         <mxCell id="rpt-e2" edge="1" parent="rpt-cron" source="rpt-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="rpt-3">
@@ -738,6 +744,102 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="671" y="280" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="FN-_bnwQkx_E5uBZmBOE" name="VIP_Get_Vip_Vehicle_CAS">
+    <mxGraphModel dx="1426" dy="897" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="5r05AkD-xN1CCb64aikc-1" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="OCMS Cron Service" vertex="1">
+          <mxGeometry height="470" width="1240" x="280" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-2" parent="5r05AkD-xN1CCb64aikc-1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="CRON Start" vertex="1">
+          <mxGeometry height="40" width="100" x="40" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cas-shedlock" parent="5r05AkD-xN1CCb64aikc-1" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CRON Schedule:&lt;/b&gt;&lt;div&gt;- Schedule: Daily 01:00 AM&lt;/div&gt;&lt;div&gt;- Shedlock: sync_vip_vehicle_cas&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="220" x="40" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-3" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="5r05AkD-xN1CCb64aikc-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="171" y="120" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-4" parent="5r05AkD-xN1CCb64aikc-1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Call CAS DB to get vip vehicle" vertex="1">
+          <mxGeometry height="80" width="100" x="221" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-5" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="5r05AkD-xN1CCb64aikc-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-6" parent="5r05AkD-xN1CCb64aikc-1" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT vehicle_no, vip_label_status,&lt;div&gt;label_expiry_date&lt;/div&gt;&lt;div&gt;FROM ocms_vip&lt;/div&gt;&lt;div&gt;WHERE status = &#39;ACTIVE&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="210" x="166" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-7" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="5r05AkD-xN1CCb64aikc-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-8" parent="5r05AkD-xN1CCb64aikc-1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="VIP found?" vertex="1">
+          <mxGeometry height="80" width="80" x="426" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-9" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="5r05AkD-xN1CCb64aikc-12" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-10" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="5r05AkD-xN1CCb64aikc-11" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-37" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="5r05AkD-xN1CCb64aikc-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-11" parent="5r05AkD-xN1CCb64aikc-1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log Error" vertex="1">
+          <mxGeometry height="60" width="100" x="416" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-12" parent="5r05AkD-xN1CCb64aikc-1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Insert into OCMS DB" vertex="1">
+          <mxGeometry height="80" width="100" x="645" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-13" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="5r05AkD-xN1CCb64aikc-33">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="896" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-31" parent="5r05AkD-xN1CCb64aikc-1" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="&lt;div&gt;INSERT INTO ocms_vip&lt;/div&gt;&lt;div&gt;(&lt;/div&gt;&lt;div&gt;&amp;nbsp; vehicle_no,&lt;/div&gt;&lt;div&gt;&amp;nbsp; description,&lt;/div&gt;&lt;div&gt;&amp;nbsp; status,&lt;/div&gt;&lt;div&gt;&amp;nbsp; cre_date,&lt;/div&gt;&lt;div&gt;&amp;nbsp; cre_user_id,&lt;/div&gt;&lt;div&gt;&amp;nbsp; upd_date,&lt;/div&gt;&lt;div&gt;&amp;nbsp; upd_user_id&lt;/div&gt;&lt;div&gt;)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="180" width="310" x="540" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-32" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="5r05AkD-xN1CCb64aikc-31">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="671" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-39" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="5r05AkD-xN1CCb64aikc-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-42" connectable="0" parent="5r05AkD-xN1CCb64aikc-39" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="no" vertex="1">
+          <mxGeometry relative="1" x="0.04" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-33" parent="5r05AkD-xN1CCb64aikc-1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Success?" vertex="1">
+          <mxGeometry height="80" width="80" x="900" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-34" parent="5r05AkD-xN1CCb64aikc-1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="40" width="100" x="1080" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-35" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="5r05AkD-xN1CCb64aikc-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-41" connectable="0" parent="5r05AkD-xN1CCb64aikc-35" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="yes" vertex="1">
+          <mxGeometry relative="1" x="-0.44" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-36" parent="5r05AkD-xN1CCb64aikc-1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="40" width="100" x="416" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-38" parent="5r05AkD-xN1CCb64aikc-1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log Error" vertex="1">
+          <mxGeometry height="60" width="100" x="890" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="5r05AkD-xN1CCb64aikc-40" edge="1" parent="5r05AkD-xN1CCb64aikc-1" source="5r05AkD-xN1CCb64aikc-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" target="5r05AkD-xN1CCb64aikc-34">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

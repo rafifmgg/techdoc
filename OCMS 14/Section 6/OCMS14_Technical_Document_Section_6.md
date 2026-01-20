@@ -16,6 +16,7 @@
 | v1.1 | Claude | 19/01/2026 | Fixed Critical Issues: Replaced SYSTEM with ocmsiz_app_conn in all SQL statements |
 | v1.2 | Claude | 19/01/2026 | Added Appendix A (Sync Flag), Appendix E (Eligibility by Source) |
 | v1.3 | Claude | 19/01/2026 | Updated furnish field names to match Data Dictionary (txn_ref_no, furnish_id_no, etc.) |
+| v1.4 | Claude | 20/01/2026 | Added Section 6 - VIP Vehicle Sync from CAS; Updated Section 5 to use ocms_vip table; Added ocms_vip table documentation |
 
 ---
 
@@ -61,6 +62,13 @@
 | 5.2.2 | Database Operations | [X] |
 | 5.2.3 | Success Outcome | [X] |
 | 5.2.4 | Error Handling | [X] |
+| 6 | VIP Vehicle Sync from CAS | [X] |
+| 6.1 | Use Case | [X] |
+| 6.2 | CAS Sync Flow | [X] |
+| 6.2.1 | Data Mapping | [X] |
+| 6.2.2 | Database Operations | [X] |
+| 6.2.3 | Success Outcome | [X] |
+| 6.2.4 | Error Handling | [X] |
 | A | Sync Flag Mechanism | [X] |
 | B | Suspension Type Reference | [X] |
 | C | Stage Transition Reference | [X] |
@@ -859,8 +867,8 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Step | Description | Brief Description |
 | --- | --- | --- |
 | Start | Cron job initiated at scheduled time | Cron start |
-| Retrieve Active VIP Vehicles from CAS | Query VIP_VEHICLE table for active vehicles | CAS query |
-| Any Active VIP Vehicles Found | Check if records returned from CAS | Record check |
+| Query Active VIP Vehicles from ocms_vip | Query ocms_vip table for active VIP vehicles | VIP query |
+| Any Active VIP Vehicles Found | Check if records returned from ocms_vip | Record check |
 | Generate Empty Report | Create report with no data if no VIP vehicles | Empty report |
 | Extract Vehicle Numbers | Get list of vehicle_no from CAS response | Data extraction |
 | Retrieve Notice Details from OCMS | Query ocms_valid_offence_notice for VIP notices | OCMS query |
@@ -882,10 +890,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 | Zone | Database Table | Field Name | Description |
 | --- | --- | --- | --- |
-| External | vip_vehicle | vehicle_no | Vehicle registration number |
-| External | vip_vehicle | vip_label_status | VIP label status |
-| External | vip_vehicle | status | Active/Inactive status |
-| External | vip_vehicle | label_expiry_date | VIP label expiry date |
+| Intranet | ocms_vip | vehicle_no | Vehicle registration number |
+| Intranet | ocms_vip | vip_label_status | VIP label status |
+| Intranet | ocms_vip | status | Active/Inactive status |
+| Intranet | ocms_vip | label_expiry_date | VIP label expiry date |
 | Intranet | ocms_valid_offence_notice | notice_no | Unique notice identifier |
 | Intranet | ocms_valid_offence_notice | vehicle_no | Vehicle registration number |
 | Intranet | ocms_valid_offence_notice | vehicle_registration_type | Vehicle type ('V' for VIP) |
@@ -920,10 +928,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 ### 5.2.2 Database Operations
 
-**Query Active VIP Vehicles from CAS:**
+**Query Active VIP Vehicles from ocms_vip:**
 ```sql
 SELECT vehicle_no, vip_label_status, label_expiry_date
-FROM vip_vehicle
+FROM ocms_vip
 WHERE status = 'ACTIVE'
 ```
 
@@ -1009,7 +1017,7 @@ WHERE sn.reason_of_suspension = 'CLV'
 
 ### 5.2.3 Success Outcome
 
-- CAS/FOMS query successfully retrieves active VIP vehicles
+- ocms_vip query successfully retrieves active VIP vehicles
 - OCMS query retrieves all related notice details
 - Offender details successfully retrieved for all notices
 - Outstanding and settled counts correctly calculated
@@ -1024,7 +1032,7 @@ WHERE sn.reason_of_suspension = 'CLV'
 
 | Error Scenario | Definition | Brief Description |
 | --- | --- | --- |
-| CAS Query Failed | Unable to retrieve VIP vehicles from CAS | Generate report with warning, notify admin |
+| VIP Query Failed | Unable to retrieve VIP vehicles from ocms_vip | Generate report with warning, notify admin |
 | OCMS Query Failed | Unable to retrieve notice details | Log error, terminate with notification |
 | Excel Generation Failed | Unable to create Excel file | Log error, retry or notify admin |
 | Email Send Failed | Unable to send email to recipients | Retry, log for manual send if persistent |
@@ -1034,9 +1042,136 @@ WHERE sn.reason_of_suspension = 'CLV'
 | Error Scenario | App Error Code | User Message | Brief Description |
 | --- | --- | --- | --- |
 | General Server Error | OCMS-5000 | Something went wrong. Please try again later. | Server error |
-| CAS Connection Error | RPT-001 | Unable to connect to CAS service. | External service error |
+| VIP Query Error | RPT-001 | Unable to retrieve VIP vehicle data. | Database error |
 | Email Service Error | RPT-002 | Unable to send report email. | Email service unavailable |
 | Report Generation Error | RPT-003 | Unable to generate report. | Excel creation failed |
+
+---
+
+# Section 6 – VIP Vehicle Sync from CAS
+
+## 6.1 Use Case
+
+1. The VIP Vehicle Sync process retrieves VIP vehicle data from the external CAS (Carpark Access System) database and synchronizes it to the local OCMS database.
+
+2. This sync ensures that OCMS has up-to-date VIP vehicle information for notice processing and report generation without requiring real-time calls to CAS.
+
+3. The sync runs as a scheduled cron job to maintain data freshness.
+
+4. [ASSUMPTION] CAS database connection is temporarily disabled. When FOMS goes live, this will query FOMS instead of CAS. The sync mechanism will remain the same.
+
+5. Refer to FD Section 7.9.1 for VIP vehicle data specifications.
+
+## 6.2 CAS Sync Flow
+
+<!-- Insert flow diagram here -->
+![CAS Sync Flow](./images/section6-cas-sync-flow.png)
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+| Step | Description | Brief Description |
+| --- | --- | --- |
+| Start | Cron job initiated at scheduled time | Cron start |
+| Call CAS DB to get VIP vehicle | Query CAS database for active VIP vehicles | CAS query |
+| VIP found? | Check if any VIP vehicles returned from CAS | Record check |
+| Log Error (No VIP) | If no VIP vehicles found, log warning | Warning logged |
+| Insert into OCMS DB | Insert/update VIP vehicle records into ocms_vip | Data insert |
+| Success? | Check if database insert was successful | Insert check |
+| Log Error (Insert fail) | If insert failed, log error | Error logged |
+| End | Sync process complete | Exit point |
+
+### 6.2.1 Data Mapping
+
+| Zone | Database Table | Field Name | Type | Description |
+| --- | --- | --- | --- | --- |
+| External | CAS.vip_vehicle | vehicle_no | varchar(14) | Vehicle registration number |
+| External | CAS.vip_vehicle | vip_label_status | varchar(2) | VIP label status |
+| External | CAS.vip_vehicle | label_expiry_date | datetime2(7) | VIP label expiry date |
+| Intranet | ocms_vip | vehicle_no | varchar(14) | Vehicle registration number (PK) |
+| Intranet | ocms_vip | description | varchar(200) | VIP vehicle description |
+| Intranet | ocms_vip | status | varchar(20) | Active/Inactive status |
+| Intranet | ocms_vip | cre_date | datetime2(7) | Record creation date |
+| Intranet | ocms_vip | cre_user_id | varchar(50) | Created by user |
+| Intranet | ocms_vip | upd_date | datetime2(7) | Last update date |
+| Intranet | ocms_vip | upd_user_id | varchar(50) | Updated by user |
+
+### 6.2.2 Database Operations
+
+**Query VIP Vehicles from CAS:**
+```sql
+SELECT vehicle_no, vip_label_status, label_expiry_date
+FROM CAS.vip_vehicle
+WHERE status = 'ACTIVE'
+```
+
+**Insert into OCMS VIP Table:**
+```sql
+INSERT INTO ocms_vip (
+    vehicle_no,
+    description,
+    status,
+    cre_date,
+    cre_user_id,
+    upd_date,
+    upd_user_id
+)
+VALUES (
+    :vehicle_no,
+    :description,
+    'ACTIVE',
+    CURRENT_TIMESTAMP,
+    'ocmsiz_app_conn',
+    CURRENT_TIMESTAMP,
+    'ocmsiz_app_conn'
+)
+```
+
+**Note:** If vehicle already exists, update the record instead:
+```sql
+UPDATE ocms_vip
+SET description = :description,
+    status = :status,
+    upd_date = CURRENT_TIMESTAMP,
+    upd_user_id = 'ocmsiz_app_conn'
+WHERE vehicle_no = :vehicle_no
+```
+
+### 6.2.3 Success Outcome
+
+- CAS database query successfully retrieves VIP vehicle records
+- All VIP vehicles are inserted/updated in ocms_vip table
+- Audit fields (cre_date, cre_user_id, upd_date, upd_user_id) are correctly populated
+- Batch job status logged as completed
+- The workflow reaches the End state without triggering any error-handling paths
+
+### 6.2.4 Error Handling
+
+#### Application Error Handling
+
+| Error Scenario | Definition | Brief Description |
+| --- | --- | --- |
+| CAS Connection Failed | Unable to connect to CAS database | Retry with exponential backoff, alert after 3 failures |
+| No VIP Found | CAS returns empty result | Log warning, complete job without data |
+| Insert Failed | Unable to insert into ocms_vip | Log error, retry individual record |
+| Duplicate Key | Vehicle already exists | Update existing record instead |
+
+#### API Error Handling
+
+| Error Scenario | App Error Code | User Message | Brief Description |
+| --- | --- | --- | --- |
+| CAS Connection Error | SYNC-001 | Unable to connect to CAS database. | External database unavailable |
+| Database Insert Error | SYNC-002 | Unable to sync VIP vehicle data. | Insert/update failed |
+| General Server Error | OCMS-5000 | Something went wrong. Please try again later. | Server error |
+
+#### Batch Job Configuration
+
+| Parameter | Value |
+| --- | --- |
+| Shedlock Name | `sync_vip_vehicle_cas` |
+| Schedule | TBD (recommended: daily at 1:00 AM) |
+| Lock Duration | 30 minutes |
+| Retry Strategy | 3 retries with exponential backoff |
+| Alert After Failure | Yes (email to admin) |
 
 ---
 
@@ -1061,6 +1196,7 @@ The sync flag (`is_sync`) is used to track synchronization status between Intran
 | Intranet | ocms_valid_offence_notice | is_sync | Intranet → Internet |
 | Intranet | ocms_offence_notice_owner_driver | is_sync | Intranet → Internet |
 | Intranet | ocms_suspended_notice | is_sync | Intranet → Internet |
+| Intranet | ocms_vip | - | CAS/FOMS → Intranet |
 | Internet | eocms_furnish_application | is_sync | Internet → Intranet |
 
 ## A.4 Sync Flow

@@ -20,6 +20,7 @@ refer to FD instead of duplicating content.
 | v1.0 | Claude | 15/01/2026 | Document Initiation - Section 5 |
 | v1.1 | Claude | 19/01/2026 | Fix SELECT *, add token refresh, Shedlock naming, batch job standards |
 | v1.2 | Claude | 20/01/2026 | Fix table name: ocms_offence_notice_owner_driver_addr; Fix suspension_source to 4-char code (align with data dictionary) |
+| v1.3 | Claude | 20/01/2026 | Code comparison update: Add process_indicator, officer_authorising_suspension fields; Add eocms_request_driver_particulars table structure |
 
 ---
 
@@ -496,6 +497,34 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Driver/Hirer record | ocms_offence_notice_owner_driver |
 | Furnish request | eocms_request_driver_particulars |
 
+### eocms_request_driver_particulars Table Structure
+
+**Note:** This table is pending addition to data dictionary. Structure derived from code.
+
+| Field | Type | Nullable | Description |
+| --- | --- | --- | --- |
+| date_of_processing | DATETIME | NO (PK) | Processing date (composite key) |
+| notice_no | VARCHAR(10) | NO (PK) | Notice number (composite key) |
+| date_of_rdp | DATETIME | NO | Date of Request Driver Particulars |
+| date_of_return | DATETIME | YES | Date returned |
+| processing_stage | VARCHAR(3) | NO | Current processing stage |
+| owner_nric_no | VARCHAR(20) | NO | Owner NRIC/ID number |
+| owner_name | VARCHAR(66) | YES | Owner name |
+| owner_id_type | VARCHAR(1) | NO | ID type (N/P/D/etc) |
+| owner_blk_hse_no | VARCHAR(10) | YES | Block/House number |
+| owner_street | VARCHAR(32) | YES | Street name |
+| owner_floor | VARCHAR(3) | YES | Floor number |
+| owner_unit | VARCHAR(5) | YES | Unit number |
+| owner_bldg | VARCHAR(65) | YES | Building name |
+| owner_postal_code | VARCHAR(6) | YES | Postal code |
+| postal_regn_no | VARCHAR(15) | YES | Postal registration number |
+| reminder_flag | VARCHAR(1) | YES | Reminder sent flag |
+| unclaimed_reason | VARCHAR(3) | YES | Reason if unclaimed |
+| cre_date | DATETIME | NO | Record creation date |
+| cre_user_id | VARCHAR(50) | NO | Created by user |
+| upd_date | DATETIME | YES | Last update date |
+| upd_user_id | VARCHAR(50) | YES | Updated by user |
+
 ---
 
 ## 5.6 PS-DIP Suspension Flow
@@ -539,7 +568,7 @@ WHERE vehicle_registration_type = 'D'
 | --- | --- | --- | --- |
 | Query | SELECT | ocms_valid_offence_notice | WHERE criteria above |
 | Update VON | UPDATE | ocms_valid_offence_notice | suspension_type='PS', epr_reason='DIP', epr_date=NOW() |
-| Insert OSN | INSERT | ocms_suspended_notice | notice_no, suspension_type, reason, date, source |
+| Insert OSN | INSERT | ocms_suspended_notice | notice_no, suspension_type, reason, date, source, officer, remarks, process_indicator |
 | Sync | UPDATE | eocms_valid_offence_notice | suspension_type, epr_reason, epr_date |
 
 ### PS-DIP Suspension Record
@@ -551,6 +580,9 @@ WHERE vehicle_registration_type = 'D'
 | reason_of_suspension | 'DIP' | Constant (Diplomatic) |
 | date_of_suspension | NOW() | System timestamp |
 | suspension_source | 'OCMS' | Constant (4-char source code) |
+| officer_authorising_suspension | 'SYSTEM' | Constant for CRON job |
+| suspension_remarks | 'Diplomatic Vehicle' | Optional remarks |
+| process_indicator | 'suspend_dip_notices' | Shedlock name for tracking |
 | cre_user_id | 'ocmsiz_app_conn' | Constant (NOT 'SYSTEM') |
 | cre_date | NOW() | System timestamp |
 | sr_no | Running number | SQL Server Sequence |

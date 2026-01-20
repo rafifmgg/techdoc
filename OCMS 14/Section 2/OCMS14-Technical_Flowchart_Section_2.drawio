@@ -137,7 +137,7 @@
         <mxCell id="info-status" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;Violation Status Codes:&lt;/b&gt;&lt;div&gt;- O = Outstanding (Unpaid notices)&lt;/div&gt;&lt;div&gt;- S = Settled (Paid notices)&lt;/div&gt;&lt;div&gt;- C = Cancelled (TS/PS/Archived)&lt;/div&gt;" vertex="1">
           <mxGeometry height="100" width="240" x="340" y="300" as="geometry" />
         </mxCell>
-        <mxCell id="info-cron" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CRON Schedule:&lt;/b&gt;&lt;div&gt;- Trigger: Daily (TBD timing)&lt;/div&gt;&lt;div&gt;- Shedlock Name: vhub_update_violation_api&lt;/div&gt;" vertex="1">
+        <mxCell id="info-cron" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CRON Schedule:&lt;/b&gt;&lt;div&gt;- Trigger: Daily at 02:00 AM&lt;/div&gt;&lt;div&gt;- CRON: 0 0 2 * * ?&lt;/div&gt;&lt;div&gt;- Shedlock: sync_vhub_violation&lt;/div&gt;" vertex="1">
           <mxGeometry height="80" width="240" x="600" y="300" as="geometry" />
         </mxCell>
       </root>
@@ -867,6 +867,9 @@
         <mxCell id="sftp-spec" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;vHub SFTP Specification:&lt;/b&gt;&lt;div&gt;- Format: XML&lt;/div&gt;&lt;div&gt;- Frequency: Daily&lt;/div&gt;&lt;div&gt;- File Name: URA_VHUB_VIOLATION_YYYYMMDD_HHMMSS.xml&lt;/div&gt;&lt;div&gt;- Reference: vHub External Agency Interface&lt;/div&gt;&lt;div&gt;&amp;nbsp; Requirement Specifications v1.3&lt;/div&gt;" vertex="1">
           <mxGeometry height="110" width="340" x="20" y="70" as="geometry" />
         </mxCell>
+        <mxCell id="info-cron-sftp" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CRON Schedule:&lt;/b&gt;&lt;div&gt;- Trigger: Daily at 03:00 AM&lt;/div&gt;&lt;div&gt;- CRON: 0 0 3 * * ?&lt;/div&gt;&lt;div&gt;- Shedlock: generate_vhub_sftp_file&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="240" x="380" y="85" as="geometry" />
+        </mxCell>
         <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
           <mxGeometry height="60" width="100" x="40" y="220" as="geometry" />
         </mxCell>
@@ -976,6 +979,9 @@
         <mxCell id="repccs-spec" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;REPCCS SFTP Specification:&lt;/b&gt;&lt;div&gt;- Format: CSV/TXT&lt;/div&gt;&lt;div&gt;- Frequency: Daily&lt;/div&gt;&lt;div&gt;- Reference: REPCCS Interfaces to Other&lt;/div&gt;&lt;div&gt;&amp;nbsp; URA System(s) v2.0&lt;/div&gt;" vertex="1">
           <mxGeometry height="100" width="280" x="20" y="70" as="geometry" />
         </mxCell>
+        <mxCell id="info-cron-repccs" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CRON Schedule:&lt;/b&gt;&lt;div&gt;- Trigger: Daily at 04:00 AM&lt;/div&gt;&lt;div&gt;- CRON: 0 0 4 * * ?&lt;/div&gt;&lt;div&gt;- Shedlock: generate_rep_listed_vehicle&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="250" x="320" y="80" as="geometry" />
+        </mxCell>
         <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
           <mxGeometry height="60" width="100" x="40" y="220" as="geometry" />
         </mxCell>
@@ -1067,6 +1073,9 @@
         <mxCell id="ces-spec" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CES EHT SFTP Specification:&lt;/b&gt;&lt;div&gt;- Format: CSV/TXT&lt;/div&gt;&lt;div&gt;- Frequency: Daily&lt;/div&gt;&lt;div&gt;- Purpose: Certis enforcement&lt;/div&gt;" vertex="1">
           <mxGeometry height="90" width="250" x="20" y="70" as="geometry" />
         </mxCell>
+        <mxCell id="info-cron-ces" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CRON Schedule:&lt;/b&gt;&lt;div&gt;- Trigger: Daily at 04:30 AM&lt;/div&gt;&lt;div&gt;- CRON: 0 30 4 * * ?&lt;/div&gt;&lt;div&gt;- Shedlock: generate_ces_tagged_vehicle&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="250" x="290" y="75" as="geometry" />
+        </mxCell>
         <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
           <mxGeometry height="60" width="100" x="40" y="210" as="geometry" />
         </mxCell>
@@ -1157,6 +1166,9 @@
         </mxCell>
         <mxCell id="admin-spec" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;Admin Fee Parameters:&lt;/b&gt;&lt;div&gt;- FOD: Days before adding admin fee&lt;/div&gt;&lt;div&gt;- AFO: Admin fee amount&lt;/div&gt;&lt;div&gt;- Source: ocms_parameter (Intranet)&lt;/div&gt;" vertex="1">
           <mxGeometry height="90" width="260" x="20" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="info-cron-adminfee" parent="sw-cron" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#82b366;fillColor=#d5e8d4;" value="&lt;b&gt;CRON Schedule:&lt;/b&gt;&lt;div&gt;- Trigger: Daily at 01:00 AM&lt;/div&gt;&lt;div&gt;- CRON: 0 0 1 * * ?&lt;/div&gt;&lt;div&gt;- Shedlock: apply_admin_fee&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="220" x="300" y="75" as="geometry" />
         </mxCell>
         <mxCell id="start" parent="sw-cron" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
           <mxGeometry height="60" width="100" x="40" y="210" as="geometry" />

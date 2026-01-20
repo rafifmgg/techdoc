@@ -21,6 +21,7 @@ refer to FD instead of duplicating content.
 | v1.1 | Claude | 18/01/2026 | Updated queries and database operations based on data dictionary |
 | v1.2 | Claude | 19/01/2026 | Yi Jie Review Fixes: (1) Replaced SELECT * with specific fields, (2) Added API response format standards, (3) Added eligibility scenarios by source, (4) Fixed flowchart references, (5) Added sync flag documentation, (6) Clarified batch job logging approach, (7) Added push mechanism details, (8) Documented sequential/parallel error flow |
 | v1.3 | Claude | 19/01/2026 | Data Dictionary Alignment: (1) Fixed table name ocms_offence_notice_owner_driver_addr, (2) Fixed computer_rule_code type to integer, (3) Marked sync flag fields as [NEW FIELD] for database schema |
+| v1.4 | Claude | 20/01/2026 | Backend Code Alignment: (1) Updated sync field from sync_to_internet to is_sync per actual code, (2) Updated CRON job names to match code: FurnishSyncJob → Ocms41SyncFurnishedJob, NoticeSyncJob → SyncIntranetInternetJob, (3) Added Shedlock names to CRON jobs table, (4) Added note on mha_dh_check_allow vs dh_mha_check_allow discrepancy |
 
 ---
 
@@ -216,6 +217,8 @@ Tab: 4.3 Type O & E Processing Flow
 | offender_indicator | varchar(1) | Y | Is offender |
 | mha_dh_check_allow | varchar(1) | N | Bypass MHA/DataHive check |
 
+**Note:** Field name in Data Dictionary is `mha_dh_check_allow`. Backend code uses `dh_mha_check_allow` (line 76-77 in OcmsOffenceNoticeOwnerDriver.java). Verify with database team which is the actual column name.
+
 #### Hardcoded MINDEF Address (ocms_offence_notice_owner_driver_addr)
 
 | Field | Type | Value | Description |
@@ -375,37 +378,49 @@ WHERE vehicle_no = :vehicleNo
 
 #### Sync Flag Documentation
 
-**[NEW FIELD]** The sync mechanism fields below are new fields to be added to the database schema for this feature.
+The sync mechanism uses `is_sync` flag in both Intranet and Internet databases to track synchronization status.
 
-The sync mechanism uses flags in both Intranet and Internet databases to track synchronization status:
-
-##### Intranet Sync Flags (ocms_valid_offence_notice) [NEW FIELD]
+##### Intranet Sync Flag (ocms_valid_offence_notice)
 
 | Field | Type | Description | Values |
 | --- | --- | --- | --- |
-| sync_to_internet | varchar(1) | Mark notice for Internet sync | Y = Needs sync, N = Synced |
-| sync_timestamp | datetime2(7) | Last successful sync time | Timestamp |
+| is_sync | varchar(1) | Mark notice for Internet sync | N = Needs sync, Y = Synced (default 'N') |
 
-##### Internet Sync Flags (eocms_valid_offence_notice)
+**Code Reference:** `OcmsValidOffenceNotice.java` line 165-166
+```java
+@Column(name = "is_sync", length = 1)
+private String isSync = "N";
+```
+
+##### Internet Sync Flag (eocms_valid_offence_notice)
 
 | Field | Type | Description | Values |
 | --- | --- | --- | --- |
-| is_sync | varchar(1) | Mark record for Intranet sync | Y = Synced, N = Needs sync |
-| sync_timestamp | datetime2(7) | Last successful sync time | Timestamp |
+| is_sync | varchar(1) | Mark record for Intranet sync | N = Needs sync, Y = Synced (default 'N') |
+
+**Code Reference:** `EocmsValidOffenceNotice.java` line 73-74
 
 ##### Sync Flow Logic
 
 | Direction | Trigger | Sync Flag Update |
 | --- | --- | --- |
-| Intranet → Internet | Notice created/updated | Set `sync_to_internet = 'Y'`, CRON picks up and syncs, then set `sync_to_internet = 'N'` |
+| Intranet → Internet | Notice created/updated | Set `is_sync = 'N'`, CRON picks up and syncs, then set `is_sync = 'Y'` |
 | Internet → Intranet | Furnish submitted | Set `is_sync = 'N'`, CRON picks up and syncs, then set `is_sync = 'Y'` |
+
+**Code Reference:** `SyncIntranetInternetJob.java` line 14-27
+```
+For each record with is_sync = false:
+1. Check if corresponding record exists in target DB
+2. INSERT if not exists, UPDATE if exists
+3. Set is_sync = true in source record
+```
 
 ##### Sync Failure Handling
 
 | Scenario | Action | Flag State |
 | --- | --- | --- |
-| Sync success | Clear flag | `sync_to_internet = 'N'` or `is_sync = 'Y'` |
-| Sync failure | Keep flag, retry | Flag remains, picked up by next CRON |
+| Sync success | Clear flag | `is_sync = 'Y'` |
+| Sync failure | Keep flag, retry | `is_sync = 'N'` remains, picked up by next CRON |
 | Multiple failures | Alert OIC | Flag remains, logged for manual review |
 
 #### Push/Sync Mechanism Details
@@ -417,16 +432,17 @@ This section clarifies how data is pushed/synced between Intranet and Internet z
 | Attribute | Value |
 | --- | --- |
 | Mechanism | **CRON Job + Direct Database Write** |
-| Job Name | NoticeSyncJob |
+| Job Name | SyncIntranetInternetJob |
+| Shedlock Name | sync_intranet_internet |
 | Frequency | Every 5 minutes |
 | Connection | Intranet DB reads from ocms_valid_offence_notice, writes to eocms_valid_offence_notice |
 | Authentication | Database connection credentials (not API) |
 
 **Process Flow:**
 1. CRON job runs on Intranet server
-2. Query records where `sync_to_internet = 'Y'`
+2. Query records where `is_sync = 'N'`
 3. Direct INSERT/UPDATE to Internet database (eocms_valid_offence_notice)
-4. On success: Set `sync_to_internet = 'N'`
+4. On success: Set `is_sync = 'Y'`
 5. On failure: Log error, retry in next cycle
 
 ##### Internet → Intranet Sync (Furnish Data)
@@ -434,7 +450,8 @@ This section clarifies how data is pushed/synced between Intranet and Internet z
 | Attribute | Value |
 | --- | --- |
 | Mechanism | **CRON Job + Direct Database Read** |
-| Job Name | FurnishSyncJob |
+| Job Name | Ocms41SyncFurnishedJob |
+| Shedlock Name | sync_furnish_intranet |
 | Frequency | Every 5 minutes |
 | Connection | Intranet DB reads from eocms_furnish_application, writes to ocms_furnish_application |
 | Authentication | Database connection credentials (not API) |
@@ -1052,32 +1069,33 @@ WHERE vehicle_registration_type IN ('D', 'I', 'F')
 
 ### D. CRON Jobs Summary
 
-| Job Name | Schedule | Purpose |
-| --- | --- | --- |
-| PrepareForRD1Job | End of day | Process NPA → RD1 |
-| PrepareForRD2Job | End of RD1 | Process RD1 → RD2 |
-| PrepareForDN1Job | End of day | Process furnished notices → DN1 |
-| PrepareForDN2Job | End of DN1 | Process DN1 → DN2 |
-| DipMidForRecheckJob | 11:59 PM daily | Re-apply PS-MID at RD2/DN2 |
-| ANLetterGenerationJob | End of day | Generate AN Letters |
-| SuspendMIDNoticesJob | End of RD2/DN2 | Apply PS-MID suspension |
-| FurnishSyncJob | Scheduled | Sync furnish data Internet → Intranet |
+| Job Name | Shedlock Name | Schedule | Purpose |
+| --- | --- | --- | --- |
+| ToppanLettersGeneratorJob | prepare_rd1_letter | End of day | Process NPA → RD1, generate letters |
+| ToppanLettersGeneratorJob | prepare_rd2_letter | End of RD1 | Process RD1 → RD2, generate letters |
+| ToppanLettersGeneratorJob | prepare_dn1_letter | End of day | Process furnished notices → DN1, generate letters |
+| ToppanLettersGeneratorJob | prepare_dn2_letter | End of DN1 | Process DN1 → DN2, generate letters |
+| DipMidForRecheckJob | ocms19_dip_mid_for_recheck | 11:59 PM daily | Re-apply PS-MID at RD2/DN2 |
+| ToppanLettersGeneratorJob | generate_an_letter | End of day | Generate AN Letters |
+| SuspendMIDNoticesJob | suspend_mid_notices | End of RD2/DN2 | Apply PS-MID suspension |
+| Ocms41SyncFurnishedJob | sync_furnish_intranet | Frequent | Sync furnish data Internet → Intranet |
+| SyncIntranetInternetJob | sync_intranet_internet | Frequent | Sync VON/ONOD to Internet |
 
 #### CRON Job Logging Approach
 
 Per Yi Jie guidelines, logging approach differs by job frequency:
 
-| Job Name | Frequency | Log To | Reason |
-| --- | --- | --- | --- |
-| PrepareForRD1Job | Daily | Batch Job Table | Daily job, track completion status |
-| PrepareForRD2Job | Daily | Batch Job Table | Daily job, track completion status |
-| PrepareForDN1Job | Daily | Batch Job Table | Daily job, track completion status |
-| PrepareForDN2Job | Daily | Batch Job Table | Daily job, track completion status |
-| DipMidForRecheckJob | Daily | Batch Job Table | Daily job, track completion status |
-| ANLetterGenerationJob | Daily | Batch Job Table | Daily job, track completion status |
-| SuspendMIDNoticesJob | Daily | Batch Job Table | Daily job, track completion status |
-| **FurnishSyncJob** | **Frequent** | **Application Logs Only** | **High frequency sync, no batch table logging** |
-| **NoticeSyncJob** | **Frequent** | **Application Logs Only** | **High frequency sync, no batch table logging** |
+| Job Name | Shedlock Name | Frequency | Log To | Reason |
+| --- | --- | --- | --- | --- |
+| ToppanLettersGeneratorJob | prepare_rd1_letter | Daily | Batch Job Table | Daily job, track completion status |
+| ToppanLettersGeneratorJob | prepare_rd2_letter | Daily | Batch Job Table | Daily job, track completion status |
+| ToppanLettersGeneratorJob | prepare_dn1_letter | Daily | Batch Job Table | Daily job, track completion status |
+| ToppanLettersGeneratorJob | prepare_dn2_letter | Daily | Batch Job Table | Daily job, track completion status |
+| DipMidForRecheckJob | ocms19_dip_mid_for_recheck | Daily | Batch Job Table | Daily job, track completion status |
+| ToppanLettersGeneratorJob | generate_an_letter | Daily | Batch Job Table | Daily job, track completion status |
+| SuspendMIDNoticesJob | suspend_mid_notices | Daily | Batch Job Table | Daily job, track completion status |
+| **Ocms41SyncFurnishedJob** | **sync_furnish_intranet** | **Frequent** | **Application Logs Only** | **High frequency sync, no batch table logging** |
+| **SyncIntranetInternetJob** | **sync_intranet_internet** | **Frequent** | **Application Logs Only** | **High frequency sync, no batch table logging** |
 
 ##### Batch Job Table Logging
 
@@ -1099,7 +1117,7 @@ For daily jobs, record to `ocms_batch_job_log`:
 
 ##### Application Log Only (Frequent Sync Jobs)
 
-For high-frequency sync jobs (FurnishSyncJob, NoticeSyncJob):
+For high-frequency sync jobs (Ocms41SyncFurnishedJob, SyncIntranetInternetJob):
 - Log to application logs only (not batch table)
 - Log format: `[TIMESTAMP] [JOB_NAME] [LEVEL] [MESSAGE]`
 - Log error messages for failed sync attempts

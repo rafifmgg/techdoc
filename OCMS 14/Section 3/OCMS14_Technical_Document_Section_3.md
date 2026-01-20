@@ -21,6 +21,8 @@ refer to FD instead of duplicating content.
 | v1.1 | Claude | 18/01/2026 | Added API Specification tables per template format (Section 3.3.2, 3.5.1) |
 | v1.2 | Claude | 19/01/2026 | Yi Jie compliance fixes: Added batch job tracking section, Shedlock naming, aligned API response format with guidelines |
 | v1.3 | Claude | 19/01/2026 | Data Dictionary compliance: Fixed ins_user_id→cre_user_id, offence_date→notice_date_and_time, removed non-existent current_offender_id, SQL Server syntax (GETDATE) |
+| v1.4 | Claude | 20/01/2026 | Code alignment: Updated Shedlock naming to snake_case per Yi Jie #14, corrected schedule to 02:00 AM per actual code |
+| v1.5 | Claude | 20/01/2026 | Code alignment: Updated report columns (7→13) per RipHirerDriverReportHelper.java, added missing error codes (OCMS-4002, OCMS-4005, OCMS-4008), replaced OCMS-5000 with OCMS-4007 per actual code |
 
 ---
 
@@ -308,7 +310,10 @@ WHERE FIN = '<fin_number>'
 | Notice Already PS | OCMS-2001 | Notice already has this PS code | Idempotent - return success |
 | Invalid Notice Number | OCMS-4001 | Invalid Notice Number | Notice not found in database |
 | Source Not Allowed | OCMS-4000 | Suspension Source is missing | PLUS cannot apply RIP/RP2 |
+| Stage Not Allowed | OCMS-4002 | Stage not allowed for this suspension type | Notice stage does not permit PS |
 | Paid Notice | OCMS-4003 | Paid/partially paid notices only allow APP, CFA, or VST | Cannot apply RIP/RP2 to paid notice |
+| No Active PS Found | OCMS-4005 | No active PS-RIP/RP2 found for this notice | Revival requires active PS |
+| Cannot Apply FP/PRA | OCMS-4008 | Cannot apply FP or PRA suspension on this notice | CRS PS restriction |
 | System Error | OCMS-4007 | System error. Please inform Administrator | Unexpected system error |
 
 ---
@@ -338,9 +343,14 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 | Attribute | Value |
 | --- | --- |
-| Job Name | generateRIPHirerDriverReport |
-| Schedule | Daily (00:30) |
-| Lock Duration | 15 minutes |
+| Job Name | `generate_rip_hirer_driver_report` |
+| Naming Pattern | `[action]_[subject]_[suffix]` (file/report operations) |
+| Schedule | Daily 02:00 AM |
+| Cron Expression | `0 0 2 * * ?` |
+| Lock At Least | 1 minute |
+| Lock At Most | 15 minutes |
+
+*Note: Naming follows Yi Jie Guideline #14 for file/report operations*
 
 ---
 
@@ -394,15 +404,23 @@ WHERE sn.suspension_type = 'PS'
 
 #### Report Output Columns
 
-| Column | Source Field | Description |
-| --- | --- | --- |
-| Notice No | von.notice_no | Notice number |
-| Offender Name | ond.name | Name of deceased offender |
-| Offender ID | ond.id_no | NRIC/FIN of deceased |
-| Type | ond.owner_driver_indicator | H (Hirer) or D (Driver) |
-| Date of Death | ond.date_of_death | Date of death |
-| Suspension Date | sn.date_of_suspension | Date PS-RP2 was applied |
-| Offence Date | von.notice_date_and_time | Original offence date/time |
+| # | Column | Source Field | Description |
+| --- | --- | --- | --- |
+| 1 | S/N | Generated | Sequential row number |
+| 2 | Notice No | von.notice_no | Notice number |
+| 3 | Vehicle No | von.vehicle_no | Vehicle registration number |
+| 4 | Offender Name | ond.name | Name of deceased offender |
+| 5 | ID Type | ond.id_type | Type of ID (NRIC/FIN) |
+| 6 | ID No | ond.id_no | NRIC/FIN of deceased |
+| 7 | Owner/Driver/Hirer | ond.owner_driver_indicator | O (Owner), H (Hirer), or D (Driver) |
+| 8 | Suspension Date | sn.date_of_suspension | Date PS-RP2 was applied |
+| 9 | Notice Date | von.notice_date_and_time | Notice date and time |
+| 10 | Offence Rule Code | von.offence_rule_code | Offence code reference |
+| 11 | Place of Offence | von.place_of_offence | Location where offence occurred |
+| 12 | Composition Amount | von.composition_amount | Original composition amount |
+| 13 | Amount Payable | von.amount_payable | Current amount payable |
+
+**Note:** Date of Death column is not included in actual code implementation. Pending BA clarification if this should be added.
 
 ---
 
@@ -568,9 +586,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 | Error Scenario | App Error Code | User Message | Brief Description |
 | --- | --- | --- | --- |
-| General Server Error | OCMS-5000 | Something went wrong. Please try again later. | Server error |
+| System Error | OCMS-4007 | System error. Please inform Administrator | Unexpected system error |
 | Bad Request | OCMS-4000 | Invalid request. Please check and try again. | Invalid syntax |
 | Unauthorized Access | OCMS-4001 | You are not authorized. Please log in and try again. | Auth failed |
+| No Active PS Found | OCMS-4005 | No active PS-RIP/RP2 found for this notice | Revival requires active PS |
 
 ---
 
