@@ -4,8 +4,8 @@
 
 | Field | Value |
 |-------|-------|
-| **Document Version** | 1.2 |
-| **Date** | 2026-01-13 |
+| **Document Version** | 1.3 |
+| **Date** | 2026-01-15 |
 | **Epic** | OCMS 21 - Manage Duplicate Notices |
 | **Feature** | Double Booking (DBB) Detection & Suspension |
 | **Source Documents** | v1.0_OCMS_21_Duplicate_Notices.md (FD) |
@@ -279,9 +279,11 @@ try {
 1. Set `dbbQueryFailed = true` flag
 2. Create TS-OLD suspension instead of PS-DBB
 3. Set `suspension_remarks = "TS-OLD: DBB query failed after 3 retries - [exception]"`
-4. Calculate `due_date_of_revival = NOW() + OLD_DURATION days`
+4. Set `due_date_of_revival` based on system configuration (FD does not specify exact duration)
 
 **FD Reference:** Section 3.3/3.4 - "On query failure → TS-OLD suspension"
+
+⚠️ **Note:** FD does not specify the exact duration for TS-OLD revival. Check system configuration for OLD suspension duration.
 
 **Code Reference:** `CreateNoticeServiceImpl.java:1068-1157`
 
@@ -397,6 +399,7 @@ suspendedNotice.setSuspensionSource("ocmsiz_app_conn");
 | 1.0 | 2026-01-08 | Initial planning document |
 | 1.1 | 2026-01-13 | Updated audit fields, verified flowchart compliance |
 | 1.2 | 2026-01-13 | Final verification - TS-OLD consistency, suspension_source fix |
+| 1.3 | 2026-01-15 | Removed hardcoded TS-OLD duration (FD does not specify exact value) |
 
 ### v1.2 Changes (2026-01-13)
 

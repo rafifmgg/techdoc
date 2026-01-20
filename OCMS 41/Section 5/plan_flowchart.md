@@ -4,8 +4,8 @@
 
 | Field | Value |
 |-------|-------|
-| Version | 1.0 |
-| Date | 2026-01-07 |
+| Version | 1.1 |
+| Date | 2026-01-19 |
 | Source | Functional Document v1.1, Section 5 |
 | Module | OCMS 41 - Section 5: Batch Furnish and Batch Update |
 
@@ -115,7 +115,7 @@ Functional Flow drawio memiliki diagram berikut:
 **Database Operations:**
 - ocms_valid_offence_notice: Query notice
 - ocms_offence_notice_owner_driver: INSERT/UPDATE offender
-- eocms_offence_notice_owner_driver: Sync to Internet
+- eocms_furnish_application: Sync to Internet/PII
 
 **Estimated Dimensions:**
 - Width: ~3600px
@@ -139,7 +139,7 @@ Functional Flow drawio memiliki diagram berikut:
 2. OIC navigates to Batch Update screen
 3. OIC enters ID Number
 4. OIC clicks SEARCH
-5. Call GET /notice/offender/outstanding/{idNo}
+5. Call POST /notice/offender/outstanding
 6. Receive response
 7. Decision: Records found? → No: Show "Offender not found"
 8. Display Notice list with mailing addresses
@@ -148,7 +148,7 @@ Functional Flow drawio memiliki diagram berikut:
 11. OIC clicks SUBMIT
 12. Frontend validation
 13. Decision: Valid? → No: Show error
-14. Call PATCH /batch/update-address
+14. Call POST /batch/update-address
 15. Receive response
 16. Display Result Page
 17. End

@@ -4,8 +4,8 @@
 
 | Field | Value |
 |-------|-------|
-| Version | 1.0 |
-| Date | 2026-01-07 |
+| Version | 1.1 |
+| Date | 2026-01-19 |
 | Source | Functional Document v1.1, Section 6 |
 | Module | OCMS 41 - Section 6: PLUS External System Integration |
 
@@ -82,7 +82,7 @@ Functional Flow drawio memiliki diagram berikut:
 2. Call OCMS API: POST /external/plus/check-furnishability
 3. Return result to Portal
 4. Decision: Update allowed? → No: Stop
-5. Call OCMS API: GET /external/plus/offender/{noticeNo}
+5. Call OCMS API: POST /external/plus/get-offender
 6. Return existing offender data to Portal
 7. Receive submit request from Portal
 8. Call OCMS API: POST /external/plus/furnish
@@ -123,7 +123,7 @@ Functional Flow drawio memiliki diagram berikut:
 - ocms_valid_offence_notice: Query notice
 - ocms_offence_notice_owner_driver: SELECT/INSERT/UPDATE offender
 - ocms_offence_notice_owner_driver_addr: INSERT/UPDATE address
-- eocms_offence_notice_owner_driver: Sync to Internet
+- eocms_furnish_application: Sync to Internet
 
 **Estimated Dimensions:**
 - Width: ~3800px
@@ -163,7 +163,7 @@ Functional Flow drawio memiliki diagram berikut:
 2. Call OCMS API: POST /external/plus/check-redirect
 3. Return result to Portal
 4. Decision: Redirect allowed? → No: Stop
-5. Call OCMS API: GET /external/plus/offenders/{noticeNo}
+5. Call OCMS API: POST /external/plus/get-all-offenders
 6. Return all offenders data to Portal
 7. Receive redirect request from Portal
 8. Call OCMS API: POST /external/plus/redirect
@@ -208,7 +208,7 @@ Functional Flow drawio memiliki diagram berikut:
 - ocms_valid_offence_notice: Query notice
 - ocms_offence_notice_owner_driver: SELECT Owner/Hirer/Driver, UPDATE indicators
 - ocms_offence_notice_owner_driver_addr: SELECT/INSERT/UPDATE addresses
-- eocms_offence_notice_owner_driver: Sync to Internet
+- eocms_furnish_application: Sync to Internet
 
 **Estimated Dimensions:**
 - Width: ~3800px

@@ -4,8 +4,8 @@
 
 | Field | Value |
 |-------|-------|
-| **Document Version** | 1.2 |
-| **Date** | 2026-01-13 |
+| **Document Version** | 1.3 |
+| **Date** | 2026-01-15 |
 | **Epic** | OCMS 21 - Manage Duplicate Notices |
 | **Feature** | Technical Flowchart Planning |
 | **Source Documents** | v1.0_OCMS_21_Duplicate_Notices.md (FD)<br>ocms 21 - Func flow_.drawio (Functional Flow) |
@@ -226,8 +226,9 @@ START: Check for Double Booking (triggered from Create Notice)
   ↓
 {Offence Type?}
   ├─→ Type O → [Call Type O DBB Sub-flow] → (Link to Tab 2.3)
-  ├─→ Type E → [Call Type E DBB Sub-flow] → (Link to Tab 2.4)
-  └─→ Type U → [Skip DBB (manual processing)] → RETURN: Not duplicate
+  └─→ Type E → [Call Type E DBB Sub-flow] → (Link to Tab 2.4)
+
+⚠️ **Note:** Type U is NOT handled in Tab 2.2 - Type U notices are routed to manual processing in Tab 1.2 (Create Notice Flow) BEFORE reaching DBB Processing.
   ↓
 {Duplicate detected by sub-flow?}
   ├─→ YES → RETURN: Duplicate (with original notice_no)
@@ -248,7 +249,7 @@ END
 | Decision Diamond | Condition | Path 1 | Path 2 | Code Reference |
 |------------------|-----------|--------|--------|----------------|
 | All fields present? | vehicle_no, date_time, rule_code, pp_code NOT NULL | YES: Continue | NO: Skip DBB | Line 378-381 |
-| Offence Type? | offenceType value | O: Type O flow | E: Type E flow | Line 450/456 |
+| Offence Type? | offenceType value (O or E only - Type U already filtered in Tab 1.2) | O: Type O flow | E: Type E flow | Line 450/456 |
 | Duplicate detected? | Return from sub-flow | YES: Apply PS-DBB | NO: Continue normal | Line 1159 |
 
 ---
@@ -675,6 +676,7 @@ Technical Flowchart: OCMS21_Flowchart.drawio
 | 1.0 | 2026-01-08 | Initial planning document |
 | 1.1 | 2026-01-13 | Updated based on flowchart implementation and FD compliance review |
 | 1.2 | 2026-01-13 | Final verification - fixed eligibility, audit fields, TS-OLD consistency |
+| 1.3 | 2026-01-15 | Removed Type U from Tab 2.2 (Type U handled in Tab 1.2 before DBB processing) |
 
 ### v1.2 Changes (2026-01-13)
 

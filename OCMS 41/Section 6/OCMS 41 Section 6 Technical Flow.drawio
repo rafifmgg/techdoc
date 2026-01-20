@@ -163,7 +163,7 @@
           <mxGeometry x="690" y="140" width="60" height="40" as="geometry" />
         </mxCell>
 
-        <mxCell id="pu-pb4" value="Call OCMS API: GET /offender/{noticeNo}" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="pu-swim-plus">
+        <mxCell id="pu-pb4" value="Call OCMS API: POST /get-offender" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="pu-swim-plus">
           <mxGeometry x="810" y="40" width="100" height="70" as="geometry" />
         </mxCell>
 
@@ -400,7 +400,7 @@
         </mxCell>
 
         <!-- Database query boxes (inside API swimlane) -->
-        <mxCell id="pu-db1" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT * WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pu-swim-api">
+        <mxCell id="pu-db1" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT notice_no, last_processing_stage, vehicle_no WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pu-swim-api">
           <mxGeometry x="260" y="380" width="180" height="50" as="geometry" />
         </mxCell>
         <mxCell id="pu-db2" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;SELECT/INSERT/UPDATE offender&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pu-swim-api">
@@ -409,7 +409,7 @@
         <mxCell id="pu-db3" value="&lt;b&gt;ocms_offence_notice_owner_driver_addr&lt;/b&gt;&lt;div&gt;INSERT/UPDATE mailing address&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pu-swim-api">
           <mxGeometry x="1720" y="380" width="220" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="pu-db4" value="&lt;b&gt;eocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;Sync to Internet DB&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pu-swim-api">
+        <mxCell id="pu-db4" value="&lt;b&gt;eocms_furnish_application&lt;/b&gt;&lt;div&gt;Sync to Internet DB&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pu-swim-api">
           <mxGeometry x="2810" y="380" width="200" height="50" as="geometry" />
         </mxCell>
 
@@ -603,7 +603,7 @@
           <mxGeometry x="690" y="140" width="60" height="40" as="geometry" />
         </mxCell>
 
-        <mxCell id="pr-pb4" value="Call OCMS API: GET /offenders/{noticeNo}" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="pr-swim-plus">
+        <mxCell id="pr-pb4" value="Call OCMS API: POST /get-all-offenders" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="pr-swim-plus">
           <mxGeometry x="810" y="40" width="100" height="70" as="geometry" />
         </mxCell>
 
@@ -825,7 +825,7 @@
         </mxCell>
 
         <!-- Database query boxes (inside API swimlane) -->
-        <mxCell id="pr-db1" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT * WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pr-swim-api">
+        <mxCell id="pr-db1" value="&lt;b&gt;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;SELECT notice_no, last_processing_stage, vehicle_no WHERE notice_no = ?&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pr-swim-api">
           <mxGeometry x="260" y="400" width="180" height="50" as="geometry" />
         </mxCell>
         <mxCell id="pr-db2" value="&lt;b&gt;ocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;SELECT/INSERT/UPDATE offender&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pr-swim-api">
@@ -834,7 +834,7 @@
         <mxCell id="pr-db3" value="&lt;b&gt;ocms_offence_notice_owner_driver_addr&lt;/b&gt;&lt;div&gt;INSERT/UPDATE mailing address&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pr-swim-api">
           <mxGeometry x="1750" y="400" width="220" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="pr-db4" value="&lt;b&gt;eocms_offence_notice_owner_driver&lt;/b&gt;&lt;div&gt;Sync to Internet DB&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pr-swim-api">
+        <mxCell id="pr-db4" value="&lt;b&gt;eocms_furnish_application&lt;/b&gt;&lt;div&gt;Sync to Internet DB&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="pr-swim-api">
           <mxGeometry x="2810" y="400" width="200" height="50" as="geometry" />
         </mxCell>
 
