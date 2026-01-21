@@ -1,4 +1,4 @@
-# OCMS 41 Section 5 - Technical Flowchart Plan
+# OCMS 41 Section 6 - Technical Flowchart Plan
 
 ## Document Information
 
@@ -6,8 +6,8 @@
 |-------|-------|
 | Version | 1.1 |
 | Date | 2026-01-19 |
-| Source | Functional Document v1.1, Section 5 |
-| Module | OCMS 41 - Section 5: Batch Furnish and Batch Update |
+| Source | Functional Document v1.1, Section 6 |
+| Module | OCMS 41 - Section 6: PLUS External System Integration |
 
 ---
 
@@ -21,21 +21,20 @@
 
 ## 1. Overview
 
-Section 5 Technical Flow akan menjelaskan detail teknis untuk batch furnish dan batch update mailing address dari Staff Portal OCMS.
+Section 6 Technical Flow akan menjelaskan detail teknis untuk integrasi PLUS dengan OCMS untuk furnish dan redirect operations.
 
 ### 1.1 Reference Diagrams
 
 Functional Flow drawio memiliki diagram berikut:
-- 5.2 Batch Furnish Owners, Hirer or Drivers
-- 5.3 Batch Update Mailing Addr
+- 6.2.1 PLUS Update Hirer/Driver
+- 6.3.1 PLUS Redirect
 
 ### 1.2 Technical Flow Diagrams Needed
 
 | Diagram | Name | Description |
 |---------|------|-------------|
-| 5.2 | Batch Furnish | Detailed batch furnish process with API & DB |
-| 5.3 | Batch Update Mailing Address | Detailed batch update process with API & DB |
-| 5.3.1 | Retrieve Outstanding Notices | Backend flow for retrieving notices by ID |
+| 6.2 | PLUS Update Hirer/Driver | Detailed flow for PLUS furnish operation with API & DB |
+| 6.3 | PLUS Redirect | Detailed flow for PLUS redirect operation with API & DB |
 
 ---
 
@@ -45,191 +44,175 @@ Functional Flow drawio memiliki diagram berikut:
 
 | Tab | Name | Type | Swimlanes |
 |-----|------|------|-----------|
-| 5.2 | Batch_Furnish_Offender | Detailed | Staff Portal, OCMS Admin API, Intranet DB, Internet DB |
-| 5.3 | Batch_Update_Mailing_Addr | Detailed | Staff Portal, OCMS Admin API, Intranet DB |
-| 5.3.1 | Retrieve_Outstanding_Notices | Backend | OCMS Admin API, Intranet DB |
+| 6.2 | PLUS_Update_Hirer_Driver | Detailed | PLUS Staff Portal, PLUS Backend, OCMS Admin API, Intranet DB |
+| 6.3 | PLUS_Redirect | Detailed | PLUS Staff Portal, PLUS Backend, OCMS Admin API, Intranet DB |
 
 ---
 
 ## 3. Diagram Specifications
 
-### 3.1 Diagram 5.2: Batch Furnish Offender (Detailed)
+### 3.1 Diagram 6.2: PLUS Update Hirer/Driver (Detailed)
 
-**Purpose:** Detailed technical flow for batch furnishing offender to multiple notices
+**Purpose:** Detailed technical flow for PLUS updating Hirer or Driver particulars via OCMS API
 
 **Swimlanes:**
-1. Staff Portal (Blue) - Frontend validation, API calls, result handling
-2. OCMS Admin API Intranet (Green) - Backend processing
-3. Intranet Database (Yellow) - Data storage
-4. Internet Database (Orange) - Sync to Internet
+1. PLUS Staff Portal (Light Blue) - UI interactions
+2. PLUS Intranet Backend (Blue) - PLUS backend processing
+3. OCMS Admin API Intranet (Green) - OCMS API processing
+4. Intranet Database (Yellow) - Data storage
 
 **Flow Elements:**
 
-**Staff Portal:**
+**PLUS Staff Portal:**
 1. Start
-2. OIC navigates to Search Notices page
-3. OIC searches and selects multiple Notices
-4. OIC clicks APPLY OPERATION → BATCH FURNISH
-5. Call POST /batch/check-furnishability
-6. Receive furnishability response
-7. Decision: All non-furnishable? → Yes: Show error, End
-8. Decision: Some non-furnishable? → Yes: Prompt continue
-9. User confirms to continue
-10. Display Batch Furnish form
-11. OIC enters offender details
-12. OIC clicks SUBMIT
-13. Frontend validation
-14. Decision: Valid? → No: Show error
-15. Display overwrite warning prompt
-16. User clicks CONFIRM
-17. Loop: Process each Notice
-18. Call POST /notice/offender/furnish per Notice
-19. Store result (success/failure)
-20. Query DB for latest details
-21. Display Result Page
-22. End
+2. PLM initiates Update Hirer/Driver
+3. Receive furnishability result
+4. Decision: Update allowed? → No: Display error, End
+5. Receive existing offender data
+6. Decision: Existing offender? → Yes: Display form with data / No: Display blank form
+7. PLM enters/updates particulars
+8. PLM clicks SUBMIT
+9. Receive API response
+10. Decision: Success? → No: Display error
+11. Display success message
+12. End
+
+**PLUS Intranet Backend:**
+1. Receive UI request for furnishability check
+2. Call OCMS API: POST /external/plus/check-furnishability
+3. Return result to Portal
+4. Decision: Update allowed? → No: Stop
+5. Call OCMS API: POST /external/plus/get-offender
+6. Return existing offender data to Portal
+7. Receive submit request from Portal
+8. Call OCMS API: POST /external/plus/furnish
+9. Return result to Portal
 
 **OCMS Admin API (Check Furnishability):**
-1. Receive check request
-2. Loop: Check each Notice
-3. Query Notice by noticeNo
+1. Receive check request from PLUS
+2. Query notice by noticeNo
+3. Decision: Notice exists? → No: Return NOT_FOUND
 4. Check processing stage
-5. Return furnishability result
+5. Decision: Can furnish? → No: Return NOT_FURNISHABLE
+6. Return furnishable = true with allowed types
+
+**OCMS Admin API (Get Existing Offender):**
+1. Receive get request from PLUS
+2. Query ocms_offence_notice_owner_driver by notice and type
+3. Decision: Record exists? → No: Return null
+4. Query ocms_offence_notice_owner_driver_addr for address
+5. Return existing offender data
 
 **OCMS Admin API (Furnish):**
-1. Receive furnish request
+1. Receive furnish request from PLUS
 2. Bean validation
 3. Decision: Valid? → No: Return VALIDATION_ERROR
 4. Query notice by noticeNo
 5. Decision: Exists? → No: Return NOT_FOUND
 6. Check furnishability
 7. Decision: Can furnish? → No: Return NOT_FURNISHABLE
-8. Decision: Existing offender? → POST/PATCH
-9. Create/Update offender record
-10. Set offender_indicator = Y
-11. Clear previous offender indicator
-12. Update processing stage
+8. Decision: Existing offender? → Yes: Update / No: Insert
+9. Save address as Mailing Address
+10. Decision: Transfer flag? → Yes: Update offender_indicator
+11. Update processing stage (RD1/DN)
+12. Set NPS = Next Day
 13. Sync to Internet DB
 14. Return success response
 
 **Database Operations:**
 - ocms_valid_offence_notice: Query notice
-- ocms_offence_notice_owner_driver: INSERT/UPDATE offender
-- eocms_furnish_application: Sync to Internet/PII
+- ocms_offence_notice_owner_driver: SELECT/INSERT/UPDATE offender
+- ocms_offence_notice_owner_driver_addr: INSERT/UPDATE address
+- eocms_furnish_application: Sync to Internet
 
 **Estimated Dimensions:**
-- Width: ~3600px
-- Height: ~1300px
+- Width: ~3800px
+- Height: ~1400px
 
 ---
 
-### 3.2 Diagram 5.3: Batch Update Mailing Address (Detailed)
+### 3.2 Diagram 6.3: PLUS Redirect (Detailed)
 
-**Purpose:** Detailed technical flow for batch updating mailing address
+**Purpose:** Detailed technical flow for PLUS redirecting Notice to new Offender via OCMS API
 
 **Swimlanes:**
-1. Staff Portal (Blue) - Search, display, update
-2. OCMS Admin API Intranet (Green) - Backend processing
-3. Intranet Database (Yellow) - Data storage
+1. PLUS Staff Portal (Light Blue) - UI interactions
+2. PLUS Intranet Backend (Blue) - PLUS backend processing
+3. OCMS Admin API Intranet (Green) - OCMS API processing
+4. Intranet Database (Yellow) - Data storage
 
 **Flow Elements:**
 
-**Staff Portal:**
+**PLUS Staff Portal:**
 1. Start
-2. OIC navigates to Batch Update screen
-3. OIC enters ID Number
-4. OIC clicks SEARCH
-5. Call POST /notice/offender/outstanding
-6. Receive response
-7. Decision: Records found? → No: Show "Offender not found"
-8. Display Notice list with mailing addresses
-9. OIC selects Notices to update
-10. OIC enters new mailing address
-11. OIC clicks SUBMIT
-12. Frontend validation
-13. Decision: Valid? → No: Show error
-14. Call POST /batch/update-address
-15. Receive response
-16. Display Result Page
-17. End
+2. PLM initiates Redirect
+3. Receive redirect eligibility result
+4. Decision: Redirect allowed? → No: Display error, End
+5. Receive all offenders data
+6. Display form with existing Owner/Hirer/Driver particulars
+7. PLM selects target offender type
+8. (Optional) PLM edits particulars
+9. PLM clicks SUBMIT
+10. Receive API response
+11. Decision: Success? → No: Display error
+12. Display success message
+13. End
 
-**OCMS Admin API (Get Outstanding):**
-1. Receive request with idNo
-2. Query ocms_offence_notice_owner_driver by id_no
-3. Decision: Records found? → No: Return OFFENDER_NOT_FOUND
-4. Filter by offender_indicator = 'Y'
-5. For each record: Query ocms_valid_offence_notice
-6. For each notice: Query ocms_suspended_notice
-7. Check for active PS (type='PS' AND date_of_revival IS NULL)
-8. Remove notices with active PS
-9. Query ocms_offence_notice_owner_driver_addr for mailing
-10. Consolidate results
-11. Return response
+**PLUS Intranet Backend:**
+1. Receive UI request for redirect eligibility check
+2. Call OCMS API: POST /external/plus/check-redirect
+3. Return result to Portal
+4. Decision: Redirect allowed? → No: Stop
+5. Call OCMS API: POST /external/plus/get-all-offenders
+6. Return all offenders data to Portal
+7. Receive redirect request from Portal
+8. Call OCMS API: POST /external/plus/redirect
+9. Return result to Portal
 
-**OCMS Admin API (Update Address):**
-1. Receive update request
-2. Validate request
-3. Loop: Process each Notice
-4. Query offender record
-5. Decision: Is current offender? → No: Skip
-6. Update/Insert address record
-7. Update contact info if provided
-8. Return success response
+**OCMS Admin API (Check Redirect):**
+1. Receive check request from PLUS
+2. Query notice by noticeNo
+3. Decision: Notice exists? → No: Return NOT_FOUND
+4. Check processing stage
+5. Decision: Can redirect? → No: Return NOT_REDIRECTABLE
+6. Query current offender
+7. Decision: Has current offender? → No: Return NO_CURRENT_OFFENDER
+8. Return redirectable = true with current offender info
+
+**OCMS Admin API (Get All Offenders):**
+1. Receive get request from PLUS
+2. Query ocms_offence_notice_owner_driver for all types
+3. Query ocms_offence_notice_owner_driver_addr for each
+4. Consolidate Owner, Hirer, Driver data
+5. Return all offenders with addresses
+
+**OCMS Admin API (Redirect):**
+1. Receive redirect request from PLUS
+2. Bean validation
+3. Decision: Valid? → No: Return VALIDATION_ERROR
+4. Query notice by noticeNo
+5. Decision: Exists? → No: Return NOT_FOUND
+6. Check redirect eligibility
+7. Decision: Can redirect? → No: Return NOT_REDIRECTABLE
+8. Query current offender
+9. Decision: Same as target? → Yes: Return SAME_OFFENDER
+10. Save updated address as Mailing Address
+11. Set previous offender_indicator = 'N'
+12. Set new offender_indicator = 'Y'
+13. Update processing stage (RD1/DN)
+14. Set NPS = Next Day
+15. Sync to Internet DB
+16. Return success response
 
 **Database Operations:**
-- ocms_offence_notice_owner_driver: Query by id_no
-- ocms_valid_offence_notice: Query notice details
-- ocms_suspended_notice: Check suspension status
-- ocms_offence_notice_owner_driver_addr: Query/Update address
+- ocms_valid_offence_notice: Query notice
+- ocms_offence_notice_owner_driver: SELECT Owner/Hirer/Driver, UPDATE indicators
+- ocms_offence_notice_owner_driver_addr: SELECT/INSERT/UPDATE addresses
+- eocms_furnish_application: Sync to Internet
 
 **Estimated Dimensions:**
-- Width: ~3200px
-- Height: ~1200px
-
----
-
-### 3.3 Diagram 5.3.1: Retrieve Outstanding Notices (Backend Detail)
-
-**Purpose:** Detailed backend flow for retrieving outstanding notices by ID
-
-**Swimlanes:**
-1. OCMS Admin API Intranet (Green) - Processing logic
-2. Intranet Database (Yellow) - Data queries
-
-**Flow Elements:**
-
-**OCMS Admin API:**
-1. Function Start
-2. Extract ID number from request
-3. Query DB for offender records
-4. Decision: Records found? → No: Return NOT_FOUND
-5. Filter by offender_indicator = 'Y'
-6. Result: List of notices where ID is current offender
-7. Loop: For each notice
-8. Query ocms_valid_offence_notice
-9. Decision: Notice found? → No: Skip
-10. Query ocms_suspended_notice
-11. Decision: Any suspension record? → No: Add to eligible list
-12. Decision: suspension_type = 'PS'? → No: Add to eligible list
-13. Decision: date_of_revival IS NULL? → Yes: Has active PS (exclude)
-14. Add to eligible list (PS revived)
-15. Continue loop until all processed
-16. Result: List of notices without active PS
-17. Query ocms_offence_notice_owner_driver_addr for each
-18. Decision: Address found? → Mixed results possible
-19. Consolidate all data
-20. Return response
-21. Function End
-
-**Database Queries:**
-- Query 1: ocms_offence_notice_owner_driver WHERE id_no = ?
-- Query 2: ocms_valid_offence_notice WHERE notice_no = ?
-- Query 3: ocms_suspended_notice WHERE notice_no = ?
-- Query 4: ocms_offence_notice_owner_driver_addr WHERE notice_no = ? AND owner_driver_indicator = ?
-
-**Estimated Dimensions:**
-- Width: ~2800px
-- Height: ~1400px
+- Width: ~3800px
+- Height: ~1500px
 
 ---
 
@@ -239,9 +222,8 @@ Following the flowchart-sizing-standard.md:
 
 | Diagram | Est. Elements | Page Width | Page Height |
 |---------|---------------|------------|-------------|
-| 5.2 Batch Furnish | ~35 | 3600 | 1300 |
-| 5.3 Batch Update | ~30 | 3200 | 1200 |
-| 5.3.1 Retrieve Outstanding | ~25 | 2800 | 1400 |
+| 6.2 PLUS Update | ~40 | 3800 | 1400 |
+| 6.3 PLUS Redirect | ~45 | 3800 | 1500 |
 
 ---
 
@@ -252,44 +234,40 @@ Following the flowchart-sizing-standard.md:
 | Start/End | start-, end- | start-1, end-1 |
 | Process | p- | p-validate, p-query |
 | Decision | d- | d-valid, d-exists |
-| Swimlane | swim- | swim-portal, swim-api |
+| Swimlane | swim- | swim-plus-portal, swim-ocms |
 | Edge | e- | e-1, e-yes, e-no |
 | Database box | db- | db-offender, db-notice |
-| API box | api- | api-furnish, api-update |
-| Loop | loop- | loop-process, loop-notice |
+| API call | api- | api-furnish, api-redirect |
 
 ---
 
 ## 6. Special Flow Patterns
 
-### 6.1 Loop Pattern for Batch Processing
+### 6.1 External System Integration Pattern
 
 ```
-[Loop Start] → [Process Item] → [Store Result] → [Decision: More items?]
-                                                        │
-                                                        ├── Yes → [Loop Start]
-                                                        │
-                                                        └── No → [Continue]
+[PLUS Portal] → [PLUS Backend] → [OCMS API] → [Database]
+      ↑              ↑                ↑             │
+      └──────────────┴────────────────┴─────────────┘
+                  Response Flow
 ```
 
-### 6.2 Permanent Suspension Check Pattern
+### 6.2 Three-Step Operation Pattern
+
+Each operation follows:
+1. **Check** - Verify eligibility (Check Furnishability / Check Redirect)
+2. **Retrieve** - Get existing data (Get Offender / Get All Offenders)
+3. **Execute** - Perform action (Furnish / Redirect)
+
+### 6.3 Offender Flag Transfer Pattern (Redirect)
 
 ```
-[Query ocms_suspended_notice] → [Decision: Record found?]
+[Query Current Offender] → [Set offender_indicator = 'N']
                                         │
-                                        ├── No → [Eligible]
-                                        │
-                                        └── Yes → [Decision: type = PS?]
-                                                        │
-                                                        ├── No → [Eligible]
-                                                        │
-                                                        └── Yes → [Decision: date_of_revival IS NULL?]
-                                                                        │
-                                                                        ├── Yes → [Exclude (Active PS)]
-                                                                        │
-                                                                        └── No → [Eligible (PS Revived)]
+                                        ↓
+[Query Target Offender] → [Set offender_indicator = 'Y']
 ```
 
 ---
 
-*Document generated for OCMS 41 Section 5 flowchart planning*
+*Document generated for OCMS 41 Section 6 flowchart planning*

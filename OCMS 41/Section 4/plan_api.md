@@ -1,13 +1,13 @@
-# OCMS 41 Section 4 - Staff Portal Manual Furnish/Update API Specification
+# OCMS 41 Section 5 - Batch Furnish and Batch Update API Specification
 
 ## Document Information
 
 | Field | Value |
 |-------|-------|
-| Version | 1.2 |
+| Version | 1.1 |
 | Date | 2026-01-19 |
-| Source | Functional Document v1.1, Section 4 |
-| Module | OCMS 41 - Section 4: Staff Portal Manual Furnish or Update Owner, Hirer or Driver Particulars |
+| Source | Functional Document v1.1, Section 5 |
+| Module | OCMS 41 - Section 5: Batch Furnish and Batch Update |
 
 ---
 
@@ -17,22 +17,21 @@
 2. [Internal APIs](#2-internal-apis)
 3. [Error Codes Reference](#3-error-codes-reference)
 4. [Data Types Reference](#4-data-types-reference)
-5. [Database Specification](#5-database-specification)
+5. [Technical Standards](#5-technical-standards)
 
 ---
 
 ## 1. Overview
 
-Section 4 covers the Staff Portal functions for OIC to manually:
-- **Furnish** - Add a new Owner, Hirer or Driver as the Current Offender
-- **Redirect** - Transfer the Offender Indicator to another person/role
-- **Update** - Modify particulars of an existing Current Offender
+Section 5 covers the Staff Portal batch functions:
+- **Batch Furnish** - Furnish the same offender particulars to multiple Notices at once
+- **Batch Update Mailing Address** - Update mailing address for all outstanding Notices of a specific person
 
 ### 1.1 Actors
 
 | Actor | Description |
 |-------|-------------|
-| OIC | Officer-In-Charge who manages offender particulars |
+| OIC | Officer-In-Charge who performs batch operations |
 
 ### 1.2 API Base Path
 
@@ -40,148 +39,33 @@ Section 4 covers the Staff Portal functions for OIC to manually:
 /api/v1/notice/offender
 ```
 
-### 1.3 API Standards
-
-| Standard | Rule |
-|----------|------|
-| HTTP Method | **POST only** for all APIs |
-| Response Format | `{ "data": { "appCode", "message", ... } }` |
-| Sensitive Data | No sensitive data in URL |
-| SQL Query | No `SELECT *` - specify only required fields |
-
 ---
 
 ## 2. Internal APIs
 
-### 2.1 Check Furnish/Redirect Eligibility
+### 2.1 Check Batch Furnishability
 
-**Endpoint:** `POST /notice/offender/check-eligibility`
+**Endpoint:** `POST /notice/offender/batch/check-furnishability`
 
-**Description:** Checks whether a Notice can be furnished or redirected.
+**Description:** Checks whether multiple Notices can be furnished. Returns furnishability status for each Notice.
 
-**User Stories:** OCMS41.4.6.2.2, OCMS41.4.7.2.2
-
-#### Request
-
-```json
-{
-  "noticeNo": "500500303J",
-  "offenderType": "H"
-}
-```
-
-| Field | Type | Required | Max Length | Description | Source |
-|-------|------|----------|------------|-------------|--------|
-| noticeNo | VARCHAR | Yes | 10 | Notice number | User input |
-| offenderType | VARCHAR | Yes | 1 | Role to check: O (Owner), H (Hirer), D (Driver) | User input |
-
-#### Response (Success - Can Furnish/Redirect)
-
-```json
-{
-  "data": {
-    "appCode": "OCMS-2000",
-    "message": "Eligibility check successful",
-    "noticeNo": "500500303J",
-    "canFurnish": true,
-    "canRedirect": true,
-    "currentStage": "RD1",
-    "reasonCode": null,
-    "reasonMessage": null
-  }
-}
-```
-
-| Field | Type | Description | Source |
-|-------|------|-------------|--------|
-| appCode | VARCHAR(20) | Application response code | System generated |
-| message | VARCHAR(200) | Response message | System generated |
-| noticeNo | VARCHAR(10) | Notice number | Request input |
-| canFurnish | BOOLEAN | Whether notice can be furnished | Calculated from VON.last_processing_stage |
-| canRedirect | BOOLEAN | Whether notice can be redirected | Calculated from VON.last_processing_stage |
-| currentStage | VARCHAR(3) | Current processing stage | VON.last_processing_stage |
-| reasonCode | VARCHAR(50) | Reason code if not eligible | System generated |
-| reasonMessage | VARCHAR(200) | Reason message if not eligible | System generated |
-
-#### Response (Cannot Furnish/Redirect)
-
-```json
-{
-  "data": {
-    "appCode": "OCMS-4001",
-    "message": "Notice is not eligible for furnish/redirect",
-    "noticeNo": "500500303J",
-    "canFurnish": false,
-    "canRedirect": false,
-    "currentStage": "CPC",
-    "reasonCode": "LAST_STAGE_AFTER_CPC",
-    "reasonMessage": "Notice is at final processing stage"
-  }
-}
-```
-
----
-
-### 2.2 Furnish Offender
-
-**Endpoint:** `POST /notice/offender/furnish`
-
-**Description:** Adds a new Owner, Hirer or Driver as the Current Offender. If an existing offender exists for the role, it will be overwritten.
-
-**User Stories:** OCMS41.4.6.1-4.6.2.3
+**User Stories:** OCMS41.5.2
 
 #### Request
 
 ```json
 {
-  "noticeNo": "500500303J",
-  "ownerDriverIndicator": "H",
-  "idType": "N",
-  "idNo": "S1234567A",
-  "name": "JOHN LEE",
-  "emailAddr": "john.lee@email.com",
-  "telCode": "65",
-  "telNo": "91234567",
-  "address": {
-    "blkHseNo": "123",
-    "streetName": "ORCHARD ROAD",
-    "bldgName": "PLAZA TOWER",
-    "floorNo": "01",
-    "unitNo": "01",
-    "postalCode": "238888"
-  },
-  "hirerOwnerRelationship": "L",
-  "othersRelationshipDesc": null,
-  "rentalPeriodFrom": "2025-01-01",
-  "rentalPeriodTo": "2025-12-31",
-  "remarks": "Furnished by OIC"
+  "noticeList": [
+    "500500303J",
+    "500500304K",
+    "500500305L"
+  ]
 }
 ```
 
-| Field | Type | Required | Max Length | Nullable | Description | Source | Maps To |
-|-------|------|----------|------------|----------|-------------|--------|---------|
-| noticeNo | VARCHAR | Yes | 10 | NOT NULL | Notice number | User input | OND.notice_no |
-| ownerDriverIndicator | VARCHAR | Yes | 1 | NOT NULL | Role: O (Owner), H (Hirer), D (Driver) | User input | OND.owner_driver_indicator |
-| idType | VARCHAR | Yes | 1 | NOT NULL | ID type: N (NRIC), F (FIN), U (UEN), P (Passport) | User input | OND.id_type |
-| idNo | VARCHAR | Yes | 12 | NOT NULL | ID number | User input | OND.id_no |
-| name | VARCHAR | Yes | 66 | NOT NULL | Full name | User input | OND.name |
-| emailAddr | VARCHAR | No | 320 | NULL | Email address | User input | OND.email_addr |
-| telCode | VARCHAR | No | 3 | NULL | Phone country code | User input | OND.offender_tel_code |
-| telNo | VARCHAR | No | 12 | NULL | Contact number | User input | OND.offender_tel_no |
-| address | Object | No | - | NULL | Mailing address | User input | OND_ADDR table |
-| address.blkHseNo | VARCHAR | No | 10 | NULL | Block/house number | User input | OND_ADDR.blk_hse_no |
-| address.streetName | VARCHAR | No | 32 | NULL | Street name | User input | OND_ADDR.street_name |
-| address.bldgName | VARCHAR | No | 65 | NULL | Building name | User input | OND_ADDR.bldg_name |
-| address.floorNo | VARCHAR | No | 3 | NULL | Floor number | User input | OND_ADDR.floor_no |
-| address.unitNo | VARCHAR | No | 5 | NULL | Unit number | User input | OND_ADDR.unit_no |
-| address.postalCode | VARCHAR | No | 6 | NULL | Postal code | User input | OND_ADDR.postal_code |
-| hirerOwnerRelationship | VARCHAR | Yes* | 1 | NOT NULL | Relationship code (*required for Hirer) | User input | FA.hirer_owner_relationship |
-| othersRelationshipDesc | VARCHAR | No | 15 | NULL | Description if relationship='O' (Others) | User input | FA.others_relationship_desc |
-| rentalPeriodFrom | DATETIME | No | - | NULL | Rental start date (for Hirer with relationship='L') | User input | FA.rental_period_from |
-| rentalPeriodTo | DATETIME | No | - | NULL | Rental end date (for Hirer with relationship='L') | User input | FA.rental_period_to |
-| remarks | VARCHAR | No | 200 | NULL | OIC remarks | User input | FA.remarks |
-
-**Note:** FA = ocms_furnish_application table
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| noticeList | Array<String> | Yes | List of Notice numbers to check (max 100) |
 
 #### Response (Success)
 
@@ -189,83 +73,81 @@ Section 4 covers the Staff Portal functions for OIC to manually:
 {
   "data": {
     "appCode": "OCMS-2000",
-    "message": "Hirer furnished successfully",
-    "noticeNo": "500500303J",
-    "ownerDriverIndicator": "H",
-    "newProcessingStage": "RD2"
-  }
-}
-```
-
-| Field | Type | Description | Source |
-|-------|------|-------------|--------|
-| appCode | VARCHAR(20) | Application response code | System generated |
-| message | VARCHAR(200) | Success message | System generated |
-| noticeNo | VARCHAR(10) | Notice number | Request input |
-| ownerDriverIndicator | VARCHAR(1) | Offender type furnished | Request input |
-| newProcessingStage | VARCHAR(3) | Updated processing stage | Calculated based on offender type |
-
-#### Response (Business Error)
-
-```json
-{
-  "data": {
-    "appCode": "OCMS-4002",
-    "message": "Notice is not at furnishable stage",
-    "noticeNo": "500500303J",
-    "reasonCode": "NOT_FURNISHABLE"
+    "message": "Furnishability check completed",
+    "totalNotices": 3,
+    "furnishableCount": 2,
+    "nonFurnishableCount": 1,
+    "results": [
+      {
+        "noticeNo": "500500303J",
+        "furnishable": true,
+        "reasonCode": null,
+        "reasonMessage": null
+      },
+      {
+        "noticeNo": "500500304K",
+        "furnishable": true,
+        "reasonCode": null,
+        "reasonMessage": null
+      },
+      {
+        "noticeNo": "500500305L",
+        "furnishable": false,
+        "reasonCode": "LAST_STAGE_AFTER_CPC",
+        "reasonMessage": "Notice cannot be furnished because processing stage is after CPC"
+      }
+    ]
   }
 }
 ```
 
 ---
 
-### 2.3 Redirect Notice
+### 2.2 Batch Furnish Offender
 
-**Endpoint:** `POST /notice/offender/redirect`
+**Endpoint:** `POST /notice/offender/batch/furnish`
 
-**Description:** Transfers the Offender Indicator to another person/role and initiates processing for the new offender.
+**Description:** Furnishes the same offender particulars to multiple Notices. Processes each Notice individually and returns consolidated results.
 
-**User Stories:** OCMS41.4.7.1-4.7.2.3
+**User Stories:** OCMS41.5.2
 
 #### Request
 
 ```json
 {
-  "noticeNo": "500500303J",
-  "fromOwnerDriverIndicator": "O",
-  "toOwnerDriverIndicator": "H",
-  "idType": "N",
+  "noticeList": [
+    "500500303J",
+    "500500304K"
+  ],
+  "ownerDriverIndicator": "H",
+  "idType": "NRIC",
   "idNo": "S1234567A",
   "name": "JOHN LEE",
   "emailAddr": "john.lee@email.com",
-  "telCode": "65",
-  "telNo": "91234567",
+  "countryCode": "65",
+  "offenderTelNo": "91234567",
   "address": {
-    "blkHseNo": "123",
+    "blockNo": "123",
     "streetName": "ORCHARD ROAD",
-    "bldgName": "PLAZA TOWER",
+    "buildingName": "PLAZA TOWER",
     "floorNo": "01",
     "unitNo": "01",
     "postalCode": "238888"
-  },
-  "remarks": "Redirected by OIC"
+  }
 }
 ```
 
-| Field | Type | Required | Max Length | Nullable | Description | Source | Maps To |
-|-------|------|----------|------------|----------|-------------|--------|---------|
-| noticeNo | VARCHAR | Yes | 10 | NOT NULL | Notice number | User input | OND.notice_no |
-| fromOwnerDriverIndicator | VARCHAR | Yes | 1 | NOT NULL | Current offender role | User input | OND.owner_driver_indicator (source) |
-| toOwnerDriverIndicator | VARCHAR | Yes | 1 | NOT NULL | Target offender role | User input | OND.owner_driver_indicator (target) |
-| idType | VARCHAR | Yes | 1 | NOT NULL | ID type of new offender | User input | OND.id_type |
-| idNo | VARCHAR | Yes | 12 | NOT NULL | ID number of new offender | User input | OND.id_no |
-| name | VARCHAR | Yes | 66 | NOT NULL | Full name of new offender | User input | OND.name |
-| emailAddr | VARCHAR | No | 320 | NULL | Email address | User input | OND.email_addr |
-| telCode | VARCHAR | No | 3 | NULL | Phone country code | User input | OND.offender_tel_code |
-| telNo | VARCHAR | No | 12 | NULL | Contact number | User input | OND.offender_tel_no |
-| address | Object | No | - | NULL | Mailing address | User input | OND_ADDR table |
-| remarks | VARCHAR | No | 200 | NULL | OIC remarks | User input | FA.remarks |
+| Field | Type | Required | Max Length | Description |
+|-------|------|----------|------------|-------------|
+| noticeList | Array<String> | Yes | 100 items | List of Notice numbers to furnish |
+| ownerDriverIndicator | String | Yes | 1 | Role: O (Owner), H (Hirer), D (Driver) |
+| idType | String | Yes | 20 | ID type: NRIC, FIN, UEN, PASSPORT |
+| idNo | String | Yes | 20 | ID number |
+| name | String | Yes | 66 | Full name |
+| emailAddr | String | No | 320 | Email address |
+| countryCode | String | No | 5 | Phone country code |
+| offenderTelNo | String | No | 20 | Contact number |
+| address | Object | No | - | Mailing address |
 
 #### Response (Success)
 
@@ -273,66 +155,198 @@ Section 4 covers the Staff Portal functions for OIC to manually:
 {
   "data": {
     "appCode": "OCMS-2000",
-    "message": "Notice redirected successfully",
-    "noticeNo": "500500303J",
-    "redirectedFrom": "O",
-    "redirectedTo": "H",
-    "newProcessingStage": "RD1"
+    "message": "Batch furnish completed",
+    "totalProcessed": 2,
+    "successCount": 2,
+    "failureCount": 0,
+    "successRecords": [
+      {
+        "noticeNo": "500500303J",
+        "offenderName": "JOHN LEE",
+        "offenderId": "S1234567A",
+        "ownerDriverIndicator": "H",
+        "newProcessingStage": "RD2"
+      },
+      {
+        "noticeNo": "500500304K",
+        "offenderName": "JOHN LEE",
+        "offenderId": "S1234567A",
+        "ownerDriverIndicator": "H",
+        "newProcessingStage": "RD1"
+      }
+    ],
+    "failedRecords": []
   }
 }
 ```
 
-| Field | Type | Description | Source |
-|-------|------|-------------|--------|
-| appCode | VARCHAR(20) | Application response code | System generated |
-| message | VARCHAR(200) | Success message | System generated |
-| noticeNo | VARCHAR(10) | Notice number | Request input |
-| redirectedFrom | VARCHAR(1) | Previous offender type | Request input |
-| redirectedTo | VARCHAR(1) | New offender type | Request input |
-| newProcessingStage | VARCHAR(3) | Reset processing stage | Calculated based on target offender type |
+#### Response (Partial Success)
+
+```json
+{
+  "data": {
+    "appCode": "OCMS-2001",
+    "message": "Batch furnish completed with errors",
+    "totalProcessed": 3,
+    "successCount": 2,
+    "failureCount": 1,
+    "successRecords": [...],
+    "failedRecords": [
+      {
+        "noticeNo": "500500305L",
+        "furnishedName": "JOHN LEE",
+        "furnishedId": "S1234567A",
+        "errorCode": "DB_UPDATE_FAILED",
+        "errorMessage": "Failed to update database"
+      }
+    ]
+  }
+}
+```
 
 ---
 
-### 2.4 Update Offender Particulars
+### 2.3 Get Outstanding Notices by ID
 
-**Endpoint:** `POST /notice/offender/update`
+**Endpoint:** `POST /notice/offender/outstanding`
 
-**Description:** Updates the particulars of an existing Current Offender without changing the Offender Indicator.
+**Description:** Retrieves all outstanding Notices where the person (by ID number) is the Current Offender. Excludes Notices with active Permanent Suspension.
 
-**User Stories:** OCMS41.4.8.1-4.8.2.3
+**User Stories:** OCMS41.5.3
 
 #### Request
 
 ```json
 {
-  "noticeNo": "500500303J",
-  "ownerDriverIndicator": "H",
-  "name": "JOHN LEE UPDATED",
-  "emailAddr": "john.lee.new@email.com",
-  "telCode": "65",
-  "telNo": "98765432",
-  "address": {
-    "blkHseNo": "456",
+  "idNo": "S1234567A"
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| idNo | String | Yes | ID number to search |
+
+#### Response (Success - Records Found)
+
+```json
+{
+  "data": {
+    "appCode": "OCMS-2000",
+    "message": "Outstanding notices retrieved",
+    "idNo": "S1234567A",
+    "totalNotices": 3,
+    "offenderDetails": {
+      "name": "JOHN LEE",
+      "idType": "NRIC",
+      "idNo": "S1234567A"
+    },
+    "registeredAddress": {
+      "blockNo": "456",
+      "streetName": "BUKIT TIMAH ROAD",
+      "buildingName": null,
+      "floorNo": "05",
+      "unitNo": "123",
+      "postalCode": "289628"
+    },
+    "notices": [
+      {
+        "noticeNo": "500500303J",
+        "summonNo": "SUM123456",
+        "vehicleNo": "SNC7392R",
+        "offenceDateTime": "2025-06-15T14:30:00",
+        "ownerDriverIndicator": "H",
+        "offenceRuleCode": "PV01",
+        "amountPayable": 70.00,
+        "lastProcessingStage": "RD1",
+        "mailingAddress": {
+          "blockNo": "123",
+          "streetName": "ORCHARD ROAD",
+          "buildingName": "PLAZA TOWER",
+          "floorNo": "01",
+          "unitNo": "01",
+          "postalCode": "238888"
+        },
+        "offenderTelNo": "91234567",
+        "emailAddr": "john.lee@email.com"
+      },
+      {
+        "noticeNo": "500500304K",
+        "summonNo": "SUM123457",
+        "vehicleNo": "SNC7392R",
+        "offenceDateTime": "2025-07-20T10:15:00",
+        "ownerDriverIndicator": "O",
+        "offenceRuleCode": "PV02",
+        "amountPayable": 120.00,
+        "lastProcessingStage": "OW",
+        "mailingAddress": null,
+        "offenderTelNo": null,
+        "emailAddr": null
+      }
+    ]
+  }
+}
+```
+
+#### Response (No Records Found)
+
+```json
+{
+  "data": {
+    "appCode": "OCMS-4004",
+    "message": "Offender not found",
+    "idNo": "S1234567A",
+    "totalNotices": 0
+  }
+}
+```
+
+---
+
+### 2.4 Batch Update Mailing Address
+
+**Endpoint:** `POST /notice/offender/batch/update-address`
+
+**Description:** Updates mailing address for multiple Notices of the same offender.
+
+**User Stories:** OCMS41.5.3
+
+#### Request
+
+```json
+{
+  "idNo": "S1234567A",
+  "noticeList": [
+    {
+      "noticeNo": "500500303J",
+      "ownerDriverIndicator": "H"
+    },
+    {
+      "noticeNo": "500500304K",
+      "ownerDriverIndicator": "O"
+    }
+  ],
+  "newAddress": {
+    "blockNo": "789",
     "streetName": "MARINA BAY",
-    "bldgName": "TOWER A",
-    "floorNo": "02",
-    "unitNo": "02",
+    "buildingName": "TOWER A",
+    "floorNo": "10",
+    "unitNo": "05",
     "postalCode": "018989"
   },
-  "remarks": "Address updated by OIC"
+  "offenderTelNo": "98765432",
+  "emailAddr": "john.new@email.com"
 }
 ```
 
-| Field | Type | Required | Max Length | Nullable | Description | Source | Maps To |
-|-------|------|----------|------------|----------|-------------|--------|---------|
-| noticeNo | VARCHAR | Yes | 10 | NOT NULL | Notice number | User input | OND.notice_no |
-| ownerDriverIndicator | VARCHAR | Yes | 1 | NOT NULL | Current offender role | User input | OND.owner_driver_indicator |
-| name | VARCHAR | No | 66 | NULL | Updated name | User input | OND.name |
-| emailAddr | VARCHAR | No | 320 | NULL | Updated email | User input | OND.email_addr |
-| telCode | VARCHAR | No | 3 | NULL | Updated country code | User input | OND.offender_tel_code |
-| telNo | VARCHAR | No | 12 | NULL | Updated contact | User input | OND.offender_tel_no |
-| address | Object | No | - | NULL | Updated address | User input | OND_ADDR table |
-| remarks | VARCHAR | No | 200 | NULL | OIC remarks | User input | FA.remarks |
+| Field | Type | Required | Max Length | Description |
+|-------|------|----------|------------|-------------|
+| idNo | String | Yes | 20 | ID number of offender |
+| noticeList | Array | Yes | 100 items | List of notices with their offender types |
+| noticeList[].noticeNo | String | Yes | 10 | Notice number |
+| noticeList[].ownerDriverIndicator | String | Yes | 1 | O/H/D |
+| newAddress | Object | Yes | - | New mailing address |
+| offenderTelNo | String | No | 20 | Updated contact number |
+| emailAddr | String | No | 320 | Updated email address |
 
 #### Response (Success)
 
@@ -340,39 +354,48 @@ Section 4 covers the Staff Portal functions for OIC to manually:
 {
   "data": {
     "appCode": "OCMS-2000",
-    "message": "Offender particulars updated successfully",
-    "noticeNo": "500500303J",
-    "ownerDriverIndicator": "H"
+    "message": "Batch update completed",
+    "totalProcessed": 2,
+    "successCount": 2,
+    "failureCount": 0,
+    "successRecords": [
+      {
+        "noticeNo": "500500303J",
+        "ownerDriverIndicator": "H",
+        "addressUpdated": true
+      },
+      {
+        "noticeNo": "500500304K",
+        "ownerDriverIndicator": "O",
+        "addressUpdated": true
+      }
+    ],
+    "failedRecords": []
   }
 }
 ```
 
-| Field | Type | Description | Source |
-|-------|------|-------------|--------|
-| appCode | VARCHAR(20) | Application response code | System generated |
-| message | VARCHAR(200) | Success message | System generated |
-| noticeNo | VARCHAR(10) | Notice number | Request input |
-| ownerDriverIndicator | VARCHAR(1) | Offender type updated | Request input |
-
 ---
 
-### 2.5 Get Notice Offender Details
+### 2.5 Get Latest Offender and Notice Details
 
-**Endpoint:** `POST /notice/offender/get-details`
+**Endpoint:** `POST /notice/offender/details`
 
-**Description:** Retrieves Owner, Hirer, and Driver details for a Notice.
+**Description:** Retrieves latest offender and notice details for result page display after batch operations.
+
+**User Stories:** OCMS41.5.2, OCMS41.5.3
 
 #### Request
 
 ```json
 {
-  "noticeNo": "500500303J"
+  "noticeNoList": ["500500303J", "500500304K"]
 }
 ```
 
-| Field | Type | Required | Max Length | Description | Source |
-|-------|------|----------|------------|-------------|--------|
-| noticeNo | VARCHAR | Yes | 10 | Notice number | User input |
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| noticeNoList | Array<String> | Yes | List of Notice numbers |
 
 #### Response (Success)
 
@@ -380,363 +403,190 @@ Section 4 covers the Staff Portal functions for OIC to manually:
 {
   "data": {
     "appCode": "OCMS-2000",
-    "message": "Notice offender details retrieved",
-    "noticeNo": "500500303J",
-    "vehicleNo": "SNC7392R",
-    "currentProcessingStage": "RD1",
-    "owner": {
-      "exists": true,
-      "isCurrentOffender": false,
-      "idType": "N",
-      "idNo": "S9876543B",
-      "name": "VEHICLE OWNER PTE LTD",
-      "emailAddr": "owner@company.com",
-      "telNo": "61234567",
-      "address": {
-        "blkHseNo": "100",
-        "streetName": "MAIN STREET",
-        "bldgName": "CORP BUILDING",
-        "floorNo": "10",
-        "unitNo": "01",
-        "postalCode": "123456"
+    "message": "Details retrieved",
+    "results": [
+      {
+        "noticeNo": "500500303J",
+        "currentOffender": {
+          "name": "JOHN LEE",
+          "idNo": "S1234567A",
+          "ownerDriverIndicator": "H"
+        },
+        "lastProcessingStage": "RD2"
       }
-    },
-    "hirer": {
-      "exists": true,
-      "isCurrentOffender": true,
-      "idType": "N",
-      "idNo": "S1234567A",
-      "name": "JOHN LEE",
-      "emailAddr": "john.lee@email.com",
-      "telNo": "91234567",
-      "address": {
-        "blkHseNo": "123",
-        "streetName": "ORCHARD ROAD",
-        "bldgName": "PLAZA TOWER",
-        "floorNo": "01",
-        "unitNo": "01",
-        "postalCode": "238888"
-      }
-    },
-    "driver": {
-      "exists": false,
-      "isCurrentOffender": false
-    }
+    ]
   }
 }
 ```
-
-| Field | Type | Description | Source |
-|-------|------|-------------|--------|
-| appCode | VARCHAR(20) | Application response code | System generated |
-| message | VARCHAR(200) | Response message | System generated |
-| noticeNo | VARCHAR(10) | Notice number | VON.notice_no |
-| vehicleNo | VARCHAR(14) | Vehicle registration number | VON.vehicle_no |
-| currentProcessingStage | VARCHAR(3) | Current processing stage | VON.last_processing_stage |
-| owner.exists | BOOLEAN | Whether owner record exists | Calculated from OND where owner_driver_indicator='O' |
-| owner.isCurrentOffender | BOOLEAN | Whether owner is current offender | OND.offender_indicator = 'Y' |
-| owner.idType | VARCHAR(1) | Owner ID type | OND.id_type |
-| owner.idNo | VARCHAR(12) | Owner ID number | OND.id_no |
-| owner.name | VARCHAR(66) | Owner name | OND.name |
-| owner.emailAddr | VARCHAR(320) | Owner email | OND.email_addr |
-| owner.telNo | VARCHAR(12) | Owner contact number | OND.offender_tel_no |
-| owner.address | Object | Owner address | OND_ADDR table (type_of_address='furnished_mail') |
-| hirer.* | - | Same structure as owner | OND where owner_driver_indicator='H' |
-| driver.* | - | Same structure as owner | OND where owner_driver_indicator='D' |
 
 ---
 
 ## 3. Error Codes Reference
 
-### 3.1 Success Codes (HTTP 200)
+### 3.1 Validation Errors (HTTP 400)
 
-| App Code | Message |
-|----------|---------|
-| OCMS-2000 | Success |
+| Error Type | Field | Message |
+|------------|-------|---------|
+| VALIDATION_ERROR | noticeList | Notice list is required |
+| VALIDATION_ERROR | noticeList | Notice list cannot be empty |
+| VALIDATION_ERROR | noticeList | Maximum 100 notices allowed per batch |
+| VALIDATION_ERROR | idNo | ID number is required |
+| VALIDATION_ERROR | name | Name is required |
+| VALIDATION_ERROR | name | Name exceeds maximum length (66 characters) |
+| VALIDATION_ERROR | newAddress | Address is required |
 
-### 3.2 Validation Errors (HTTP 400)
+### 3.2 Business Errors (HTTP 409)
 
-```json
-{
-  "data": {
-    "appCode": "OCMS-4000",
-    "message": "Validation error: {field} - {error message}",
-    "noticeNo": "500500303J"
-  }
-}
-```
+| Reason | Message |
+|--------|---------|
+| ALL_NOT_FURNISHABLE | All selected Notices are not furnishable |
+| OFFENDER_NOT_FOUND | No outstanding Notices found for this ID |
+| NOTICE_NOT_FOUND | Notice not found |
+| NOT_CURRENT_OFFENDER | Cannot update - not the current offender |
+| PERMANENT_SUSPENSION | Notice has active permanent suspension |
 
-| App Code | Field | Message |
-|----------|-------|---------|
-| OCMS-4000 | noticeNo | Notice number is required |
-| OCMS-4000 | ownerDriverIndicator | Invalid offender type |
-| OCMS-4000 | idNo | ID number is required |
-| OCMS-4000 | name | Name is required |
+### 3.3 Technical Errors (HTTP 500)
 
-### 3.3 Authentication Errors (HTTP 401)
-
-```json
-{
-  "data": {
-    "appCode": "OCMS-4010",
-    "message": "Authentication failed"
-  }
-}
-```
-
-| App Code | Reason | Message |
-|----------|--------|---------|
-| OCMS-4010 | JWT_INVALID | Invalid JWT token |
-| OCMS-4011 | API_KEY_INVALID | Invalid Auth Token |
-
-### 3.4 Business Errors (HTTP 409)
-
-```json
-{
-  "data": {
-    "appCode": "OCMS-4090",
-    "message": "Business rule violation",
-    "noticeNo": "500500303J",
-    "reasonCode": "NOT_FURNISHABLE"
-  }
-}
-```
-
-| App Code | Reason Code | Message |
-|----------|-------------|---------|
-| OCMS-4001 | NOT_FURNISHABLE | Notice is not at furnishable stage |
-| OCMS-4002 | LAST_STAGE_AFTER_CPC | Notice is at final processing stage |
-| OCMS-4003 | OFFENDER_NOT_FOUND | Offender record not found |
-| OCMS-4004 | NOT_CURRENT_OFFENDER | Cannot update - not the current offender |
-| OCMS-4005 | REDIRECT_SAME_ROLE | Cannot redirect to the same role |
-
-### 3.5 Technical Errors (HTTP 500)
-
-```json
-{
-  "data": {
-    "appCode": "OCMS-5000",
-    "message": "Internal server error",
-    "noticeNo": "500500303J"
-  }
-}
-```
-
-| App Code | Operation | Message |
-|----------|-----------|---------|
-| OCMS-5001 | DB_UPDATE | Failed to update database |
-| OCMS-5002 | SYNC_INTERNET | Failed to sync to Internet DB after 3 retries |
+| Operation | Message |
+|-----------|---------|
+| DB_UPDATE | Failed to update database |
+| BATCH_PROCESSING | Error processing batch request |
 
 ---
 
 ## 4. Data Types Reference
 
-### 4.1 Owner Driver Indicator Values
+### 4.1 Owner/Driver Indicator (owner_driver_indicator)
 
-| Code | Description | Source |
-|------|-------------|--------|
-| O | Vehicle Owner | Standard Code: OWNER_DRIVER_IND |
-| H | Hirer | Standard Code: OWNER_DRIVER_IND |
-| D | Driver | Standard Code: OWNER_DRIVER_IND |
+| Code | Description |
+|------|-------------|
+| O | Vehicle Owner |
+| H | Hirer |
+| D | Driver |
 
 ### 4.2 ID Types
 
-| Code | Description | Source |
-|------|-------------|--------|
-| N | Singapore NRIC | Standard Code: ID_TYPE |
-| F | Foreign Identification Number (FIN) | Standard Code: ID_TYPE |
-| U | Unique Entity Number (Company) | Standard Code: ID_TYPE |
-| P | Passport Number | Standard Code: ID_TYPE |
+| Code | Description |
+|------|-------------|
+| NRIC | Singapore NRIC |
+| FIN | Foreign Identification Number |
+| UEN | Unique Entity Number (Company) |
+| PASSPORT | Passport Number |
 
-### 4.3 Processing Stages
+### 4.3 Non-Furnishable Reason Codes
 
-| Stage | Description | Source |
-|-------|-------------|--------|
-| OW | Owner Stage | Standard Code: PROCESSING_STAGE |
-| RD1 | Registered Driver Stage 1 | Standard Code: PROCESSING_STAGE |
-| RD2 | Registered Driver Stage 2 | Standard Code: PROCESSING_STAGE |
-| DN | Driver Named Stage | Standard Code: PROCESSING_STAGE |
-| CPC | Court Processing Complete | Standard Code: PROCESSING_STAGE |
+| Code | Description |
+|------|-------------|
+| LAST_STAGE_AFTER_CPC | Processing stage is after CPC |
+| PERMANENT_SUSPENSION | Notice has active permanent suspension |
+| INVALID_STAGE | Notice is not at furnishable stage |
 
-### 4.4 Hirer-Owner Relationship Codes
+### 4.4 Address Object
 
-| Code | Description | Source |
-|------|-------------|--------|
-| E | Employee | Standard Code: HIRER_OWNER_REL |
-| L | Vehicle is Leased | Standard Code: HIRER_OWNER_REL |
-| F | Family Member | Standard Code: HIRER_OWNER_REL |
-| O | Others (requires othersRelationshipDesc) | Standard Code: HIRER_OWNER_REL |
-
-### 4.5 Address Type Values
-
-| Code | Description | Source |
-|------|-------------|--------|
-| mha_reg | MHA Registered Address | OND_ADDR.type_of_address |
-| lta_reg | LTA Registered Address | OND_ADDR.type_of_address |
-| lta_mail | LTA Mailing Address | OND_ADDR.type_of_address |
-| furnished_mail | Furnished Mailing Address | OND_ADDR.type_of_address |
-
-### 4.6 Action Button Display Rules
-
-| Condition | FURNISH Button | REDIRECT Button | UPDATE Button |
-|-----------|----------------|-----------------|---------------|
-| No existing offender for role | Show | Hide | Hide |
-| Offender exists, is Current Offender | Hide | Hide | Show |
-| Offender exists, not Current Offender | Hide | Show | Hide |
+| Field | Type | Max Length | Description |
+|-------|------|------------|-------------|
+| blockNo | String | 10 | House/Block number |
+| streetName | String | 100 | Street name |
+| buildingName | String | 100 | Building name (optional) |
+| floorNo | String | 5 | Floor number |
+| unitNo | String | 10 | Unit number |
+| postalCode | String | 6 | Postal code |
 
 ---
 
-## 5. Database Specification
+## 5. Technical Standards
 
-### 5.1 Tables Used
+### 5.1 HTTP Method
 
-| Table Alias | Full Table Name | Zone | Purpose |
-|-------------|-----------------|------|---------|
-| VON | ocms_valid_offence_notice | Intranet | Notice information |
-| OND | ocms_offence_notice_owner_driver | Intranet | Owner/Hirer/Driver records |
-| OND_ADDR | ocms_offence_notice_owner_driver_addr | Intranet | Address records |
-| FA | ocms_furnish_application | Intranet | Furnish application details |
-| eFA | eocms_furnish_application | PII | Internet copy of furnish application |
+All APIs use **POST** method only. No GET, PUT, PATCH, or DELETE allowed.
 
-### 5.2 Audit User Configuration
+### 5.2 Audit User Fields
 
-| Zone | User ID for cre_user_id / upd_user_id |
-|------|---------------------------------------|
-| Intranet | `ocmsiz_app_conn` |
-| Internet/PII | `ocmsez_app_conn` |
+Database operations must use proper audit user:
 
-**Important:** Do NOT use "SYSTEM" for audit user fields.
+| Zone | Audit User | Usage |
+|------|------------|-------|
+| Intranet | `ocmsiz_app_conn` | cre_user_id, upd_user_id for Intranet tables |
+| Internet/PII | `ocmsez_app_conn` | cre_user_id, upd_user_id for PII tables |
+
+**Note:** Never use "SYSTEM" as audit user.
 
 ### 5.3 SQL Query Best Practice
 
 - **Do NOT use `SELECT *`** in any query
-- Always specify only the fields required for the operation
-- Example:
-  ```sql
-  -- CORRECT
-  SELECT notice_no, last_processing_stage, vehicle_no
-  FROM ocms_valid_offence_notice
-  WHERE notice_no = :noticeNo
+- Always specify only the required fields
+- Example: `SELECT notice_no, vehicle_no, last_processing_stage FROM ocms_valid_offence_notice WHERE notice_no = ?`
 
-  -- INCORRECT
-  SELECT * FROM ocms_valid_offence_notice WHERE notice_no = :noticeNo
-  ```
+### 5.4 Internet Sync & Retry Mechanism
 
-### 5.4 Insert/Update Order
+For syncing to Internet/PII zone:
+- **Retry**: 3 attempts on connection failure
+- **Alert**: Email notification after all retries fail
+- **Target Table**: `eocms_furnish_application` (NOT eocms_offence_notice_owner_driver)
 
-When performing database operations, follow this order:
+### 5.5 Column Name Mapping (Data Dictionary)
 
-1. **Parent table first:** `ocms_valid_offence_notice` (VON)
-2. **Child table after:** `ocms_offence_notice_owner_driver` (OND)
-3. **Address table:** `ocms_offence_notice_owner_driver_addr` (OND_ADDR)
-4. **Furnish application:** `ocms_furnish_application` (FA)
-
-### 5.5 Sync Flag Configuration
-
-| Field | Table | Type | Default | Description |
-|-------|-------|------|---------|-------------|
-| is_sync | OND | varchar(1) | 'N' | Indicates if record needs sync to Internet |
-
-**Sync Flag Values:**
-| Value | Description |
-|-------|-------------|
-| Y | Sync successful |
-| N | Pending sync / sync failed |
-
-### 5.6 Internet Sync Retry Mechanism
-
-When syncing to Internet database:
-
-| Step | Action |
-|------|--------|
-| 1 | Attempt sync to Internet DB |
-| 2 | If failed, retry up to **3 times** |
-| 3 | If all retries fail, set `is_sync = 'N'` |
-| 4 | Trigger **email alert** to support team |
-| 5 | Cron job will pick up failed syncs for retry |
-
-**Retry Configuration:**
-| Parameter | Value |
-|-----------|-------|
-| Max Retries | 3 |
-| Retry Interval | 5 seconds |
-| Alert Email | Configured in parameter table |
+| API Field | Database Column | Table |
+|-----------|-----------------|-------|
+| ownerDriverIndicator | owner_driver_indicator | OND |
+| emailAddr | email_addr | OND |
+| offenderTelNo | offender_tel_no | OND |
+| lastProcessingStage | last_processing_stage | VON |
+| offenderIndicator | offender_indicator | OND |
 
 ---
 
-## 5.7 Key Column Mappings
+## Appendix A: Database Tables
 
-### VON (ocms_valid_offence_notice) Fields
+### A.1 Tables Used
 
-| API Field | DB Column | Data Type | Nullable | Description |
-|-----------|-----------|-----------|----------|-------------|
-| noticeNo | notice_no | varchar(10) | NOT NULL | Primary key |
-| vehicleNo | vehicle_no | varchar(14) | NOT NULL | Vehicle number |
-| currentStage | last_processing_stage | varchar(3) | NOT NULL | Current processing stage |
+| Table | Zone | Purpose |
+|-------|------|---------|
+| ocms_valid_offence_notice (VON) | Intranet | Notice information |
+| ocms_offence_notice_owner_driver (OND) | Intranet | Owner/Hirer/Driver records |
+| ocms_offence_notice_owner_driver_addr (OND_ADDR) | Intranet | Address records |
+| ocms_suspended_notice | Intranet | Suspension records |
+| ocms_furnish_application (FA) | Intranet | Furnish application records |
+| eocms_furnish_application (eFA) | Internet/PII | PII sync for furnish applications |
 
-### OND (ocms_offence_notice_owner_driver) Fields
+### A.2 Database Operations
 
-| API Field | DB Column | Data Type | Nullable | Description |
-|-----------|-----------|-----------|----------|-------------|
-| noticeNo | notice_no | varchar(10) | NOT NULL | Primary key (composite) |
-| ownerDriverIndicator | owner_driver_indicator | varchar(1) | NOT NULL | Primary key (composite): O/H/D |
-| idType | id_type | varchar(1) | NULL | ID type code: N/F/U/P |
-| idNo | id_no | varchar(12) | NOT NULL | ID number |
-| name | name | varchar(66) | NULL | Full name |
-| emailAddr | email_addr | varchar(320) | NULL | Email address |
-| telCode | offender_tel_code | varchar(3) | NULL | Country code |
-| telNo | offender_tel_no | varchar(12) | NULL | Contact number |
-| - | offender_indicator | varchar(1) | NULL | Y = Current offender, N = Not current |
-| - | is_sync | varchar(1) | NOT NULL | Sync status (default 'N') |
-| - | cre_user_id | varchar(50) | NOT NULL | Created by user |
-| - | cre_date | datetime2(7) | NOT NULL | Created timestamp |
-| - | upd_user_id | varchar(50) | NULL | Updated by user |
-| - | upd_date | datetime2(7) | NULL | Updated timestamp |
+#### Batch Furnish - Per Notice
+```sql
+-- Query notice (Intranet)
+SELECT notice_no, vehicle_no, last_processing_stage
+FROM ocms_valid_offence_notice
+WHERE notice_no = ?
 
-### OND_ADDR (ocms_offence_notice_owner_driver_addr) Fields
+-- Insert/Update offender (Intranet)
+-- cre_user_id/upd_user_id = 'ocmsiz_app_conn'
+INSERT/UPDATE ocms_offence_notice_owner_driver
+SET offender_indicator = 'Y', ...
 
-| API Field | DB Column | Data Type | Nullable | Description |
-|-----------|-----------|-----------|----------|-------------|
-| - | notice_no | varchar(10) | NOT NULL | Primary key (composite) |
-| - | owner_driver_indicator | varchar(1) | NOT NULL | Primary key (composite) |
-| - | type_of_address | varchar(20) | NOT NULL | Primary key (composite): mha_reg/lta_reg/lta_mail/furnished_mail |
-| address.blkHseNo | blk_hse_no | varchar(10) | NULL | Block/house number |
-| address.streetName | street_name | varchar(32) | NULL | Street name |
-| address.bldgName | bldg_name | varchar(65) | NULL | Building name |
-| address.floorNo | floor_no | varchar(3) | NULL | Floor number |
-| address.unitNo | unit_no | varchar(5) | NULL | Unit number |
-| address.postalCode | postal_code | varchar(6) | NULL | Postal code |
+-- Clear previous offender indicator
+UPDATE ocms_offence_notice_owner_driver
+SET offender_indicator = 'N', upd_user_id = 'ocmsiz_app_conn'
+WHERE notice_no = ? AND offender_indicator = 'Y'
 
-**Note:** For Staff Portal Manual Furnish, use `type_of_address = 'furnished_mail'`
+-- Sync to PII zone
+-- cre_user_id/upd_user_id = 'ocmsez_app_conn'
+INSERT INTO eocms_furnish_application (...)
+```
 
-### FA (ocms_furnish_application) Fields
+#### Batch Update Address - Per Notice
+```sql
+-- Query offender (Intranet)
+SELECT notice_no, id_no, id_type, name, email_addr, offender_tel_no, offender_indicator, owner_driver_indicator
+FROM ocms_offence_notice_owner_driver
+WHERE id_no = ? AND offender_indicator = 'Y'
 
-| API Field | DB Column | Data Type | Nullable | Description |
-|-----------|-----------|-----------|----------|-------------|
-| - | txn_no | varchar(20) | NOT NULL | Primary key - unique submission reference |
-| noticeNo | notice_no | varchar(10) | NOT NULL | Notice number |
-| - | vehicle_no | varchar(14) | NOT NULL | Vehicle number |
-| ownerDriverIndicator | owner_driver_indicator | varchar(1) | NOT NULL | O/H/D |
-| name | furnish_name | varchar(66) | NOT NULL | Furnished person name |
-| idType | furnish_id_type | varchar(1) | NOT NULL | ID type |
-| idNo | furnish_id_no | varchar(12) | NOT NULL | ID number |
-| address.blkHseNo | furnish_mail_blk_no | varchar(10) | NOT NULL | Block number |
-| address.streetName | furnish_mail_street_name | varchar(32) | NOT NULL | Street name |
-| address.bldgName | furnish_mail_bldg_name | varchar(65) | NULL | Building name |
-| address.floorNo | furnish_mail_floor | varchar(3) | NULL | Floor number |
-| address.unitNo | furnish_mail_unit_no | varchar(5) | NULL | Unit number |
-| address.postalCode | furnish_mail_postal_code | varchar(6) | NOT NULL | Postal code |
-| telCode | furnish_tel_code | varchar(3) | NULL | Country code |
-| telNo | furnish_tel_no | varchar(12) | NULL | Contact number |
-| emailAddr | furnish_email_addr | varchar(320) | NULL | Email address |
-| hirerOwnerRelationship | hirer_owner_relationship | varchar(1) | NOT NULL | Relationship code: E/L/F/O |
-| othersRelationshipDesc | others_relationship_desc | varchar(15) | NOT NULL | Description if relationship='O' |
-| rentalPeriodFrom | rental_period_from | datetime2(7) | NULL | Rental start date |
-| rentalPeriodTo | rental_period_to | datetime2(7) | NULL | Rental end date |
-| remarks | remarks | varchar(200) | NULL | Remarks |
-| - | status | varchar(1) | NOT NULL | P=Pending, A=Approved, R=Rejected |
+-- Update address (Intranet)
+-- upd_user_id = 'ocmsiz_app_conn'
+UPDATE ocms_offence_notice_owner_driver_addr
+SET block_no = ?, street_name = ?, ...
+WHERE notice_no = ? AND owner_driver_indicator = ?
+```
 
 ---
 
-*Document generated for OCMS 41 Section 4 API planning*
-*Version 1.2 - Updated with Data Dictionary compliance*
+*Document generated for OCMS 41 Section 5 API planning*

@@ -1,4 +1,4 @@
-# OCMS 41 Section 4 - Validation Conditions
+# OCMS 41 Section 5 - Validation Conditions
 
 ## Document Information
 
@@ -6,8 +6,8 @@
 |-------|-------|
 | Version | 1.1 |
 | Date | 2026-01-19 |
-| Source | Functional Document v1.1, Section 4 |
-| Module | OCMS 41 - Section 4: Staff Portal Manual Furnish or Update |
+| Source | Functional Document v1.1, Section 5 |
+| Module | OCMS 41 - Section 5: Batch Furnish and Batch Update |
 
 ---
 
@@ -22,60 +22,57 @@
 
 ## 1. Frontend Validations
 
-### 1.1 Action Button Display Rules (Section 4.5.1)
-
-#### Rule: Determine which buttons to display
-
-| Rule ID | Condition | FURNISH | REDIRECT | UPDATE |
-|---------|-----------|---------|----------|--------|
-| BTN-001 | No existing offender record for role | Show | Hide | Hide |
-| BTN-002 | Offender exists AND is Current Offender | Hide | Hide | Show |
-| BTN-003 | Offender exists AND NOT Current Offender | Hide | Show | Hide |
-
-### 1.2 Furnish Form Validations
+### 1.1 Batch Furnish - Notice Selection (Section 5.2)
 
 | Field | Rule ID | Validation | Error Message |
 |-------|---------|------------|---------------|
-| ID Type | FRN-001 | Required | ID Type is required |
-| ID Number | FRN-002 | Required | ID Number is required |
-| ID Number | FRN-003 | Format check based on ID Type | Invalid {idType} format |
-| Name | FRN-004 | Required | Name is required |
-| Name | FRN-005 | Max 66 characters | Name exceeds maximum length |
-| Email | FRN-006 | Valid email format if provided | Invalid email format |
-| Contact No | FRN-007 | Numeric only, 8 digits for SG | Invalid contact number |
-| Postal Code | FRN-008 | 6 digits for Singapore | Invalid postal code |
+| Notice Selection | BF-001 | At least one Notice must be selected | Please select at least one Notice |
+| Notice Selection | BF-002 | Maximum 100 Notices per batch | Maximum 100 Notices allowed per batch |
 
-### 1.3 Redirect Form Validations
+### 1.2 Batch Furnish - Form Validations
 
 | Field | Rule ID | Validation | Error Message |
 |-------|---------|------------|---------------|
-| Target Role | RDR-001 | Required | Target role is required |
-| Target Role | RDR-002 | Different from current role | Cannot redirect to the same role |
-| ID Type | RDR-003 | Required | ID Type is required |
-| ID Number | RDR-004 | Required | ID Number is required |
-| Name | RDR-005 | Required | Name is required |
+| Role (owner_driver_indicator) | BF-FRM-001 | Required (O/H/D) | Role is required |
+| Name | BF-FRM-002 | Required | Name is required |
+| Name | BF-FRM-003 | Max 66 characters | Name exceeds maximum length |
+| ID Type | BF-FRM-004 | Required | ID Type is required |
+| ID Number | BF-FRM-005 | Required | ID Number is required |
+| ID Number | BF-FRM-006 | Format check based on ID Type | Invalid {idType} format |
+| Entity Type | BF-FRM-007 | Required if ID Type = UEN | Entity Type is required for UEN |
+| Email (email_addr) | BF-FRM-008 | Valid email format if provided | Invalid email format |
+| Contact No (offender_tel_no) | BF-FRM-009 | Valid format if provided | Invalid contact number |
 
-### 1.4 Update Form Validations
+### 1.3 Batch Update - Search Validations (Section 5.3)
 
 | Field | Rule ID | Validation | Error Message |
 |-------|---------|------------|---------------|
-| At least one field | UPD-001 | At least one field must be changed | No changes detected |
-| Email | UPD-002 | Valid email format if provided | Invalid email format |
-| Contact No | UPD-003 | Valid format if provided | Invalid contact number |
+| ID Number | BU-001 | Required | ID Number is required |
+| ID Number | BU-002 | Valid format (NRIC/FIN/UEN/Passport) | Invalid ID Number format |
+
+### 1.4 Batch Update - Form Validations
+
+| Field | Rule ID | Validation | Error Message |
+|-------|---------|------------|---------------|
+| Notice Selection | BU-FRM-001 | At least one Notice must be selected | Please select at least one Notice |
+| Postal Code | BU-FRM-002 | 6 digits for Singapore address | Invalid postal code |
+| Email (email_addr) | BU-FRM-003 | Valid email format if provided | Invalid email format |
+| Contact No (offender_tel_no) | BU-FRM-004 | Valid format if provided | Invalid contact number |
 
 ---
 
 ## 2. Backend Validations
 
-### 2.1 Furnish Eligibility Check (Section 4.6.2.2)
+### 2.1 Batch Furnish - Furnishability Check (Section 5.2)
 
 | Rule ID | Check | Condition | Action if Failed |
 |---------|-------|-----------|------------------|
-| FRN-BE-001 | Notice Exists | Notice must exist in database | Return NOT_FOUND |
-| FRN-BE-002 | Processing Stage | Notice must be at furnishable stage | Return NOT_FURNISHABLE |
-| FRN-BE-003 | Not Final Stage | Stage must not be after CPC | Return LAST_STAGE_AFTER_CPC |
+| BF-BE-001 | Notice Exists | Notice must exist in database | Return NOT_FOUND for that Notice |
+| BF-BE-002 | Processing Stage | Notice must be at furnishable stage | Return NOT_FURNISHABLE for that Notice |
+| BF-BE-003 | Not Final Stage | Stage must not be after CPC | Return LAST_STAGE_AFTER_CPC |
+| BF-BE-004 | All Non-Furnishable | If all notices non-furnishable | Stop and prompt user |
 
-#### Furnishable Stages
+#### Furnishable Stages (Same as Section 4)
 
 | Stage | Can Furnish Owner | Can Furnish Hirer | Can Furnish Driver |
 |-------|-------------------|-------------------|-------------------|
@@ -85,136 +82,153 @@
 | DN | No | No | No |
 | CPC+ | No | No | No |
 
-### 2.2 Redirect Eligibility Check (Section 4.7.2.2)
+### 2.2 Batch Update - Outstanding Notice Check (Section 5.3)
 
 | Rule ID | Check | Condition | Action if Failed |
 |---------|-------|-----------|------------------|
-| RDR-BE-001 | Notice Exists | Notice must exist in database | Return NOT_FOUND |
-| RDR-BE-002 | Current Offender Exists | Must have a current offender | Return NO_CURRENT_OFFENDER |
-| RDR-BE-003 | Different Role | Target role must be different | Return REDIRECT_SAME_ROLE |
-| RDR-BE-004 | Processing Stage | Notice must be at redirectable stage | Return NOT_REDIRECTABLE |
+| BU-BE-001 | Offender Exists | ID must exist in ocms_offence_notice_owner_driver | Return OFFENDER_NOT_FOUND |
+| BU-BE-002 | Is Current Offender | offender_indicator must be 'Y' | Skip Notice (not current offender) |
+| BU-BE-003 | Notice Exists | Notice must exist in ocms_valid_offence_notice | Skip Notice |
+| BU-BE-004 | No Active PS | Notice must not have active Permanent Suspension | Remove from eligible list |
 
-### 2.3 Update Eligibility Check (Section 4.8.2.2)
+#### Permanent Suspension Check Logic
 
-| Rule ID | Check | Condition | Action if Failed |
-|---------|-------|-----------|------------------|
-| UPD-BE-001 | Notice Exists | Notice must exist in database | Return NOT_FOUND |
-| UPD-BE-002 | Offender Exists | Offender record must exist | Return OFFENDER_NOT_FOUND |
-| UPD-BE-003 | Is Current Offender | Must be the current offender | Return NOT_CURRENT_OFFENDER |
+| Step | Check | Condition | Result |
+|------|-------|-----------|--------|
+| 1 | Query suspension records | suspension_type = 'PS' | Continue if found |
+| 2 | Check revival status | date_of_revival IS NULL | Has active PS |
+| 3 | Check revival status | date_of_revival IS NOT NULL | PS has been revived (eligible) |
 
-### 2.4 Furnish Processing Rules (Section 4.6.2.3)
-
-| Step | Rule ID | Check | Action |
-|------|---------|-------|--------|
-| 1 | FRN-PR-001 | Check if existing offender for role | If exists → PATCH, else → POST |
-| 2 | FRN-PR-002 | Request type = POST | Create new offender record |
-| 3 | FRN-PR-003 | Request type = PATCH | Overwrite existing offender record |
-| 4 | FRN-PR-004 | Set offender_indicator | Set to 'Y' for new offender |
-| 5 | FRN-PR-005 | Clear previous offender | Set previous offender_indicator to 'N' |
-| 6 | FRN-PR-006 | Update processing stage | Change stage based on offender type |
-
-#### Processing Stage Update Rules
-
-| Offender Type (owner_driver_indicator) | Current Stage | New Stage |
-|-----------------------------------------|---------------|-----------|
-| H (Hirer) | OW | RD1 |
-| H (Hirer) | RD1 | RD2 |
-| D (Driver) | OW | DN |
-| D (Driver) | RD1 | DN |
-| D (Driver) | RD2 | DN |
-
-### 2.5 Redirect Processing Rules (Section 4.7.2.3)
+### 2.3 Batch Furnish Processing Rules
 
 | Step | Rule ID | Check | Action |
 |------|---------|-------|--------|
-| 1 | RDR-PR-001 | Clear current offender | Set offender_indicator = 'N' |
-| 2 | RDR-PR-002 | Check target offender exists | If exists → Update, else → Create |
-| 3 | RDR-PR-003 | Set new offender_indicator | Set to 'Y' for target offender |
-| 4 | RDR-PR-004 | Reset processing stage | Reset to appropriate starting stage |
+| 1 | BF-PR-001 | Process each Notice individually | Loop through Notice list |
+| 2 | BF-PR-002 | Check existing offender for role | If exists → PATCH, else → POST |
+| 3 | BF-PR-003 | Set offender_indicator | Set to 'Y' for new offender |
+| 4 | BF-PR-004 | Clear previous offender | Set previous offender_indicator to 'N' |
+| 5 | BF-PR-005 | Update processing stage | Change based on offender type |
+| 6 | BF-PR-006 | Store result | Add to success/failure list |
+| 7 | BF-PR-007 | Sync to Internet | Sync each record to Internet DB |
 
-### 2.6 Update Processing Rules (Section 4.8.2.3)
+### 2.4 Batch Update Processing Rules
 
 | Step | Rule ID | Check | Action |
 |------|---------|-------|--------|
-| 1 | UPD-PR-001 | Validate offender is current | Verify offender_indicator = 'Y' |
-| 2 | UPD-PR-002 | Update particulars | Update provided fields only |
-| 3 | UPD-PR-003 | No stage change | Processing stage remains unchanged |
+| 1 | BU-PR-001 | Validate offender is current | Verify offender_indicator = 'Y' |
+| 2 | BU-PR-002 | Update address record | Update ocms_offence_notice_owner_driver_addr |
+| 3 | BU-PR-003 | Update contact info | Update offender_tel_no and email_addr if provided |
+| 4 | BU-PR-004 | No stage change | Processing stage remains unchanged |
 
 ---
 
 ## 3. Decision Trees
 
-### 3.1 Action Button Decision Tree
+### 3.1 Batch Furnish Decision Tree
 
 ```
-START: User clicks UNLOCK button
+START: OIC selects Notices and clicks BATCH FURNISH
   │
-  ├── Check: Does offender record exist for this role?
+  ├── Call Check Furnishability API
   │     │
-  │     ├── NO → Display FURNISH button only
+  │     ├── All Notices Non-Furnishable
+  │     │     └── Display error, return to search
   │     │
-  │     └── YES → Check: Is this offender the Current Offender?
+  │     ├── Some Notices Non-Furnishable
+  │     │     │
+  │     │     ├── Prompt: "X Notices not furnishable. Continue?"
+  │     │     │     │
+  │     │     │     ├── User clicks NO → Return to search
+  │     │     │     │
+  │     │     │     └── User clicks YES → Continue with furnishable Notices
+  │     │     │
+  │     │
+  │     └── All Notices Furnishable → Continue
+  │
+  ├── Display Batch Furnish Form
+  │     │
+  │     ├── OIC enters offender details
+  │     ├── OIC clicks SUBMIT
+  │     │
+  │     ├── Frontend Validation
+  │     │     │
+  │     │     ├── FAIL → Show validation error
+  │     │     │
+  │     │     └── PASS → Prompt overwrite warning
+  │     │           │
+  │     │           ├── User clicks BACK → Edit form
+  │     │           │
+  │     │           └── User clicks CONFIRM → Process batch
+  │     │
+  │     └── Process Each Notice
   │           │
-  │           ├── YES → Display UPDATE button only
+  │           ├── Call Furnish API per Notice
+  │           ├── Store success/failure result
+  │           ├── Loop until all processed
   │           │
-  │           └── NO → Display REDIRECT button only
+  │           └── Display Result Page
   │
 END
 ```
 
-### 3.2 Furnish Decision Tree
+### 3.2 Batch Update Decision Tree
 
 ```
-START: OIC clicks FURNISH
+START: OIC navigates to Batch Update screen
   │
-  ├── Frontend Validation
+  ├── OIC enters ID Number and clicks SEARCH
   │     │
-  │     ├── FAIL → Show validation error
+  │     ├── Call Outstanding Notices API
+  │     │     │
+  │     │     ├── No records found
+  │     │     │     └── Display "Offender not found"
+  │     │     │
+  │     │     └── Records found → Display list
   │     │
-  │     └── PASS → Call Backend API
-  │           │
-  │           ├── Check Notice Stage
-  │           │     │
-  │           │     ├── NOT FURNISHABLE → Return error
-  │           │     │
-  │           │     └── FURNISHABLE → Check existing offender
-  │           │           │
-  │           │           ├── EXISTS → PATCH (overwrite)
-  │           │           │
-  │           │           └── NOT EXISTS → POST (create new)
-  │           │
-  │           ├── Set offender_indicator = Y
-  │           ├── Clear previous offender indicator
-  │           ├── Update processing stage
-  │           │
-  │           └── Return success
+  │     ├── Backend processes:
+  │     │     ├── Query ocms_offence_notice_owner_driver by ID
+  │     │     ├── Filter by offender_indicator = 'Y'
+  │     │     ├── Query ocms_valid_offence_notice for each
+  │     │     ├── Check ocms_suspended_notice for PS
+  │     │     ├── Remove notices with active PS
+  │     │     ├── Query mailing address for each
+  │     │     └── Return consolidated results
+  │     │
+  │     └── Display Notice list with current mailing address
+  │
+  ├── OIC selects Notices to update
+  ├── OIC enters new mailing address
+  ├── OIC clicks SUBMIT
+  │     │
+  │     ├── Frontend Validation
+  │     │     │
+  │     │     ├── FAIL → Show validation error
+  │     │     │
+  │     │     └── PASS → Call Batch Update API
+  │     │
+  │     └── Display Result Page
   │
 END
 ```
 
-### 3.3 Redirect Decision Tree
+### 3.3 Permanent Suspension Check Tree
 
 ```
-START: OIC clicks REDIRECT
+START: Check Notice for Permanent Suspension
   │
-  ├── Frontend Validation
+  ├── Query ocms_suspended_notice
   │     │
-  │     ├── FAIL → Show validation error
+  │     ├── No record found → Notice is eligible
   │     │
-  │     └── PASS → Call Backend API
+  │     └── Record found → Check suspension_type
   │           │
-  │           ├── Check can redirect
-  │           │     │
-  │           │     ├── CANNOT → Return error with reason
-  │           │     │
-  │           │     └── CAN → Process redirect
-  │           │           │
-  │           │           ├── Clear current offender indicator
-  │           │           ├── Create/Update target offender
-  │           │           ├── Set new offender indicator
-  │           │           ├── Reset processing stage
-  │           │           │
-  │           │           └── Return success
+  │           ├── suspension_type != 'PS' → Notice is eligible
+  │           │
+  │           └── suspension_type = 'PS' → Check date_of_revival
+  │                 │
+  │                 ├── date_of_revival IS NULL → Has Active PS (exclude)
+  │                 │
+  │                 └── date_of_revival IS NOT NULL → PS Revived (eligible)
   │
 END
 ```
@@ -227,18 +241,20 @@ END
 
 | ID | Assumption | Basis | Impact |
 |----|------------|-------|--------|
-| ASM-001 | Only one offender per role (Owner/Hirer/Driver) can be current at a time | Functional doc mentions "Current Offender" as singular | Single offender_indicator per role |
-| ASM-002 | Furnish overwrites existing offender if exists | Section 4.6.2.3 mentions PATCH for existing | No separate "replace" function needed |
-| ASM-003 | Update only changes particulars, not offender indicator | Section 4.8 describes update as editing existing | Simpler update logic |
-| ASM-004 | Redirect resets processing stage to starting stage for target role | Logical flow for re-processing | Stage reset logic needed |
+| ASM-001 | Same offender particulars applied to all Notices in batch furnish | Functional doc shows single form for all | Single API call per Notice with same data |
+| ASM-002 | Frontend processes Notices sequentially (not parallel) | Portal loops API calls per Notice | Progress tracking per Notice |
+| ASM-003 | Batch update only updates mailing address, not registered address | Section 5.3 specifies mailing address only | Registered address remains unchanged |
+| ASM-004 | Notices with active PS are excluded silently | Flow shows removal from list | No error shown for PS notices |
+| ASM-005 | Maximum batch size is implementation-defined | Not specified in functional doc | Suggest 100 Notices max |
 
 ### 4.2 Questions for Clarification
 
 | ID | Question | Status |
 |----|----------|--------|
-| Q-001 | Can an OIC furnish/redirect/update multiple notices at once in Section 4? | Assumed NO (Batch is Section 5) |
-| Q-002 | What happens to suspension status when redirect occurs? | Assumed: Follows existing suspension rules |
+| Q-001 | What is the maximum number of Notices that can be processed in one batch? | Assumed 100 |
+| Q-002 | Should batch update also sync to Internet DB? | Assumed YES for consistency |
+| Q-003 | If one Notice fails during batch furnish, should processing continue? | Assumed YES (continue processing) |
 
 ---
 
-*Document generated for OCMS 41 Section 4 condition planning*
+*Document generated for OCMS 41 Section 5 condition planning*

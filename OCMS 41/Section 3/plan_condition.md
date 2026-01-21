@@ -1,470 +1,244 @@
-# OCMS 41 Section 3 - Staff Portal Manual Review Conditions & Validations
+# OCMS 41 Section 4 - Validation Conditions
 
 ## Document Information
 
 | Field | Value |
 |-------|-------|
-| Version | 1.0 |
-| Date | 2026-01-07 |
-| Source | Functional Document v1.1, Backend Code |
-| Module | OCMS 41 - Section 3: Staff Portal Manual Review |
+| Version | 1.1 |
+| Date | 2026-01-19 |
+| Source | Functional Document v1.1, Section 4 |
+| Module | OCMS 41 - Section 4: Staff Portal Manual Furnish or Update |
 
 ---
 
 ## Table of Contents
 
-1. [Overview](#1-overview)
-2. [Frontend Validations](#2-frontend-validations)
-3. [Backend Validations](#3-backend-validations)
-4. [Business Rule Conditions](#4-business-rule-conditions)
-5. [Decision Trees](#5-decision-trees)
-6. [Email/SMS Conditions](#6-emailsms-conditions)
-7. [Error Handling Conditions](#7-error-handling-conditions)
-8. [Assumptions Log](#8-assumptions-log)
+1. [Frontend Validations](#1-frontend-validations)
+2. [Backend Validations](#2-backend-validations)
+3. [Decision Trees](#3-decision-trees)
+4. [Assumptions Log](#4-assumptions-log)
 
 ---
 
-## 1. Overview
+## 1. Frontend Validations
 
-This document defines all validation rules, conditions, and decision logic for OCMS 41 Section 3 - Staff Portal Manual Review of Furnished Submissions.
+### 1.1 Action Button Display Rules (Section 4.5.1)
 
-### 1.1 Actors
+#### Rule: Determine which buttons to display
 
-| Actor | Description |
-|-------|-------------|
-| OIC | Officer-In-Charge who reviews furnished submissions |
+| Rule ID | Condition | FURNISH | REDIRECT | UPDATE |
+|---------|-----------|---------|----------|--------|
+| BTN-001 | No existing offender record for role | Show | Hide | Hide |
+| BTN-002 | Offender exists AND is Current Offender | Hide | Hide | Show |
+| BTN-003 | Offender exists AND NOT Current Offender | Hide | Show | Hide |
 
-### 1.2 Validation Layers
+### 1.2 Furnish Form Validations
 
-| Layer | Responsibility | Implementation |
-|-------|----------------|----------------|
-| Frontend | Form field validation, UI state management | Staff Portal |
-| API Gateway | Authentication, authorization | JWT validation |
-| Backend - Bean | Request format validation | Jakarta Bean Validation |
-| Backend - Business | Business rule validation | Service layer |
-| Database | Data integrity constraints | Primary keys, foreign keys |
+| Field | Rule ID | Validation | Error Message |
+|-------|---------|------------|---------------|
+| ID Type | FRN-001 | Required | ID Type is required |
+| ID Number | FRN-002 | Required | ID Number is required |
+| ID Number | FRN-003 | Format check based on ID Type | Invalid {idType} format |
+| Name | FRN-004 | Required | Name is required |
+| Name | FRN-005 | Max 66 characters | Name exceeds maximum length |
+| Email | FRN-006 | Valid email format if provided | Invalid email format |
+| Contact No | FRN-007 | Numeric only, 8 digits for SG | Invalid contact number |
+| Postal Code | FRN-008 | 6 digits for Singapore | Invalid postal code |
 
----
+### 1.3 Redirect Form Validations
 
-## 2. Frontend Validations
+| Field | Rule ID | Validation | Error Message |
+|-------|---------|------------|---------------|
+| Target Role | RDR-001 | Required | Target role is required |
+| Target Role | RDR-002 | Different from current role | Cannot redirect to the same role |
+| ID Type | RDR-003 | Required | ID Type is required |
+| ID Number | RDR-004 | Required | ID Number is required |
+| Name | RDR-005 | Required | Name is required |
 
-### 2.1 Summary List Page
+### 1.4 Update Form Validations
 
-#### 2.1.1 Search Parameters
-
-| Rule ID | Field | Validation Rule | Error Message |
-|---------|-------|-----------------|---------------|
-| FE-S01 | Notice No | Optional, alphanumeric, exact match | - |
-| FE-S02 | Vehicle No | Optional, alphanumeric, partial match | - |
-| FE-S03 | Submitter's ID No | Optional, alphanumeric (NRIC/FIN/UEN/Passport) | - |
-| FE-S04 | Submission Date From | Optional, date picker, format DD/MM/YYYY | - |
-| FE-S05 | Submission Date To | Optional, date picker, format DD/MM/YYYY, >= From | End date must be after start date |
-| FE-S06 | Status | Optional, dropdown: Pending, Resubmission, Approved, Rejected | - |
-
-#### 2.1.2 Default Behavior
-
-| Rule ID | Condition | Default Behavior |
-|---------|-----------|------------------|
-| FE-D01 | Page Load | Display submissions with status = 'Pending' OR 'Resubmission' |
-| FE-D02 | Sort Order | Default sort by Submission Date DESC |
-| FE-D03 | Pagination | Default page size = 10 |
+| Field | Rule ID | Validation | Error Message |
+|-------|---------|------------|---------------|
+| At least one field | UPD-001 | At least one field must be changed | No changes detected |
+| Email | UPD-002 | Valid email format if provided | Invalid email format |
+| Contact No | UPD-003 | Valid format if provided | Invalid contact number |
 
 ---
 
-### 2.2 Submission Details Screen
+## 2. Backend Validations
 
-#### 2.2.1 Notice Details Sub-Section (Read-Only)
+### 2.1 Furnish Eligibility Check (Section 4.6.2.2)
 
-| Rule ID | Field | Display Condition |
-|---------|-------|-------------------|
-| FE-N01 | Notice No | Always displayed, non-editable |
-| FE-N02 | Vehicle No | Always displayed, non-editable |
-| FE-N03 | Car Park | Always displayed, non-editable |
-| FE-N04 | Offence Date & Time | Always displayed, non-editable |
+| Rule ID | Check | Condition | Action if Failed |
+|---------|-------|-----------|------------------|
+| FRN-BE-001 | Notice Exists | Notice must exist in database | Return NOT_FOUND |
+| FRN-BE-002 | Processing Stage | Notice must be at furnishable stage | Return NOT_FURNISHABLE |
+| FRN-BE-003 | Not Final Stage | Stage must not be after CPC | Return LAST_STAGE_AFTER_CPC |
 
-#### 2.2.2 Furnished Details Sub-Section (Read-Only)
+#### Furnishable Stages
 
-| Rule ID | Field | Display Condition |
-|---------|-------|-------------------|
-| FE-F01 | Submission Date & Time | Always displayed, non-editable |
-| FE-F02 | Current Processing Stage | Always displayed, non-editable |
-| FE-F03 | Status | Always displayed, non-editable |
-| FE-F04 | Reason for Review | Always displayed, non-editable |
-| FE-F05 | Submitter's Particulars | Always displayed, non-editable |
-| FE-F06 | Furnished Person's Particulars | Always displayed, non-editable |
+| Stage | Can Furnish Owner | Can Furnish Hirer | Can Furnish Driver |
+|-------|-------------------|-------------------|-------------------|
+| OW | No | Yes | Yes |
+| RD1 | No | No | Yes |
+| RD2 | No | No | Yes |
+| DN | No | No | No |
+| CPC+ | No | No | No |
 
-#### 2.2.3 Editable Fields
+### 2.2 Redirect Eligibility Check (Section 4.7.2.2)
 
-> **Source:** Data Dictionary - `ocms_furnish_application` table
+| Rule ID | Check | Condition | Action if Failed |
+|---------|-------|-----------|------------------|
+| RDR-BE-001 | Notice Exists | Notice must exist in database | Return NOT_FOUND |
+| RDR-BE-002 | Current Offender Exists | Must have a current offender | Return NO_CURRENT_OFFENDER |
+| RDR-BE-003 | Different Role | Target role must be different | Return REDIRECT_SAME_ROLE |
+| RDR-BE-004 | Processing Stage | Notice must be at redirectable stage | Return NOT_REDIRECTABLE |
 
-| Rule ID | Field | Validation Rule | Error Message | DB Column (Max Length) |
-|---------|-------|-----------------|---------------|------------------------|
-| FE-E01 | Submitter's Email | Required, max 320 chars, email format | Invalid email format | furnish_email_addr (320) |
-| FE-E02 | Submitter's Country Code | Required, max 4 chars | Invalid country code | furnish_tel_country_code (4) |
-| FE-E03 | Submitter's Contact No | Required, max 12 chars | Invalid contact number | furnish_tel_no (12) |
+### 2.3 Update Eligibility Check (Section 4.8.2.2)
 
-#### 2.2.4 OIC Review Sub-Section
+| Rule ID | Check | Condition | Action if Failed |
+|---------|-------|-----------|------------------|
+| UPD-BE-001 | Notice Exists | Notice must exist in database | Return NOT_FOUND |
+| UPD-BE-002 | Offender Exists | Offender record must exist | Return OFFENDER_NOT_FOUND |
+| UPD-BE-003 | Is Current Offender | Must be the current offender | Return NOT_CURRENT_OFFENDER |
 
-> **Source:** Data Dictionary - `ocms_furnish_application` table
+### 2.4 Furnish Processing Rules (Section 4.6.2.3)
 
-| Rule ID | Field | Validation Rule | Error Message | DB Column (Max Length) |
-|---------|-------|-----------------|---------------|------------------------|
-| FE-R01 | Decision | Required, radio button (Approve Hirer/Approve Driver/Reject) | Please select a decision | status (1) |
-| FE-R02 | Remarks | Optional, max 200 chars | Maximum 200 characters allowed | remarks (200) |
-| FE-R03 | Send Email/SMS | Optional, checkbox, default unchecked | - | - |
+| Step | Rule ID | Check | Action |
+|------|---------|-------|--------|
+| 1 | FRN-PR-001 | Check if existing offender for role | If exists → PATCH, else → POST |
+| 2 | FRN-PR-002 | Request type = POST | Create new offender record |
+| 3 | FRN-PR-003 | Request type = PATCH | Overwrite existing offender record |
+| 4 | FRN-PR-004 | Set offender_indicator | Set to 'Y' for new offender |
+| 5 | FRN-PR-005 | Clear previous offender | Set previous offender_indicator to 'N' |
+| 6 | FRN-PR-006 | Update processing stage | Change stage based on offender type |
 
----
+#### Processing Stage Update Rules
 
-### 2.3 Compose Email/SMS Sub-Tab
+| Offender Type (owner_driver_indicator) | Current Stage | New Stage |
+|-----------------------------------------|---------------|-----------|
+| H (Hirer) | OW | RD1 |
+| H (Hirer) | RD1 | RD2 |
+| D (Driver) | OW | DN |
+| D (Driver) | RD1 | DN |
+| D (Driver) | RD2 | DN |
 
-#### 2.3.1 Message Mode Field
+### 2.5 Redirect Processing Rules (Section 4.7.2.3)
 
-| Rule ID | Field | Validation Rule | Error Message |
-|---------|-------|-----------------|---------------|
-| FE-M01 | Message Mode | Required, radio button (Email/SMS/Both) | Please select message mode |
+| Step | Rule ID | Check | Action |
+|------|---------|-------|--------|
+| 1 | RDR-PR-001 | Clear current offender | Set offender_indicator = 'N' |
+| 2 | RDR-PR-002 | Check target offender exists | If exists → Update, else → Create |
+| 3 | RDR-PR-003 | Set new offender_indicator | Set to 'Y' for target offender |
+| 4 | RDR-PR-004 | Reset processing stage | Reset to appropriate starting stage |
 
-#### 2.3.2 Email Fields
+### 2.6 Update Processing Rules (Section 4.8.2.3)
 
-| Rule ID | Field | Validation Rule | Error Message |
-|---------|-------|-----------------|---------------|
-| FE-EM01 | Recipient Type | Required when mode=Email, dropdown (Submitter/Furnished Person/Both) | Please select recipient |
-| FE-EM02 | Email Subject | Required when mode=Email, max 200 chars | Please enter email subject |
-| FE-EM03 | Email Body | Required when mode=Email, max 2000 chars | Please enter email body |
-| FE-EM04 | Template Selection | Optional, dropdown | - |
-
-#### 2.3.3 SMS Fields
-
-| Rule ID | Field | Validation Rule | Error Message |
-|---------|-------|-----------------|---------------|
-| FE-SM01 | Recipient | Required when mode=SMS, auto-populated to Furnished Person | - |
-| FE-SM02 | SMS Body | Required when mode=SMS, max 160 chars | Please enter SMS message |
-
----
-
-### 2.4 Summary Page
-
-#### 2.4.1 Pre-Submit Validations
-
-| Rule ID | Validation | Error Action |
-|---------|------------|--------------|
-| FE-PS01 | Decision must be selected | Redirect to Submission Details, prompt to select decision |
-| FE-PS02 | If Send Email/SMS checked, message must be composed | Redirect to Compose page |
-
-#### 2.4.2 Confirmation Prompt
-
-| Rule ID | Trigger | Behavior |
-|---------|---------|----------|
-| FE-CP01 | User clicks Submit | Display confirmation dialog |
-| FE-CP02 | User clicks Confirm | Send to backend |
-| FE-CP03 | User clicks Cancel | Return to Submission Details |
+| Step | Rule ID | Check | Action |
+|------|---------|-------|--------|
+| 1 | UPD-PR-001 | Validate offender is current | Verify offender_indicator = 'Y' |
+| 2 | UPD-PR-002 | Update particulars | Update provided fields only |
+| 3 | UPD-PR-003 | No stage change | Processing stage remains unchanged |
 
 ---
 
-## 3. Backend Validations
+## 3. Decision Trees
 
-### 3.1 Bean Validations (Request Format)
-
-| Rule ID | Field | Annotation | Error Message |
-|---------|-------|------------|---------------|
-| BE-001 | txnNo | @NotBlank | Transaction number is required |
-| BE-002 | officerId | @NotBlank | Officer ID is required |
-| BE-003 | rejectionReason | @NotBlank (for reject) | Rejection reason is required |
-
-### 3.2 Business Validations
-
-| Rule ID | Validation | Query/Logic | Error Type | Error Message |
-|---------|------------|-------------|------------|---------------|
-| BE-010 | Application exists | `SELECT txn_no, status, notice_no FROM ocms_furnish_application WHERE txn_no = ?` | NOT_FOUND | Furnished application not found: {txnNo} |
-| BE-011 | Status is Pending or Resubmission | `status IN ('P', 'S')` | ALREADY_PROCESSED | Submission has already been processed |
-| BE-012 | Notice is still furnishable | Check notice processing stage | NOTICE_NOT_FURNISHABLE | Notice is no longer at furnishable stage |
-| BE-013 | Notice not permanently suspended | Check active PS suspension | PERMANENTLY_SUSPENDED | Notice is permanently suspended |
-
----
-
-## 4. Business Rule Conditions
-
-### 4.1 Furnishability Check
-
-| Rule ID | Condition | Action |
-|---------|-----------|--------|
-| BR-001 | Notice stage NOT in furnishable list | Display prompt: "Notice is no longer furnishable. Reject?" |
-| BR-002 | Notice has active Permanent Suspension | Display warning, allow continue or reject |
-| BR-003 | User selects "Reject" on prompt | Set decision = Reject automatically |
-| BR-004 | User selects "Continue Review" | Allow OIC to proceed with review |
-
-### 4.2 Processing Stage Changes on Approval
-
-| Rule ID | Decision | Processing Stage Change |
-|---------|----------|------------------------|
-| BR-010 | Approve Hirer | Notice stage changes to RD (Reminder Driver/Hirer) |
-| BR-011 | Approve Driver | Notice stage changes to DN (Driver Notice) |
-| BR-012 | Reject | No stage change, notice resent to eService |
-
-### 4.3 Offender Record Updates on Approval
-
-| Rule ID | Action | Description |
-|---------|--------|-------------|
-| BR-020 | Create Hirer/Driver Record | Insert into ocms_offence_notice_owner_driver |
-| BR-021 | Create Address Record | Insert into ocms_offence_notice_owner_driver_addr |
-| BR-022 | Set Current Offender | Set offender_indicator = 'Y' |
-| BR-023 | Update Previous Offender | Set previous offender's offender_indicator = 'N' |
-| BR-024 | Revive TS-PDP Suspension | Set date_of_revival = NOW() |
-
-### 4.4 Rejection Actions
-
-| Rule ID | Action | Description |
-|---------|--------|-------------|
-| BR-030 | Keep Suspension Active | TS-PDP suspension remains (allows resubmission) |
-| BR-031 | Resend to eService | Sync notice back to Internet for resubmission |
-| BR-032 | Update Status | Set furnish application status = 'R' |
-
----
-
-## 5. Decision Trees
-
-### 5.1 View Furnished Submission Decision Tree
+### 3.1 Action Button Decision Tree
 
 ```
-START: OIC clicks on Notice No. from Summary List
-│
-├─► Retrieve Furnished Submission details from Intranet DB
-│   ├─► FAIL → Display error message
-│   └─► SUCCESS → Continue
-│
-├─► Retrieve latest Notice details
-│   └─► Get suspension info, Owner/Hirer/Driver info
-│
-├─► Check if Notice is still furnishable
-│   │
-│   ├─► NOT FURNISHABLE
-│   │   ├─► Display prompt: "Notice is no longer furnishable"
-│   │   ├─► User clicks "Reject" → Auto-set decision = Reject, continue to Step 10
-│   │   └─► User clicks "Continue Review" → Continue to Step 5
-│   │
-│   └─► FURNISHABLE → Continue to Step 5
-│
-├─► Display Furnished Submission Details screen
-│   ├─► Notice details (read-only)
-│   ├─► Furnished details (read-only)
-│   └─► OIC Review section (editable)
-│
+START: User clicks UNLOCK button
+  │
+  ├── Check: Does offender record exist for this role?
+  │     │
+  │     ├── NO → Display FURNISH button only
+  │     │
+  │     └── YES → Check: Is this offender the Current Offender?
+  │           │
+  │           ├── YES → Display UPDATE button only
+  │           │
+  │           └── NO → Display REDIRECT button only
+  │
 END
 ```
 
-### 5.2 Submit Approval Decision Tree
+### 3.2 Furnish Decision Tree
 
 ```
-START: Receive Approval Request
-│
-├─► Validate Request Format
-│   ├─► txnNo blank? → Return VALIDATION_ERROR
-│   ├─► officerId blank? → Return VALIDATION_ERROR
-│   └─► PASS → Continue
-│
-├─► Validate Business Rules
-│   ├─► Application exists?
-│   │   ├─► NO → Return NOT_FOUND (404)
-│   │   └─► YES → Continue
-│   │
-│   ├─► Status = 'P' or 'S'?
-│   │   ├─► NO → Return ALREADY_PROCESSED (409)
-│   │   └─► YES → Continue
-│   │
-│   └─► Notice still furnishable?
-│       ├─► NO → Return NOTICE_NOT_FURNISHABLE (409)
-│       └─► YES → Continue
-│
-├─► Update Furnish Application
-│   ├─► Set status = 'A'
-│   ├─► Set remarks
-│   ├─► Set upd_user_id = officerId
-│   └─► Set upd_date = NOW()
-│
-├─► Create/Update Hirer/Driver Record
-│   ├─► Insert into ocms_offence_notice_owner_driver
-│   ├─► Set offender_indicator = 'Y'
-│   └─► Update previous offender to 'N'
-│
-├─► Create Address Record
-│   └─► Insert into ocms_offence_notice_owner_driver_addr
-│
-├─► Update Processing Stage
-│   ├─► If hirerDriverIndicator = 'H' → Set stage = 'RD'
-│   └─► If hirerDriverIndicator = 'D' → Set stage = 'DN'
-│
-├─► Revive TS-PDP Suspension
-│   └─► Set date_of_revival = NOW()
-│
-├─► Sync to Internet DB
-│   ├─► Update eocms_furnish_application
-│   ├─► Update eocms_offence_notice_owner_driver
-│   └─► Update eocms_offence_notice_owner_driver_addr
-│
-├─► Send Notifications (if requested)
-│   ├─► sendEmailToOwner = true → Send email to owner
-│   ├─► sendEmailToFurnished = true → Send email to furnished person
-│   └─► sendSmsToFurnished = true → Send SMS to furnished person
-│
-└─► Return SUCCESS
-│
+START: OIC clicks FURNISH
+  │
+  ├── Frontend Validation
+  │     │
+  │     ├── FAIL → Show validation error
+  │     │
+  │     └── PASS → Call Backend API
+  │           │
+  │           ├── Check Notice Stage
+  │           │     │
+  │           │     ├── NOT FURNISHABLE → Return error
+  │           │     │
+  │           │     └── FURNISHABLE → Check existing offender
+  │           │           │
+  │           │           ├── EXISTS → PATCH (overwrite)
+  │           │           │
+  │           │           └── NOT EXISTS → POST (create new)
+  │           │
+  │           ├── Set offender_indicator = Y
+  │           ├── Clear previous offender indicator
+  │           ├── Update processing stage
+  │           │
+  │           └── Return success
+  │
 END
 ```
 
-### 5.3 Submit Rejection Decision Tree
+### 3.3 Redirect Decision Tree
 
 ```
-START: Receive Rejection Request
-│
-├─► Validate Request Format
-│   ├─► txnNo blank? → Return VALIDATION_ERROR
-│   ├─► officerId blank? → Return VALIDATION_ERROR
-│   ├─► rejectionReason blank? → Return VALIDATION_ERROR
-│   └─► PASS → Continue
-│
-├─► Validate Business Rules
-│   ├─► Application exists?
-│   │   ├─► NO → Return NOT_FOUND (404)
-│   │   └─► YES → Continue
-│   │
-│   └─► Status = 'P' or 'S'?
-│       ├─► NO → Return ALREADY_PROCESSED (409)
-│       └─► YES → Continue
-│
-├─► Update Furnish Application
-│   ├─► Set status = 'R'
-│   ├─► Set rejection_reason
-│   ├─► Set remarks
-│   ├─► Set upd_user_id = officerId
-│   └─► Set upd_date = NOW()
-│
-├─► Keep TS-PDP Suspension Active
-│   └─► (No change - allows owner to resubmit)
-│
-├─► Sync to Internet DB
-│   └─► Update eocms_furnish_application status = 'R'
-│
-├─► Resend Notice to eService Portal
-│   └─► Make notice available for resubmission
-│
-├─► Send Notifications (if requested)
-│   └─► sendEmailToOwner = true → Send rejection email to owner
-│
-└─► Return SUCCESS
-│
+START: OIC clicks REDIRECT
+  │
+  ├── Frontend Validation
+  │     │
+  │     ├── FAIL → Show validation error
+  │     │
+  │     └── PASS → Call Backend API
+  │           │
+  │           ├── Check can redirect
+  │           │     │
+  │           │     ├── CANNOT → Return error with reason
+  │           │     │
+  │           │     └── CAN → Process redirect
+  │           │           │
+  │           │           ├── Clear current offender indicator
+  │           │           ├── Create/Update target offender
+  │           │           ├── Set new offender indicator
+  │           │           ├── Reset processing stage
+  │           │           │
+  │           │           └── Return success
+  │
 END
 ```
 
 ---
 
-## 6. Email/SMS Conditions
+## 4. Assumptions Log
 
-### 6.1 Email Template Selection
+### 4.1 Assumptions Made
 
-| Template ID | Decision | Recipient | Description |
-|-------------|----------|-----------|-------------|
-| APPROVED_HIRER_INDIVIDUAL | Approve Hirer | Owner | Hirer approval notification (individual submitter) |
-| APPROVED_HIRER_COMPANY | Approve Hirer | Owner | Hirer approval notification (company submitter) |
-| APPROVED_DRIVER_INDIVIDUAL | Approve Driver | Owner | Driver approval notification (individual) |
-| APPROVED_DRIVER_COMPANY | Approve Driver | Owner | Driver approval notification (company) |
-| APPROVED_FURNISHED_PERSON | Approve | Furnished Person | Notification to furnished person |
-| REJECTED_DOCS_REQUIRED | Reject | Owner | Rejection - documents required |
-| REJECTED_MULTIPLE_HIRERS | Reject | Owner | Rejection - multiple hirers detected |
-| REJECTED_RENTAL_DISCREPANCY | Reject | Owner | Rejection - rental period discrepancy |
-| REJECTED_GENERAL | Reject | Owner | General rejection notification |
+| ID | Assumption | Basis | Impact |
+|----|------------|-------|--------|
+| ASM-001 | Only one offender per role (Owner/Hirer/Driver) can be current at a time | Functional doc mentions "Current Offender" as singular | Single offender_indicator per role |
+| ASM-002 | Furnish overwrites existing offender if exists | Section 4.6.2.3 mentions PATCH for existing | No separate "replace" function needed |
+| ASM-003 | Update only changes particulars, not offender indicator | Section 4.8 describes update as editing existing | Simpler update logic |
+| ASM-004 | Redirect resets processing stage to starting stage for target role | Logical flow for re-processing | Stage reset logic needed |
 
-### 6.2 Notification Conditions
+### 4.2 Questions for Clarification
 
-| Rule ID | Condition | Action |
-|---------|-----------|--------|
-| NT-001 | sendEmailToOwner = true AND owner email exists | Send email to owner |
-| NT-002 | sendEmailToFurnished = true AND furnished email exists | Send email to furnished person |
-| NT-003 | sendSmsToFurnished = true AND furnished mobile exists | Send SMS to furnished person |
-| NT-004 | Email/SMS send fails | Log error, continue processing (non-blocking) |
-
-### 6.3 Email/SMS Data Mapping
-
-| Placeholder | Source Field |
-|-------------|--------------|
-| {{submitterName}} | furnish_application.owner_name |
-| {{noticeNo}} | furnish_application.notice_no |
-| {{vehicleNo}} | furnish_application.vehicle_no |
-| {{furnishedName}} | furnish_application.furnish_name |
-| {{offenceDate}} | notice.offence_date |
-| {{decisionDate}} | NOW() |
-| {{rejectionReason}} | request.rejectionReason |
+| ID | Question | Status |
+|----|----------|--------|
+| Q-001 | Can an OIC furnish/redirect/update multiple notices at once in Section 4? | Assumed NO (Batch is Section 5) |
+| Q-002 | What happens to suspension status when redirect occurs? | Assumed: Follows existing suspension rules |
 
 ---
 
-## 7. Error Handling Conditions
-
-### 7.1 Validation Errors (HTTP 400)
-
-| Error Code | Field | Message |
-|------------|-------|---------|
-| VALIDATION_ERROR | txnNo | Transaction number is required |
-| VALIDATION_ERROR | officerId | Officer ID is required |
-| VALIDATION_ERROR | rejectionReason | Rejection reason is required |
-
-### 7.2 Business Errors (HTTP 409)
-
-| Reason Code | Message | Handling |
-|-------------|---------|----------|
-| ALREADY_PROCESSED | Submission has already been processed | Refresh list, notify OIC |
-| NOT_PENDING | Submission is not in pending status | Refresh list, notify OIC |
-| NOTICE_NOT_FURNISHABLE | Notice is no longer at furnishable stage | Prompt to reject |
-| PERMANENTLY_SUSPENDED | Notice is permanently suspended | Display warning |
-
-### 7.3 Technical Errors (HTTP 500)
-
-| Error Code | Message | Handling |
-|------------|---------|----------|
-| DB_UPDATE | Failed to update database | Rollback, retry, log error |
-| EMAIL_SEND | Failed to send email notification | Log error, continue (non-blocking) |
-| SMS_SEND | Failed to send SMS notification | Log error, continue (non-blocking) |
-| SYNC_INTERNET | Failed to sync outcome to Internet DB | Log error, retry scheduled |
-
----
-
-## 8. Assumptions Log
-
-### 8.1 Code Implementation Assumptions
-
-| ID | Assumption | Basis | Impact if Wrong |
-|----|------------|-------|-----------------|
-| ASM-001 | Email/SMS send failure is non-blocking | Common pattern for notification systems | May need to add retry queue |
-| ASM-002 | Internet DB sync happens synchronously | Code analysis pattern | May need async with retry |
-| ASM-003 | Only one OIC can process a submission at a time | Implied by status check | May need optimistic locking |
-
-### 8.2 Functional Assumptions
-
-| ID | Assumption | Basis | Impact if Wrong |
-|----|------------|-------|-----------------|
-| ASM-010 | OIC must have valid session/JWT | Standard security practice | Need to add auth validation |
-| ASM-011 | Furnished person address is optional for approval | FD doesn't mandate | May need additional validation |
-| ASM-012 | Rejection allows unlimited resubmissions | FD mentions resubmission | May need resubmission limit |
-
----
-
-## Appendix A: User Story Mapping
-
-| User Story | Validation Rules |
-|------------|------------------|
-| OCMS41.9-41.12 | FE-S01 to FE-S06, FE-D01 to FE-D03 |
-| OCMS41.13-41.14 | FE-N01 to FE-N04, FE-F01 to FE-F06 |
-| OCMS41.15-41.23 | BE-001, BE-002, BE-010 to BE-013, BR-010 to BR-024 |
-| OCMS41.24-41.33 | BE-001, BE-002, BE-003, BR-030 to BR-032 |
-
----
-
-## Appendix B: Status Transitions
-
-| From Status | Action | To Status |
-|-------------|--------|-----------|
-| Pending (P) | OIC Approve | Approved (A) |
-| Pending (P) | OIC Reject | Rejected (R) |
-| Resubmission (S) | OIC Approve | Approved (A) |
-| Resubmission (S) | OIC Reject | Rejected (R) |
-
----
-
-*Document generated for OCMS 41 Section 3 condition planning*
+*Document generated for OCMS 41 Section 4 condition planning*

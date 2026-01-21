@@ -485,11 +485,41 @@ def convert_markdown_to_word(input_path: str, output_path: str = None) -> str:
             if in_code_block:
                 # End code block
                 code_text = '\n'.join(code_block_content)
-                p = doc.add_paragraph()
+
+                # Create a single-cell table for code block with gray background
+                code_table = doc.add_table(rows=1, cols=1)
+                code_table.alignment = WD_TABLE_ALIGNMENT.LEFT
+                cell = code_table.rows[0].cells[0]
+
+                # Add gray background to cell
+                shading = OxmlElement('w:shd')
+                shading.set(qn('w:fill'), 'F5F5F5')  # Light gray background
+                cell._tc.get_or_add_tcPr().append(shading)
+
+                # Set cell padding
+                set_cell_padding(cell, left=Cm(0.3), right=Cm(0.3), top=Cm(0.2), bottom=Cm(0.2))
+
+                # Add code text with monospace font
+                cell.text = ''
+                p = cell.paragraphs[0]
                 run = p.add_run(code_text)
-                # Use Arial 10pt for code blocks
-                set_run_font(run, FONT_NAME, BODY_FONT_SIZE)
-                p.paragraph_format.left_indent = Inches(0.5)
+                set_run_font(run, CODE_FONT_NAME, CODE_FONT_SIZE)
+
+                # Add thin border to table
+                tbl = code_table._tbl
+                tblPr = tbl.tblPr if tbl.tblPr is not None else OxmlElement('w:tblPr')
+                if tbl.tblPr is None:
+                    tbl.insert(0, tblPr)
+                tblBorders = OxmlElement('w:tblBorders')
+                for border_name in ['top', 'left', 'bottom', 'right']:
+                    border = OxmlElement(f'w:{border_name}')
+                    border.set(qn('w:val'), 'single')
+                    border.set(qn('w:sz'), '4')
+                    border.set(qn('w:color'), 'CCCCCC')  # Light gray border
+                    tblBorders.append(border)
+                tblPr.append(tblBorders)
+
+                doc.add_paragraph()  # Add space after code block
                 code_block_content = []
                 in_code_block = False
             else:

@@ -1,4 +1,4 @@
-# OCMS 41 Section 4 - Technical Flowchart Plan
+# OCMS 41 Section 5 - Technical Flowchart Plan
 
 ## Document Information
 
@@ -6,8 +6,8 @@
 |-------|-------|
 | Version | 1.1 |
 | Date | 2026-01-19 |
-| Source | Functional Document v1.1, Section 4 |
-| Module | OCMS 41 - Section 4: Staff Portal Manual Furnish or Update |
+| Source | Functional Document v1.1, Section 5 |
+| Module | OCMS 41 - Section 5: Batch Furnish and Batch Update |
 
 ---
 
@@ -21,26 +21,21 @@
 
 ## 1. Overview
 
-Section 4 Technical Flow akan menjelaskan detail teknis untuk fungsi manual furnish, redirect, dan update dari Staff Portal OCMS.
+Section 5 Technical Flow akan menjelaskan detail teknis untuk batch furnish dan batch update mailing address dari Staff Portal OCMS.
 
 ### 1.1 Reference Diagrams
 
 Functional Flow drawio memiliki diagram berikut:
-- 4.2_HL Portal_furnish_update (High Level)
-- 4.5.1_Action_button_checks
-- 4.6.2 Process Flow for Furnish
-- 4.7.2 Process Flow for Redirect
-- 4.8.2 Process Flow for Update
+- 5.2 Batch Furnish Owners, Hirer or Drivers
+- 5.3 Batch Update Mailing Addr
 
 ### 1.2 Technical Flow Diagrams Needed
 
 | Diagram | Name | Description |
 |---------|------|-------------|
-| 4.2 | High Level Flow | Overview of Furnish/Redirect/Update flow |
-| 4.5 | Action Button Check | Determine which buttons to display |
-| 4.6 | Furnish Submission | Detailed furnish process with API & DB |
-| 4.7 | Redirect Notice | Detailed redirect process with API & DB |
-| 4.8 | Update Particulars | Detailed update process with API & DB |
+| 5.2 | Batch Furnish | Detailed batch furnish process with API & DB |
+| 5.3 | Batch Update Mailing Address | Detailed batch update process with API & DB |
+| 5.3.1 | Retrieve Outstanding Notices | Backend flow for retrieving notices by ID |
 
 ---
 
@@ -50,79 +45,20 @@ Functional Flow drawio memiliki diagram berikut:
 
 | Tab | Name | Type | Swimlanes |
 |-----|------|------|-----------|
-| 4.2 | High_Level_Furnish_Update | Overview | Staff Portal |
-| 4.5 | Action_Button_Check | Decision | Staff Portal, Backend |
-| 4.6 | Furnish_Offender | Detailed | Staff Portal, OCMS Admin API, Intranet DB, Internet DB |
-| 4.7 | Redirect_Notice | Detailed | Staff Portal, OCMS Admin API, Intranet DB, Internet DB |
-| 4.8 | Update_Particulars | Detailed | Staff Portal, OCMS Admin API, Intranet DB |
+| 5.2 | Batch_Furnish_Offender | Detailed | Staff Portal, OCMS Admin API, Intranet DB, Internet DB |
+| 5.3 | Batch_Update_Mailing_Addr | Detailed | Staff Portal, OCMS Admin API, Intranet DB |
+| 5.3.1 | Retrieve_Outstanding_Notices | Backend | OCMS Admin API, Intranet DB |
 
 ---
 
 ## 3. Diagram Specifications
 
-### 3.1 Diagram 4.2: High Level Furnish/Update Flow
+### 3.1 Diagram 5.2: Batch Furnish Offender (Detailed)
 
-**Purpose:** Show overview of manual furnish/update process
-
-**Swimlanes:**
-1. Staff Portal (Blue)
-
-**Flow Elements:**
-1. Start
-2. OIC navigates to Search Notices page
-3. OIC searches for Notice
-4. OIC clicks Notice Number → Opens detail page in new tab
-5. OIC clicks Owner/Hirer/Driver Details sub-tab
-6. Portal displays Owner/Hirer/Driver details
-7. OIC clicks UNLOCK button
-8. Portal unlocks fields and detects presence of particulars
-9. Decision: Which action?
-   - FURNISH → Add new offender
-   - REDIRECT → Transfer to another offender
-   - UPDATE → Modify existing offender
-10. Portal performs data validation
-11. Portal calls backend API
-12. Portal receives processing result
-13. Portal displays outcome
-14. End
-
-**Estimated Dimensions:**
-- Width: ~2000px
-- Height: ~600px (single swimlane)
-
----
-
-### 3.2 Diagram 4.5: Action Button Check
-
-**Purpose:** Show logic for determining which buttons to display
+**Purpose:** Detailed technical flow for batch furnishing offender to multiple notices
 
 **Swimlanes:**
-1. Staff Portal (Blue)
-2. Backend Logic (Green)
-
-**Flow Elements:**
-1. Start
-2. OIC clicks UNLOCK button
-3. Portal detects presence of particulars and Offender Indicator
-4. Decision: Does offender record exist?
-   - NO → Display FURNISH button only
-   - YES → Check: Is Current Offender?
-     - YES → Display UPDATE button only
-     - NO → Display REDIRECT button only
-5. End
-
-**Estimated Dimensions:**
-- Width: ~1800px
-- Height: ~700px
-
----
-
-### 3.3 Diagram 4.6: Furnish Offender (Detailed)
-
-**Purpose:** Detailed technical flow for furnishing offender
-
-**Swimlanes:**
-1. Staff Portal (Blue) - Frontend validation, API calls
+1. Staff Portal (Blue) - Frontend validation, API calls, result handling
 2. OCMS Admin API Intranet (Green) - Backend processing
 3. Intranet Database (Yellow) - Data storage
 4. Internet Database (Orange) - Sync to Internet
@@ -131,18 +67,37 @@ Functional Flow drawio memiliki diagram berikut:
 
 **Staff Portal:**
 1. Start
-2. OIC clicks FURNISH button
-3. OIC enters offender details
-4. OIC clicks Submit
-5. Frontend validation
-6. Decision: Valid? → No: Show error
-7. Call POST /notice/offender/furnish
-8. Receive response
-9. Display success/error message
-10. End
+2. OIC navigates to Search Notices page
+3. OIC searches and selects multiple Notices
+4. OIC clicks APPLY OPERATION → BATCH FURNISH
+5. Call POST /batch/check-furnishability
+6. Receive furnishability response
+7. Decision: All non-furnishable? → Yes: Show error, End
+8. Decision: Some non-furnishable? → Yes: Prompt continue
+9. User confirms to continue
+10. Display Batch Furnish form
+11. OIC enters offender details
+12. OIC clicks SUBMIT
+13. Frontend validation
+14. Decision: Valid? → No: Show error
+15. Display overwrite warning prompt
+16. User clicks CONFIRM
+17. Loop: Process each Notice
+18. Call POST /notice/offender/furnish per Notice
+19. Store result (success/failure)
+20. Query DB for latest details
+21. Display Result Page
+22. End
 
-**OCMS Admin API:**
-1. Receive request
+**OCMS Admin API (Check Furnishability):**
+1. Receive check request
+2. Loop: Check each Notice
+3. Query Notice by noticeNo
+4. Check processing stage
+5. Return furnishability result
+
+**OCMS Admin API (Furnish):**
+1. Receive furnish request
 2. Bean validation
 3. Decision: Valid? → No: Return VALIDATION_ERROR
 4. Query notice by noticeNo
@@ -158,98 +113,123 @@ Functional Flow drawio memiliki diagram berikut:
 14. Return success response
 
 **Database Operations:**
-- ocms_valid_offence_notice (VON): Query notice (last_processing_stage, vehicle_no)
-- ocms_offence_notice_owner_driver (OND): INSERT/UPDATE offender
-- ocms_offence_notice_owner_driver_addr (OND_ADDR): INSERT/UPDATE address (type_of_address='furnished_mail')
-- ocms_furnish_application (FA): INSERT furnish application record
-- eocms_furnish_application (eFA): Sync to PII zone
+- ocms_valid_offence_notice: Query notice
+- ocms_offence_notice_owner_driver: INSERT/UPDATE offender
+- eocms_furnish_application: Sync to Internet/PII
 
 **Estimated Dimensions:**
-- Width: ~3200px
-- Height: ~1100px
+- Width: ~3600px
+- Height: ~1300px
 
 ---
 
-### 3.4 Diagram 4.7: Redirect Notice (Detailed)
+### 3.2 Diagram 5.3: Batch Update Mailing Address (Detailed)
 
-**Purpose:** Detailed technical flow for redirecting notice
+**Purpose:** Detailed technical flow for batch updating mailing address
 
 **Swimlanes:**
-1. Staff Portal (Blue)
-2. OCMS Admin API Intranet (Green)
-3. Intranet Database (Yellow)
-4. Internet Database (Orange)
+1. Staff Portal (Blue) - Search, display, update
+2. OCMS Admin API Intranet (Green) - Backend processing
+3. Intranet Database (Yellow) - Data storage
 
 **Flow Elements:**
 
 **Staff Portal:**
 1. Start
-2. OIC clicks REDIRECT button
-3. OIC selects target role
-4. OIC enters new offender details
-5. OIC clicks Submit
-6. Frontend validation
-7. Call POST /notice/offender/redirect
-8. Receive response
-9. Display success/error message
-10. End
+2. OIC navigates to Batch Update screen
+3. OIC enters ID Number
+4. OIC clicks SEARCH
+5. Call POST /notice/offender/outstanding
+6. Receive response
+7. Decision: Records found? → No: Show "Offender not found"
+8. Display Notice list with mailing addresses
+9. OIC selects Notices to update
+10. OIC enters new mailing address
+11. OIC clicks SUBMIT
+12. Frontend validation
+13. Decision: Valid? → No: Show error
+14. Call POST /batch/update-address
+15. Receive response
+16. Display Result Page
+17. End
 
-**OCMS Admin API:**
-1. Receive request
+**OCMS Admin API (Get Outstanding):**
+1. Receive request with idNo
+2. Query ocms_offence_notice_owner_driver by id_no
+3. Decision: Records found? → No: Return OFFENDER_NOT_FOUND
+4. Filter by offender_indicator = 'Y'
+5. For each record: Query ocms_valid_offence_notice
+6. For each notice: Query ocms_suspended_notice
+7. Check for active PS (type='PS' AND date_of_revival IS NULL)
+8. Remove notices with active PS
+9. Query ocms_offence_notice_owner_driver_addr for mailing
+10. Consolidate results
+11. Return response
+
+**OCMS Admin API (Update Address):**
+1. Receive update request
 2. Validate request
-3. Query notice and current offender
-4. Check redirect eligibility
-5. Decision: Can redirect? → No: Return error
-6. Clear current offender indicator
-7. Decision: Target offender exists? → Create/Update
-8. Set new offender indicator = Y
-9. Reset processing stage
-10. Sync to Internet DB
-11. Return success response
+3. Loop: Process each Notice
+4. Query offender record
+5. Decision: Is current offender? → No: Skip
+6. Update/Insert address record
+7. Update contact info if provided
+8. Return success response
+
+**Database Operations:**
+- ocms_offence_notice_owner_driver: Query by id_no
+- ocms_valid_offence_notice: Query notice details
+- ocms_suspended_notice: Check suspension status
+- ocms_offence_notice_owner_driver_addr: Query/Update address
 
 **Estimated Dimensions:**
 - Width: ~3200px
-- Height: ~1100px
+- Height: ~1200px
 
 ---
 
-### 3.5 Diagram 4.8: Update Particulars (Detailed)
+### 3.3 Diagram 5.3.1: Retrieve Outstanding Notices (Backend Detail)
 
-**Purpose:** Detailed technical flow for updating offender particulars
+**Purpose:** Detailed backend flow for retrieving outstanding notices by ID
 
 **Swimlanes:**
-1. Staff Portal (Blue)
-2. OCMS Admin API Intranet (Green)
-3. Intranet Database (Yellow)
+1. OCMS Admin API Intranet (Green) - Processing logic
+2. Intranet Database (Yellow) - Data queries
 
 **Flow Elements:**
 
-**Staff Portal:**
-1. Start
-2. OIC clicks UPDATE button
-3. OIC modifies particulars
-4. OIC clicks Submit
-5. Frontend validation
-6. Call POST /notice/offender/update
-7. Receive response
-8. Display success/error message
-9. End
-
 **OCMS Admin API:**
-1. Receive request
-2. Validate request
-3. Query offender record
-4. Decision: Is current offender? → No: Return NOT_CURRENT_OFFENDER
-5. Update offender particulars
-6. Return success response
+1. Function Start
+2. Extract ID number from request
+3. Query DB for offender records
+4. Decision: Records found? → No: Return NOT_FOUND
+5. Filter by offender_indicator = 'Y'
+6. Result: List of notices where ID is current offender
+7. Loop: For each notice
+8. Query ocms_valid_offence_notice
+9. Decision: Notice found? → No: Skip
+10. Query ocms_suspended_notice
+11. Decision: Any suspension record? → No: Add to eligible list
+12. Decision: suspension_type = 'PS'? → No: Add to eligible list
+13. Decision: date_of_revival IS NULL? → Yes: Has active PS (exclude)
+14. Add to eligible list (PS revived)
+15. Continue loop until all processed
+16. Result: List of notices without active PS
+17. Query ocms_offence_notice_owner_driver_addr for each
+18. Decision: Address found? → Mixed results possible
+19. Consolidate all data
+20. Return response
+21. Function End
 
-**Note:** Update does NOT change:
-- Offender indicator
-- Processing stage
+**Database Queries:**
+- Query 1: ocms_offence_notice_owner_driver WHERE id_no = ?
+- Query 2: ocms_valid_offence_notice WHERE notice_no = ?
+- Query 3: ocms_suspended_notice WHERE notice_no = ?
+- Query 4: ocms_offence_notice_owner_driver_addr WHERE notice_no = ? AND owner_driver_indicator = ?
 
 **Estimated Dimensions:**
-- Width: ~2400px
-- Height: ~900px
+- Width: ~2800px
+- Height: ~1400px
 
 ---
 
@@ -259,11 +239,9 @@ Following the flowchart-sizing-standard.md:
 
 | Diagram | Est. Elements | Page Width | Page Height |
 |---------|---------------|------------|-------------|
-| 4.2 HL | ~15 | 2000 | 600 |
-| 4.5 Button | ~12 | 1800 | 700 |
-| 4.6 Furnish | ~25 | 3200 | 1100 |
-| 4.7 Redirect | ~25 | 3200 | 1100 |
-| 4.8 Update | ~15 | 2400 | 900 |
+| 5.2 Batch Furnish | ~35 | 3600 | 1300 |
+| 5.3 Batch Update | ~30 | 3200 | 1200 |
+| 5.3.1 Retrieve Outstanding | ~25 | 2800 | 1400 |
 
 ---
 
@@ -277,8 +255,41 @@ Following the flowchart-sizing-standard.md:
 | Swimlane | swim- | swim-portal, swim-api |
 | Edge | e- | e-1, e-yes, e-no |
 | Database box | db- | db-offender, db-notice |
-| API box | api- | api-furnish, api-redirect |
+| API box | api- | api-furnish, api-update |
+| Loop | loop- | loop-process, loop-notice |
 
 ---
 
-*Document generated for OCMS 41 Section 4 flowchart planning*
+## 6. Special Flow Patterns
+
+### 6.1 Loop Pattern for Batch Processing
+
+```
+[Loop Start] → [Process Item] → [Store Result] → [Decision: More items?]
+                                                        │
+                                                        ├── Yes → [Loop Start]
+                                                        │
+                                                        └── No → [Continue]
+```
+
+### 6.2 Permanent Suspension Check Pattern
+
+```
+[Query ocms_suspended_notice] → [Decision: Record found?]
+                                        │
+                                        ├── No → [Eligible]
+                                        │
+                                        └── Yes → [Decision: type = PS?]
+                                                        │
+                                                        ├── No → [Eligible]
+                                                        │
+                                                        └── Yes → [Decision: date_of_revival IS NULL?]
+                                                                        │
+                                                                        ├── Yes → [Exclude (Active PS)]
+                                                                        │
+                                                                        └── No → [Eligible (PS Revived)]
+```
+
+---
+
+*Document generated for OCMS 41 Section 5 flowchart planning*
