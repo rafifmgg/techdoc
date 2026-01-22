@@ -1,47 +1,28 @@
-# API Plan: OCMS 15 - Change Processing Stage
+# API Plan - OCMS 15: Manage Change Processing Stage
 
-## Overview
-
-| Attribute | Value |
-| --- | --- |
-| API Name | Change Processing Stage API |
-| Version | v1.0 |
-| Author | Claude |
-| Created Date | 18/01/2026 |
-| Last Updated | 18/01/2026 |
-| Status | Draft |
-| Related Document | OCMS 15 Technical Doc |
+**Document Information**
+- Version: 1.0
+- Date: 2026-01-21
+- Source: Backend Code Analysis + Functional Document v1.2
+- Feature: Manual Change Processing Stage & PLUS Integration
 
 ---
 
-## 1. Purpose
+## 1. Internal APIs (Backend to Frontend)
 
-The Change Processing Stage API allows authorized users to manually change the processing stage of offence notices. This feature supports batch operations from OCMS Staff Portal, external integrations with PLUS Portal, and internal Toppan cron processing. The API ensures eligibility validation, audit trail recording, and report generation.
+### 1.1 Search Notices for Change Processing Stage
 
----
+**API Name:** searchChangeProcessingStage
 
-## 2. API Endpoints
+**Endpoint:**
+- UAT: `https://[domain]/ocms/v1/change-processing-stage/search`
+- PRD: `https://[domain]/ocms/v1/change-processing-stage/search`
 
-### 2.1 Search Notices for Change Processing Stage
+**Method:** POST
 
-| Attribute | Value |
-| --- | --- |
-| Method | POST |
-| URL | `/api/v1/change-processing-stage/search` |
-| Authentication | Bearer Token |
-| Description | Search notices based on criteria and return segregated lists of eligible vs ineligible notices |
+**Description:** Search for notices based on criteria and return segregated lists of eligible vs ineligible notices
 
-#### Request
-
-**Headers:**
-
-| Header | Required | Description |
-| --- | --- | --- |
-| Authorization | Yes | Bearer {token} |
-| Content-Type | Yes | application/json |
-
-**Request Body:**
-
+**Request Payload:**
 ```json
 {
   "noticeNo": "N-001",
@@ -52,34 +33,23 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
-**Request Body Schema:**
+**Request Rules:**
+- At least one search criterion is required
+- When searching by ID Number: Backend queries ONOD table first, then joins with VON table
 
-| Field | Type | Required | Validation | Description |
-| --- | --- | --- | --- | --- |
-| noticeNo | string | No | max: 10 chars | Notice number |
-| idNo | string | No | max: 20 chars | Offender ID number (NRIC/FIN/Passport) |
-| vehicleNo | string | No | max: 14 chars | Vehicle registration number |
-| currentProcessingStage | string | No | max: 3 chars | Current processing stage code |
-| dateOfCurrentProcessingStage | date | No | format: yyyy-MM-dd | Date of current processing stage |
-
-> **Note:** At least one search criterion is required.
-
-#### Response
-
-**Success Response (200 OK):**
-
+**Response (Success with Results):**
 ```json
 {
   "eligibleNotices": [
     {
       "noticeNo": "N-001",
       "offenceType": "SP",
-      "offenceDateTime": "2025-12-01 10:30:00",
+      "offenceDateTime": "2025-12-01T10:30:00",
       "offenderName": "John Doe",
       "offenderId": "S1234567A",
       "vehicleNo": "SBA1234A",
       "currentProcessingStage": "DN1",
-      "currentProcessingStageDate": "2025-12-15 09:00:00",
+      "currentProcessingStageDate": "2025-12-15T09:00:00",
       "suspensionType": null,
       "suspensionStatus": null,
       "ownerDriverIndicator": "D",
@@ -90,12 +60,12 @@ The Change Processing Stage API allows authorized users to manually change the p
     {
       "noticeNo": "N-002",
       "offenceType": "SP",
-      "offenceDateTime": "2025-12-01 11:00:00",
+      "offenceDateTime": "2025-12-01T11:00:00",
       "offenderName": "Jane Smith",
       "offenderId": "S9876543B",
       "vehicleNo": "SBA5678B",
       "currentProcessingStage": "CRT",
-      "currentProcessingStageDate": "2025-12-18 14:00:00",
+      "currentProcessingStageDate": "2025-12-18T14:00:00",
       "reasonCode": "OCMS.CPS.SEARCH.COURT_STAGE",
       "reasonMessage": "Notice is in court stage"
     }
@@ -108,46 +78,47 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
-**Response Schema:**
+**Response (No Results):**
+```json
+{
+  "eligibleNotices": [],
+  "ineligibleNotices": [],
+  "summary": {
+    "total": 0,
+    "eligible": 0,
+    "ineligible": 0
+  }
+}
+```
 
-| Field | Type | Description |
-| --- | --- | --- |
-| eligibleNotices | array | Notices eligible for stage change |
-| eligibleNotices[].noticeNo | string | Notice number |
-| eligibleNotices[].offenceType | string | Offence type code |
-| eligibleNotices[].offenceDateTime | datetime | Offence date and time |
-| eligibleNotices[].offenderName | string | Offender name |
-| eligibleNotices[].offenderId | string | Offender ID number |
-| eligibleNotices[].vehicleNo | string | Vehicle number |
-| eligibleNotices[].currentProcessingStage | string | Current stage code |
-| eligibleNotices[].currentProcessingStageDate | datetime | Current stage date |
-| eligibleNotices[].suspensionType | string | Suspension type (TS/PS/null) |
-| eligibleNotices[].suspensionStatus | string | Suspension status |
-| eligibleNotices[].ownerDriverIndicator | string | D=Driver, O=Owner, H=Hirer, DIR=Director |
-| eligibleNotices[].entityType | string | Entity type for company |
-| ineligibleNotices | array | Notices NOT eligible for stage change |
-| ineligibleNotices[].reasonCode | string | Reason code for ineligibility |
-| ineligibleNotices[].reasonMessage | string | Human-readable reason |
-| summary | object | Summary statistics |
-| summary.total | integer | Total notices found |
-| summary.eligible | integer | Eligible count |
-| summary.ineligible | integer | Ineligible count |
+**Response (Failure):**
+```json
+{
+  "eligibleNotices": [],
+  "ineligibleNotices": [],
+  "summary": {
+    "total": 0,
+    "eligible": 0,
+    "ineligible": 0
+  }
+}
+```
 
 ---
 
-### 2.2 Validate Change Processing Stage
+### 1.2 Validate Change Processing Stage Eligibility
 
-| Attribute | Value |
-| --- | --- |
-| Method | POST |
-| URL | `/api/v1/change-processing-stage/validate` |
-| Authentication | Bearer Token |
-| Description | Validate notices BEFORE submission to identify changeable vs non-changeable notices |
+**API Name:** validateChangeProcessingStage
 
-#### Request
+**Endpoint:**
+- UAT: `https://[domain]/ocms/v1/change-processing-stage/validate`
+- PRD: `https://[domain]/ocms/v1/change-processing-stage/validate`
 
-**Request Body:**
+**Method:** POST
 
+**Description:** Validate notices BEFORE submission to identify which notices are eligible vs ineligible for requested stage change
+
+**Request Payload:**
 ```json
 {
   "notices": [
@@ -164,23 +135,12 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
-**Request Body Schema:**
+**Request Rules:**
+- `notices` array cannot be empty
+- If `reasonOfChange` = "OTH", then `remarks` is mandatory
+- `newProcessingStage` is required
 
-| Field | Type | Required | Validation | Description |
-| --- | --- | --- | --- | --- |
-| notices | array | Yes | not empty | List of notices to validate |
-| notices[].noticeNo | string | Yes | max: 10 chars | Notice number |
-| notices[].currentStage | string | No | max: 3 chars | Current stage (fetched from DB if not provided) |
-| notices[].offenderType | string | No | DRIVER/OWNER/HIRER/DIRECTOR | Offender type |
-| notices[].entityType | string | No | - | Entity type (for CFC validation) |
-| newProcessingStage | string | Yes | max: 3 chars | Target processing stage |
-| reasonOfChange | string | No | max: 3 chars | Reason code |
-| remarks | string | Conditional | max: 200 chars | Remarks (required if reasonOfChange=OTH) |
-
-#### Response
-
-**Success Response (200 OK):**
-
+**Response (Success):**
 ```json
 {
   "changeableNotices": [
@@ -188,14 +148,12 @@ The Change Processing Stage API allows authorized users to manually change the p
       "noticeNo": "N-001",
       "currentStage": "DN1",
       "offenderType": "DRIVER",
-      "entityType": null,
-      "message": "Eligible for stage change to DN2"
+      "message": "Eligible for stage change"
     }
   ],
   "nonChangeableNotices": [
     {
       "noticeNo": "N-002",
-      "currentStage": "CRT",
       "code": "OCMS.CPS.COURT_STAGE",
       "message": "Notice is in court stage"
     }
@@ -208,21 +166,40 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
+**Response (Failure - Remarks Required):**
+```json
+{
+  "changeableNotices": [],
+  "nonChangeableNotices": [
+    {
+      "noticeNo": "N-001",
+      "code": "OCMS.CPS.REMARKS_REQUIRED",
+      "message": "Remarks are mandatory when reason for change is 'OTH' (Others)"
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "changeable": 0,
+    "nonChangeable": 1
+  }
+}
+```
+
 ---
 
-### 2.3 Submit Change Processing Stage (Batch)
+### 1.3 Submit Change Processing Stage
 
-| Attribute | Value |
-| --- | --- |
-| Method | POST |
-| URL | `/api/v1/change-processing-stage` |
-| Authentication | Bearer Token |
-| Description | Submit batch request to change processing stage for multiple notices |
+**API Name:** changeProcessingStage
 
-#### Request
+**Endpoint:**
+- UAT: `https://[domain]/ocms/v1/change-processing-stage`
+- PRD: `https://[domain]/ocms/v1/change-processing-stage`
 
-**Request Body:**
+**Method:** POST
 
+**Description:** Submit batch change processing stage request
+
+**Request Payload:**
 ```json
 {
   "items": [
@@ -230,7 +207,8 @@ The Change Processing Stage API allows authorized users to manually change the p
       "noticeNo": "N-001",
       "newStage": "DN2",
       "reason": "SUP",
-      "remark": "Verified by AO",
+      "remark": "Manual adjustment",
+      "source": "PORTAL",
       "dhMhaCheck": false,
       "isConfirmation": false
     }
@@ -238,22 +216,40 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
-**Request Body Schema:**
+**Request Rules:**
+- `items` array cannot be empty
+- `noticeNo` is required for each item
+- `newStage` is optional (can be derived from current stage)
+- `dhMhaCheck` defaults to false
+- `isConfirmation` defaults to false (set true to override duplicate record warning)
 
-| Field | Type | Required | Validation | Description |
-| --- | --- | --- | --- | --- |
-| items | array | Yes | not empty | List of notices to change |
-| items[].noticeNo | string | Yes | max: 10 chars | Notice number |
-| items[].newStage | string | No | max: 3 chars | New stage (can be derived from StageMap) |
-| items[].reason | string | No | max: 3 chars | Reason code |
-| items[].remark | string | No | max: 200 chars | Additional remarks |
-| items[].dhMhaCheck | boolean | No | - | Flag to update DH MHA check |
-| items[].isConfirmation | boolean | No | - | Confirmation flag for duplicate override |
+**Response (Success):**
+```json
+{
+  "status": "SUCCESS",
+  "summary": {
+    "requested": 1,
+    "succeeded": 1,
+    "failed": 0
+  },
+  "results": [
+    {
+      "noticeNo": "N-001",
+      "outcome": "UPDATED",
+      "previousStage": "DN1",
+      "newStage": "DN2",
+      "code": "OCMS-2000",
+      "message": "Success"
+    }
+  ],
+  "report": {
+    "url": "https://signed-url.xlsx",
+    "expiresAt": "2025-10-28T16:00:00+08:00"
+  }
+}
+```
 
-#### Response
-
-**Success Response (200 OK):**
-
+**Response (Partial Success):**
 ```json
 {
   "status": "PARTIAL",
@@ -268,127 +264,171 @@ The Change Processing Stage API allows authorized users to manually change the p
       "outcome": "UPDATED",
       "previousStage": "DN1",
       "newStage": "DN2",
-      "message": "Stage changed successfully"
+      "code": "OCMS-2000",
+      "message": "Success"
     },
     {
       "noticeNo": "N-002",
       "outcome": "FAILED",
       "code": "OCMS.CPS.NOT_FOUND",
       "message": "VON not found"
-    },
-    {
-      "noticeNo": "N-003",
-      "outcome": "WARNING",
-      "code": "OCMS.CPS.ELIG.EXISTING_CHANGE_TODAY",
-      "message": "Notice No. N-003 has existing stage change update. Please confirm to proceed."
     }
   ],
-  "reportUrl": "https://blob.storage/reports/change-stage/ChangeStageReport_20251220.xlsx",
-  "existingRecordWarning": true
+  "report": {
+    "url": "https://signed-url.xlsx",
+    "expiresAt": "2025-10-28T16:00:00+08:00"
+  }
 }
 ```
 
-**Response Schema:**
+**Response (Duplicate Record Warning):**
+```json
+{
+  "status": "PARTIAL",
+  "summary": {
+    "requested": 1,
+    "succeeded": 0,
+    "failed": 1
+  },
+  "results": [
+    {
+      "noticeNo": "N-001",
+      "outcome": "FAILED",
+      "code": "OCMS.CPS.DUPLICATE_RECORD",
+      "message": "Existing change record found for this notice today. Set isConfirmation=true to proceed."
+    }
+  ]
+}
+```
 
-| Field | Type | Description |
-| --- | --- | --- |
-| status | string | SUCCESS / PARTIAL / FAILED / WARNING |
-| summary.requested | integer | Total notices requested |
-| summary.succeeded | integer | Successfully updated count |
-| summary.failed | integer | Failed count (includes warnings) |
-| results | array | Per-notice results |
-| results[].noticeNo | string | Notice number |
-| results[].outcome | string | UPDATED / FAILED / WARNING |
-| results[].previousStage | string | Previous stage (for success) |
-| results[].newStage | string | New stage (for success) |
-| results[].code | string | Error code (for failure) |
-| results[].message | string | Result message |
-| reportUrl | string | URL to download Excel report |
-| existingRecordWarning | boolean | Indicates duplicate record exists |
+**Response (Failure):**
+```json
+{
+  "status": "FAILED",
+  "summary": {
+    "requested": 0,
+    "succeeded": 0,
+    "failed": 0
+  },
+  "results": [
+    {
+      "noticeNo": "",
+      "outcome": "FAILED",
+      "code": "OCMS.CPS.INVALID_FORMAT",
+      "message": "Items list cannot be empty"
+    }
+  ]
+}
+```
 
 ---
 
-### 2.4 Retrieve Change Stage Reports
+### 1.4 Get Change Processing Stage Reports
 
-| Attribute | Value |
-| --- | --- |
-| Method | GET |
-| URL | `/api/v1/change-processing-stage/reports` |
-| Authentication | Bearer Token |
-| Description | Retrieve list of change stage reports by date range |
+**API Name:** getChangeStageReports
 
-#### Request
+**Endpoint:**
+- UAT: `https://[domain]/ocms/v1/change-processing-stage/reports?startDate=2025-01-01&endDate=2025-01-31`
+- PRD: `https://[domain]/ocms/v1/change-processing-stage/reports?startDate=2025-01-01&endDate=2025-01-31`
+
+**Method:** GET
+
+**Description:** Retrieve list of change stage reports within date range
 
 **Query Parameters:**
+- `startDate` (required): Start date in format yyyy-MM-dd
+- `endDate` (required): End date in format yyyy-MM-dd
 
-| Parameter | Type | Required | Validation | Description |
-| --- | --- | --- | --- | --- |
-| startDate | date | Yes | format: yyyy-MM-dd | Start date (inclusive) |
-| endDate | date | Yes | format: yyyy-MM-dd | End date (inclusive) |
+**Request Rules:**
+- Date range cannot exceed 90 days
+- End date must be after start date
 
-> **Note:** Date range cannot exceed 90 days.
-
-#### Response
-
-**Success Response (200 OK):**
-
+**Response (Success):**
 ```json
 {
   "reports": [
     {
-      "reportDate": "2025-12-20",
-      "generatedBy": "USER01",
-      "noticeCount": 15,
-      "reportUrl": "reports/change-stage/ChangeStageReport_20251220_USER01.xlsx"
+      "reportDate": "2025-01-15",
+      "generatedBy": "USER01, USER02",
+      "noticeCount": 25,
+      "reportUrl": "reports/change-stage/ChangeStageReport_20250115_USER01.xlsx"
+    },
+    {
+      "reportDate": "2025-01-10",
+      "generatedBy": "USER03",
+      "noticeCount": 10,
+      "reportUrl": "reports/change-stage/ChangeStageReport_20250110_USER03.xlsx"
     }
   ],
-  "totalReports": 1,
-  "totalNotices": 15
+  "totalReports": 2,
+  "totalNotices": 35
+}
+```
+
+**Response (Failure - Invalid Date Range):**
+```json
+{
+  "error": "INVALID_DATE_RANGE",
+  "message": "Date range cannot exceed 90 days. Current range: 120 days"
 }
 ```
 
 ---
 
-### 2.5 Download Change Stage Report
+### 1.5 Download Change Processing Stage Report
 
-| Attribute | Value |
-| --- | --- |
-| Method | GET |
-| URL | `/api/v1/change-processing-stage/report/{reportId}` |
-| Authentication | Bearer Token |
-| Description | Download individual change stage report as Excel file |
+**API Name:** downloadChangeStageReport
 
-#### Request
+**Endpoint:**
+- UAT: `https://[domain]/ocms/v1/change-processing-stage/report/{reportId}`
+- PRD: `https://[domain]/ocms/v1/change-processing-stage/report/{reportId}`
+
+**Method:** GET
+
+**Description:** Download individual change processing stage report Excel file
 
 **Path Parameters:**
+- `reportId` (required): Report filename (e.g., "ChangeStageReport_20251220_143022_USER01.xlsx")
 
-| Parameter | Type | Required | Description |
-| --- | --- | --- | --- |
-| reportId | string | Yes | Report filename/ID |
+**Response (Success):**
+- HTTP 200 OK
+- Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+- Content-Disposition: attachment; filename="[reportId]"
+- Body: Excel file bytes
 
-#### Response
+**Response (Failure - Not Found):**
+```json
+{
+  "error": "REPORT_NOT_FOUND",
+  "message": "Report not found: ChangeStageReport_20251220_143022_USER01.xlsx"
+}
+```
 
-**Success Response (200 OK):**
-
-- Content-Type: `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`
-- Content-Disposition: `attachment; filename="ChangeStageReport_20251220.xlsx"`
-- Body: Excel file binary
+**Response (Failure - Invalid Report ID):**
+```json
+{
+  "error": "INVALID_REPORT_ID",
+  "message": "Report ID contains invalid characters"
+}
+```
 
 ---
 
-### 2.6 PLUS Manual Change Processing Stage (External API)
+## 2. External APIs (Integration with External Systems)
 
-| Attribute | Value |
-| --- | --- |
-| Method | POST |
-| URL | `/api/v1/external/plus/change-processing-stage` |
-| Authentication | API Key |
-| Description | External API for PLUS Portal to manually change processing stages |
+### 2.1 PLUS Manual Change Processing Stage
 
-#### Request
+**API Name:** plusChangeProcessingStage
 
-**Request Body:**
+**Endpoint:**
+- UAT: `https://[domain]/ocms/v1/external/plus/change-processing-stage`
+- PRD: `https://[domain]/ocms/v1/external/plus/change-processing-stage`
 
+**Method:** POST
+
+**Description:** PLUS Staff Portal requests to change notice processing stage
+
+**Request Payload:**
 ```json
 {
   "noticeNo": ["N-001", "N-002"],
@@ -401,22 +441,11 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
-**Request Body Schema:**
+**Request Rules:**
+- `noticeNo` is array of notice numbers
+- Stage transition must be allowed according to stage map
 
-| Field | Type | Required | Validation | Description |
-| --- | --- | --- | --- | --- |
-| noticeNo | array | Yes | not empty | List of notice numbers |
-| lastStageName | string | Yes | max: 3 chars | Current/last processing stage |
-| nextStageName | string | Yes | max: 3 chars | New processing stage |
-| lastStageDate | string | No | ISO 8601 | Last stage date |
-| newStageDate | string | No | ISO 8601 | New stage date |
-| offenceType | string | Yes | O/D/H/DIR | Offence type (Owner/Driver/Hirer/Director) |
-| source | string | Yes | max: 8 chars | Source code (005 for PLUS) |
-
-#### Response
-
-**Success Response (200 OK):**
-
+**Response (Success):**
 ```json
 {
   "status": "SUCCESS",
@@ -425,8 +454,7 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
-**Error Response (422 Unprocessable Entity):**
-
+**Response (Failure):**
 ```json
 {
   "status": "FAILED",
@@ -435,21 +463,32 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
+**Response (System Error):**
+```json
+{
+  "status": "ERROR",
+  "code": "INTERNAL_ERROR",
+  "message": "Unexpected system error: [error details]"
+}
+```
+
 ---
 
-### 2.7 Toppan Stage Update (Internal API)
+## 3. Internal APIs (Cron/System Integration)
 
-| Attribute | Value |
-| --- | --- |
-| Method | POST |
-| URL | `/api/v1/internal/toppan/update-stages` |
-| Authentication | Internal |
-| Description | Internal API called by Toppan cron to update VON processing stages |
+### 3.1 Toppan Stage Update (Internal)
 
-#### Request
+**API Name:** updateToppanStages
 
-**Request Body:**
+**Endpoint:**
+- UAT: `https://[domain]/ocms/v1/internal/toppan/update-stages`
+- PRD: `https://[domain]/ocms/v1/internal/toppan/update-stages`
 
+**Method:** POST
+
+**Description:** Called by generate_toppan_letters cron job to update VON processing stages after Toppan files are generated
+
+**Request Payload:**
 ```json
 {
   "noticeNumbers": ["N-001", "N-002", "N-003"],
@@ -458,18 +497,7 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
-**Request Body Schema:**
-
-| Field | Type | Required | Validation | Description |
-| --- | --- | --- | --- | --- |
-| noticeNumbers | array | Yes | not empty | List of notice numbers processed by Toppan |
-| currentStage | string | Yes | max: 3 chars | Current processing stage |
-| processingDate | datetime | Yes | ISO 8601 | Processing date/time |
-
-#### Response
-
-**Success Response (200 OK):**
-
+**Response (Success):**
 ```json
 {
   "totalNotices": 3,
@@ -481,110 +509,82 @@ The Change Processing Stage API allows authorized users to manually change the p
 }
 ```
 
-**Response Schema:**
-
-| Field | Type | Description |
-| --- | --- | --- |
-| totalNotices | integer | Total notices in request |
-| automaticUpdates | integer | Notices updated as automatic (with amount_payable calculation) |
-| manualUpdates | integer | Notices updated as manual (without amount_payable change) |
-| skipped | integer | Notices skipped (not found, stage mismatch) |
-| errors | array | List of error messages |
-| success | boolean | Overall success flag |
-
----
-
-## 3. Error Responses
-
-### Standard Error Format
-
+**Response (Failure):**
 ```json
 {
-  "success": false,
-  "error": {
-    "code": "ERROR_CODE",
-    "message": "Human-readable error message"
-  }
+  "totalNotices": 3,
+  "automaticUpdates": 0,
+  "manualUpdates": 0,
+  "skipped": 0,
+  "errors": ["Unexpected error: [error details]"],
+  "success": false
 }
 ```
 
-### Error Codes
+---
 
-| HTTP Status | Error Code | Description | Resolution |
-| --- | --- | --- | --- |
-| 400 | OCMS.CPS.INVALID_FORMAT | Request validation failed | Check request body format |
-| 400 | OCMS.CPS.MISSING_DATA | Required field missing | Provide all required fields |
-| 400 | INVALID_DATE_RANGE | Date range exceeds 90 days | Reduce date range |
-| 404 | OCMS.CPS.NOT_FOUND | VON not found | Verify notice number exists |
-| 404 | REPORT_NOT_FOUND | Report file not found | Verify report ID |
-| 422 | OCMS.CPS.ELIG.COURT_STAGE | Notice is at court stage | Cannot change court stage notices |
-| 422 | OCMS.CPS.ELIG.PS_BLOCKED | Permanent suspension active | Cannot change PS notices |
-| 422 | OCMS.CPS.ELIG.INELIGIBLE_STAGE | Stage not allowed for role | Check eligible stages for role |
-| 422 | OCMS.CPS.ELIG.ROLE_CONFLICT | Cannot determine offender role | Check ONOD data |
-| 422 | OCMS.CPS.REMARKS_REQUIRED | Remarks mandatory for OTH reason | Provide remarks |
-| 422 | OCMS-4000 | Stage transition not allowed | Check stage map |
-| 422 | OCMS-4004 | CFC not allowed from PLUS | Use OCMS Staff Portal for CFC |
-| 500 | OCMS.CPS.UNEXPECTED | Unexpected server error | Contact support |
+## 4. Error Codes
+
+| Code | Category | Description | User Message |
+|------|----------|-------------|--------------|
+| OCMS-2000 | Success | Operation successful | Success |
+| OCMS-4000 | Client Error | Bad Request / Invalid Data | Invalid request. Please check and try again. |
+| OCMS-5000 | Server Error | Internal Server Error | Something went wrong. Please try again later. |
+| OCMS.CPS.INVALID_FORMAT | Validation | Invalid request format | Items list cannot be empty |
+| OCMS.CPS.MISSING_DATA | Validation | Required field missing | noticeNo is required |
+| OCMS.CPS.REMARKS_REQUIRED | Validation | Remarks mandatory for OTH reason | Remarks are mandatory when reason for change is 'OTH' (Others) |
+| OCMS.CPS.NOT_FOUND | Business Logic | Notice not found in database | VON not found |
+| OCMS.CPS.COURT_STAGE | Business Logic | Notice is in court stage | Notice is in court stage and cannot be changed |
+| OCMS.CPS.DUPLICATE_RECORD | Business Logic | Duplicate change record exists | Existing change record found for this notice today |
+| OCMS.CPS.SEARCH.COURT_STAGE | Search | Notice ineligible due to court stage | Notice is in court stage |
+| OCMS.CPS.UNEXPECTED | System Error | Unexpected error occurred | Unexpected error: [details] |
 
 ---
 
-## 4. Data Mapping
+## 5. Database Tables Used
 
-### Request to Database
-
-| API Field | Database Table | Database Field | Transformation |
-| --- | --- | --- | --- |
-| noticeNo | ocms_change_of_processing | notice_no | Direct mapping |
-| newStage | ocms_change_of_processing | new_processing_stage | Direct mapping |
-| reason | ocms_change_of_processing | reason_of_change | Direct mapping |
-| remark | ocms_change_of_processing | remarks | Direct mapping |
-| - | ocms_change_of_processing | last_processing_stage | From VON.last_processing_stage |
-| - | ocms_change_of_processing | date_of_change | Current date |
-| - | ocms_change_of_processing | authorised_officer | From user session |
-| - | ocms_change_of_processing | source | OCMS/PLUS/SYSTEM |
-
-### VON Update Mapping
-
-| Field | Source | Description |
-| --- | --- | --- |
-| prev_processing_stage | old last_processing_stage | Previous stage backup |
-| prev_processing_date | old last_processing_date | Previous date backup |
-| last_processing_stage | old next_processing_stage or newStage | New current stage |
-| last_processing_date | current datetime | Current timestamp |
-| next_processing_stage | ocms_parameter (NEXT_STAGE_{newStage}) | Computed next stage |
-| next_processing_date | current datetime + STAGEDAYS | Computed next date |
-| amount_payable | Calculated | Based on stage transition |
+| Zone | Table Name | Purpose |
+|------|------------|---------|
+| Intranet | ocms_valid_offence_notice | Main notice records |
+| Intranet | ocms_offence_notice_owner_driver | Offender details (for ID search) |
+| Intranet | ocms_change_of_processing | Change processing stage records |
+| Intranet | ocms_stage_map | Stage transition rules |
+| Intranet | ocmsiz_app_conn | Audit trail (Intranet) |
+| Internet | ocmsez_app_conn | Audit trail (Internet) |
 
 ---
 
-## 5. Database Tables
+## 6. Notes
 
-### Primary Tables
+1. **Search Optimization:**
+   - When searching by ID Number, system queries ONOD table first, then joins with VON
+   - All other searches query VON table directly
 
-| Table Name | Purpose |
-| --- | --- |
-| ocms_valid_offence_notice | Main notice data (VON) |
-| ocms_offence_notice_owner_driver | Offender details (ONOD) |
-| ocms_change_of_processing | Audit trail for stage changes |
-| ocms_stage_map | Stage transition mapping |
-| ocms_parameter | System parameters (NEXT_STAGE, STAGEDAYS) |
+2. **Eligibility Check:**
+   - Search API returns pre-segregated lists (eligible vs ineligible)
+   - Validate API performs deeper validation before submission
+   - Court stage notices are always ineligible
+
+3. **Duplicate Handling:**
+   - System checks for existing change record on same date
+   - First attempt returns warning
+   - Second attempt with `isConfirmation=true` proceeds with update
+
+4. **Report Generation:**
+   - Reports generated automatically upon successful change
+   - Stored in Azure Blob Storage
+   - Accessible via download API or signed URL
+
+5. **PLUS Integration:**
+   - PLUS uses separate endpoint with different payload structure
+   - Source code "005" identifies PLUS origin
+   - Validates stage transition rules before processing
+
+6. **Toppan Integration:**
+   - Internal endpoint for cron job only
+   - Differentiates between manual vs automatic stage changes
+   - Updates VON records after Toppan file generation
 
 ---
 
-## 6. Dependencies
-
-| Service/System | Type | Purpose |
-| --- | --- | --- |
-| OCMS Admin API Intranet | Backend | API service |
-| Azure Blob Storage | Storage | Report file storage |
-| PLUS Portal | External | External integration |
-| Toppan Cron | Internal | Automated stage processing |
-| Email Service | Internal | Error notification |
-
----
-
-## 7. Changelog
-
-| Version | Date | Author | Changes |
-| --- | --- | --- | --- |
-| 1.0 | 18/01/2026 | Claude | Initial version |
+**End of API Plan**

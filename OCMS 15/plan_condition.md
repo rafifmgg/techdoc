@@ -1,584 +1,324 @@
-# Condition Plan: OCMS 15 - Change Processing Stage
+# Condition Plan - OCMS 15: Manage Change Processing Stage
 
-## Overview
-
-| Attribute | Value |
-| --- | --- |
-| Feature Name | Change Processing Stage |
-| Version | v1.0 |
-| Author | Claude |
-| Created Date | 18/01/2026 |
-| Last Updated | 18/01/2026 |
-| Status | Draft |
-| Functional Document | OCMS 15 Functional Document v1.1 |
-| Technical Document | OCMS 15 Technical Doc |
+**Document Information**
+- Version: 1.0
+- Date: 2026-01-21
+- Source: Functional Document v1.2 + Backend Code Analysis
+- Feature: Manual Change Processing Stage & PLUS Integration
 
 ---
 
-## 1. Reference Documents
+## 1. Frontend Validations (OCMS Staff Portal)
 
-| Document Type | Reference | Description |
-| --- | --- | --- |
-| Functional Document | OCMS 15 FD v1.1 | Change Processing Stage Functional Document |
-| Backend Code | ChangeOfProcessingController.java | Main controller |
-| Backend Code | ChangeOfProcessingService.java | Service layer |
-| Backend Code | EligibilityService.java | Eligibility validation |
-| Data Dictionary | intranet.json | Database schema |
+### 1.1 Search Form Validations
 
----
+| Rule ID | Field | Validation Rule | Error Message | When |
+|---------|-------|----------------|---------------|------|
+| FE-001 | Notice No | Format validation: Alphanumeric, 10 chars including spaces | Invalid Notice no. | On submit |
+| FE-002 | ID No | Format validation: Alphanumeric, max 20 chars | Invalid ID no. | On submit |
+| FE-003 | Vehicle No | Format warning: Local vehicle number format check | Number does not match the local vehicle number format. | On input (warning only, can proceed) |
+| FE-004 | Search Criteria | At least one search criterion must be provided | Please enter at least one search criterion | On submit |
+| FE-005 | Date of Current Processing Stage | Valid date format: dd/MM/yyyy | Invalid date format | On date picker |
 
-## 2. Business Conditions
+### 1.2 Change Processing Stage Form Validations
 
-### 2.1 Eligibility Validation Conditions
+| Rule ID | Field | Validation Rule | Error Message | When |
+|---------|-------|----------------|---------------|------|
+| FE-010 | New Processing Stage | Required field | New Processing Stage is required | On submit |
+| FE-011 | Reason of Change | Required field | Reason of Change is required | On submit |
+| FE-012 | Remark | Required if Reason of Change = "OTH" (Others) | Remarks are mandatory when reason for change is 'OTH' (Others) | On submit |
+| FE-013 | Notice Selection | At least one notice must be selected (checkbox checked) | Please select at least one notice | On click Change Processing Stage button |
+| FE-014 | Send for DH/MHA Check | If unchecked, prompt user confirmation | Notice will not go for DH/MHA check. Do you want to proceed? | On submit |
 
-**Description:** Conditions to determine if a notice is eligible for processing stage change.
+### 1.3 Offender Type Validation (Portal-Side)
 
-#### Condition Matrix
+| Rule ID | Condition | Allowed New Stages | Validation |
+|---------|-----------|-------------------|------------|
+| FE-020 | Offender Type = DRIVER | DN1, DN2, DR3 | If new stage not in allowed list → mark as non-changeable |
+| FE-021 | Offender Type = OWNER/HIRER/DIRECTOR | ROV, RD1, RD2, RR3 | If new stage not in allowed list → mark as non-changeable |
+| FE-022 | Mixed Offender Types | Per-notice validation | Each notice validated individually |
 
-| Condition ID | Condition Name | Input Fields | Logic | Output/Action |
-| --- | --- | --- | --- | --- |
-| C001 | Notice Existence | noticeNo | VON and ONOD both not found | NOT_FOUND error |
-| C002 | Role Resolution | VON, ONOD | Cannot determine offender role | ROLE_CONFLICT error |
-| C003 | Court Stage Check | lastProcessingStage | Stage IN (CRT, CRC, CFI) | COURT_STAGE error |
-| C004 | PS Block Check | suspensionType | suspensionType = 'PS' | PS_BLOCKED error (optional) |
-| C005 | Stage Eligibility | role, requestedStage | Stage not in eligible set | INELIGIBLE_STAGE error |
-| C006 | Stage Rule Check | currentStage, role | Cannot derive next stage | NO_STAGE_RULE error |
-| C007 | Duplicate Check | noticeNo, newStage, date | Same change on same day | EXISTING_CHANGE_TODAY warning |
-| C008 | Remarks Required | reasonOfChange, remarks | reason=OTH AND remarks empty | REMARKS_REQUIRED error |
+### 1.4 UI State Validations
 
-#### Condition Details
-
-**C001: Notice Existence Check**
-
-| Attribute | Value |
-| --- | --- |
-| Description | Check if notice exists in VON or ONOD table |
-| Trigger | At the start of eligibility validation |
-| Input | noticeNo |
-| Logic | Query VON by noticeNo AND Query ONOD by noticeNo |
-| Output | Continue validation if at least one found |
-| Else | Return NOT_FOUND error |
-
-```
-IF VON.noticeNo NOT FOUND AND ONOD.noticeNo NOT FOUND
-THEN RETURN {changeable: false, code: "OCMS.CPS.ELIG.NOT_FOUND", message: "Notice not found in VON or ONOD"}
-ELSE CONTINUE
-```
-
-**C002: Role Resolution**
-
-| Attribute | Value |
-| --- | --- |
-| Description | Determine offender role from ONOD record |
-| Trigger | After notice existence check |
-| Input | ONOD.ownerDriverIndicator |
-| Logic | Get role from ONOD, normalize to DRIVER/OWNER/HIRER/DIRECTOR |
-| Output | Resolved role |
-| Else | Default to OWNER if VON exists but no ONOD |
-
-```
-IF ONOD.ownerDriverIndicator IS NOT NULL
-THEN role = normalizeRole(ONOD.ownerDriverIndicator)
-ELSE IF VON EXISTS
-THEN role = "OWNER" (default)
-ELSE RETURN {changeable: false, code: "OCMS.CPS.ELIG.ROLE_CONFLICT", message: "Cannot determine offender role"}
-```
-
-**C003: Court Stage Check**
-
-| Attribute | Value |
-| --- | --- |
-| Description | Check if notice is at court stage (non-changeable) |
-| Trigger | After role resolution |
-| Input | VON.lastProcessingStage |
-| Logic | Check if stage is in COURT_STAGES set |
-| Output | If court stage, reject |
-| Else | Continue validation |
-
-```
-COURT_STAGES = {"CRT", "CRC", "CFI"}
-
-IF VON.lastProcessingStage IN COURT_STAGES
-THEN RETURN {changeable: false, code: "OCMS.CPS.ELIG.COURT_STAGE", message: "Notice is at court stage"}
-ELSE CONTINUE
-```
-
-**C005: Stage Eligibility by Role**
-
-| Attribute | Value |
-| --- | --- |
-| Description | Check if requested stage is allowed for offender role |
-| Trigger | After court stage check |
-| Input | role, requestedStage |
-| Logic | Get eligible stages for role, check if requestedStage in set |
-| Output | If eligible, proceed |
-| Else | Return INELIGIBLE_STAGE error |
-
-```
-DRIVER_STAGES = {"DN1", "DN2", "DR3"}
-OWNER_HIRER_DIRECTOR_STAGES = {"ROV", "RD1", "RD2", "RR3"}
-
-IF role = "DRIVER"
-THEN eligibleStages = DRIVER_STAGES
-ELSE eligibleStages = OWNER_HIRER_DIRECTOR_STAGES
-
-IF requestedStage NOT IN eligibleStages
-THEN RETURN {changeable: false, code: "OCMS.CPS.ELIG.INELIGIBLE_STAGE", message: "Stage X not eligible for role Y"}
-ELSE RETURN {changeable: true}
-```
+| Rule ID | State | Validation | Action |
+|---------|-------|------------|--------|
+| FE-030 | No search results | Display message | "No record found" |
+| FE-031 | All notices non-changeable | Block submission | "All selected notices are not eligible for stage change. Please uncheck inapplicable notices." |
+| FE-032 | Mixed changeable/non-changeable | Allow submission with warning | "Some notices are not eligible. Please uncheck inapplicable notices or proceed with eligible ones only." |
+| FE-033 | Duplicate record warning | Prompt user confirmation | "Notice No. xxx has existing stage change update. Do you want to proceed?" |
 
 ---
 
-### 2.2 PLUS API Validation Conditions
+## 2. Backend Validations (OCMS Backend API)
 
-**Description:** Specific validation conditions for PLUS external API.
+### 2.1 Request Format Validations
 
-#### Condition Matrix
+| Rule ID | Field | Validation | Error Code | Error Message |
+|---------|-------|------------|------------|---------------|
+| BE-001 | items | Cannot be empty/null | OCMS.CPS.INVALID_FORMAT | Items list cannot be empty |
+| BE-002 | noticeNo | Required for each item | OCMS.CPS.MISSING_DATA | noticeNo is required |
+| BE-003 | notices | Cannot be empty/null (validate API) | OCMS.CPS.INVALID_FORMAT | Notices list cannot be empty |
+| BE-004 | newProcessingStage | Required (validate API) | OCMS.CPS.MISSING_DATA | newProcessingStage is required |
 
-| Condition ID | Condition Name | Input Fields | Logic | Output/Action |
-| --- | --- | --- | --- | --- |
-| P001 | CFC Restriction | source, nextStageName | source=005 AND nextStage=CFC | OCMS-4004 error |
-| P002 | Skip Condition | offenceType, nextStageName | type=U AND stage IN (DN1,DN2,DR3,CPC) | Skip processing |
-| P003 | Stage Map Validation | lastStageName, nextStageName | Query ocms_stage_map | OCMS-4000 if not found |
+### 2.2 Business Logic Validations
 
-#### Condition Details
+| Rule ID | Validation Check | Logic | Error Code | Error Message | Source |
+|---------|-----------------|-------|------------|---------------|---------|
+| BE-010 | VON Exists | Query ocms_valid_offence_notice by notice_no | OCMS.CPS.NOT_FOUND | VON not found | FD §2.5.1 Step 3 |
+| BE-011 | Court Stage Check | Check if current_processing_stage in court stages (CRT, etc.) | OCMS.CPS.COURT_STAGE | Notice is in court stage | FD §2.3.1 Step 5 |
+| BE-012 | Duplicate Record Check | Query ocms_change_of_processing by notice_no and cre_dtm (today) | OCMS.CPS.DUPLICATE_RECORD | Existing change record found for this notice today | FD §2.5.1 Step 4 |
+| BE-013 | Stage Transition Allowed | Validate stage transition using ocms_stage_map | OCMS.CPS.INVALID_TRANSITION | Stage transition not allowed: [current] -> [new] | FD §2.4.2 Step 4-6 |
+| BE-014 | Remarks Required | If reason = "OTH", remarks must not be empty | OCMS.CPS.REMARKS_REQUIRED | Remarks are mandatory when reason for change is 'OTH' (Others) | Code: ValidateChangeProcessingStageRequest |
+| BE-015 | Offender Type Match | Driver → DN1/DN2/DR3, Owner/Hirer/Director → ROV/RD1/RD2/RR3 | OCMS.CPS.INVALID_STAGE_FOR_OFFENDER | Stage [stage] not allowed for offender type [type] | FD §2.4.2 Step 5 |
 
-**P001: CFC Restriction from PLUS**
+### 2.3 Search Eligibility Checks
 
-| Attribute | Value |
-| --- | --- |
-| Description | PLUS cannot change stage to CFC (Claim for Complaint) |
-| Trigger | At start of PLUS API processing |
-| Input | source, nextStageName |
-| Logic | Check if source=005 (PLUS) AND nextStageName=CFC |
-| Output | OCMS-4004 error |
-| Else | Continue |
+| Rule ID | Check | Condition | Result | Reason Code |
+|---------|-------|-----------|--------|-------------|
+| BE-020 | Court Stage | current_processing_stage IN ('CRT', 'CS1', 'CS2', etc.) | Ineligible | OCMS.CPS.SEARCH.COURT_STAGE |
+| BE-021 | PS Stage | current_processing_stage IN ('PS1', 'PS2', etc.) | Ineligible | OCMS.CPS.SEARCH.PS_STAGE |
+| BE-022 | Suspended Notice | suspension_status = 'ACTIVE' | Check suspension type | - |
+| BE-023 | Offender Type | owner_driver_indicator = 'D' | Eligible for DN stages | - |
+| BE-024 | Offender Type | owner_driver_indicator IN ('O', 'H', 'R') | Eligible for ROV/RD stages | - |
 
-```
-IF source = "005" AND nextStageName = "CFC"
-THEN RETURN {status: "FAILED", code: "OCMS-4004", message: "Stage change to CFC is not allowed from PLUS source"}
-ELSE CONTINUE
-```
+### 2.4 Date Range Validations (Report API)
 
-**P002: Skip Processing Condition**
-
-| Attribute | Value |
-| --- | --- |
-| Description | Skip processing for certain offence type and stage combinations |
-| Trigger | After CFC restriction check |
-| Input | offenceType, nextStageName |
-| Logic | Check if type=U AND stage IN specific set |
-| Output | Return SUCCESS immediately (no processing) |
-| Else | Continue processing |
-
-```
-SKIP_STAGES = {"DN1", "DN2", "DR3", "CPC"}
-
-IF offenceType = "U" AND nextStageName IN SKIP_STAGES
-THEN RETURN {status: "SUCCESS"} // No actual processing
-ELSE CONTINUE
-```
-
-**P003: Stage Map Validation**
-
-| Attribute | Value |
-| --- | --- |
-| Description | Validate stage transition is allowed per ocms_stage_map |
-| Trigger | After skip condition check |
-| Input | lastStageName, nextStageName |
-| Logic | Query ocms_stage_map for valid transition |
-| Output | Continue if found |
-| Else | OCMS-4000 error |
-
-```
-stageMapCount = SELECT COUNT(*) FROM ocms_stage_map
-                WHERE last_processing_stage = lastStageName
-                AND next_processing_stage LIKE '%' + nextStageName + '%'
-
-IF stageMapCount = 0
-THEN RETURN {status: "FAILED", code: "OCMS-4000", message: "Stage transition not allowed: X -> Y"}
-ELSE CONTINUE
-```
+| Rule ID | Field | Validation | Error Code | Error Message |
+|---------|-------|------------|------------|---------------|
+| BE-030 | startDate, endDate | Both required | INVALID_DATE_RANGE | Start date and end date are required |
+| BE-031 | Date Range | endDate >= startDate | INVALID_DATE_RANGE | End date must be after start date |
+| BE-032 | Date Range | Days between <= 90 | INVALID_DATE_RANGE | Date range cannot exceed 90 days. Current range: [X] days |
 
 ---
 
-### 2.3 Toppan Cron Conditions
+## 3. External API Conditions (PLUS Integration)
 
-**Description:** Conditions for Toppan cron processing to differentiate manual vs automatic changes.
+### 3.1 PLUS Request Validations
 
-#### Condition Matrix
+| Rule ID | Field | Validation | Error Code | Error Message |
+|---------|-------|------------|------------|---------------|
+| EXT-001 | noticeNo | Array cannot be empty | OCMS-4000 | Notice numbers are required |
+| EXT-002 | lastStageName | Required | OCMS-4000 | Last stage name is required |
+| EXT-003 | nextStageName | Required | OCMS-4000 | Next stage name is required |
+| EXT-004 | Stage Transition | Validate using stage_map | OCMS-4000 | Stage transition not allowed: [last] -> [next] |
+| EXT-005 | Source Code | Must be "005" for PLUS | OCMS-4000 | Invalid source code |
 
-| Condition ID | Condition Name | Input Fields | Logic | Output/Action |
-| --- | --- | --- | --- | --- |
-| T001 | Manual Change Detection | noticeNo, date, newStage | Check ocms_change_of_processing | isManual=true/false |
-| T002 | Stage Mismatch | currentStage, VON.nextProcessingStage | Stages don't match | Skip notice |
+### 3.2 PLUS Business Rules
 
-#### Condition Details
-
-**T001: Manual vs Automatic Change Detection**
-
-| Attribute | Value |
-| --- | --- |
-| Description | Determine if a notice has a manual change record |
-| Trigger | For each notice in Toppan batch |
-| Input | noticeNo, processingDate, currentStage |
-| Logic | Query ocms_change_of_processing for manual sources |
-| Output | isManual = true (stage update only) |
-| Else | isManual = false (stage + amount_payable update) |
-
-```
-MANUAL_SOURCES = {"OCMS", "PLUS"}
-
-changeRecord = SELECT * FROM ocms_change_of_processing
-               WHERE notice_no = noticeNo
-               AND date_of_change = processingDate
-               AND new_processing_stage = currentStage
-
-IF changeRecord EXISTS AND changeRecord.source IN MANUAL_SOURCES
-THEN isManual = TRUE  // Update stage only, DO NOT touch amount_payable
-ELSE isManual = FALSE // Update stage AND calculate amount_payable
-```
+| Rule ID | Condition | Action | Error Code | Message |
+|---------|-----------|--------|------------|---------|
+| EXT-010 | All notices in court stage | Reject request | OCMS-4000 | All notices are in court stage |
+| EXT-011 | Mixed valid/invalid notices | Process valid, return errors for invalid | OCMS-4000 | Partial success: [X] succeeded, [Y] failed |
+| EXT-012 | Stage transition not in stage map | Reject request | OCMS-4000 | Stage transition not allowed |
 
 ---
 
-## 3. Decision Tree
+## 4. Internal API Conditions (Toppan Cron)
 
-### 3.1 Eligibility Check Decision Flow
+### 4.1 Toppan Request Validations
+
+| Rule ID | Field | Validation | Error Response |
+|---------|-------|------------|----------------|
+| INT-001 | noticeNumbers | Array cannot be empty | success: false, errors: ["Notice numbers required"] |
+| INT-002 | currentStage | Required | success: false, errors: ["Current stage required"] |
+| INT-003 | processingDate | Valid datetime format | success: false, errors: ["Invalid date format"] |
+
+### 4.2 Toppan Processing Rules
+
+| Rule ID | Condition | Action | Type |
+|---------|-----------|--------|------|
+| INT-010 | Manual stage change record exists in ocms_change_of_processing | Skip VON update (already updated manually) | Manual Update |
+| INT-011 | No manual stage change record | Update VON processing stage automatically | Automatic Update |
+| INT-012 | VON not found | Skip notice, add to errors list | Skipped |
+| INT-013 | Stage transition not allowed | Skip notice, add to errors list | Skipped |
+
+---
+
+## 5. Decision Trees
+
+### 5.1 Search Notice Eligibility Decision Tree
 
 ```
 START
-  │
-  ├─► Query VON by noticeNo
-  │     │
-  │     ├─ FOUND ─► Continue
-  │     │
-  │     └─ NOT FOUND ─► Query ONOD by noticeNo
-  │                       │
-  │                       ├─ FOUND ─► Continue (VON=null, ONOD exists)
-  │                       │
-  │                       └─ NOT FOUND ─► RETURN NOT_FOUND ─► END
-  │
-  ├─► Resolve Role from ONOD
-  │     │
-  │     ├─ RESOLVED ─► Continue
-  │     │
-  │     └─ CANNOT RESOLVE ─► RETURN ROLE_CONFLICT ─► END
-  │
-  ├─► Check Court Stage?
-  │     │
-  │     ├─ YES (CRT/CRC/CFI) ─► RETURN COURT_STAGE ─► END
-  │     │
-  │     └─ NO ─► Continue
-  │
-  ├─► Check PS Status? (Optional)
-  │     │
-  │     ├─ PS Active ─► RETURN PS_BLOCKED (if configured) ─► END
-  │     │
-  │     └─ No PS ─► Continue
-  │
-  ├─► Resolve Target Stage
-  │     │
-  │     ├─ PROVIDED ─► Use requestedStage
-  │     │
-  │     └─ NOT PROVIDED ─► Derive from StageMap
-  │                          │
-  │                          ├─ DERIVED ─► Continue
-  │                          │
-  │                          └─ CANNOT DERIVE ─► RETURN NO_STAGE_RULE ─► END
-  │
-  ├─► Check Stage Eligibility for Role
-  │     │
-  │     ├─ ELIGIBLE ─► RETURN CHANGEABLE ─► END
-  │     │
-  │     └─ NOT ELIGIBLE ─► RETURN INELIGIBLE_STAGE ─► END
-  │
+  ↓
+Is VON found?
+  ├─ NO → Return "No record found"
+  ├─ YES → Check Court Stage
+       ↓
+Is in Court Stage (CRT, CS1, CS2)?
+  ├─ YES → Mark as INELIGIBLE (reason: COURT_STAGE)
+  ├─ NO → Check PS Stage
+       ↓
+Is in PS Stage (PS1, PS2)?
+  ├─ YES → Mark as INELIGIBLE (reason: PS_STAGE)
+  ├─ NO → Mark as ELIGIBLE
+       ↓
+Return segregated lists (eligible + ineligible)
+  ↓
 END
 ```
 
-### 3.2 PLUS API Decision Flow
+### 5.2 Validate Processing Stage Decision Tree
 
 ```
 START
-  │
-  ├─► Check: source=005 AND nextStage=CFC?
-  │     │
-  │     ├─ YES ─► RETURN OCMS-4004 ─► END
-  │     │
-  │     └─ NO ─► Continue
-  │
-  ├─► Check: offenceType=U AND nextStage IN (DN1,DN2,DR3,CPC)?
-  │     │
-  │     ├─ YES ─► RETURN SUCCESS (skip) ─► END
-  │     │
-  │     └─ NO ─► Continue
-  │
-  ├─► Query Stage Map Validation
-  │     │
-  │     ├─ VALID ─► Continue
-  │     │
-  │     └─ INVALID ─► RETURN OCMS-4000 ─► END
-  │
-  ├─► Process Each Notice
-  │     │
-  │     ├─► Update VON using updateVonStage()
-  │     │
-  │     ├─► Insert Audit Trail to ocms_change_of_processing
-  │     │
-  │     └─► Next Notice
-  │
-  ├─► All Success?
-  │     │
-  │     ├─ YES ─► Generate Report ─► RETURN SUCCESS ─► END
-  │     │
-  │     └─ NO ─► RETURN PROCESSING_FAILED with errors ─► END
-  │
+  ↓
+Is Reason = "OTH"?
+  ├─ YES → Is Remarks provided?
+       ├─ NO → Return error (REMARKS_REQUIRED)
+       ├─ YES → Continue
+  ├─ NO → Continue
+       ↓
+For each notice:
+  ↓
+Is VON found?
+  ├─ NO → Mark as NON-CHANGEABLE (NOT_FOUND)
+  ├─ YES → Is in Court/PS Stage?
+       ├─ YES → Mark as NON-CHANGEABLE (COURT_STAGE)
+       ├─ NO → Is stage transition allowed?
+            ├─ NO → Mark as NON-CHANGEABLE (INVALID_TRANSITION)
+            ├─ YES → Is offender type match?
+                 ├─ NO → Mark as NON-CHANGEABLE (INVALID_STAGE_FOR_OFFENDER)
+                 ├─ YES → Mark as CHANGEABLE
+  ↓
+Return changeable + non-changeable lists
+  ↓
 END
 ```
 
-### Decision Table
-
-| Court Stage | PS Active | Role Resolved | Stage Eligible | Result |
-| --- | --- | --- | --- | --- |
-| YES | - | - | - | COURT_STAGE error |
-| NO | YES | - | - | PS_BLOCKED (optional) |
-| NO | NO | NO | - | ROLE_CONFLICT error |
-| NO | NO | YES | NO | INELIGIBLE_STAGE error |
-| NO | NO | YES | YES | CHANGEABLE |
-
----
-
-## 4. Validation Rules
-
-### 4.1 Field Validations
-
-| Field Name | Data Type | Required | Validation Rule | Error Code | Error Message |
-| --- | --- | --- | --- | --- | --- |
-| noticeNo | string | Yes | max 10 chars, not empty | VAL001 | noticeNo is required |
-| newProcessingStage | string | Conditional | max 3 chars, in valid stages | VAL002 | Invalid processing stage |
-| reasonOfChange | string | No | max 3 chars | VAL003 | Invalid reason code |
-| remarks | string | Conditional | max 200 chars, required if reason=OTH | VAL004 | Remarks required for reason OTH |
-| idNo | string | No | max 20 chars | VAL005 | Invalid ID number format |
-| vehicleNo | string | No | max 14 chars | VAL006 | Invalid vehicle number |
-| startDate | date | Yes (reports) | format yyyy-MM-dd | VAL007 | Invalid date format |
-| endDate | date | Yes (reports) | format yyyy-MM-dd, >= startDate | VAL008 | End date must be after start date |
-
-### 4.2 Cross-Field Validations
-
-| Validation ID | Fields Involved | Rule | Error Code | Error Message |
-| --- | --- | --- | --- | --- |
-| XF001 | reasonOfChange, remarks | If reason=OTH then remarks required | OCMS.CPS.REMARKS_REQUIRED | Remarks are mandatory when reason is OTH |
-| XF002 | startDate, endDate | endDate - startDate <= 90 days | INVALID_DATE_RANGE | Date range cannot exceed 90 days |
-| XF003 | role, newStage | Stage must match role eligibility | OCMS.CPS.ELIG.INELIGIBLE_STAGE | Stage not allowed for role |
-
-### 4.3 Business Rule Validations
-
-| Rule ID | Rule Name | Description | Condition | Error Code | Error Message |
-| --- | --- | --- | --- | --- | --- |
-| BR001 | Search Criteria Required | At least one search field needed | All search fields empty | VAL010 | At least one search criterion required |
-| BR002 | Duplicate Change Warning | Same stage change on same day | Exists in ocms_change_of_processing | OCMS.CPS.ELIG.EXISTING_CHANGE_TODAY | Existing stage change found |
-| BR003 | PLUS CFC Restriction | PLUS cannot change to CFC | source=005 AND stage=CFC | OCMS-4004 | CFC not allowed from PLUS |
-| BR004 | Court Stage Immutable | Cannot change court stage notices | stage IN (CRT, CRC, CFI) | OCMS.CPS.ELIG.COURT_STAGE | Notice is at court stage |
-
----
-
-## 5. Status Transitions
-
-### 5.1 Processing Stage Flow
+### 5.3 Submit Change Processing Stage Decision Tree
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           DRIVER STAGES                                      │
-│                                                                              │
-│  ┌──────┐    Toppan    ┌──────┐    Toppan    ┌──────┐                       │
-│  │ DN1  │ ───────────► │ DN2  │ ───────────► │ DR3  │                       │
-│  └──────┘              └──────┘              └──────┘                       │
-│     │                      │                     │                          │
-│     │ Manual               │ Manual              │ Manual                   │
-│     ▼                      ▼                     ▼                          │
-│  [Can change to DN2/DR3] [Can change to DR3]   [End stage]                  │
-│                                                                              │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                        OWNER/HIRER/DIRECTOR STAGES                          │
-│                                                                              │
-│  ┌──────┐    Toppan    ┌──────┐    Toppan    ┌──────┐    Toppan    ┌──────┐│
-│  │ ROV  │ ───────────► │ RD1  │ ───────────► │ RD2  │ ───────────► │ RR3  ││
-│  └──────┘              └──────┘              └──────┘              └──────┘│
-│     │                      │                     │                     │    │
-│     │ Manual               │ Manual              │ Manual              │    │
-│     ▼                      ▼                     ▼                     ▼    │
-│  [Can change]          [Can change]          [Can change]          [End]   │
-│                                                                              │
-└─────────────────────────────────────────────────────────────────────────────┘
+START
+  ↓
+Is request format valid?
+  ├─ NO → Return error (INVALID_FORMAT / MISSING_DATA)
+  ├─ YES → For each item:
+       ↓
+Is VON found?
+  ├─ NO → Mark as FAILED (NOT_FOUND)
+  ├─ YES → Check duplicate record
+       ↓
+Duplicate record exists?
+  ├─ YES → Is isConfirmation = true?
+       ├─ NO → Mark as FAILED (DUPLICATE_RECORD, prompt user)
+       ├─ YES → Continue (user confirmed)
+  ├─ NO → Continue
+       ↓
+Is stage transition valid?
+  ├─ NO → Mark as FAILED (INVALID_TRANSITION)
+  ├─ YES → Process stage change
+       ↓
+Update VON + Insert change record + Calculate amount payable
+  ↓
+Mark as SUCCESS
+  ↓
+Generate report
+  ↓
+Return batch response (SUCCESS / PARTIAL / FAILED)
+  ↓
+END
 ```
 
-### Stage Transition Matrix
-
-| From Stage | To Stage | Allowed For | Source |
-| --- | --- | --- | --- |
-| NPA/ENA | DN1 | DRIVER | Toppan/Manual |
-| DN1 | DN2 | DRIVER | Toppan/Manual |
-| DN2 | DR3 | DRIVER | Toppan/Manual |
-| NPA | ROV | OWNER/HIRER/DIRECTOR | Toppan/Manual |
-| ROV | RD1 | OWNER/HIRER/DIRECTOR | Toppan/Manual |
-| RD1 | RD2 | OWNER/HIRER/DIRECTOR | Toppan/Manual |
-| RD2 | RR3 | OWNER/HIRER/DIRECTOR | Toppan/Manual |
-
-### Stage Definitions
-
-| Stage | Code | Description | Allowed Roles |
-| --- | --- | --- | --- |
-| DN1 | DN1 | Driver Notice 1st Reminder | DRIVER |
-| DN2 | DN2 | Driver Notice 2nd Reminder | DRIVER |
-| DR3 | DR3 | Driver 3rd Reminder | DRIVER |
-| ROV | ROV | Registered Owner Vehicle | OWNER/HIRER/DIRECTOR |
-| RD1 | RD1 | Registered Owner 1st Reminder | OWNER/HIRER/DIRECTOR |
-| RD2 | RD2 | Registered Owner 2nd Reminder | OWNER/HIRER/DIRECTOR |
-| RR3 | RR3 | Registered Owner 3rd Reminder | OWNER/HIRER/DIRECTOR |
-| CRT | CRT | Court Stage | (Non-changeable) |
-| CRC | CRC | Court Case | (Non-changeable) |
-| CFI | CFI | Court Final | (Non-changeable) |
-| CFC | CFC | Claim for Complaint | (Not allowed from PLUS) |
-
----
-
-## 6. Calculation Formulas
-
-### 6.1 Amount Payable Calculation
-
-| Attribute | Value |
-| --- | --- |
-| Description | Calculate new amount_payable based on stage transition |
-| Formula | Based on stage transition rules and composition amount |
-| Input Fields | previousStage, newStage, currentAmountPayable |
-| Output Field | newAmountPayable |
-| Precision | 2 decimal places |
-
-**Logic:**
-- For MANUAL changes via Toppan: amount_payable is NOT recalculated (already set during manual submission)
-- For AUTOMATIC changes via Toppan: amount_payable IS recalculated based on stage transition
-
-### 6.2 Next Processing Date Calculation
-
-| Attribute | Value |
-| --- | --- |
-| Description | Calculate next_processing_date from stage days parameter |
-| Formula | `next_processing_date = current_datetime + STAGEDAYS` |
-| Input Fields | currentStage, current_datetime |
-| Output Field | next_processing_date |
+### 5.4 Toppan Stage Update Decision Tree
 
 ```
-stageDays = SELECT value FROM ocms_parameter
-            WHERE parameter_id = 'STAGEDAYS' AND code = newStage
-
-IF stageDays IS NULL OR stageDays < 0
-THEN stageDays = 14 (default)
-
-next_processing_date = NOW() + stageDays days
+START (for each notice)
+  ↓
+Is VON found?
+  ├─ NO → Skip (add to errors)
+  ├─ YES → Check manual stage change record
+       ↓
+Manual record exists today?
+  ├─ YES → Skip VON update (count as manual update)
+  ├─ NO → Update VON stage automatically (count as automatic update)
+       ↓
+Is stage transition allowed?
+  ├─ NO → Skip (add to errors)
+  ├─ YES → Update VON processing stage
+       ↓
+       Continue to next notice
+  ↓
+Return summary (total, automatic, manual, skipped, errors)
+  ↓
+END
 ```
 
 ---
 
-## 7. Condition-Action Mapping
+## 6. Validation Sequence
 
-### 7.1 Change Processing Stage Flow
+### 6.1 Search API Validation Sequence
 
-| Scenario | Conditions | Actions | Database Updates |
-| --- | --- | --- | --- |
-| Successful Change | All validations pass | Update VON, Insert audit | VON: stages, dates; CPS: new record |
-| Duplicate Warning | Same change exists today, not confirmed | Return warning | None |
-| Duplicate Confirmed | Same change exists, isConfirmation=true | Proceed with update | VON: stages, dates; CPS: new record |
-| Eligibility Failure | Any eligibility check fails | Return error | None |
-| PLUS Skip | offenceType=U AND stage in skip set | Return success | None |
-| Toppan Manual | isManual=true | Update VON stage only | VON: stages, dates (NOT amount_payable) |
-| Toppan Automatic | isManual=false | Update VON stage + amount | VON: stages, dates, amount_payable |
+1. **Request Validation** (Frontend)
+   - At least one search criterion provided (FE-004)
+   - Format validation (FE-001, FE-002, FE-003)
 
-### Detailed Scenarios
+2. **Backend Validation**
+   - Query VON table
+   - Apply eligibility checks (BE-020 to BE-024)
+   - Segregate results
 
-**Scenario 1: Successful Manual Stage Change**
+3. **Response**
+   - Return eligible + ineligible lists
 
-- **Trigger:** User submits change request via OCMS Staff Portal
-- **Conditions:**
-  - Notice exists in VON/ONOD
-  - Role resolved successfully
-  - Not at court stage
-  - Stage eligible for role
-- **Actions:**
-  1. Calculate new amount_payable
-  2. Update VON processing stages
-  3. Update ONOD dh_mha_check_allow (if provided)
-  4. Insert audit record to ocms_change_of_processing
-  5. Generate Excel report
-- **Database Updates:**
-  ```
-  UPDATE ocms_valid_offence_notice
-  SET prev_processing_stage = :oldLastStage,
-      prev_processing_date = :oldLastDate,
-      last_processing_stage = :newStage,
-      last_processing_date = NOW(),
-      next_processing_stage = :computedNextStage,
-      next_processing_date = NOW() + :stageDays,
-      amount_payable = :newAmount
-  WHERE notice_no = :noticeNo
+### 6.2 Validate API Validation Sequence
 
-  INSERT INTO ocms_change_of_processing (...)
-  ```
-- **Expected Result:** Stage changed, report generated
+1. **Request Validation**
+   - notices array not empty (BE-003)
+   - newProcessingStage provided (BE-004)
+   - Remarks check if reason = "OTH" (BE-014)
 
----
+2. **Per-Notice Validation**
+   - VON exists check (BE-010)
+   - Court stage check (BE-011)
+   - Stage transition check (BE-013)
+   - Offender type match check (BE-015)
 
-## 8. Exception Handling
+3. **Response**
+   - Return changeable + non-changeable lists
 
-### 8.1 Business Exceptions
+### 6.3 Submit API Validation Sequence
 
-| Exception Code | Exception Name | Condition | Handling |
-| --- | --- | --- | --- |
-| OCMS.CPS.ELIG.NOT_FOUND | Notice Not Found | VON and ONOD both not found | Return 404 with error details |
-| OCMS.CPS.ELIG.COURT_STAGE | Court Stage | lastProcessingStage IN (CRT,CRC,CFI) | Return 422 with error details |
-| OCMS.CPS.ELIG.INELIGIBLE_STAGE | Stage Not Eligible | Stage not in role's eligible set | Return 422 with error details |
-| OCMS.CPS.REMARKS_REQUIRED | Remarks Required | reason=OTH AND remarks empty | Return 400 with error details |
-| OCMS-4000 | Stage Transition Invalid | Stage map validation fails | Return 422 with error details |
-| OCMS-4004 | CFC Not Allowed | PLUS tries to change to CFC | Return 422 with error details |
+1. **Request Format Validation**
+   - items array not empty (BE-001)
+   - noticeNo provided (BE-002)
 
-### 8.2 System Exceptions
+2. **Per-Item Processing**
+   - VON exists (BE-010)
+   - Duplicate record check (BE-012)
+   - If duplicate and isConfirmation=false → return warning
+   - If duplicate and isConfirmation=true → proceed
+   - Stage transition validation (BE-013)
 
-| Exception Code | Exception Name | Condition | Handling |
-| --- | --- | --- | --- |
-| DB_ERROR | Database Error | DB operation fails | Retry, then log and return 500 |
-| BLOB_ERROR | Blob Storage Error | Report upload fails | Log error, return response without reportUrl |
-| EMAIL_ERROR | Email Service Error | Notification fails | Log error, continue (non-critical) |
+3. **Database Operations**
+   - UPDATE ocms_valid_offence_notice (last_processing_stage, last_processing_date)
+   - INSERT ocms_change_of_processing (new record)
+   - Calculate amount payable (if applicable)
+   - Update DH/MHA check flag (if applicable)
+
+4. **Report Generation**
+   - Generate Excel report
+   - Upload to Azure Blob Storage
+   - Return signed URL
+
+5. **Response**
+   - Return batch summary + per-notice results
 
 ---
 
-## 9. Test Scenarios
+## 7. Assumptions Log
 
-### Condition Test Cases
-
-| Test ID | Condition | Test Input | Expected Output | Status |
-| --- | --- | --- | --- | --- |
-| TC001 | Valid notice search | noticeNo=N-001 | 200 OK with eligible notice | - |
-| TC002 | Notice not found | noticeNo=INVALID | 200 OK with empty results | - |
-| TC003 | Court stage notice | Notice at CRT | Ineligible with COURT_STAGE reason | - |
-| TC004 | PS active notice | Notice with PS | Ineligible with PS_ACTIVE reason | - |
-| TC005 | Valid stage change | DRIVER DN1->DN2 | 200 OK, stage updated | - |
-| TC006 | Invalid stage for role | DRIVER DN1->RD1 | 422 INELIGIBLE_STAGE | - |
-| TC007 | Duplicate same day | Same change twice | Warning on first, success if confirmed | - |
-| TC008 | PLUS CFC restriction | source=005, stage=CFC | 422 OCMS-4004 | - |
-| TC009 | PLUS skip condition | type=U, stage=DN1 | 200 OK (no processing) | - |
-| TC010 | Remarks required | reason=OTH, remarks=null | 400 REMARKS_REQUIRED | - |
-
-### Edge Cases
-
-| Test ID | Scenario | Test Input | Expected Output |
-| --- | --- | --- | --- |
-| EC001 | Empty search criteria | All fields null | 400 Bad Request |
-| EC002 | Date range > 90 days | 100 day range | 400 INVALID_DATE_RANGE |
-| EC003 | Batch with mixed results | Some valid, some invalid | 200 with PARTIAL status |
-| EC004 | Report not found | Invalid reportId | 404 REPORT_NOT_FOUND |
+| ID | Assumption | Rationale | Status |
+|----|------------|-----------|--------|
+| A-001 | Court stages include: CRT, CS1, CS2 | Based on common OCMS stage naming | [ASSUMPTION] |
+| A-002 | PS stages include: PS1, PS2 | Based on common OCMS stage naming | [ASSUMPTION] |
+| A-003 | Stage map table contains all valid transitions | Required for validation logic | Confirmed in Code |
+| A-004 | Toppan cron runs daily at fixed time | Based on Section 2.5.2 description | [ASSUMPTION] |
+| A-005 | Report files stored in Azure Blob Storage path: reports/change-stage/ | Based on code implementation | Confirmed in Code |
+| A-006 | User ID extracted from X-User-Id header or defaults to "SYSTEM" | Based on code implementation | Confirmed in Code |
+| A-007 | DH/MHA check flag updates separate database field | Based on FD mention of checkbox | [ASSUMPTION] |
 
 ---
 
-## 10. Changelog
-
-| Version | Date | Author | Changes |
-| --- | --- | --- | --- |
-| 1.0 | 18/01/2026 | Claude | Initial version |
+**End of Condition Plan**

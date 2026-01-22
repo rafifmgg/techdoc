@@ -1,545 +1,792 @@
-# OCMS 15 - Change Processing Stage Flowchart Plan
+# Flowchart Plan: Manage Change Processing Stage
 
-## Document Information
+## Overview
 
-| Item | Details |
-|------|---------|
-| Version | 1.0 |
-| Date | 2026-01-18 |
-| Source Document | v1.1_OCMS15_Change_Processing_Stage.docx |
-| Source Flowchart | OCMS15_Functional-Flowchart.drawio |
-| Related Documents | plan_api.md, plan_condition.md |
-| Author | Technical Documentation |
+| Attribute | Value |
+| --- | --- |
+| Feature Name | Manage Change Processing Stage |
+| Version | v1.0 |
+| Author | Claude |
+| Created Date | 21/01/2026 |
+| Status | Active |
+| FD Reference | OCMS 15 - Section 2 & Section 3 |
+| TD Reference | OCMS 15 - Section 1 & Section 2 |
 
 ---
 
-## 1. Diagram Sections Overview
+## 1. Diagram Sections (Tabs)
 
-### 1.1 Required Tabs/Pages
+The Technical Flowchart will contain the following tabs/sections:
 
 | Tab # | Tab Name | Description | Priority |
-|-------|----------|-------------|----------|
-| 1 | CPS_High_Level | High-level overview of Change Processing Stage process | High |
-| 2 | UI_Side_Validation | Staff Portal validation flow | High |
-| 3 | Backend_Side_Validation | OCMS Backend eligibility validation flow | High |
-| 4 | OCMS_Staff_Portal_Manual_CPS | OCMS Staff Portal complete flow | High |
-| 5 | PLUS_Manual_CPS | PLUS Portal integration flow | High |
-| 6 | Toppan_Auto_CPS | Toppan cron automated stage processing | Medium |
-| 7 | CPS_Report | Change Stage report generation flow | Low |
-
-### 1.2 Swimlanes (Systems)
-
-| Swimlane | Color | Description |
-|----------|-------|-------------|
-| Staff Portal (Frontend) | Light Blue (#dae8fc) | OCMS Staff Portal UI |
-| OCMS Backend | Light Green (#d5e8d4) | OCMS Admin API Intranet |
-| Database | Light Yellow (#fff2cc) | Intranet Database |
-| External System (PLUS) | Light Orange (#ffe6cc) | PLUS Portal |
+| --- | --- | --- | --- |
+| 1 | Section_1_High_Level | High-level overview of Manual Change Processing Stage via OCMS Staff Portal | High |
+| 2 | Section_1_Search_Notices | Detailed flow for searching notices and checking eligibility | High |
+| 3 | Section_1_Portal_Validation | Portal validation for new processing stage eligibility | High |
+| 4 | Section_1_Backend_Processing | Backend processing for change processing stage submission | High |
+| 5 | Section_1_Change_Stage_Subflow | Sub-flow for changing notice's next processing stage | High |
+| 6 | Section_1_Generate_Report | Sub-flow for generating Change Processing Stage Report | High |
+| 7 | Section_2_High_Level | High-level overview of Manual Change Processing Stage via PLUS Staff Portal | Medium |
+| 8 | Section_2_PLUS_Integration | Detailed flow for PLUS integration and backend processing | Medium |
+| 9 | Section_3_Toppan_Integration | Flow for Toppan cron job handling manual stage changes | Medium |
 
 ---
 
-## 2. High-Level Flow (Tab 1: CPS_High_Level)
+## 2. Systems Involved (Swimlanes)
 
-### 2.1 Overview Diagram
+| System/Tier | Color Code | Hex | Description |
+| --- | --- | --- | --- |
+| OCMS Staff Portal (Frontend) | Light Blue | #dae8fc | Portal user interface |
+| OCMS Backend API | Light Green | #d5e8d4 | Backend API processing |
+| Database (Intranet) | Light Yellow | #fff2cc | Intranet database operations |
+| PLUS Staff Portal | Light Purple | #e1d5e7 | External system (PLUS) |
+| External System (Toppan Cron) | Light Orange | #ffe6cc | Batch job system |
+
+---
+
+## 3. Section 1: Manual Change Processing Stage via OCMS Staff Portal
+
+### 3.1 Tab 1: Section_1_High_Level
+
+#### 3.1.1 Process Overview
+
+| Attribute | Value |
+| --- | --- |
+| Process Name | Manual Change Processing Stage - High Level |
+| Section | 1.1 |
+| Trigger | OIC initiates change processing stage request in OCMS Staff Portal |
+| Frequency | Real-time (on-demand by OIC) |
+| Systems Involved | OCMS Staff Portal, OCMS Backend, Database |
+| Expected Outcome | Notice processing stage updated and report generated |
+
+#### 3.1.2 High Level Flow Diagram (ASCII)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                      CHANGE PROCESSING STAGE                             │
-│                         HIGH-LEVEL FLOW                                  │
+│                     OCMS STAFF PORTAL                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    ┌───────────┐                                                         │
+│    │   Start   │                                                         │
+│    └─────┬─────┘                                                         │
+│          │                                                               │
+│          ▼                                                               │
+│    ┌────────────────────────────────────────┐                           │
+│    │ OIC launches Change Processing Stage   │                           │
+│    │ module and enters search criteria      │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ Search notices and check eligibility   │                           │
+│    │ (displays eligible and ineligible)     │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ OIC selects notice(s) and fills form   │                           │
+│    │ - New Processing Stage                 │                           │
+│    │ - Reason of Change                     │                           │
+│    │ - Remarks (if reason = OTH)            │                           │
+│    │ - DH/MHA Check option                  │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ Portal validates new processing stage  │                           │
+│    │ (checks offender type matching)        │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ Submit to OCMS Backend API             │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                     OCMS BACKEND                                         │
+├─────────────────────────────────────────────────────────────────────────┤
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ Backend processes change request       │                           │
+│    │ - Validate request                     │                           │
+│    │ - Check VON exists                     │                           │
+│    │ - Check duplicate record               │                           │
+│    │ - Update VON processing stage          │                           │
+│    │ - Insert change record                 │                           │
+│    │ - Calculate amount payable             │                           │
+│    │ - Generate report                      │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ Return response with status and        │                           │
+│    │ report URL to Staff Portal             │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                     OCMS STAFF PORTAL                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ Display status and auto-download       │                           │
+│    │ Change Processing Stage Report         │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌───────────┐                                                         │
+│    │    End    │                                                         │
+│    └───────────┘                                                         │
+│                                                                          │
 └─────────────────────────────────────────────────────────────────────────┘
-
-                    ┌─────────────────────┐
-                    │       START         │
-                    └──────────┬──────────┘
-                               │
-              ┌────────────────┼────────────────┐
-              │                │                │
-              ▼                ▼                ▼
-     ┌────────────────┐ ┌────────────────┐ ┌────────────────┐
-     │ Manual CPS     │ │ Manual CPS     │ │ Auto CPS by    │
-     │ from OCMS      │ │ from PLUS      │ │ Toppan Cron    │
-     │ Staff Portal   │ │ Portal         │ │                │
-     └───────┬────────┘ └───────┬────────┘ └───────┬────────┘
-             │                  │                  │
-             ▼                  ▼                  │
-     ┌────────────────┐ ┌────────────────┐        │
-     │ Search Notice  │ │ Call OCMS      │        │
-     │ Check Eligible │ │ External API   │        │
-     └───────┬────────┘ └───────┬────────┘        │
-             │                  │                  │
-             ▼                  ▼                  │
-        ┌─────────┐        ┌─────────┐            │
-        │Eligible?│        │Allowed? │            │
-        └────┬────┘        └────┬────┘            │
-         Yes │ No           Yes │ No              │
-             │  │               │  │              │
-             │  ▼               │  ▼              │
-             │ [Error]          │ [Error]         │
-             │                  │                 │
-             └──────────┬───────┴─────────────────┘
-                        │
-                        ▼
-               ┌────────────────┐
-               │ Call OCMS      │
-               │ Backend API    │
-               └───────┬────────┘
-                       │
-                       ▼
-               ┌────────────────┐
-               │ Backend        │
-               │ Validation     │
-               └───────┬────────┘
-                       │
-                       ▼
-                  ┌─────────┐
-                  │Changeable│
-                  └────┬────┘
-                   Yes │ No
-                       │  │
-          ┌────────────┘  └────────────┐
-          ▼                            ▼
-   ┌────────────────┐          ┌────────────────┐
-   │ Update VON     │          │ Return Error   │
-   │ Insert Audit   │          │ Response       │
-   └───────┬────────┘          └───────┬────────┘
-           │                           │
-           ▼                           │
-   ┌────────────────┐                  │
-   │ Generate       │                  │
-   │ Report         │                  │
-   └───────┬────────┘                  │
-           │                           │
-           └───────────┬───────────────┘
-                       ▼
-                  ┌─────────┐
-                  │   END   │
-                  └─────────┘
 ```
 
-### 2.2 Process Steps
+#### 3.1.3 Process Steps Table (High Level)
 
-| Step | Actor | Action | Next Step |
-|------|-------|--------|-----------|
-| 1 | OIC/PLM/System | Initiate CPS request | 2 |
-| 2 | Staff Portal | Search notices | 3 |
-| 3 | Staff Portal | UI-side eligibility check | 4a (Yes) / 4b (No) |
-| 4a | Staff Portal | Call OCMS Backend API | 5 |
-| 4b | Staff Portal | Show error message | END |
-| 5 | OCMS Backend | Validate CPS request | 6 |
-| 6 | OCMS Backend | Check if changeable | 7a (Yes) / 7b (No) |
-| 7a | OCMS Backend | Update VON, insert audit trail | 8 |
-| 7b | OCMS Backend | Return error response | 9 |
-| 8 | OCMS Backend | Generate Excel report | 9 |
-| 9 | - | End | - |
-
----
-
-## 3. UI-Side Validation Flow (Tab 2: UI_Side_Validation)
-
-### 3.1 Swimlanes
-- **Staff Portal (Frontend)**
-- **Database**
-
-### 3.2 Process Steps
-
-| Step | Swimlane | Action | Decision | Yes Path | No Path |
-|------|----------|--------|----------|----------|---------|
-| 1 | Frontend | OIC access Staff Portal | - | 2 | - |
-| 2 | Frontend | OIC enters search criteria | - | 3 | - |
-| 3 | Frontend | Check: At least one criteria provided? | Decision | 4 | END (show error) |
-| 4 | Frontend | Call Search API | - | 5 | - |
-| 5 | Database | Query VON by criteria | - | 6 | - |
-| 6 | Database | Query ONOD for offender details | - | 7 | - |
-| 7 | Frontend | Any records found? | Decision | 8 | END (show no results) |
-| 8 | Frontend | Check: Notice at court stage? | Decision | 9 (No) | 10 (Yes) |
-| 9 | Frontend | Add to eligible list | - | 11 | - |
-| 10 | Frontend | Add to ineligible list (COURT_STAGE) | - | 11 | - |
-| 11 | Frontend | Check: PS active? | Decision | 12 (No) | 13 (Yes) |
-| 12 | Frontend | Mark as eligible | - | 14 | - |
-| 13 | Frontend | Add to ineligible list (PS_ACTIVE) | - | 14 | - |
-| 14 | Frontend | Display search results (segregated) | - | 15 | - |
-| 15 | Frontend | OIC selects eligible notice(s) | - | 16 | - |
-| 16 | Frontend | OIC selects new processing stage | - | 17 | - |
-| 17 | Frontend | Check: Stage valid for role? | Decision | 18 | END (show error) |
-| 18 | Frontend | OIC selects reason of change | - | 19 | - |
-| 19 | Frontend | Check: Reason = OTH? | Decision | 20 | 21 |
-| 20 | Frontend | Require remarks input | - | 21 | - |
-| 21 | Frontend | OIC clicks Submit | - | 22 | - |
-| 22 | Frontend | Call Validate API | - | 23 | - |
-| 23 | Frontend | Display validation results | - | 24 | - |
-| 24 | Frontend | OIC confirms submission | - | 25 | - |
-| 25 | Frontend | Call Submit API | - | END | - |
-
-### 3.3 Decision Points
-
-| # | Decision | Condition | Yes Action | No Action |
-|---|----------|-----------|------------|-----------|
-| D1 | Search criteria provided? | At least one field filled | Proceed search | Show VAL010 error |
-| D2 | Records found? | Query returns results | Classify notices | Show no results |
-| D3 | Court stage? | Stage IN (CRT, CRC, CFI) | Mark ineligible | Check PS |
-| D4 | PS active? | suspensionType = PS | Mark ineligible | Mark eligible |
-| D5 | Stage valid for role? | DRIVER→DN stages, OWNER→RD stages | Proceed | Show error |
-| D6 | Reason = OTH? | reasonOfChange = "OTH" | Require remarks | Optional remarks |
+| Step | Definition | Brief Description |
+| --- | --- | --- |
+| Start | Entry point | OIC initiates change processing stage module |
+| Launch Module | User action | OIC launches Change Processing Stage module and enters search criteria |
+| Search Notices | Search and filter | Backend searches notices and checks eligibility |
+| Fill Form | User input | OIC selects notices and fills change processing stage form |
+| Portal Validation | Frontend validation | Portal validates new processing stage eligibility |
+| Submit to Backend | API call | Portal sends change request to backend |
+| Backend Processing | Backend action | Backend validates, updates database, generates report |
+| Return Response | API response | Backend returns status and report URL |
+| Display Result | UI display | Portal displays status and auto-downloads report |
+| End | Exit point | Process complete |
 
 ---
 
-## 4. Backend-Side Validation Flow (Tab 3: Backend_Side_Validation)
+### 3.2 Tab 2: Section_1_Search_Notices
 
-### 4.1 Swimlanes
-- **OCMS Backend**
-- **Database**
+#### 3.2.1 Process Overview
 
-### 4.2 Process Steps
+| Attribute | Value |
+| --- | --- |
+| Process Name | Search Notices for Change Processing Stage |
+| Section | 1.2 |
+| Trigger | OIC enters search criteria and submits |
+| Frequency | Real-time |
+| Systems Involved | OCMS Staff Portal, OCMS Backend, Database |
+| Expected Outcome | Return segregated lists of eligible and ineligible notices |
 
-| Step | Swimlane | Action | Decision | Yes Path | No Path |
-|------|----------|--------|----------|----------|---------|
-| 1 | Backend | CPS API request received | - | 2 | - |
-| 2 | Backend | Authenticate request (JWT) | Decision | 4 | 3 |
-| 3 | Backend | Return: 401 Unauthorized | - | END | - |
-| 4 | Backend | Validate mandatory fields | Decision | 6 | 5 |
-| 5 | Backend | Return: 400 Missing field | - | END | - |
-| 6 | Database | Query VON by noticeNo | Decision | 8 | 7a |
-| 7a | Database | Query ONOD by noticeNo | Decision | 8 | 7b |
-| 7b | Backend | Return: OCMS.CPS.ELIG.NOT_FOUND | - | END | - |
-| 8 | Backend | Resolve offender role | Decision | 10 | 9 |
-| 9 | Backend | Return: OCMS.CPS.ELIG.ROLE_CONFLICT | - | END | - |
-| 10 | Backend | Check: Court stage? | Decision | 11 (No) | 12 |
-| 11 | Backend | Continue | - | 13 | - |
-| 12 | Backend | Return: OCMS.CPS.ELIG.COURT_STAGE | - | END | - |
-| 13 | Backend | Check: PS active? (configurable) | Decision | 14 (No) | 15 |
-| 14 | Backend | Continue | - | 16 | - |
-| 15 | Backend | Return: OCMS.CPS.ELIG.PS_BLOCKED | - | END | - |
-| 16 | Backend | Resolve target stage | Decision | 18 | 17 |
-| 17 | Backend | Return: OCMS.CPS.ELIG.NO_STAGE_RULE | - | END | - |
-| 18 | Backend | Get eligible stages for role | - | 19 | - |
-| 19 | Backend | Check: Stage in eligible set? | Decision | 21 | 20 |
-| 20 | Backend | Return: OCMS.CPS.ELIG.INELIGIBLE_STAGE | - | END | - |
-| 21 | Database | Check duplicate change today | Decision | 22 (No) | 23 |
-| 22 | Backend | Proceed with change | - | 24 | - |
-| 23 | Backend | Check: isConfirmation=true? | Decision | 22 | 24 |
-| 24 | Backend | Return: EXISTING_CHANGE_TODAY warning | - | END | - |
-| 25 | Backend | Mark as CHANGEABLE | - | END | - |
+#### 3.2.2 Process Steps Table
 
-### 4.3 Decision Points
+| Step | Type | Definition | Brief Description | Next Step |
+| --- | --- | --- | --- | --- |
+| 1 | Start | Start Search Process | OIC launches Change Processing Stage module | 2 |
+| 2 | Process | OIC enters search criteria | OIC enters at least one: Notice No, ID No, Vehicle No, Current Stage, Date | 3 |
+| 3 | Process | Portal validates search data | Portal validates format (FE-001 to FE-005) | 4 |
+| 4 | Decision | Search data valid? | Check if entered data passes format validation | Yes→5, No→E1 |
+| 5 | Process | Send search request to Backend | Portal calls searchChangeProcessingStage API | 6 |
+| 6 | Process | Backend queries ocms_valid_offence_notice | If ID No: Query ONOD first, then join VON. Otherwise: Query VON directly | 7 |
+| 7 | Decision | Any record found? | Check if query returns any result | Yes→8, No→E2 |
+| 8 | Process | Check notice eligibility | Backend checks if notice is eligible for stage change | 9 |
+| 9 | Decision | Is in Court Stage? | Check if current_processing_stage IN (CRT, CS1, CS2) | Yes→10, No→11 |
+| 10 | Process | Mark as INELIGIBLE | Add to ineligibleNotices list with reason COURT_STAGE | 12 |
+| 11 | Decision | Is in PS Stage? | Check if current_processing_stage IN (PS1, PS2) | Yes→13, No→14 |
+| 12 | Decision | Last record? | Check if current record is last in result set | Yes→15, No→8 |
+| 13 | Process | Mark as INELIGIBLE | Add to ineligibleNotices list with reason PS_STAGE | 12 |
+| 14 | Process | Mark as ELIGIBLE | Add to eligibleNotices list | 12 |
+| 15 | Process | Return segregated lists | Return eligibleNotices and ineligibleNotices to Portal | 16 |
+| 16 | Process | Portal displays results | Display notice list with details and checkboxes | End |
+| E1 | Error | Display validation error | Show "Invalid <field>" message | End |
+| E2 | Error | Display no record message | Show "No record found" | End |
+| End | End | End Search | Process complete | - |
 
-| # | Decision | Condition | Yes Action | No Action |
-|---|----------|-----------|------------|-----------|
-| D1 | Auth success? | Valid JWT | Continue | 401 Unauthorized |
-| D2 | Fields valid? | All required present | Continue | 400 Bad Request |
-| D3 | Notice exists? | Found in VON or ONOD | Continue | NOT_FOUND |
-| D4 | Role resolved? | ONOD.ownerDriverIndicator present | Continue | ROLE_CONFLICT |
-| D5 | Court stage? | Stage IN (CRT, CRC, CFI) | COURT_STAGE error | Continue |
-| D6 | PS active? | suspensionType = PS | PS_BLOCKED (optional) | Continue |
-| D7 | Stage derivable? | StageMap lookup success | Continue | NO_STAGE_RULE |
-| D8 | Stage eligible? | Stage in role's allowed set | CHANGEABLE | INELIGIBLE_STAGE |
-| D9 | Duplicate today? | Exists in ocms_change_of_processing | Check confirmation | Proceed |
-| D10 | Confirmed? | isConfirmation = true | Proceed | Return warning |
+#### 3.2.3 Decision Logic
 
-### 4.4 Eligible Stages by Role
+| ID | Decision | Input | Condition | Yes Action | No Action |
+| --- | --- | --- | --- | --- | --- |
+| D1 | Search data valid? | Form input | Passes FE-001 to FE-005 validation | Continue to Step 5 | Error E1 |
+| D2 | Any record found? | Query result | count > 0 | Continue to Step 8 | Error E2 |
+| D3 | Is in Court Stage? | current_processing_stage | IN (CRT, CS1, CS2, etc.) | Mark INELIGIBLE | Go to D4 |
+| D4 | Is in PS Stage? | current_processing_stage | IN (PS1, PS2, etc.) | Mark INELIGIBLE | Mark ELIGIBLE |
+| D5 | Last record? | Loop counter | current == total | Return results | Continue to next record |
 
-| Role | Eligible Stages |
-|------|-----------------|
-| DRIVER | DN1, DN2, DR3 |
-| OWNER | ROV, RD1, RD2, RR3 |
-| HIRER | ROV, RD1, RD2, RR3 |
-| DIRECTOR | ROV, RD1, RD2, RR3 |
+#### 3.2.4 Database Operations
 
----
+| Step | Operation | Database | Table | Query/Action |
+| --- | --- | --- | --- | --- |
+| 6 (ID Search) | SELECT | Intranet | ocms_offence_notice_owner_driver | Query by id_no, then JOIN with VON |
+| 6 (Other Search) | SELECT | Intranet | ocms_valid_offence_notice | Query by notice_no, vehicle_no, current_processing_stage, or date |
 
-## 5. OCMS Staff Portal Manual CPS (Tab 4: OCMS_Staff_Portal_Manual_CPS)
+#### 3.2.5 API Specification Reference
 
-### 5.1 Swimlanes
-- **Staff Portal (Frontend)**
-- **OCMS Backend**
-- **Database**
-
-### 5.2 Process Steps
-
-| Step | Swimlane | Action | Reference |
-|------|----------|--------|-----------|
-| 1 | Frontend | Start - OIC wishes to change processing stage | - |
-| 2 | Frontend | Enter search criteria | At least one required |
-| 3 | Frontend | Click Search | - |
-| 4 | Backend | Call Search API | API 2.1 |
-| 5 | Database | Query VON and ONOD | - |
-| 6 | Backend | Classify eligible vs ineligible | Eligibility rules |
-| 7 | Frontend | Display segregated results | - |
-| 8 | Frontend | Select eligible notice(s) | Checkbox |
-| 9 | Frontend | Select new processing stage | Dropdown |
-| 10 | Frontend | Select reason of change | Dropdown |
-| 11 | Frontend | Enter remarks (if OTH) | Text field |
-| 12 | Frontend | Click Submit | - |
-| 13 | Backend | Call Validate API | API 2.2 |
-| 14 | Frontend | Display changeable vs non-changeable | - |
-| 15 | Frontend | OIC confirms to proceed | Confirmation dialog |
-| 16 | Backend | Call Submit API | API 2.3 |
-| 17 | Backend | Validate eligibility | Backend validation |
-| 18 | Backend | Calculate new amount_payable | - |
-| 19 | Database | Update VON (stages, dates, amount) | - |
-| 20 | Database | Insert ocms_change_of_processing | Audit trail |
-| 21 | Backend | Generate Excel report | - |
-| 22 | Frontend | Display results with report URL | - |
-| 23 | Frontend | End | - |
-
-### 5.3 Search Criteria Fields
-
-| Field | Type | Required | Max Length |
-|-------|------|----------|------------|
-| noticeNo | String | No | 10 |
-| idNo | String | No | 20 |
-| vehicleNo | String | No | 14 |
-| currentProcessingStage | String | No | 3 |
-| dateOfCurrentProcessingStage | Date | No | - |
-
-> **Note:** At least one field must be provided.
-
-### 5.4 Stage Change Form Fields
-
-| Field | Type | Required | Validation |
-|-------|------|----------|------------|
-| newProcessingStage | Dropdown | Yes | Must be eligible for role |
-| reasonOfChange | Dropdown | Yes | Valid reason codes |
-| remarks | Text | Conditional | Required if reason = OTH |
+**API:** searchChangeProcessingStage
+**Endpoint:** `/ocms/v1/change-processing-stage/search`
+**Method:** POST
+**Reference:** plan_api.md Section 1.1
 
 ---
 
-## 6. PLUS Manual CPS (Tab 5: PLUS_Manual_CPS)
+### 3.3 Tab 3: Section_1_Portal_Validation
 
-### 6.1 Swimlanes
-- **PLUS Portal (Frontend)**
-- **OCMS Backend**
-- **Database**
+#### 3.3.1 Process Overview
 
-### 6.2 Process Steps
+| Attribute | Value |
+| --- | --- |
+| Process Name | Portal Validation for New Processing Stage |
+| Section | 1.3 |
+| Trigger | OIC submits Change Processing Stage form |
+| Frequency | Real-time |
+| Systems Involved | OCMS Staff Portal (Frontend only) |
+| Expected Outcome | Validated notices ready for backend submission or error displayed |
 
-| Step | Swimlane | Action | Decision | Yes Path | No Path |
-|------|----------|--------|----------|----------|---------|
-| 1 | PLUS Frontend | Start - PLM initiates CPS | - | 2 | - |
-| 2 | PLUS Frontend | Send CPS request to OCMS | - | 3 | - |
-| 3 | Backend | Receive PLUS API request | - | 4 | - |
-| 4 | Backend | Check: source = 005? | Decision | 5 | 6 |
-| 5 | Backend | Check: nextStage = CFC? | Decision | 7 (No) | 8 |
-| 6 | Backend | Proceed normal flow | - | 9 | - |
-| 7 | Backend | Continue PLUS flow | - | 9 | - |
-| 8 | Backend | Return: OCMS-4004 CFC not allowed | - | END | - |
-| 9 | Backend | Check: offenceType=U AND stage skip? | Decision | 10 | 11 |
-| 10 | Backend | Return: SUCCESS (skip processing) | - | END | - |
-| 11 | Database | Query stage_map validation | Decision | 13 | 12 |
-| 12 | Backend | Return: OCMS-4000 Stage invalid | - | END | - |
-| 13 | Backend | For each notice: eligibility check | - | 14 | - |
-| 14 | Database | Update VON stages | - | 15 | - |
-| 15 | Database | Insert audit trail | - | 16 | - |
-| 16 | Backend | Compile success/failed lists | - | 17 | - |
-| 17 | Backend | Return response to PLUS | - | END | - |
+#### 3.3.2 Process Steps Table
 
-### 6.3 PLUS Restrictions
+| Step | Type | Definition | Brief Description | Next Step |
+| --- | --- | --- | --- | --- |
+| 1 | Start | Start Validation | OIC has filled form and clicks submit | 2 |
+| 2 | Decision | Required fields filled? | Check New Processing Stage, Reason of Change, Remarks (if OTH) | Yes→3, No→E1 |
+| 3 | Decision | DH/MHA check unchecked? | Check if Send for DH/MHA Check is unchecked | Yes→4, No→5 |
+| 4 | Process | Prompt user confirmation | Show "Notice will not go for DH/MHA check. Proceed?" | 5 |
+| 5 | Process | Initialize loop | Start validating each selected notice | 6 |
+| 6 | Decision | Is offender = DRIVER? | Check owner_driver_indicator = 'D' | Yes→7, No→9 |
+| 7 | Decision | New stage in DN1/DN2/DR3? | Check if newProcessingStage in allowed list for Driver | Yes→11, No→12 |
+| 8 | Decision | Last record? | Check if current notice is last in selection | Yes→13, No→6 |
+| 9 | Decision | Is offender = OWNER/HIRER/DIRECTOR? | Check owner_driver_indicator IN ('O', 'H', 'R') | Yes→10, No→12 |
+| 10 | Decision | New stage in ROV/RD1/RD2/RR3? | Check if newProcessingStage in allowed list for Owner | Yes→11, No→12 |
+| 11 | Process | Mark as CHANGEABLE | Add to changeableNotices list | 8 |
+| 12 | Process | Mark as NON-CHANGEABLE | Add to nonChangeableNotices list | 8 |
+| 13 | Decision | Has non-changeable notices? | Check if nonChangeableNotices list is not empty | Yes→E2, No→14 |
+| 14 | Process | Display summary page | Show summary for OIC review before backend submission | 15 |
+| 15 | Process | OIC confirms submission | OIC reviews and confirms | End |
+| E1 | Error | Display validation error | Show "Required field missing" or "Remarks mandatory for OTH" | End |
+| E2 | Error | Display non-changeable error | Show "Some notices not eligible. Uncheck inapplicable notices." | End |
+| End | End | End Validation | Proceed to backend submission | - |
 
-| Restriction | Condition | Error Code |
-|-------------|-----------|------------|
-| CFC not allowed | source=005 AND nextStage=CFC | OCMS-4004 |
-| Skip condition | offenceType=U AND stage IN (DN1,DN2,DR3,CPC) | Skip (SUCCESS) |
-| Stage map invalid | Transition not in ocms_stage_map | OCMS-4000 |
+#### 3.3.3 Decision Logic
 
-### 6.4 API Parameters (PLUS → OCMS)
-
-| Parameter | Required | Type | Description |
-|-----------|----------|------|-------------|
-| noticeNo | Yes | Array | List of notice numbers |
-| lastStageName | Yes | String | Current processing stage |
-| nextStageName | Yes | String | New processing stage |
-| lastStageDate | No | DateTime | Last stage date |
-| newStageDate | No | DateTime | New stage date |
-| offenceType | Yes | String | O/D/H/DIR |
-| source | Yes | String | "005" for PLUS |
-
----
-
-## 7. Toppan Auto CPS (Tab 6: Toppan_Auto_CPS)
-
-### 7.1 Swimlanes
-- **OCMS Backend (Cron)**
-- **Database**
-
-### 7.2 Process Steps
-
-| Step | Swimlane | Action | Decision | Yes Path | No Path |
-|------|----------|--------|----------|----------|---------|
-| 1 | Cron | Toppan batch job starts | - | 2 | - |
-| 2 | Cron | Generate Toppan enquiry files | - | 3 | - |
-| 3 | Cron | Collect processed notice numbers | - | 4 | - |
-| 4 | Cron | Call internal Toppan API | - | 5 | - |
-| 5 | Backend | Receive Toppan update request | - | 6 | - |
-| 6 | Backend | For each notice in batch | Loop | 7 | 18 |
-| 7 | Database | Query VON by noticeNo | Decision | 9 | 8 |
-| 8 | Backend | Add to skipped list | - | 6 (next) | - |
-| 9 | Backend | Check: Stage matches currentStage? | Decision | 11 | 10 |
-| 10 | Backend | Add to skipped (stage mismatch) | - | 6 (next) | - |
-| 11 | Database | Query ocms_change_of_processing | - | 12 | - |
-| 12 | Backend | Check: Manual change exists today? | Decision | 13 | 14 |
-| 13 | Backend | Mark as MANUAL update | - | 15 | - |
-| 14 | Backend | Mark as AUTOMATIC update | - | 16 | - |
-| 15 | Database | Update VON (stage only, NOT amount) | - | 17 | - |
-| 16 | Database | Update VON (stage + amount_payable) | - | 17 | - |
-| 17 | Database | Insert/update audit trail | - | 6 (next) | - |
-| 18 | Backend | Compile statistics | - | 19 | - |
-| 19 | Backend | Return response | - | END | - |
-
-### 7.3 Manual vs Automatic Detection
-
-| Type | Condition | VON Update |
-|------|-----------|------------|
-| MANUAL | Change record exists with source IN (OCMS, PLUS) on same date | Stage only (amount_payable NOT touched) |
-| AUTOMATIC | No manual change record | Stage + amount_payable recalculated |
-
-### 7.4 Toppan Response Fields
-
-| Field | Type | Description |
-|-------|------|-------------|
-| totalNotices | Integer | Total notices in request |
-| automaticUpdates | Integer | Count of automatic updates |
-| manualUpdates | Integer | Count of manual updates |
-| skipped | Integer | Count of skipped notices |
-| errors | Array | List of error messages |
-| success | Boolean | Overall success flag |
+| ID | Decision | Input | Condition | Yes Action | No Action |
+| --- | --- | --- | --- | --- | --- |
+| D1 | Required fields filled? | Form fields | All mandatory fields not empty + Remarks check | Continue | Error E1 |
+| D2 | DH/MHA unchecked? | Checkbox state | Send for DH/MHA Check = false | Prompt user | Continue |
+| D3 | Is offender = DRIVER? | owner_driver_indicator | = 'D' | Go to D4 | Go to D5 |
+| D4 | New stage in DN list? | newProcessingStage | IN ('DN1', 'DN2', 'DR3') | Mark CHANGEABLE | Mark NON-CHANGEABLE |
+| D5 | Is offender = OWNER? | owner_driver_indicator | IN ('O', 'H', 'R') | Go to D6 | Mark NON-CHANGEABLE |
+| D6 | New stage in RO list? | newProcessingStage | IN ('ROV', 'RD1', 'RD2', 'RR3') | Mark CHANGEABLE | Mark NON-CHANGEABLE |
+| D7 | Has non-changeable? | nonChangeableNotices | count > 0 | Error E2 | Continue |
+| D8 | Last record? | Loop counter | current == total | Check results | Continue loop |
 
 ---
 
-## 8. CPS Report Flow (Tab 7: CPS_Report)
+### 3.4 Tab 4: Section_1_Backend_Processing
 
-### 8.1 Swimlanes
-- **Staff Portal (Frontend)**
-- **OCMS Backend**
-- **Database**
+#### 3.4.1 Process Overview
 
-### 8.2 Process Steps
+| Attribute | Value |
+| --- | --- |
+| Process Name | Backend Processing for Change Processing Stage |
+| Section | 1.4 |
+| Trigger | Portal submits change request via API |
+| Frequency | Real-time |
+| Systems Involved | OCMS Backend API, Database |
+| Expected Outcome | VON updated, change record inserted, report generated |
 
-| Step | Swimlane | Action |
-|------|----------|--------|
-| 1 | Frontend | User enters report parameters |
-| 2 | Frontend | Validate date range (max 90 days) |
-| 3 | Frontend | Submit report request |
-| 4 | Backend | Call Reports API |
-| 5 | Database | Query ocms_change_of_processing |
-| 6 | Database | Join with VON for notice details |
-| 7 | Backend | Compile report data |
-| 8 | Backend | Return report list |
-| 9 | Frontend | Display available reports |
-| 10 | Frontend | User clicks download |
-| 11 | Backend | Call Download API |
-| 12 | Backend | Retrieve file from Azure Blob |
-| 13 | Frontend | Download Excel file |
-| 14 | Frontend | End |
+#### 3.4.2 Process Steps Table
 
-### 8.3 Report Parameters
+| Step | Type | Definition | Brief Description | Next Step |
+| --- | --- | --- | --- | --- |
+| 1 | Start | Start Backend Processing | Backend receives API request from Portal | 2 |
+| 2 | Process | Validate request format | Check items not empty, noticeNo present (BE-001, BE-002) | 3 |
+| 3 | Decision | Request valid? | Check if request format passes validation | Yes→4, No→E1 |
+| 4 | Process | Initialize batch processing | Start processing each item in request | 5 |
+| 5 | Process | Query VON by notice_no | Query ocms_valid_offence_notice to check existence | 6 |
+| 6 | Decision | VON exists? | Check if query returns record | Yes→7, No→E2 |
+| 7 | Process | Check duplicate change record | Query ocms_change_of_processing by notice_no and today's date | 8 |
+| 8 | Decision | Duplicate record exists? | Check if change record exists for today | Yes→9, No→11 |
+| 9 | Decision | isConfirmation = true? | Check if user confirmed to proceed with duplicate | Yes→11, No→E3 |
+| 10 | Decision | Last item? | Check if current item is last in batch | Yes→20, No→5 |
+| 11 | Process | Validate stage transition | Check ocms_stage_map for allowed transition | 12 |
+| 12 | Decision | Stage transition allowed? | Check if current stage → new stage is valid | Yes→13, No→E4 |
+| 13 | Process | Call Change Stage Sub-flow | Execute sub-flow to update VON and insert change record | 14 |
+| 14 | Decision | Change stage success? | Check if sub-flow completed successfully | Yes→15, No→E5 |
+| 15 | Process | Mark item as SUCCESS | Add to results with outcome = UPDATED | 10 |
+| 16 | Process | Increment success counter | Update summary.succeeded count | 10 |
+| 17 | Process | Mark item as FAILED | Add to results with outcome = FAILED and error message | 10 |
+| 18 | Process | Increment failed counter | Update summary.failed count | 10 |
+| 19 | Decision | Any success? | Check if summary.succeeded > 0 | Yes→20, No→22 |
+| 20 | Process | Generate Change Stage Report | Call report generation sub-flow | 21 |
+| 21 | Process | Upload report to Azure Blob | Store report and get signed URL | 22 |
+| 22 | Process | Build response | Build response with summary, results, and report URL | 23 |
+| 23 | Process | Return response to Portal | Send SUCCESS/PARTIAL/FAILED response | End |
+| E1 | Error | Return format error | Return OCMS.CPS.INVALID_FORMAT error | End |
+| E2 | Error | Mark as FAILED (NOT_FOUND) | VON not found | 17 |
+| E3 | Error | Mark as FAILED (DUPLICATE) | Return DUPLICATE_RECORD warning | 17 |
+| E4 | Error | Mark as FAILED (INVALID_TRANSITION) | Stage transition not allowed | 17 |
+| E5 | Error | Mark as FAILED (UNEXPECTED) | Unexpected error during stage change | 17 |
+| End | End | End Backend Processing | Response sent to Portal | - |
 
-| Parameter | Required | Type | Validation |
-|-----------|----------|------|------------|
-| startDate | Yes | Date | Format: yyyy-MM-dd |
-| endDate | Yes | Date | Format: yyyy-MM-dd, <= 90 days from start |
+#### 3.4.3 Decision Logic
 
-### 8.4 Report Output Fields
+| ID | Decision | Input | Condition | Yes Action | No Action |
+| --- | --- | --- | --- | --- | --- |
+| D1 | Request valid? | Request payload | items not empty + noticeNo present | Continue | Error E1 |
+| D2 | VON exists? | Query result | VON found in database | Continue | Error E2 |
+| D3 | Duplicate exists? | Query result | Change record exists for today | Go to D4 | Continue |
+| D4 | isConfirmation = true? | Request flag | isConfirmation field = true | Proceed | Error E3 |
+| D5 | Stage transition allowed? | stage_map query | Transition rule exists | Continue | Error E4 |
+| D6 | Change stage success? | Sub-flow result | Sub-flow returns success | Mark SUCCESS | Error E5 |
+| D7 | Last item? | Loop counter | current == total | Check any success | Continue |
+| D8 | Any success? | summary.succeeded | count > 0 | Generate report | Skip report |
 
-| Field | Source |
-|-------|--------|
-| Notice Number | ocms_change_of_processing.notice_no |
-| Previous Stage | ocms_change_of_processing.last_processing_stage |
-| New Stage | ocms_change_of_processing.new_processing_stage |
-| Date of Change | ocms_change_of_processing.date_of_change |
-| Reason of Change | ocms_change_of_processing.reason_of_change |
-| Authorised Officer | ocms_change_of_processing.authorised_officer |
-| Source | ocms_change_of_processing.source |
-| Remarks | ocms_change_of_processing.remarks |
-| Offender Name | ocms_valid_offence_notice.offender_name |
-| Vehicle Number | ocms_valid_offence_notice.vehicle_no |
+#### 3.4.4 Database Operations
 
----
+| Step | Operation | Database | Table | Query/Action |
+| --- | --- | --- | --- | --- |
+| 5 | SELECT | Intranet | ocms_valid_offence_notice | Query by notice_no |
+| 7 | SELECT | Intranet | ocms_change_of_processing | Query by notice_no and today's cre_dtm |
+| 11 | SELECT | Intranet | ocms_stage_map | Validate stage transition |
+| 13 | UPDATE | Intranet | ocms_valid_offence_notice | Update next_processing_stage (see sub-flow) |
+| 13 | INSERT | Intranet | ocms_change_of_processing | Insert change record (see sub-flow) |
+| 13 | UPDATE | Intranet | ocms_offence_notice_owner_driver | Update DH/MHA check flag (see sub-flow) |
 
-## 9. Database Operations Summary
+#### 3.4.5 API Specification Reference
 
-### 9.1 Tables Affected
-
-| Table | Operation | Flow |
-|-------|-----------|------|
-| ocms_valid_offence_notice | SELECT | Search, Eligibility |
-| ocms_valid_offence_notice | UPDATE | Apply CPS |
-| ocms_offence_notice_owner_driver | SELECT | Role resolution |
-| ocms_offence_notice_owner_driver | UPDATE | DH MHA check (optional) |
-| ocms_change_of_processing | SELECT | Duplicate check |
-| ocms_change_of_processing | INSERT | Audit trail |
-| ocms_stage_map | SELECT | Stage validation |
-| ocms_parameter | SELECT | NEXT_STAGE, STAGEDAYS |
-
-### 9.2 Fields Updated - Apply CPS
-
-**ocms_valid_offence_notice:**
-
-| Field | Value |
-|-------|-------|
-| prev_processing_stage | Old last_processing_stage |
-| prev_processing_date | Old last_processing_date |
-| last_processing_stage | New stage |
-| last_processing_date | Current timestamp |
-| next_processing_stage | From ocms_parameter (NEXT_STAGE_{newStage}) |
-| next_processing_date | Current + STAGEDAYS |
-| amount_payable | Calculated (if automatic) |
-
-**ocms_change_of_processing (INSERT):**
-
-| Field | Value |
-|-------|-------|
-| notice_no | Notice number |
-| date_of_change | Current date |
-| last_processing_stage | Previous stage |
-| new_processing_stage | New stage |
-| reason_of_change | Reason code |
-| authorised_officer | User ID |
-| source | OCMS/PLUS/SYSTEM |
-| remarks | User remarks |
-| cre_date | Current timestamp |
-| cre_user_id | User ID |
+**API:** changeProcessingStage
+**Endpoint:** `/ocms/v1/change-processing-stage`
+**Method:** POST
+**Reference:** plan_api.md Section 1.3
 
 ---
 
-## 10. Error Handling Summary
+### 3.5 Tab 5: Section_1_Change_Stage_Subflow
 
-| Error Code | Message | Flow Action |
-|------------|---------|-------------|
-| OCMS.CPS.ELIG.NOT_FOUND | Notice not found | End (error) |
-| OCMS.CPS.ELIG.ROLE_CONFLICT | Cannot determine role | End (error) |
-| OCMS.CPS.ELIG.COURT_STAGE | Notice at court stage | End (error) |
-| OCMS.CPS.ELIG.PS_BLOCKED | PS active | End (error) |
-| OCMS.CPS.ELIG.NO_STAGE_RULE | Cannot derive stage | End (error) |
-| OCMS.CPS.ELIG.INELIGIBLE_STAGE | Stage not allowed | End (error) |
-| OCMS.CPS.ELIG.EXISTING_CHANGE_TODAY | Duplicate warning | Prompt confirm |
-| OCMS.CPS.REMARKS_REQUIRED | Remarks mandatory | End (error) |
-| OCMS-4000 | Stage transition invalid | End (error) |
-| OCMS-4004 | CFC not allowed from PLUS | End (error) |
+#### 3.5.1 Process Overview
+
+| Attribute | Value |
+| --- | --- |
+| Process Name | Change Notice's Next Processing Stage Sub-flow |
+| Section | 1.5 |
+| Trigger | Backend calls sub-flow from main processing |
+| Frequency | Per item in batch |
+| Systems Involved | OCMS Backend, Database |
+| Expected Outcome | VON updated with new stage, change record inserted |
+
+#### 3.5.2 Process Steps Table
+
+| Step | Type | Definition | Brief Description | Next Step |
+| --- | --- | --- | --- | --- |
+| 1 | Start | Start Sub-flow | Receives noticeNo and newStage | 2 |
+| 2 | Process | Query current VON record | Get current stage and payment data | 3 |
+| 3 | Process | Calculate new stage date | Set next_processing_date based on new stage | 4 |
+| 4 | Process | Calculate amount payable | Calculate amount based on new stage rules | 5 |
+| 5 | Process | Update VON next_processing_stage | UPDATE ocms_valid_offence_notice SET next_processing_stage, next_processing_date | 6 |
+| 6 | Decision | VON update success? | Check if UPDATE succeeded | Yes→7, No→E1 |
+| 7 | Process | Insert change record | INSERT into ocms_change_of_processing | 8 |
+| 8 | Decision | Insert change record success? | Check if INSERT succeeded | Yes→9, No→E2 |
+| 9 | Decision | DH/MHA check required? | Check if dhMhaCheck flag = true | Yes→10, No→12 |
+| 10 | Process | Update ONOD DH/MHA flag | UPDATE ocms_offence_notice_owner_driver SET DH_MHA_check_allow = 'Y' | 11 |
+| 11 | Decision | ONOD update success? | Check if UPDATE succeeded | Yes→12, No→E3 |
+| 12 | Process | Return success | Return success to main flow | End |
+| E1 | Error | Return error (VON update failed) | Return error to main flow | End |
+| E2 | Error | Return error (Insert failed) | Return error to main flow | End |
+| E3 | Error | Return error (ONOD update failed) | Return error to main flow | End |
+| End | End | End Sub-flow | Control returns to main flow | - |
+
+#### 3.5.3 Decision Logic
+
+| ID | Decision | Input | Condition | Yes Action | No Action |
+| --- | --- | --- | --- | --- | --- |
+| D1 | VON update success? | Update result | Rows affected > 0 | Continue | Error E1 |
+| D2 | Insert success? | Insert result | Rows affected > 0 | Continue | Error E2 |
+| D3 | DH/MHA check required? | dhMhaCheck flag | = true | Update ONOD | Skip |
+| D4 | ONOD update success? | Update result | Rows affected > 0 | Success | Error E3 |
+
+#### 3.5.4 Database Operations
+
+| Step | Operation | Database | Table | Fields Updated |
+| --- | --- | --- | --- | --- |
+| 5 | UPDATE | Intranet | ocms_valid_offence_notice | next_processing_stage, next_processing_date, amount_payable, upd_user_id, upd_dtm |
+| 7 | INSERT | Intranet | ocms_change_of_processing | notice_no, date_of_change, last_processing_stage, new_processing_stage, reason_of_change, authorised_officer, remarks, cre_date, cre_user_id |
+| 10 | UPDATE | Intranet | ocms_offence_notice_owner_driver | DH_MHA_check_allow, upd_user_id, upd_dtm |
+
+**Audit User:** ocmsiz_app_conn (Do NOT use "SYSTEM")
 
 ---
 
-## 11. Flowchart Checklist
+### 3.6 Tab 6: Section_1_Generate_Report
 
-Before creating the .drawio file:
+#### 3.6.1 Process Overview
 
-- [ ] All steps have clear names
-- [ ] All decision points have Yes/No paths defined
-- [ ] All paths lead to an End point
-- [ ] Error handling paths are included
-- [ ] Database operations are marked with dashed lines
-- [ ] Swimlanes are defined for each system/tier
-- [ ] Color coding is consistent
-- [ ] Step descriptions are complete
-- [ ] API payloads are documented
-- [ ] Stage transition rules are clear
+| Attribute | Value |
+| --- | --- |
+| Process Name | Generate Change Processing Stage Report |
+| Section | 1.6 |
+| Trigger | Backend completes change processing with at least 1 success |
+| Frequency | Per batch submission |
+| Systems Involved | OCMS Backend, Azure Blob Storage |
+| Expected Outcome | Excel report generated and uploaded, URL returned |
+
+#### 3.6.2 Process Steps Table
+
+| Step | Type | Definition | Brief Description | Next Step |
+| --- | --- | --- | --- | --- |
+| 1 | Start | Start Report Generation | Receives batch results | 2 |
+| 2 | Process | Prepare report data | Collect notice details and results | 3 |
+| 3 | Process | Generate Excel file | Create Excel with submitted notice details | 4 |
+| 4 | Decision | Excel generation success? | Check if file created successfully | Yes→5, No→E1 |
+| 5 | Process | Generate report filename | Format: ChangeStageReport_yyyyMMdd_HHmmss_[userID].xlsx | 6 |
+| 6 | Process | Upload to Azure Blob Storage | Upload to path: reports/change-stage/ | 7 |
+| 7 | Decision | Upload success? | Check if upload succeeded | Yes→8, No→E2 |
+| 8 | Process | Generate signed URL | Get temporary signed URL with expiry | 9 |
+| 9 | Process | Return report URL | Return signed URL to main flow | End |
+| E1 | Error | Return error (Excel generation failed) | Return error to main flow | End |
+| E2 | Error | Return error (Upload failed) | Return error to main flow | End |
+| End | End | End Report Generation | Control returns to main flow | - |
+
+#### 3.6.3 Decision Logic
+
+| ID | Decision | Input | Condition | Yes Action | No Action |
+| --- | --- | --- | --- | --- | --- |
+| D1 | Excel generation success? | File creation result | File created | Continue | Error E1 |
+| D2 | Upload success? | Upload result | Blob stored | Continue | Error E2 |
+
+#### 3.6.4 Report Data Mapping
+
+| Report Field | Source Data | Database Table |
+| --- | --- | --- |
+| Notice No | notice_no | ocms_valid_offence_notice |
+| Previous Stage | last_processing_stage | ocms_valid_offence_notice |
+| New Stage | new_processing_stage | ocms_change_of_processing |
+| Reason of Change | reason_of_change | ocms_change_of_processing |
+| Remarks | remarks | ocms_change_of_processing |
+| Authorised Officer | authorised_officer | ocms_change_of_processing |
+| Date of Change | date_of_change | ocms_change_of_processing |
+| Status | outcome | API response |
 
 ---
 
-## 12. Change Log
+## 4. Section 2: Manual Change Processing Stage via PLUS Staff Portal
+
+### 4.1 Tab 7: Section_2_High_Level
+
+#### 4.1.1 Process Overview
+
+| Attribute | Value |
+| --- | --- |
+| Process Name | Manual Change Processing Stage via PLUS - High Level |
+| Section | 2.1 |
+| Trigger | PLUS officer initiates change processing stage request |
+| Frequency | Real-time |
+| Systems Involved | PLUS Staff Portal, OCMS Backend, Database |
+| Expected Outcome | Notice processing stage updated and confirmation returned to PLUS |
+
+#### 4.1.2 High Level Flow Diagram (ASCII)
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     PLUS STAFF PORTAL                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    ┌───────────┐                                                         │
+│    │   Start   │                                                         │
+│    └─────┬─────┘                                                         │
+│          │                                                               │
+│          ▼                                                               │
+│    ┌────────────────────────────────────────┐                           │
+│    │ PLUS officer initiates stage change    │                           │
+│    │ for notice(s)                          │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ PLUS system validates eligibility      │                           │
+│    │ based on pre-defined rules             │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ PLUS sends request to OCMS via API     │                           │
+│    │ (through APIM)                         │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                     OCMS BACKEND                                         │
+├─────────────────────────────────────────────────────────────────────────┤
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ Backend processes PLUS request         │                           │
+│    │ - Validate request data                │                           │
+│    │ - Check notice eligibility             │                           │
+│    │ - Validate stage transition            │                           │
+│    │ - Update VON processing stage          │                           │
+│    │ - Insert change record                 │                           │
+│    │ - Generate report                      │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ Return response to PLUS                │                           │
+│    │ - Success: Updated notice details      │                           │
+│    │ - Failure: Error message and lists    │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                     PLUS STAFF PORTAL                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌────────────────────────────────────────┐                           │
+│    │ PLUS displays result to officer        │                           │
+│    └────────────────┬───────────────────────┘                           │
+│                     │                                                    │
+│                     ▼                                                    │
+│    ┌───────────┐                                                         │
+│    │    End    │                                                         │
+│    └───────────┘                                                         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+#### 4.1.3 Process Steps Table (High Level)
+
+| Step | Definition | Brief Description |
+| --- | --- | --- |
+| Start | Entry point | PLUS officer initiates change processing stage |
+| PLUS Initiates | User action | PLUS officer selects notice(s) and new stage |
+| PLUS Validates | System validation | PLUS system checks eligibility |
+| PLUS Sends Request | API call | PLUS sends request to OCMS via API |
+| Backend Processing | Backend action | OCMS validates and processes change |
+| Return Response | API response | OCMS returns status to PLUS |
+| PLUS Displays Result | UI display | PLUS shows result to officer |
+| End | Exit point | Process complete |
+
+---
+
+### 4.2 Tab 8: Section_2_PLUS_Integration
+
+#### 4.2.1 Process Overview
+
+| Attribute | Value |
+| --- | --- |
+| Process Name | PLUS Integration - Backend Processing |
+| Section | 2.2 |
+| Trigger | PLUS sends API request to OCMS |
+| Frequency | Real-time |
+| Systems Involved | PLUS Portal (External), OCMS Backend, Database |
+| Expected Outcome | Stage change processed or error returned |
+
+#### 4.2.2 Process Steps Table
+
+| Step | Type | Definition | Brief Description | Next Step |
+| --- | --- | --- | --- | --- |
+| 1 | Start | Start PLUS Integration | OCMS receives request from PLUS via APIM | 2 |
+| 2 | Process | Validate request format | Check noticeNo array, lastStageName, nextStageName (EXT-001 to EXT-003) | 3 |
+| 3 | Decision | Request valid? | Check if request format passes validation | Yes→4, No→E1 |
+| 4 | Decision | Source = '005'? | Check if source code is '005' (PLUS) | Yes→5, No→E2 |
+| 5 | Process | Validate stage transition | Query ocms_stage_map for lastStageName → nextStageName | 6 |
+| 6 | Decision | Stage transition allowed? | Check if transition rule exists | Yes→7, No→E3 |
+| 7 | Process | Initialize batch processing | Start processing each notice in noticeNo array | 8 |
+| 8 | Process | Query VON by notice_no | Query ocms_valid_offence_notice | 9 |
+| 9 | Decision | VON exists? | Check if query returns record | Yes→10, No→E4 |
+| 10 | Decision | Is in Court Stage? | Check if current_processing_stage IN (CRT, CS1, CS2) | Yes→E5, No→11 |
+| 11 | Process | Call Change Stage Sub-flow | Execute sub-flow to update VON and insert change record | 12 |
+| 12 | Decision | Change stage success? | Check if sub-flow completed successfully | Yes→13, No→E6 |
+| 13 | Process | Add to success list | Increment noticeCount | 14 |
+| 14 | Decision | Last notice? | Check if current notice is last in array | Yes→15, No→8 |
+| 15 | Decision | Any success? | Check if noticeCount > 0 | Yes→16, No→18 |
+| 16 | Process | Generate Change Stage Report | Call report generation sub-flow | 17 |
+| 17 | Process | Return success response | Return status=SUCCESS, noticeCount, message | End |
+| 18 | Process | Return failure response | Return status=FAILED, error code, message | End |
+| E1 | Error | Return format error | Return status=FAILED, code=OCMS-4000, message="Invalid format" | End |
+| E2 | Error | Return source error | Return status=FAILED, code=OCMS-4000, message="Invalid source code" | End |
+| E3 | Error | Return transition error | Return status=FAILED, code=OCMS-4000, message="Stage transition not allowed" | End |
+| E4 | Error | Mark notice as failed | Add to failed list with "VON not found" | 14 |
+| E5 | Error | Mark notice as failed | Add to failed list with "Notice in court stage" | 14 |
+| E6 | Error | Mark notice as failed | Add to failed list with "Unexpected error" | 14 |
+| End | End | End PLUS Integration | Response sent to PLUS | - |
+
+#### 4.2.3 Decision Logic
+
+| ID | Decision | Input | Condition | Yes Action | No Action |
+| --- | --- | --- | --- | --- | --- |
+| D1 | Request valid? | Request payload | All required fields present | Continue | Error E1 |
+| D2 | Source = '005'? | source field | = '005' | Continue | Error E2 |
+| D3 | Stage transition allowed? | stage_map query | Transition rule exists | Continue | Error E3 |
+| D4 | VON exists? | Query result | VON found | Continue | Error E4 |
+| D5 | Is in Court Stage? | current_processing_stage | IN (CRT, CS1, CS2) | Error E5 | Continue |
+| D6 | Change stage success? | Sub-flow result | Success returned | Add to success | Error E6 |
+| D7 | Last notice? | Loop counter | current == total | Check any success | Continue |
+| D8 | Any success? | noticeCount | > 0 | Generate report | Return failure |
+
+#### 4.2.4 API Specification Reference
+
+**API:** plusChangeProcessingStage
+**Endpoint:** `/ocms/v1/external/plus/change-processing-stage`
+**Method:** POST
+**Reference:** plan_api.md Section 2.1
+
+---
+
+## 5. Section 3: Toppan Integration
+
+### 5.1 Tab 9: Section_3_Toppan_Integration
+
+#### 5.1.1 Process Overview
+
+| Attribute | Value |
+| --- | --- |
+| Process Name | Toppan Stage Update (Internal Cron) |
+| Section | 3.1 |
+| Trigger | generate_toppan_letters cron job completes |
+| Frequency | Daily (after Toppan file generation) |
+| Systems Involved | Toppan Cron, OCMS Backend, Database |
+| Expected Outcome | VON stages updated automatically or skipped if manual change exists |
+
+#### 5.1.2 Process Steps Table
+
+| Step | Type | Definition | Brief Description | Next Step |
+| --- | --- | --- | --- | --- |
+| 1 | Start | Start Toppan Cron | Cron job generates Toppan files and calls update API | 2 |
+| 2 | Process | Validate request | Check noticeNumbers, currentStage, processingDate (INT-001 to INT-003) | 3 |
+| 3 | Decision | Request valid? | Check if request format passes validation | Yes→4, No→E1 |
+| 4 | Process | Initialize processing | Start processing each notice in noticeNumbers array | 5 |
+| 5 | Process | Query VON by notice_no | Query ocms_valid_offence_notice | 6 |
+| 6 | Decision | VON exists? | Check if query returns record | Yes→7, No→E2 |
+| 7 | Process | Check manual change record | Query ocms_change_of_processing for today's manual change | 8 |
+| 8 | Decision | Manual record exists? | Check if manual change record exists for today | Yes→9, No→11 |
+| 9 | Process | Skip VON update | Count as manual update (already updated manually) | 10 |
+| 10 | Decision | Last notice? | Check if current notice is last in array | Yes→15, No→5 |
+| 11 | Process | Validate stage transition | Check if currentStage → next stage is allowed | 12 |
+| 12 | Decision | Stage transition allowed? | Check if transition rule exists | Yes→13, No→E3 |
+| 13 | Process | Update VON processing stage | UPDATE ocms_valid_offence_notice automatically | 14 |
+| 14 | Process | Count as automatic update | Increment automaticUpdates counter | 10 |
+| 15 | Process | Build response summary | Build response with totalNotices, automaticUpdates, manualUpdates, skipped, errors | 16 |
+| 16 | Process | Return response | Return summary with success = true/false | End |
+| E1 | Error | Add to errors list | Add "Invalid request format" to errors | 15 |
+| E2 | Error | Skip notice | Count as skipped, add "VON not found" to errors | 10 |
+| E3 | Error | Skip notice | Count as skipped, add "Stage transition not allowed" to errors | 10 |
+| End | End | End Toppan Integration | Cron job completes | - |
+
+#### 5.1.3 Decision Logic
+
+| ID | Decision | Input | Condition | Yes Action | No Action |
+| --- | --- | --- | --- | --- | --- |
+| D1 | Request valid? | Request payload | All required fields present | Continue | Error E1 |
+| D2 | VON exists? | Query result | VON found | Continue | Error E2 |
+| D3 | Manual record exists? | Query result | Manual change record found for today | Skip VON update | Continue |
+| D4 | Stage transition allowed? | stage_map query | Transition rule exists | Update VON | Error E3 |
+| D5 | Last notice? | Loop counter | current == total | Build response | Continue |
+
+#### 5.1.4 Database Operations
+
+| Step | Operation | Database | Table | Query/Action |
+| --- | --- | --- | --- | --- |
+| 5 | SELECT | Intranet | ocms_valid_offence_notice | Query by notice_no |
+| 7 | SELECT | Intranet | ocms_change_of_processing | Query by notice_no and today's cre_dtm |
+| 13 | UPDATE | Intranet | ocms_valid_offence_notice | Update last_processing_stage, last_processing_date, next_processing_stage |
+
+#### 5.1.5 API Specification Reference
+
+**API:** updateToppanStages
+**Endpoint:** `/ocms/v1/internal/toppan/update-stages`
+**Method:** POST
+**Reference:** plan_api.md Section 3.1
+
+---
+
+## 6. Error Handling
+
+### 6.1 Frontend Errors
+
+| Error Code | Error Point | Condition | Error Message |
+| --- | --- | --- | --- |
+| FE-001 | Search form | Invalid Notice No format | Invalid Notice no. |
+| FE-002 | Search form | Invalid ID No format | Invalid ID no. |
+| FE-003 | Search form | Invalid Vehicle No format | Number does not match the local vehicle number format. |
+| FE-004 | Search form | No search criteria | Please enter at least one search criterion |
+| FE-010 | Change form | New Processing Stage missing | New Processing Stage is required |
+| FE-011 | Change form | Reason of Change missing | Reason of Change is required |
+| FE-012 | Change form | Remarks missing when reason=OTH | Remarks are mandatory when reason for change is 'OTH' (Others) |
+| FE-013 | Change form | No notice selected | Please select at least one notice |
+| FE-031 | Portal validation | All notices non-changeable | All selected notices are not eligible for stage change |
+| FE-032 | Portal validation | Mixed changeable/non-changeable | Some notices are not eligible. Please uncheck inapplicable notices |
+
+### 6.2 Backend Errors
+
+| Error Code | Error Point | Condition | Error Message |
+| --- | --- | --- | --- |
+| OCMS.CPS.INVALID_FORMAT | Request validation | Items list empty | Items list cannot be empty |
+| OCMS.CPS.MISSING_DATA | Request validation | Required field missing | noticeNo is required |
+| OCMS.CPS.NOT_FOUND | Business logic | VON not found | VON not found |
+| OCMS.CPS.COURT_STAGE | Business logic | Notice in court stage | Notice is in court stage |
+| OCMS.CPS.DUPLICATE_RECORD | Business logic | Duplicate change record | Existing change record found for this notice today |
+| OCMS.CPS.REMARKS_REQUIRED | Business logic | Remarks missing for OTH | Remarks are mandatory when reason for change is 'OTH' (Others) |
+| OCMS.CPS.INVALID_TRANSITION | Business logic | Stage transition not allowed | Stage transition not allowed: [current] -> [new] |
+| OCMS-4000 | External API | Bad request | Invalid request / data |
+| OCMS-5000 | System error | Internal server error | Something went wrong. Please try again later. |
+
+---
+
+## 7. Flowchart Checklist
+
+Before creating the technical flowchart:
+
+- [x] All steps have clear names
+- [x] All decision points have Yes/No paths defined
+- [x] All paths lead to an End point
+- [x] Error handling paths are included with error codes
+- [x] Database operations are identified
+- [x] Swimlanes are defined for each system/tier
+- [x] Color coding is specified
+- [x] Step descriptions are complete
+- [x] External system calls are documented
+- [x] API specifications referenced
+- [x] Audit user configuration noted (ocmsiz_app_conn, NOT "SYSTEM")
+- [x] Insert/Update order documented
+
+---
+
+## 8. Notes for Technical Flowchart Creation
+
+### 8.1 Shape Guidelines
+
+| Element | Shape | Style |
+| --- | --- | --- |
+| Start/End | Terminator (rounded rectangle) | strokeWidth=2 |
+| Process | Rectangle | rounded=1, arcSize=14 |
+| Decision | Diamond | shape=mxgraph.flowchart.decision |
+| Database | Cylinder | shape=cylinder |
+| API Call | Rectangle with double border | shape=process |
+| Error | Rectangle (red border) | strokeColor=#b85450 |
+
+### 8.2 Connector Guidelines
+
+| Connection Type | Style |
+| --- | --- |
+| Normal flow | Solid arrow |
+| Database operation | Dashed line |
+| API call | Dashed line |
+| Error path | Red solid arrow |
+| Return path | Dotted line |
+
+### 8.3 Swimlane Colors
+
+| System | Hex Color | Use |
+| --- | --- | --- |
+| OCMS Staff Portal | #dae8fc | Frontend UI |
+| OCMS Backend API | #d5e8d4 | Backend processing |
+| Database | #fff2cc | Database operations |
+| PLUS Staff Portal | #e1d5e7 | External system |
+| Toppan Cron | #ffe6cc | Batch job |
+
+---
+
+## 9. Changelog
 
 | Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | 2026-01-18 | Technical Documentation | Initial version |
+| --- | --- | --- | --- |
+| v1.0 | 21/01/2026 | Claude | Initial version based on plan_api.md and plan_condition.md |
 
 ---
 
-*End of Document*
+**End of Flowchart Plan**
