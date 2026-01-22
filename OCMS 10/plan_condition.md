@@ -1,14 +1,19 @@
 # Condition and Validation Planning Document - OCMS 10: Advisory Notices Processing
 
 ## Document Information
-- **Version:** 1.1
-- **Date:** 2026-01-15
+- **Version:** 1.2
+- **Date:** 2026-01-22
 - **Source Documents:**
   - Functional Document: v1.2_OCMS 10_Functional Document.md
   - Backend Code: ura-project-ocmsadminapi-5e962080c0b4
   - Key Files: AdvisoryNoticeHelper.java, CreateNoticeServiceImpl.java, ValidationServices.java
+- **Related Documents:**
+  - OCMS 3 Technical Document (REPCCS API Specification)
+  - OCMS 5 Technical Document (Notice Creation)
+  - OCMS 21 Technical Document (Double Booking)
 
 **Change Log:**
+- v1.2 (2026-01-22): Aligned with corrected Technical Document. Updated assumptions log with confirmed findings (hardcoded AN messages, actual database tables). Added references to OCMS 3, 5, 21 documents.
 - v1.1 (2026-01-15): Updated to align with FD v1.2 - Removed Same-Day AN Check, updated Past Offense logic
 
 ---
@@ -431,6 +436,8 @@ END IF
 
 #### Duplicate Offense Details Check (Double Booking)
 **Rule:** Detect duplicate offense for same vehicle, rule code, and date/time
+
+**Reference:** Refer to OCMS 21 Technical Document for detailed Double Booking detection logic.
 
 **Implementation:** `CreateNoticeHelper.checkDuplicateOffenseDetails()`
 
@@ -933,6 +940,8 @@ START: AN Qualified
 
 ## 4. Assumptions Log
 
+### Assumptions (Need Confirmation)
+
 [ASSUMPTION] eNotification exclusion list table structure and query method need to be confirmed.
 
 [ASSUMPTION] LTA API authentication uses API key stored in Azure Key Vault (secret name: "lta-api-key").
@@ -940,8 +949,6 @@ START: AN Qualified
 [ASSUMPTION] DataHive API timeout is 30 seconds with 3 retry attempts and exponential backoff.
 
 [ASSUMPTION] MHA API response includes full postal address in structured format (building, street, postal code, unit).
-
-[ASSUMPTION] SLIFT/SFTP file format is PDF for letter submission (not XML).
 
 [ASSUMPTION] DBB query retry logic uses exponential backoff: 1s, 2s, 4s for attempts 1, 2, 3.
 
@@ -952,6 +959,24 @@ START: AN Qualified
 [ASSUMPTION] Frontend form validation error messages are displayed inline below each field.
 
 [ASSUMPTION] Staff Portal and PLUS Portal share same validation rules with identical error messages.
+
+### Confirmed Findings (From Code Analysis)
+
+[CONFIRMED] AN SMS/Email messages are currently hardcoded in `NotificationSmsEmailHelper.java` (method `generateAnMessages()`). Code contains TODO comment: "Replace with actual approved template from BA/Product Owner".
+
+[CONFIRMED] SLIFT is used for **encryption** before SFTP upload to Toppan printing vendor, NOT as a direct API call. Reference: `ToppanLettersGeneratorJob.java`.
+
+[CONFIRMED] Email notification records are stored in `ocms_email_notification_records` table.
+
+[CONFIRMED] SMS notification records are stored in `ocms_sms_notification_records` table.
+
+[CONFIRMED] AN Letter records are stored in `ocms_an_letter` table.
+
+[CONFIRMED] Vehicle owner particulars are stored in `ocms_offence_notice_owner_driver` table.
+
+[CONFIRMED] ANS Exemption rules are stored in `ocms_an_exemption_rules` table with fields: `rule_code`, `start_effective_date`, `end_effective_date`, `rule_remarks`, `composition_amount`.
+
+[CONFIRMED] ANS PS Reasons are stored in `ocms_standard_code` table WHERE `reference_code = 'ANS_PS_Reason'` AND `code_status = 'A'`. Valid codes: CAN, CFA, DBB, VST.
 
 ---
 

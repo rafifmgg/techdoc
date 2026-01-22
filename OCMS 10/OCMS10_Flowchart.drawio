@@ -1,13 +1,13 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0" version="29.3.1" pages="10">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0" version="29.3.4" pages="12">
   <diagram id="tab2_1" name="2.1_High_Level_AN_Processing">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="661" dy="387" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="title_2_1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 2.1: High-Level Advisory Notices Processing Overview" vertex="1">
           <mxGeometry height="30" width="600" x="40" y="340" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_2_1" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Backend (OCMS API)" vertex="1">
+        <mxCell id="sw_backend_2_1" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
           <mxGeometry height="600" width="2500" x="20" y="380" as="geometry" />
         </mxCell>
         <mxCell id="s2_1_start" parent="sw_backend_2_1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
@@ -107,14 +107,14 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_1" name="3.1_AN_Verification_Qualification">
-    <mxGraphModel dx="1271" dy="745" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7000" pageHeight="1800" math="0" shadow="0">
+    <mxGraphModel dx="3304" dy="1936" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="7000" pageHeight="1800" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="title_3_2" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.1: AN Verification - Qualification Check" vertex="1">
           <mxGeometry height="30" width="500" x="40" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_3_2" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Backend (OCMS API)" vertex="1">
+        <mxCell id="sw_backend_3_2" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
           <mxGeometry height="700" width="2600" x="20" y="60" as="geometry" />
         </mxCell>
         <mxCell id="s3_2_start" parent="sw_backend_3_2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
@@ -144,20 +144,11 @@
         <mxCell id="s3_2_fail2" parent="sw_backend_3_2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return Not Qualified: &quot;Vehicle type must be S/D/V/I&quot;" vertex="1">
           <mxGeometry height="100" width="140" x="930" y="290" as="geometry" />
         </mxCell>
-        <mxCell id="APUnelsGrHz7-8aDQZV9-6" edge="1" parent="sw_backend_3_2" source="s3_2_step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="APUnelsGrHz7-8aDQZV9-5">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="s3_2_step3" parent="sw_backend_3_2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check Exemption Rules" vertex="1">
-          <mxGeometry height="100" width="180" x="1150" y="80" as="geometry" />
-        </mxCell>
         <mxCell id="s3_2_dec3" parent="sw_backend_3_2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Exempt?" vertex="1">
           <mxGeometry height="120" width="140" x="1390" y="70" as="geometry" />
         </mxCell>
         <mxCell id="s3_2_fail3" parent="sw_backend_3_2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return Not Qualified: &quot;Offence exempt from AN&quot;" vertex="1">
           <mxGeometry height="100" width="140" x="1390" y="290" as="geometry" />
-        </mxCell>
-        <mxCell id="s3_2_step4" parent="sw_backend_3_2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check Past Offence: Vehicle must have qualifying offence in past 24 months" vertex="1">
-          <mxGeometry height="100" width="180" x="1660" y="80" as="geometry" />
         </mxCell>
         <mxCell id="s3_2_dec4" parent="sw_backend_3_2" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Has Past Offence?" vertex="1">
           <mxGeometry height="120" width="140" x="1980" y="70" as="geometry" />
@@ -165,20 +156,11 @@
         <mxCell id="s3_2_fail4" parent="sw_backend_3_2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return Not Qualified: &quot;No qualifying offence in past 24 months&quot;" vertex="1">
           <mxGeometry height="100" width="140" x="1980" y="280" as="geometry" />
         </mxCell>
-        <mxCell id="s3_2_query" parent="sw_backend_3_2" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, notice_date_and_time, computer_rule_code, composition_amount&lt;br&gt;FROM ocms_valid_offence_notice&lt;br&gt;WHERE vehicle_no = [current vehicle]&lt;br&gt;&amp;nbsp;&amp;nbsp;AND notice_date_and_time &amp;gt;= [currentDate - 24 months]&lt;br&gt;&amp;nbsp;&amp;nbsp;AND notice_date_and_time &amp;lt; [currentNoticeDate]" vertex="1">
-          <mxGeometry height="100" width="360" x="1570" y="230" as="geometry" />
-        </mxCell>
-        <mxCell id="c3_2_12" edge="1" parent="sw_backend_3_2" source="s3_2_step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_2_query">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="APUnelsGrHz7-8aDQZV9-1" parent="sw_backend_3_2" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="Offence type must be &#39;O&#39; for AN eligibility" vertex="1">
           <mxGeometry height="60" width="130" x="245" y="230" as="geometry" />
         </mxCell>
         <mxCell id="APUnelsGrHz7-8aDQZV9-3" parent="sw_backend_3_2" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="Vehicle registration type must be:&amp;nbsp;&lt;div&gt;- S&amp;nbsp;&lt;/div&gt;&lt;div&gt;- D&amp;nbsp;&lt;/div&gt;&lt;div&gt;- V&lt;/div&gt;&lt;div&gt;- I&amp;nbsp;&lt;/div&gt;" vertex="1">
           <mxGeometry height="90" width="135" x="702.5" y="230" as="geometry" />
-        </mxCell>
-        <mxCell id="APUnelsGrHz7-8aDQZV9-5" parent="sw_backend_3_2" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="1. Offence code 20412 with composition amount = $80 is exempt from AN&lt;br&gt;2. Offence code 11210 with vehicle category &#39;LB&#39; (Loading Bay) or &#39;HL&#39; (Handicap Lot) is exempt from AN" vertex="1">
-          <mxGeometry height="120" width="230" x="1125" y="230" as="geometry" />
         </mxCell>
         <mxCell id="s3_2_pass" parent="sw_backend_3_2" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return Qualified: qualified=true" vertex="1">
           <mxGeometry height="100" width="140" x="2190" y="80" as="geometry" />
@@ -188,6 +170,33 @@
         </mxCell>
         <mxCell id="c3_2_15" edge="1" parent="sw_backend_3_2" source="s3_2_pass" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_end">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="096JEzhakDzxay7g_l4o-2" edge="1" parent="sw_backend_3_2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_dec3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1330" y="130" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="096JEzhakDzxay7g_l4o-1" parent="sw_backend_3_2" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;div&gt;&lt;b&gt;FUNCTION&lt;/b&gt;&lt;/div&gt;Check Exemption Rules" vertex="1">
+          <mxGeometry height="80" width="180" x="1150" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_2_6" edge="1" parent="sw_backend_3_2" source="s3_2_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="096JEzhakDzxay7g_l4o-1" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1150" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="096JEzhakDzxay7g_l4o-3" parent="sw_backend_3_2" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;div&gt;&lt;b&gt;FUNCTION&lt;/b&gt;&lt;/div&gt;Check Past Offence" vertex="1">
+          <mxGeometry height="80" width="180" x="1660" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_2_10" edge="1" parent="sw_backend_3_2" source="s3_2_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="096JEzhakDzxay7g_l4o-3" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1660" y="130" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="keD3n3BUbAQ6dU2Sxcw0-1" parent="sw_backend_3_2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Refer to Section 2.3" vertex="1">
+          <mxGeometry height="30" width="120" x="1174" y="172" as="geometry" />
+        </mxCell>
+        <mxCell id="keD3n3BUbAQ6dU2Sxcw0-2" parent="sw_backend_3_2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Refer to Section 2.4" vertex="1">
+          <mxGeometry height="40" width="120" x="1693" y="168" as="geometry" />
         </mxCell>
         <mxCell id="c3_2_1" edge="1" parent="1" source="s3_2_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_step1">
           <mxGeometry relative="1" as="geometry" />
@@ -204,23 +213,21 @@
         <mxCell id="c3_2_5" edge="1" parent="1" source="s3_2_step2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_dec2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_2_6" edge="1" parent="1" source="s3_2_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_step3" value="yes">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="c3_2_7" edge="1" parent="1" source="s3_2_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_fail2" value="no">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_2_8" edge="1" parent="1" source="s3_2_step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_dec3">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="c3_2_8" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_dec3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1350" y="190" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="c3_2_9" edge="1" parent="1" source="s3_2_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_fail3" value="yes">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_2_10" edge="1" parent="1" source="s3_2_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_step4" value="no">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="c3_2_11" edge="1" parent="1" source="s3_2_step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_dec4">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="c3_2_11" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_dec4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1860" y="190" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="c3_2_13" edge="1" parent="1" source="s3_2_dec4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_2_pass" value="yes">
           <mxGeometry relative="1" as="geometry" />
@@ -263,8 +270,366 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram id="tab3_2" name="3.2_Receive_AN_REPCCS">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+  <diagram id="tab3_1_1" name="3.1.1_ANS_Exemption_Rule_Code_Check">
+    <mxGraphModel dx="972" dy="569" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="2200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_2_3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.1.1: ANS Exemption Rule Code Check Sub-Flow" vertex="1">
+          <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_backend_2_3" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
+          <mxGeometry height="920" width="2690" x="20" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_step1" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Identify new Notice&#39;s Offence Rule Code" vertex="1">
+          <mxGeometry height="80" width="160" x="310" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_step2" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query ANS Exemption DB to check if Rule Code is in exemption list" vertex="1">
+          <mxGeometry height="80" width="160" x="540" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_dec1" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Exemption Record Found?" vertex="1">
+          <mxGeometry height="100" width="120" x="790" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_eligible1" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice IS ELIGIBLE for ANS (Rule Code NOT in exemption list)" vertex="1">
+          <mxGeometry height="80" width="180" x="1000" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_step3" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Compare Notice&#39;s offence_date with Exemption Rule&#39;s start_effective_date and end_effective_date" vertex="1">
+          <mxGeometry height="80" width="200" x="1000" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_not_eligible1" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return: Notice is NOT ELIGIBLE for ANS" vertex="1">
+          <mxGeometry height="80" width="180" x="1900" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_eligible3" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice IS ELIGIBLE for ANS" vertex="1">
+          <mxGeometry height="80" width="180" x="1680" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_not_eligible2" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return: Notice is NOT ELIGIBLE for ANS" vertex="1">
+          <mxGeometry height="80" width="180" x="1920" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_eligible4" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return: Notice IS ELIGIBLE for ANS" vertex="1">
+          <mxGeometry height="80" width="180" x="1690" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_not_eligible4" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return: Notice is NOT ELIGIBLE for ANS" vertex="1">
+          <mxGeometry height="80" width="180" x="1240" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_return" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return result to main AN Qualification Process Flow" vertex="1">
+          <mxGeometry height="80" width="200" x="2240" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_3_end" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="120" x="2490" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="05_PdX5-xt_YHOxjkQOR-1" parent="sw_backend_2_3" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="Start: ANS Exemption Rule Code Check" vertex="1">
+          <mxGeometry height="70" width="160" x="80" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_1" edge="1" parent="sw_backend_2_3" source="05_PdX5-xt_YHOxjkQOR-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="s2_3_step1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="110" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s2_3_db_note" parent="sw_backend_2_3" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SELECT&amp;nbsp;&lt;div&gt;rule_code,&amp;nbsp;&lt;/div&gt;&lt;div&gt;start_effective_date,&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;end_effective_date,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;rule_remarks,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;composition_amount&lt;/span&gt;&lt;/div&gt;&lt;div&gt;FROM ocms_an_exemption_rules&amp;nbsp;&lt;br&gt;WHERE rule_code = [notice.computer_rule_code]&lt;/div&gt;" vertex="1">
+          <mxGeometry height="140" width="270" x="485" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_4" edge="1" parent="sw_backend_2_3" source="s2_3_step2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="s2_3_db_note">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="610.0526315789473" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_8" edge="1" parent="sw_backend_2_3" source="05_PdX5-xt_YHOxjkQOR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_eligible1" value="no">
+          <mxGeometry relative="1" x="-0.8235" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1330" y="300" />
+              <mxPoint x="1090" y="300" />
+            </Array>
+            <mxPoint x="1335.0000000000005" y="160" as="sourcePoint" />
+            <mxPoint x="1335" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="05_PdX5-xt_YHOxjkQOR-3" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Offence Date within exemption period?" vertex="1">
+          <mxGeometry height="100" width="120" x="1270" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_7" edge="1" parent="sw_backend_2_3" source="s2_3_step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="05_PdX5-xt_YHOxjkQOR-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1260" y="107.57142857142867" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_9" edge="1" parent="sw_backend_2_3" source="05_PdX5-xt_YHOxjkQOR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-1" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1390" y="107.57142857142867" as="sourcePoint" />
+            <mxPoint x="1480" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-1" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="computer_rule_code = 20412?" vertex="1">
+          <mxGeometry height="100" width="120" x="1490" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-5" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="composition_amount = $80?" vertex="1">
+          <mxGeometry height="100" width="120" x="1710" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-4" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="computer_rule_code = 11210?" vertex="1">
+          <mxGeometry height="100" width="120" x="1490" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-3" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Notice remarks contains &#39;Loading Bay&#39;?" vertex="1">
+          <mxGeometry height="100" width="120" x="1720" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-2" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Notice remarks contains &#39;Handicap Lot&#39;?" vertex="1">
+          <mxGeometry height="100" width="120" x="1720" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_10" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-5" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1620" y="110" as="sourcePoint" />
+            <mxPoint x="1700" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_12" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_not_eligible1" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1840" y="110" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_15" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_not_eligible4" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1480" y="400" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_14" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-3" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1620" y="400" as="sourcePoint" />
+            <mxPoint x="1700" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_16" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_not_eligible2" value="yes">
+          <mxGeometry relative="1" x="-0.75" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="1860" y="400" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_19" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_eligible4" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1780" y="610" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_18" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="s2_3_not_eligible2" value="yes">
+          <mxGeometry relative="1" x="-0.75" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="1860" y="560" as="sourcePoint" />
+            <mxPoint x="1920" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-7" parent="sw_backend_2_3" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;rounded=0;" value="&lt;p dir=&quot;ltr&quot; style=&quot;font-size: 10px; text-align: left; line-height: 1.2; margin-top: 0pt; margin-bottom: 0pt;&quot;&gt;&lt;span style=&quot;font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;&quot;&gt;&lt;b&gt;Note to User for 11210: &lt;/b&gt;&lt;br&gt;Based on the unified API data format, which field will be used by CES and REP to record the remark &quot;Loading Bay&quot; and &quot;Handicap Lot&quot;? The current API mapping is listed below:&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p dir=&quot;ltr&quot; style=&quot;font-size: 10px; text-align: left; line-height: 1.2; margin-top: 0pt; margin-bottom: 0pt;&quot;&gt;&lt;span style=&quot;font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;&quot;&gt;&lt;b&gt;Current mapping of CES/REP Operator remarks (&lt;/b&gt;&lt;/span&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); white-space-collapse: preserve; font-family: Arial, sans-serif;&quot;&gt;AN Remark) &lt;/b&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); white-space-collapse: preserve; font-family: Arial, sans-serif; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline;&quot;&gt;&lt;b&gt;to &lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Offence Notice Details DB:&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;div style=&quot;font-size: 10px; text-align: left;&quot;&gt;Rule Remarks1 =&amp;nbsp;rule_remark_1&lt;/div&gt;" vertex="1">
+          <mxGeometry height="210" width="370" x="170" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-6" parent="sw_backend_2_3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" value="&lt;div&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;(a) If new Notice is eligible for ANS, OCMS will initiate the&lt;/span&gt;&lt;/i&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;i&gt;&amp;nbsp;Past Offences check.&amp;nbsp;&lt;br&gt;&lt;/i&gt;&lt;/span&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;(b) If new Notice is not eligible for ANS, OCMS will stop the AN Qualification process. The&amp;nbsp;&lt;/span&gt;&lt;/i&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Notice will continue along the standard Type O processing flow as per OCMS 11.&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="137" width="248" x="2362" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_2" edge="1" parent="1" source="s2_3_step1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_step2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_3" edge="1" parent="1" source="s2_3_step2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_dec1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_5" edge="1" parent="1" source="s2_3_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="s2_3_eligible1" value="no">
+          <mxGeometry relative="1" x="-0.6875" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="870" y="360" />
+              <mxPoint x="1110" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_6" edge="1" parent="1" source="s2_3_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_step3" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_11" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-4" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1570" y="220" as="sourcePoint" />
+            <mxPoint x="1570" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_13" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_eligible3" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1790" y="220" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_17" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-2" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1800" y="510" as="sourcePoint" />
+            <mxPoint x="1800" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_20" edge="1" parent="1" source="s2_3_eligible1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="s2_3_return">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1110" y="910" />
+              <mxPoint x="2360" y="910" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_22" edge="1" parent="1" source="s2_3_eligible3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_23" edge="1" parent="1" source="s2_3_not_eligible1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_24" edge="1" parent="1" source="s2_3_not_eligible2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_26" edge="1" parent="1" source="s2_3_eligible4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_3_27" edge="1" parent="1" source="s2_3_not_eligible4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1350" y="910" />
+              <mxPoint x="2360" y="910" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_3_28" edge="1" parent="1" source="s2_3_return" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab3_1_2" name="3.1.2_Past_Offences_Check">
+    <mxGraphModel dx="661" dy="387" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4500" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_2_4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.1.2: Past Offences Check Sub-Flow" vertex="1">
+          <mxGeometry height="30" width="500" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_backend_2_4" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
+          <mxGeometry height="710" width="2140" x="20" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_4_db_note1" parent="sw_backend_2_4" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;SELECT&lt;/b&gt;&amp;nbsp;&lt;div&gt;notice_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;notice_date_and_time,&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_type,&amp;nbsp;&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension&lt;br&gt;&lt;b&gt;FROM&lt;/b&gt; ocms_valid_offence_notice&lt;br&gt;&lt;b&gt;WHERE&lt;/b&gt; vehicle_no = newNotice.vehicle_no&lt;br&gt;&lt;b&gt;AND&lt;/b&gt; notice_date_and_time BETWEEN DATEADD(month, -24, GETDATE()) AND GETDATE()&lt;br&gt;&lt;b&gt;AND &lt;/b&gt;notice_no !=&lt;b&gt; &lt;/b&gt;newNotice.notice_no&lt;br&gt;&lt;br&gt;&lt;i&gt;*Exclude 2pm notice (current notice being processed)&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="190" width="300" x="230" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_4_3" edge="1" parent="sw_backend_2_4" source="8SQdl-62oQZGOxBzCZQo-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="s2_4_db_note1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="150" as="sourcePoint" />
+            <mxPoint x="399.9999999999998" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s2_4_db_note2" parent="sw_backend_2_4" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;SELECT&amp;nbsp;&lt;/b&gt;&lt;div&gt;code,&amp;nbsp;&lt;/div&gt;&lt;div&gt;description&lt;br&gt;&lt;b&gt;FROM &lt;/b&gt;ocms_standard_code&lt;br&gt;&lt;b&gt;WHERE &lt;/b&gt;reference_code = &#39;ANS_PS_Reason&#39;&lt;br&gt;&lt;b&gt;AND &lt;/b&gt;code_status = &#39;A&#39;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="105" width="260" x="720" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_4_db_link2" edge="1" parent="sw_backend_2_4" source="l_U5JAuK_zLwvUa46M3A-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="s2_4_db_note2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1210" y="470.0666666666666" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lhVswmQznyBrQr2eLLpE-1" parent="sw_backend_2_4" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="Start: Past Offences Check" vertex="1">
+          <mxGeometry height="70" width="160" x="80" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_4_1" edge="1" parent="sw_backend_2_4" source="lhVswmQznyBrQr2eLLpE-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="8SQdl-62oQZGOxBzCZQo-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="239.99999999999977" y="110" as="sourcePoint" />
+            <mxPoint x="300" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8SQdl-62oQZGOxBzCZQo-1" parent="sw_backend_2_4" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query ocms_valid_offence_notice for offences in last 24 months" vertex="1">
+          <mxGeometry height="80" width="160" x="300" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_4_2" edge="1" parent="sw_backend_2_4" source="8SQdl-62oQZGOxBzCZQo-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="qzJn3AqOZbcuRUCPxLDB-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qzJn3AqOZbcuRUCPxLDB-1" parent="sw_backend_2_4" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any record found?" vertex="1">
+          <mxGeometry height="100" width="120" x="536.25" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_4_4" edge="1" parent="sw_backend_2_4" source="qzJn3AqOZbcuRUCPxLDB-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="qzJn3AqOZbcuRUCPxLDB-2" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="860" y="280" as="sourcePoint" />
+            <mxPoint x="616.2499999999998" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qzJn3AqOZbcuRUCPxLDB-2" parent="sw_backend_2_4" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return: Notice QUALIFIES as AN (No other offences in 24 months)" vertex="1">
+          <mxGeometry height="80" width="160" x="516.25" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-4" edge="1" parent="sw_backend_2_4" source="l_U5JAuK_zLwvUa46M3A-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="l_U5JAuK_zLwvUa46M3A-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-1" parent="sw_backend_2_4" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query DB to get list of active ANS PS Reasons from" vertex="1">
+          <mxGeometry height="80" width="160" x="770" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_4_5" edge="1" parent="sw_backend_2_4" source="qzJn3AqOZbcuRUCPxLDB-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="l_U5JAuK_zLwvUa46M3A-1" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="880" y="110" as="sourcePoint" />
+            <mxPoint x="1060" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c2_4_12" edge="1" parent="sw_backend_2_4" source="qzJn3AqOZbcuRUCPxLDB-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="l_U5JAuK_zLwvUa46M3A-19">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="596" y="660" />
+              <mxPoint x="1860" y="660" />
+            </Array>
+            <mxPoint x="716.25" y="390.0588235294117" as="sourcePoint" />
+            <mxPoint x="2540" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-6" edge="1" parent="sw_backend_2_4" source="l_U5JAuK_zLwvUa46M3A-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="l_U5JAuK_zLwvUa46M3A-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-3" parent="sw_backend_2_4" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Batch check: For each past offence, check if it is suspended with one of the ANS PS Reasons" vertex="1">
+          <mxGeometry height="80" width="160" x="1030" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-5" parent="sw_backend_2_4" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;rounded=0;" value="&amp;nbsp;CAN&lt;div&gt;CFA&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;DBB&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;VST)&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="80" x="1070" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-10" edge="1" parent="sw_backend_2_4" source="l_U5JAuK_zLwvUa46M3A-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="l_U5JAuK_zLwvUa46M3A-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-11" connectable="0" parent="l_U5JAuK_zLwvUa46M3A-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="no" vertex="1">
+          <mxGeometry relative="1" x="-0.2653" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-14" edge="1" parent="sw_backend_2_4" source="l_U5JAuK_zLwvUa46M3A-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="l_U5JAuK_zLwvUa46M3A-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-15" connectable="0" parent="l_U5JAuK_zLwvUa46M3A-14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="yes" vertex="1">
+          <mxGeometry relative="1" x="-0.2727" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-7" parent="sw_backend_2_4" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="ALL past Notices suspended with ANS PS Reasons?" vertex="1">
+          <mxGeometry height="100" width="120" x="1290" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-8" edge="1" parent="sw_backend_2_4" source="l_U5JAuK_zLwvUa46M3A-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="l_U5JAuK_zLwvUa46M3A-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-9" parent="sw_backend_2_4" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice does NOT QUALIFY as AN" vertex="1">
+          <mxGeometry height="80" width="160" x="1270" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-12" parent="sw_backend_2_4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&amp;nbsp;(Has past offence NOT suspended with ANS PS Reasons)" vertex="1">
+          <mxGeometry height="60" width="150" x="1275" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-20" edge="1" parent="sw_backend_2_4" source="l_U5JAuK_zLwvUa46M3A-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="l_U5JAuK_zLwvUa46M3A-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-13" parent="sw_backend_2_4" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice QUALIFIES as AN&amp;nbsp;" vertex="1">
+          <mxGeometry height="80" width="160" x="1530" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-18" parent="sw_backend_2_4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="(All past offences suspended with ANS PS Reasons)" vertex="1">
+          <mxGeometry height="60" width="150" x="1535" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="l_U5JAuK_zLwvUa46M3A-19" parent="sw_backend_2_4" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return result to main AN Qualification Process Flow" vertex="1">
+          <mxGeometry height="80" width="160" x="1780" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="s2_4_end" parent="sw_backend_2_4" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="120" x="1990" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_4_15" edge="1" parent="sw_backend_2_4" source="l_U5JAuK_zLwvUa46M3A-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="s2_4_end">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2080" y="110" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="s2_4_ans_note" parent="sw_backend_2_4" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;ANS PS Reasons (Suspension reasons that still allow AN qualification):&lt;/b&gt;&lt;br&gt;- CAN = Cancelled&lt;br&gt;- CFA = Court Fine Adjusted&lt;br&gt;- DBB = Double Booking&lt;br&gt;- VST = Vehicle Stolen&lt;br&gt;&lt;br&gt;&lt;b&gt;Logic:&lt;/b&gt; If ALL past offences in last 24 months are suspended with one of these reasons, the new notice still QUALIFIES as AN.&lt;br&gt;If ANY past offence is NOT suspended OR suspended with different reason → NOT qualified." vertex="1">
+          <mxGeometry height="180" width="500" x="1040" y="440" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab3_2" name="3.1.2_Receive_AN_REPCCS">
+    <mxGraphModel dx="826" dy="484" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -514,7 +879,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_3" name="3.3_Receive_AN_CES">
-    <mxGraphModel dx="1033" dy="605" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8500" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="918" dy="538" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8500" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -533,7 +898,7 @@
         <mxCell id="s3_4_ext_recv_error" parent="sw_external_3_4" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Receive Error Response" vertex="1">
           <mxGeometry height="80" width="160" x="4900" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_3_4" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Backend (OCMS API)" vertex="1">
+        <mxCell id="sw_backend_3_4" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
           <mxGeometry height="900" width="5080" x="20" y="380" as="geometry" />
         </mxCell>
         <mxCell id="s3_4_start" parent="sw_backend_3_4" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
@@ -804,7 +1169,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_4" name="3.4_Retrieve_Owner_Particulars">
-    <mxGraphModel dx="5507" dy="3227" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="1180" dy="691" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -880,28 +1245,10 @@
         <mxCell id="c3_5_16" edge="1" parent="sw_backend_3_5" source="s3_5_step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_5_check_exclusion">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_api_lta" parent="sw_backend_3_5" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="LTA API:&lt;br&gt;&lt;br&gt;GET LTA_API/vehicle/owner?vehicleNo=[vehicle_number]&lt;br&gt;Headers:&lt;br&gt;&amp;nbsp;&amp;nbsp;API-Key: [from Azure Key Vault]&lt;br&gt;&lt;br&gt;&lt;b&gt;Success Response (200):&lt;/b&gt;&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;ownerName&quot;: &quot;TAN AH KOW&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;ownerNRIC&quot;: &quot;S1234567A&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;vehicleMake&quot;: &quot;TOYOTA&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;vehicleModel&quot;: &quot;CAMRY&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;roadTaxExpiry&quot;: &quot;2026-12-31&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;diplomaticFlag&quot;: false&lt;br&gt;}&lt;br&gt;&lt;br&gt;&lt;b&gt;Error Response (4xx/5xx):&lt;/b&gt;&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;errorCode&quot;: &quot;LTA-404&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;message&quot;: &quot;Vehicle not found&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;Timeout: 30 seconds&lt;br&gt;Retry: 3 attempts (backoff: 100ms, 200ms, 400ms)&lt;br&gt;On failure: Send email alert to admin, add to manual queue" vertex="1">
-          <mxGeometry height="370" width="360" x="540" y="350" as="geometry" />
-        </mxCell>
-        <mxCell id="c3_5_5" edge="1" parent="sw_backend_3_5" source="s3_5_step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_5_api_lta">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="s3_5_check_suspension" parent="sw_backend_3_5" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT&amp;nbsp;&lt;div&gt;sn.suspension_type&amp;nbsp;&lt;/div&gt;&lt;div&gt;FROM ocms_suspended_notice AS sn&lt;br&gt;WHERE sn.notice_no = &#39;500400058A&#39;&lt;br&gt;AND sn.suspension_type IS NOT NULL&lt;/div&gt;" vertex="1">
           <mxGeometry height="90" width="220" x="1280" y="170" as="geometry" />
         </mxCell>
         <mxCell id="c3_5_12" edge="1" parent="sw_backend_3_5" source="s3_5_step5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_5_check_suspension">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="s3_5_api_datahive" parent="sw_backend_3_5" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="DataHive API:&lt;br&gt;&lt;br&gt;GET DATAHIVE_API/contact?nric=[owner_nric]&lt;br&gt;Headers:&lt;br&gt;&amp;nbsp;&amp;nbsp;API-Key: [from Azure Key Vault]&lt;br&gt;&lt;br&gt;Response:&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;mobileNumber&quot;: &quot;string&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;emailAddress&quot;: &quot;string&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;Timeout: 30 seconds&lt;br&gt;Retry: 3 attempts (backoff: 100ms, 200ms, 400ms)&lt;br&gt;On failure: Send email alert to admin, add to manual queue" vertex="1">
-          <mxGeometry height="230" width="330" x="2095" y="170" as="geometry" />
-        </mxCell>
-        <mxCell id="c3_5_20" edge="1" parent="sw_backend_3_5" source="s3_5_step7_datahive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_5_api_datahive">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="s3_5_api_mha" parent="sw_backend_3_5" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="MHA API:&lt;br&gt;&lt;br&gt;GET MHA_API/address?nric=S1234567A&lt;br&gt;Headers:&lt;br&gt;&amp;nbsp;&amp;nbsp;API-Key: [from Azure Key Vault]&lt;br&gt;&lt;br&gt;Response:&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;buildingName&quot;: &quot;string&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;streetName&quot;: &quot;string&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;postalCode&quot;: &quot;string&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;unitNumber&quot;: &quot;string&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;Timeout: 30 seconds&lt;br&gt;Retry: 3 attempts (backoff: 100ms, 200ms, 400ms)&lt;br&gt;On failure: Send email alert to admin, add to manual queue" vertex="1">
-          <mxGeometry height="260" width="330" x="2615" y="180" as="geometry" />
-        </mxCell>
-        <mxCell id="c3_5_25" edge="1" parent="sw_backend_3_5" source="s3_5_step9_mha" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_5_api_mha">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="s3_5_store_owner" parent="sw_backend_3_5" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;INSERT ocms_offence_notice_owner_driver:&lt;/b&gt;&lt;br&gt;notice_no =&#39;500400058A&#39;&lt;br&gt;owner_driver_indicator = &#39;O&#39;&lt;br&gt;owner_id_type = [idType]&lt;br&gt;owner_nric_no = [ownerNric]&lt;br&gt;owner_name = [ownerName]&lt;br&gt;owner_blk_hse_no = [blkHseNo]&lt;br&gt;owner_street = [street]&lt;br&gt;owner_floor = [floor]&lt;br&gt;owner_unit = [unit]&lt;br&gt;owner_bldg = [bldg]&lt;br&gt;owner_postal_code = [postalCode]&lt;br&gt;cre_date = CURRENT_TIMESTAMP&lt;br&gt;cre_user_id = &#39;ocmsiz_app_conn&#39;" vertex="1">
@@ -1031,15 +1378,15 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_5" name="3.5_Send_eNotification">
-    <mxGraphModel dx="2753" dy="1613" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="1271" dy="745" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="title_tab3_6" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.5: Send eNotification (eAN)" vertex="1">
           <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_3_6" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Backend (OCMS API)" vertex="1">
-          <mxGeometry height="680" width="3770" x="20" y="80" as="geometry" />
+        <mxCell id="sw_backend_3_6" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadmincron" vertex="1">
+          <mxGeometry height="680" width="3230" x="20" y="80" as="geometry" />
         </mxCell>
         <mxCell id="s3_6_start" parent="sw_backend_3_6" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
           <mxGeometry height="60" width="120" x="40" y="60" as="geometry" />
@@ -1050,16 +1397,19 @@
         <mxCell id="s3_6_step2" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Owner Contact" vertex="1">
           <mxGeometry height="80" width="160" x="440" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_step3" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate eAN Content" vertex="1">
-          <mxGeometry height="80" width="160" x="660" y="50" as="geometry" />
+        <mxCell id="niG7I_aoAa51jqfzBVQZ-1" edge="1" parent="sw_backend_3_6" source="s3_6_step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="s3_6_sms_template">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_6_step3" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve eAN Template from ocms_template_store" vertex="1">
+          <mxGeometry height="80" width="180" x="660" y="50" as="geometry" />
         </mxCell>
         <mxCell id="s3_6_dec1" parent="sw_backend_3_6" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Mobile Available?" vertex="1">
           <mxGeometry height="100" width="140" x="880" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_step4" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send SMS: Call SMS Gateway API to send eAN SMS" vertex="1">
+        <mxCell id="s3_6_step4" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send SMS eNotification" vertex="1">
           <mxGeometry height="80" width="160" x="1080" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_step5" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log SMS Sent: Log SMS status, timestamp, recipient" vertex="1">
+        <mxCell id="s3_6_step5" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log SMS Sent" vertex="1">
           <mxGeometry height="80" width="160" x="1300" y="50" as="geometry" />
         </mxCell>
         <mxCell id="s3_6_dec2" parent="sw_backend_3_6" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="SMS Success?" vertex="1">
@@ -1068,49 +1418,34 @@
         <mxCell id="s3_6_dec3" parent="sw_backend_3_6" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Email Available?" vertex="1">
           <mxGeometry height="100" width="140" x="1740" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_step7" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send Email: Call Email Service API to send eAN email" vertex="1">
+        <mxCell id="s3_6_step7" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send Email eNotification" vertex="1">
           <mxGeometry height="80" width="160" x="1940" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_step8" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log Email Sent: Log email status, timestamp, recipient" vertex="1">
+        <mxCell id="s3_6_step8" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log Email Sent" vertex="1">
           <mxGeometry height="80" width="160" x="2160" y="50" as="geometry" />
         </mxCell>
         <mxCell id="s3_6_dec4" parent="sw_backend_3_6" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Email Success?" vertex="1">
           <mxGeometry height="100" width="140" x="2380" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_step10" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Update eAN Status: Set eAN_sent_flag=&#39;Y&#39;, sent timestamp, notification method" vertex="1">
+        <mxCell id="s3_6_step10" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Update eAN Status" vertex="1">
           <mxGeometry height="80" width="180" x="2600" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_step11" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log Notification Complete: Log eAN notification completion" vertex="1">
+        <mxCell id="s3_6_step11" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log Notification Complete" vertex="1">
           <mxGeometry height="80" width="160" x="2840" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_fallback" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Fallback to Letter: If all retries fail, send email alert to admin, then proceed to AN letter sending (Tab 3.6)" vertex="1">
+        <mxCell id="s3_6_fallback" parent="sw_backend_3_6" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Fallback to Letter: If all retries fail, send email alert to admin, then proceed to AN letter sending" vertex="1">
           <mxGeometry height="80" width="180" x="2720" y="210" as="geometry" />
         </mxCell>
         <mxCell id="s3_6_end" parent="sw_backend_3_6" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
           <mxGeometry height="60" width="120" x="3080" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_sms_template" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SMS Template:&lt;br&gt;&lt;br&gt;Advisory Notice [NoticeNo]&lt;br&gt;Offence: [OffenceDescription]&lt;br&gt;Location: [PPName]&lt;br&gt;Date: [NoticeDate]&lt;br&gt;Amount: $[CompositionAmount]&lt;br&gt;Payment not accepted. You may appeal via OCMS portal." vertex="1">
-          <mxGeometry height="140" width="320" x="510" y="200" as="geometry" />
+        <mxCell id="s3_6_sms_template" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;SELECT&amp;nbsp;&lt;/b&gt;&lt;div&gt;template_name,&amp;nbsp;&lt;/div&gt;&lt;div&gt;template_type&lt;br&gt;&lt;b&gt;FROM &lt;/b&gt;ocms_template_store&lt;br&gt;&lt;b&gt;WHERE &lt;/b&gt;template_name = &#39;AN_SMS_TEMPLATE&#39;&lt;br&gt;OR template_name = &#39;AN_EMAIL_TEMPLATE&#39;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="280" x="610" y="190" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_email_template" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="Email Template:&lt;br&gt;&lt;br&gt;Subject: Advisory Notice [NoticeNo] - [VehicleNo]&lt;br&gt;&lt;br&gt;Dear Vehicle Owner,&lt;br&gt;&lt;br&gt;This is an Advisory Notice for the following offence:&lt;br&gt;&lt;br&gt;Notice Number: [NoticeNo]&lt;br&gt;Vehicle Number: [VehicleNo]&lt;br&gt;Offence: [OffenceDescription]&lt;br&gt;Location: [PPName]&lt;br&gt;Date: [NoticeDate]&lt;br&gt;Composition Amount: $[CompositionAmount]&lt;br&gt;&lt;br&gt;This is an advisory notice only. Payment is not accepted at this time.&lt;br&gt;&lt;br&gt;You may appeal this notice via the OCMS portal at [PortalURL].&lt;br&gt;&lt;br&gt;Regards,&lt;br&gt;Urban Redevelopment Authority" vertex="1">
-          <mxGeometry height="360" width="480" x="3240" y="60" as="geometry" />
-        </mxCell>
-        <mxCell id="s3_6_retrieve_notice" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SELECT&amp;nbsp;&lt;div&gt;von.notice_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.vehicle_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.pp_name,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.notice_date_and_time,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.composition_amount,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.computer_rule_code&lt;br&gt;FROM ocms_valid_offence_notice AS von&lt;br&gt;WHERE von.notice_no =&#39;500400058A&#39;&lt;br&gt;AND von.an_flag = &#39;Y&#39;&lt;/div&gt;" vertex="1">
+        <mxCell id="s3_6_retrieve_notice" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;SELECT&amp;nbsp;&lt;/b&gt;&lt;div&gt;von.notice_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.vehicle_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.pp_name,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.notice_date_and_time,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.composition_amount,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.computer_rule_code&lt;br&gt;&lt;b&gt;FROM &lt;/b&gt;ocms_valid_offence_notice AS von&lt;br&gt;&lt;b&gt;WHERE &lt;/b&gt;von.notice_no =&#39;500400058A&#39;&lt;br&gt;&lt;b&gt;AND &lt;/b&gt;von.an_flag = &#39;Y&#39;&lt;/div&gt;" vertex="1">
           <mxGeometry height="160" width="230" x="185" y="200" as="geometry" />
         </mxCell>
         <mxCell id="c3_6_2" edge="1" parent="sw_backend_3_6" source="s3_6_step1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_6_retrieve_notice">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="s3_6_api_email" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="Email Service API:&lt;br&gt;&lt;br&gt;POST EMAIL_SERVICE_API/send&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;emailAddress&quot;: &quot;[owner_email]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;subject&quot;: &quot;[eAN email subject]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;body&quot;: &quot;[eAN email content]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;sender&quot;: &quot;noreply@ura.gov.sg&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;Response:&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;status&quot;: &quot;success/failed&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;messageId&quot;: &quot;string&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;timestamp&quot;: &quot;datetime&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;Timeout: 10 seconds&lt;br&gt;Retry: 3 attempts" vertex="1">
-          <mxGeometry height="280" width="340" x="1720" y="355" as="geometry" />
-        </mxCell>
-        <mxCell id="c3_6_17" edge="1" parent="sw_backend_3_6" source="s3_6_step7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="s3_6_api_email">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="s3_6_api_sms" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SMS Gateway API:&lt;br&gt;&lt;br&gt;POST SMS_GATEWAY_API/send&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;mobileNumber&quot;: &quot;[owner_mobile]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;message&quot;: &quot;[eAN SMS content]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;sender&quot;: &quot;URA_OCMS&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;Response:&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;status&quot;: &quot;success/failed&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;messageId&quot;: &quot;string&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;timestamp&quot;: &quot;datetime&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;Timeout: 10 seconds&lt;br&gt;Retry: 3 attempts" vertex="1">
-          <mxGeometry height="280" width="340" x="850" y="280" as="geometry" />
-        </mxCell>
-        <mxCell id="c3_6_8" edge="1" parent="sw_backend_3_6" source="s3_6_step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="s3_6_api_sms">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="s3_6_log_complete" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br&gt;last_processing_stage = &#39;ENA&#39;,&lt;br&gt;next_processing_stage = NULL,&lt;br&gt;next_processing_date = NULL,&lt;br&gt;upd_date = CURRENT_TIMESTAMP,&lt;br&gt;upd_user_id = &#39;ocmsiz_app_conn&#39;&lt;br&gt;WHERE notice_no = [noticeNo]" vertex="1">
@@ -1124,13 +1459,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="s3_6_update_status" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="INSERT INTO ocms_suspended_notice&lt;br&gt;notice_no,&amp;nbsp;&lt;div&gt;date_of_suspension,&amp;nbsp;&lt;/div&gt;&lt;div&gt;sr_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_type,&amp;nbsp;&lt;/div&gt;&lt;div&gt;reason_of_suspension,&lt;br&gt;suspension_source,&amp;nbsp;&lt;/div&gt;&lt;div&gt;cre_date,&amp;nbsp;&lt;/div&gt;&lt;div&gt;cre_user_id)&lt;br&gt;&lt;br&gt;-- Suspend Notice with PS-ANS after successful eAN sending&lt;/div&gt;" vertex="1">
+        <mxCell id="s3_6_update_status" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="INSERT INTO ocms_suspended_notice&lt;br&gt;notice_no,&amp;nbsp;&lt;div&gt;date_of_suspension,&amp;nbsp;&lt;/div&gt;&lt;div&gt;sr_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_type,&amp;nbsp;&lt;/div&gt;&lt;div&gt;reason_of_suspension,&lt;br&gt;suspension_source,&amp;nbsp;&lt;/div&gt;&lt;div&gt;cre_date,&amp;nbsp;&lt;/div&gt;&lt;div&gt;cre_user_id&lt;br&gt;&lt;br&gt;-- Suspend Notice with PS-ANS after successful eAN sending&lt;/div&gt;" vertex="1">
           <mxGeometry height="170" width="340" x="2520" y="410" as="geometry" />
         </mxCell>
         <mxCell id="c3_6_24" edge="1" parent="sw_backend_3_6" source="s3_6_step10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_6_update_status">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="s3_6_log_email" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="INSERT INTO ocms_email_notification_records&lt;br&gt;notice_no,&amp;nbsp;&lt;div&gt;processing_stage,&amp;nbsp;&lt;/div&gt;&lt;div&gt;content,&amp;nbsp;&lt;/div&gt;&lt;div&gt;date_sent,&amp;nbsp;&lt;/div&gt;&lt;div&gt;email_addr,&amp;nbsp;&lt;/div&gt;&lt;div&gt;status,&amp;nbsp;&lt;/div&gt;&lt;div&gt;subject,&amp;nbsp;&lt;/div&gt;&lt;div&gt;cre_date,&amp;nbsp;&lt;/div&gt;&lt;div&gt;cre_user_id)&lt;br&gt;&lt;/div&gt;" vertex="1">
+        <mxCell id="s3_6_log_email" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="INSERT INTO ocms_email_notification_records&lt;br&gt;notice_no,&amp;nbsp;&lt;div&gt;processing_stage,&amp;nbsp;&lt;/div&gt;&lt;div&gt;content,&amp;nbsp;&lt;/div&gt;&lt;div&gt;date_sent,&amp;nbsp;&lt;/div&gt;&lt;div&gt;email_addr,&amp;nbsp;&lt;/div&gt;&lt;div&gt;status,&amp;nbsp;&lt;/div&gt;&lt;div&gt;subject,&amp;nbsp;&lt;/div&gt;&lt;div&gt;cre_date,&amp;nbsp;&lt;/div&gt;&lt;div&gt;cre_user_id&lt;br&gt;&lt;/div&gt;" vertex="1">
           <mxGeometry height="160" width="280" x="2100" y="390" as="geometry" />
         </mxCell>
         <mxCell id="c3_6_19" edge="1" parent="sw_backend_3_6" source="s3_6_step8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_6_log_email">
@@ -1171,6 +1506,9 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="C0sBJyTcHX1AiGMirGM0-1" parent="sw_backend_3_6" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Refer to Section 6" vertex="1">
+          <mxGeometry height="30" width="110" x="2755" y="180" as="geometry" />
+        </mxCell>
         <mxCell id="c3_6_1" edge="1" parent="1" source="s3_6_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_6_step1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -1187,10 +1525,11 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="c3_6_7" edge="1" parent="1" source="s3_6_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;jumpStyle=arc;" target="s3_6_dec3" value="no">
-          <mxGeometry relative="1" as="geometry">
+          <mxGeometry relative="1" x="-0.9412" as="geometry">
+            <mxPoint as="offset" />
             <Array as="points">
-              <mxPoint x="970" y="240" />
-              <mxPoint x="1830" y="240" />
+              <mxPoint x="970" y="470" />
+              <mxPoint x="1830" y="470" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -1277,14 +1616,14 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_6" name="3.6_Send_AN_Letter">
-    <mxGraphModel dx="2360" dy="1383" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="459" dy="269" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="title_tab3_7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.6: Send AN Letter (SLIFT)" vertex="1">
           <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_3_7" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Backend (OCMS API)" vertex="1">
+        <mxCell id="sw_backend_3_7" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadmincron" vertex="1">
           <mxGeometry height="770" width="2920" x="20" y="80" as="geometry" />
         </mxCell>
         <mxCell id="s3_7_start" parent="sw_backend_3_7" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
@@ -1293,22 +1632,25 @@
         <mxCell id="s3_7_step1" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Notice Details" vertex="1">
           <mxGeometry height="80" width="160" x="220" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_7_step2" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Owner Address: From MHA API response (building name, street, postal code, unit)" vertex="1">
+        <mxCell id="s3_7_step2" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Owner Address: From MHA API response" vertex="1">
           <mxGeometry height="80" width="180" x="440" y="50" as="geometry" />
         </mxCell>
         <mxCell id="s3_7_step3" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Owner Name: From LTA API response" vertex="1">
           <mxGeometry height="80" width="160" x="680" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_7_step4" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate Letter Template: Create PDF/XML with notice details, owner address, letter content" vertex="1">
+        <mxCell id="r2hEyLI3Sh9goh0CY92B-1" edge="1" parent="sw_backend_3_7" source="s3_7_step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="s3_7_letter_template">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s3_7_step4" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve AN Letter Template" vertex="1">
           <mxGeometry height="80" width="180" x="900" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_7_step5" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Populate Letter Fields: Fill template with notice number, vehicle number, offence details, owner name/address" vertex="1">
+        <mxCell id="s3_7_step5" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Populate Letter Fields" vertex="1">
           <mxGeometry height="80" width="200" x="1140" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_7_step6" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Format Letter Content: Format per SLIFT)" vertex="1">
+        <mxCell id="s3_7_step6" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Format Letter Content" vertex="1">
           <mxGeometry height="80" width="160" x="1400" y="50" as="geometry" />
         </mxCell>
-        <mxCell id="s3_7_dec1" parent="sw_backend_3_7" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Valid Letter? (PDF/XML generated successfully)" vertex="1">
+        <mxCell id="s3_7_dec1" parent="sw_backend_3_7" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Valid Letter?" vertex="1">
           <mxGeometry height="100" width="140" x="1620" y="40" as="geometry" />
         </mxCell>
         <mxCell id="s3_7_step7" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Call SLIFT API to submit letter for printing and mailing" vertex="1">
@@ -1317,7 +1659,7 @@
         <mxCell id="s3_7_dec2" parent="sw_backend_3_7" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="SLIFT Success?" vertex="1">
           <mxGeometry height="100" width="140" x="2060" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="s3_7_step8" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Create AN Letter Record: Insert record into ocms_an_letter table" vertex="1">
+        <mxCell id="s3_7_step8" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Create AN Letter Record" vertex="1">
           <mxGeometry height="80" width="180" x="2260" y="50" as="geometry" />
         </mxCell>
         <mxCell id="s3_7_step9" parent="sw_backend_3_7" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Proceed to Suspension: Trigger PS-ANS suspension flow" vertex="1">
@@ -1371,8 +1713,17 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="s3_7_letter_template" parent="sw_backend_3_7" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="AN Letter Content Template:&lt;br&gt;&lt;br&gt;Urban Redevelopment Authority&lt;br&gt;Car Parks Department&lt;br&gt;&lt;br&gt;[Owner Name]&lt;br&gt;[Building Name]&lt;br&gt;[Street Name]&lt;br&gt;[Unit Number]&lt;br&gt;[Postal Code]&lt;br&gt;&lt;br&gt;Date: [Current Date]&lt;br&gt;&lt;br&gt;Advisory Notice Number: [NoticeNo]&lt;br&gt;&lt;br&gt;Dear Sir/Madam,&lt;br&gt;&lt;br&gt;RE: ADVISORY NOTICE - VEHICLE [VehicleNo]&lt;br&gt;&lt;br&gt;This is an Advisory Notice for the following parking offence:&lt;br&gt;&lt;br&gt;Offence Details:&lt;br&gt;- Notice Number: [NoticeNo]&lt;br&gt;- Vehicle Number: [VehicleNo]&lt;br&gt;- Offence: [OffenceDescription]&lt;br&gt;- Location: [PPName]&lt;br&gt;- Date and Time: [NoticeDateAndTime]&lt;br&gt;- Composition Amount: $[CompositionAmount]&lt;br&gt;&lt;br&gt;This is an advisory notice only. Payment is not accepted for this notice.&lt;br&gt;&lt;br&gt;You have the right to appeal this notice. Please visit the OCMS portal&lt;br&gt;at [PortalURL] to submit your appeal.&lt;br&gt;&lt;br&gt;If you have any questions, please contact us at [ContactNumber].&lt;br&gt;&lt;br&gt;Yours faithfully,&lt;br&gt;Urban Redevelopment Authority" vertex="1">
-          <mxGeometry height="560" width="480" x="850" y="160" as="geometry" />
+        <mxCell id="s3_7_letter_template" parent="sw_backend_3_7" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SELECT&amp;nbsp;&lt;div&gt;template_name,&amp;nbsp;&lt;/div&gt;&lt;div&gt;template_type&lt;br&gt;FROM ocms_template_store&lt;br&gt;WHERE template_name = &#39;AN_LETTER_TEMPLATE&#39;&lt;br&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="300" x="840" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c3_7_20" edge="1" parent="sw_backend_3_7" source="3r0IqP37o0qrPyXTNc9M-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="s3_7_manual" value="yes">
+          <mxGeometry relative="1" x="-0.907" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="2130" y="400" />
+            </Array>
+            <mxPoint x="2129.947368421053" y="320" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="c3_7_1" edge="1" parent="1" source="s3_7_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_7_step1">
           <mxGeometry relative="1" as="geometry" />
@@ -1401,9 +1752,6 @@
         <mxCell id="c3_7_10" edge="1" parent="1" source="s3_7_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_7_error_log" value="no">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_7_11" edge="1" parent="1" source="s3_7_step7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" target="s3_7_api_slift">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="c3_7_12" edge="1" parent="1" source="s3_7_step7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_7_dec2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -1416,16 +1764,6 @@
         <mxCell id="c3_7_18" edge="1" parent="1" source="s3_7_step9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_7_end">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_7_20" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_7_manual" value="yes">
-          <mxGeometry relative="1" x="-0.907" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="2150" y="480" />
-              <mxPoint x="1720" y="480" />
-            </Array>
-            <mxPoint x="2149.947368421053" y="400" as="sourcePoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="c3_7_21" edge="1" parent="1" source="s3_7_error_log" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_7_manual">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -1437,22 +1775,19 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="s3_7_api_slift" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SLIFT API:&lt;br&gt;&lt;br&gt;POST SLIFT_API/submit&lt;br&gt;Headers:&lt;br&gt;&amp;nbsp;&amp;nbsp;API-Key: [from Azure Key Vault]&lt;br&gt;&lt;br&gt;Body (multipart/form-data):&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;noticeNumber&quot;: &quot;[notice_no]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;vehicleNumber&quot;: &quot;[vehicle_no]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;letterFile&quot;: &quot;[PDF/XML file]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;letterType&quot;: &quot;ADVISORY_NOTICE&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;recipientName&quot;: &quot;[owner_name]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;recipientAddress&quot;: &quot;[full_address]&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;priority&quot;: &quot;NORMAL&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;Response:&lt;br&gt;{&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;status&quot;: &quot;success/failed&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;submissionId&quot;: &quot;string&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;timestamp&quot;: &quot;datetime&quot;,&lt;br&gt;&amp;nbsp;&amp;nbsp;&quot;estimatedPrintDate&quot;: &quot;date&quot;&lt;br&gt;}&lt;br&gt;&lt;br&gt;Timeout: 30 seconds&lt;br&gt;Retry: 3 attempts with exponential backoff (1s, 2s, 4s)&lt;br&gt;File Format: PDF (preferred) or XML" vertex="1">
-          <mxGeometry height="420" width="420" x="1674" y="880" as="geometry" />
-        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_7" name="3.7_Suspend_PS_ANS">
-    <mxGraphModel dx="2065" dy="1210" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="1500" math="0" shadow="0">
+    <mxGraphModel dx="1377" dy="807" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="1500" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="title_3_8" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.7: Suspend Notice with PS-ANS" vertex="1">
           <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_3_8" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Backend (OCMS API)" vertex="1">
-          <mxGeometry height="720" width="2180" x="20" y="60" as="geometry" />
+        <mxCell id="sw_backend_3_8" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
+          <mxGeometry height="480" width="2180" x="20" y="60" as="geometry" />
         </mxCell>
         <mxCell id="s3_8_start" parent="sw_backend_3_8" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
           <mxGeometry height="60" width="120" x="40" y="80" as="geometry" />
@@ -1490,8 +1825,8 @@
         <mxCell id="c3_8_6" edge="1" parent="sw_backend_3_8" source="s3_8_step5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_8_insert_susp">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_sync_internet" parent="sw_backend_3_8" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="INSERT/UPDATE eocms_valid_offence_notice:&lt;br&gt;&lt;br&gt;Mirror same suspension fields from intranet table:&lt;br&gt;- suspension_type&lt;br&gt;- epr_reason_of_suspension&lt;br&gt;- epr_date_of_suspension&lt;br&gt;- due_date_of_revival&lt;br&gt;&lt;br&gt;&lt;b&gt;Error Handling:&lt;/b&gt;&lt;br&gt;If sync fails:&lt;br&gt;1. Retry 3 times with exponential backoff&lt;br&gt;2. Log error with notice_no, timestamp, error message&lt;br&gt;3. Add to pending sync queue for manual retry&lt;br&gt;4. Send email alert to admin&lt;br&gt;5. Intranet record remains valid (committed)&lt;br&gt;&lt;br&gt;Note: Sync is eventual consistency - intranet is source of truth" vertex="1">
-          <mxGeometry height="260" width="350" x="1580" y="220" as="geometry" />
+        <mxCell id="s3_8_sync_internet" parent="sw_backend_3_8" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="UPDATE eocms_valid_offence_notice:&lt;br&gt;&lt;br&gt;Mirror same suspension fields from intranet table:&lt;br&gt;- suspension_type&lt;br&gt;- epr_reason_of_suspension&lt;br&gt;- epr_date_of_suspension&lt;br&gt;- due_date_of_revival&lt;br&gt;&lt;br&gt;&lt;br&gt;Note: Sync is eventual consistency - intranet is source of truth" vertex="1">
+          <mxGeometry height="160" width="350" x="1580" y="220" as="geometry" />
         </mxCell>
         <mxCell id="c3_8_10" edge="1" parent="sw_backend_3_8" source="s3_8_step7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_8_sync_internet">
           <mxGeometry relative="1" as="geometry" />
@@ -1533,14 +1868,14 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_8" name="3.8_Generate_ANS_Reports">
-    <mxGraphModel dx="4130" dy="2420" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="718" dy="421" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="title_tab3_9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.8: Generate ANS Reports" vertex="1">
           <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="sw_frontend_3_9" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Frontend (Staff Portal)" vertex="1">
+        <mxCell id="sw_frontend_3_9" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Staff Portal" vertex="1">
           <mxGeometry height="280" width="3420" x="20" y="80" as="geometry" />
         </mxCell>
         <mxCell id="s3_9_start" parent="sw_frontend_3_9" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
@@ -1555,7 +1890,7 @@
         <mxCell id="s3_9_display_nodata" parent="sw_frontend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display No Data Message&#xa;&#39;No records found for the selected criteria&#39;" vertex="1">
           <mxGeometry height="100" width="180" x="3150" y="140" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_3_9" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Backend (OCMS API)" vertex="1">
+        <mxCell id="sw_backend_3_9" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
           <mxGeometry height="800" width="3420" x="20" y="385" as="geometry" />
         </mxCell>
         <mxCell id="9VMB-lNLdUTSCDfsktMN-2" edge="1" parent="sw_backend_3_9" source="s3_9_validate_params" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="9VMB-lNLdUTSCDfsktMN-1">
@@ -1621,8 +1956,8 @@
         <mxCell id="s3_9_return_report" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return Report File&#xa;for Download" vertex="1">
           <mxGeometry height="100" width="160" x="2805" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_output_box" parent="sw_backend_3_9" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="Report Output Format:&lt;br&gt;&lt;br&gt;Excel Columns:&lt;br&gt;1. Notice Number&lt;br&gt;2. Vehicle Number&lt;br&gt;3. Subsystem&lt;br&gt;4. Suspension Date&lt;br&gt;5. Revival Date&lt;br&gt;6. Offence Code&lt;br&gt;7. Composition Amount&lt;br&gt;8. Notice Date&lt;br&gt;9. Parking Place&lt;br&gt;10. Suspension Remarks&lt;br&gt;&lt;br&gt;PDF Structure:&lt;br&gt;Advisory Notice Suspension Report&lt;br&gt;Generated: [Current Date Time]&lt;br&gt;Date Range: [Date From] to [Date To]&lt;br&gt;&lt;br&gt;Total Records: [Count]" vertex="1">
-          <mxGeometry height="305" width="210" x="2780" y="225" as="geometry" />
+        <mxCell id="s3_9_output_box" parent="sw_backend_3_9" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="Report Output Format:&lt;br&gt;&lt;br&gt;Notice Number&lt;br&gt;Vehicle Number&lt;br&gt;Subsystem&lt;br&gt;Suspension Date&lt;br&gt;Revival Date&lt;br&gt;Offence Code&lt;br&gt;Composition Amount&lt;br&gt;Notice Date&lt;br&gt;Parking Place&lt;br&gt;Suspension Remarks" vertex="1">
+          <mxGeometry height="215" width="160" x="2805" y="225" as="geometry" />
         </mxCell>
         <mxCell id="c3_9_17" edge="1" parent="sw_backend_3_9" source="s3_9_return_report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_9_output_box">
           <mxGeometry relative="1" as="geometry" />
@@ -1685,14 +2020,14 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_9" name="3.9_Send_Unqualified_List">
-    <mxGraphModel dx="1652" dy="968" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="6000" pageHeight="1800" math="0" shadow="0">
+    <mxGraphModel dx="5507" dy="3227" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="6000" pageHeight="1800" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="title_tab3_10" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.9: Send Unqualified AN List (REPCCS/CES)" vertex="1">
           <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
         </mxCell>
-        <mxCell id="lane_backend_310" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Backend (Cron)" vertex="1">
+        <mxCell id="lane_backend_310" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadmincron" vertex="1">
           <mxGeometry height="890" width="4670" x="20" y="80" as="geometry" />
         </mxCell>
         <mxCell id="x6ROZ4C58ZNDYvBh47Pb-1" parent="lane_backend_310" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="&lt;span style=&quot;font-size: 13px;&quot;&gt;Calculate Date Range&lt;/span&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;(Previous Day)&lt;/span&gt;" vertex="1">
@@ -1704,7 +2039,7 @@
             <mxPoint x="630.0000000000002" y="110" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="x6ROZ4C58ZNDYvBh47Pb-3" parent="lane_backend_310" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="&lt;span style=&quot;font-size: 13px;&quot;&gt;Filter by Subsystem&lt;/span&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;(REPCCS vs CES)&lt;/span&gt;" vertex="1">
+        <mxCell id="x6ROZ4C58ZNDYvBh47Pb-3" parent="lane_backend_310" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="&lt;span style=&quot;font-size: 13px;&quot;&gt;Filter by Subsystem&lt;/span&gt;" vertex="1">
           <mxGeometry height="100" width="180" x="620" y="60" as="geometry" />
         </mxCell>
         <mxCell id="PEkpuAo8z3JMSkmCLv0X-3" parent="lane_backend_310" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="&lt;span style=&quot;font-size: 13px;&quot;&gt;Generate REPCCS File&lt;/span&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;(CSV Format)&lt;/span&gt;" vertex="1">
@@ -1816,12 +2151,6 @@
         <mxCell id="PEkpuAo8z3JMSkmCLv0X-29" parent="lane_backend_310" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="&lt;span style=&quot;font-size: 13px;&quot;&gt;Log Upload error&lt;/span&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;(CES)&lt;/span&gt;" vertex="1">
           <mxGeometry height="100" width="180" x="3099.9963636363636" y="460" as="geometry" />
         </mxCell>
-        <mxCell id="info_ces_sftp_310" parent="lane_backend_310" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=11;" value="&lt;b&gt;CES SFTP Details:&lt;/b&gt;&lt;br&gt;Protocol: SFTP&lt;br&gt;Server: [from Azure Key Vault: CES_SFTP_HOST]&lt;br&gt;Port: 22&lt;br&gt;Username: [from Azure Key Vault: CES_SFTP_USER]&lt;br&gt;Password: [from Azure Key Vault: CES_SFTP_PASS]&lt;br&gt;Remote Path: /inbound/unqualified_an/&lt;br&gt;&lt;br&gt;&lt;b&gt;File Format:&lt;/b&gt;&lt;br&gt;Filename: CES_Unqualified_AN_YYYYMMDD.csv&lt;br&gt;Format: CSV with header&lt;br&gt;Column: vehicle_no&lt;br&gt;Example: SHB1234U&lt;br&gt;&lt;br&gt;Timeout: 60s | Retry: 3 attempts" vertex="1">
-          <mxGeometry height="280" width="380" x="2540" y="380" as="geometry" />
-        </mxCell>
-        <mxCell id="edge_upload_ces_info_310" edge="1" parent="lane_backend_310" source="PEkpuAo8z3JMSkmCLv0X-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="info_ces_sftp_310" value="">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="PEkpuAo8z3JMSkmCLv0X-30" edge="1" parent="lane_backend_310" source="PEkpuAo8z3JMSkmCLv0X-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="PEkpuAo8z3JMSkmCLv0X-28">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -1860,7 +2189,7 @@
         <mxCell id="PEkpuAo8z3JMSkmCLv0X-39" parent="lane_backend_310" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="&lt;span style=&quot;font-size: 13px;&quot;&gt;Log Cron Complete&lt;/span&gt;&lt;br style=&quot;font-size: 13px;&quot;&gt;&lt;span style=&quot;font-size: 13px;&quot;&gt;(Summary)&lt;/span&gt;" vertex="1">
           <mxGeometry height="100" width="180" x="4290" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="info_cron_310" parent="lane_backend_310" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=12;" value="&lt;b&gt;Cron Job Configuration:&lt;/b&gt;&lt;br&gt;Schedule: Daily at 02:00 AM SGT&lt;br&gt;Date Range: Previous day (00:00:00 to 23:59:59)&lt;br&gt;Transmission: SFTP file upload&lt;br&gt;Max Retry: 3 attempts per upload&lt;br&gt;Timeout: 60 seconds per SFTP connection" vertex="1">
+        <mxCell id="info_cron_310" parent="lane_backend_310" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=12;" value="&lt;b&gt;Cron Job Config:&lt;/b&gt;&lt;br&gt;Schedule: Daily at 02:00 AM SGT&lt;br&gt;Date Range: Previous day (00:00:00 to 23:59:59)&lt;br&gt;Transmission: SFTP file upload&lt;br&gt;Max Retry: 3 attempts per upload&lt;br&gt;Timeout: 60 seconds per SFTP connection" vertex="1">
           <mxGeometry height="120" width="380" x="4190" y="240" as="geometry" />
         </mxCell>
         <mxCell id="edge_log_cron_info_310" edge="1" parent="lane_backend_310" source="PEkpuAo8z3JMSkmCLv0X-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="info_cron_310" value="">
@@ -1876,29 +2205,16 @@
             <mxPoint x="4470" y="110" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="info_repccs_sftp_310" parent="lane_backend_310" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=11;" value="&lt;b&gt;REPCCS SFTP Details:&lt;/b&gt;&lt;br&gt;Protocol: SFTP&lt;br&gt;Server: [from Azure Key Vault: REPCCS_SFTP_HOST]&lt;br&gt;Port: 22&lt;br&gt;Username: [from Azure Key Vault: REPCCS_SFTP_USER]&lt;br&gt;Password: [from Azure Key Vault: REPCCS_SFTP_PASS]&lt;br&gt;Remote Path: /inbound/unqualified_an/&lt;br&gt;&lt;br&gt;&lt;b&gt;File Format:&lt;/b&gt;&lt;br&gt;Filename: REPCCS_Unqualified_AN_YYYYMMDD.csv&lt;br&gt;Format: CSV with header&lt;br&gt;Column: vehicle_no&lt;br&gt;Example: SHB1234U&lt;br&gt;&lt;br&gt;Timeout: 60s | Retry: 3 attempts" vertex="1">
-          <mxGeometry height="280" width="380" x="1290" y="410" as="geometry" />
+        <mxCell id="info_unqualified_310" parent="lane_backend_310" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=12;" value="A notice is UNQUALIFIED (an_flag=&#39;N&#39; or NULL) when:&lt;br&gt;&lt;br&gt;1. &lt;b&gt;Offence Type:&lt;/b&gt; offence_notice_type != &#39;O&#39;&lt;br&gt;2. &lt;b&gt;Vehicle Type:&lt;/b&gt; vehicle_registration_type NOT IN (&#39;S&#39;,&#39;D&#39;,&#39;V&#39;,&#39;I&#39;)&lt;br&gt;3. &lt;b&gt;Exempt Offence:&lt;/b&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;- Rule 20412 with composition_amount = $80&lt;br&gt;&amp;nbsp;&amp;nbsp;- Rule 11210 with vehicle_category &#39;LB&#39; or &#39;HL&#39;&lt;br&gt;4. &lt;b&gt;No Past Offence:&lt;/b&gt; No qualifying offence in past 24 months&lt;br&gt;&lt;br&gt;&lt;i&gt;Note: an_flag is set during notice creation (Tab 3.2/3.3)&lt;br&gt;based on AN Qualification Check result (Tab 3.1)&lt;br&gt;CES source: an_flag from payload, no qualification check&lt;/i&gt;" vertex="1">
+          <mxGeometry height="220" width="420" x="530" y="180" as="geometry" />
         </mxCell>
-        <mxCell id="edge_upload_repccs_info_310" edge="1" parent="lane_backend_310" source="PEkpuAo8z3JMSkmCLv0X-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="info_repccs_sftp_310" value="">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2280" y="140" as="sourcePoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="info_unqualified_310" parent="lane_backend_310" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=12;" value="&lt;b&gt;Unqualified Criteria (Ref: Tab 3.1 Qualification Check):&lt;/b&gt;&lt;br&gt;&lt;br&gt;A notice is UNQUALIFIED (an_flag=&#39;N&#39; or NULL) when:&lt;br&gt;&lt;br&gt;1. &lt;b&gt;Offence Type:&lt;/b&gt; offence_notice_type != &#39;O&#39;&lt;br&gt;2. &lt;b&gt;Vehicle Type:&lt;/b&gt; vehicle_registration_type NOT IN (&#39;S&#39;,&#39;D&#39;,&#39;V&#39;,&#39;I&#39;)&lt;br&gt;3. &lt;b&gt;Exempt Offence:&lt;/b&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;- Rule 20412 with composition_amount = $80&lt;br&gt;&amp;nbsp;&amp;nbsp;- Rule 11210 with vehicle_category &#39;LB&#39; or &#39;HL&#39;&lt;br&gt;4. &lt;b&gt;No Past Offence:&lt;/b&gt; No qualifying offence in past 24 months&lt;br&gt;&lt;br&gt;&lt;i&gt;Note: an_flag is set during notice creation (Tab 3.2/3.3)&lt;br&gt;based on AN Qualification Check result (Tab 3.1)&lt;br&gt;CES source: an_flag from payload, no qualification check&lt;/i&gt;" vertex="1">
-          <mxGeometry height="220" width="420" x="530" y="340" as="geometry" />
-        </mxCell>
-        <mxCell id="edge_filter_info_310" edge="1" parent="lane_backend_310" source="x6ROZ4C58ZNDYvBh47Pb-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="info_unqualified_310" value="">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="790.0000000000002" y="110.00000000000011" as="sourcePoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="info_query_310" parent="lane_backend_310" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=12;" value="&lt;b&gt;Query for Unqualified ANs:&lt;/b&gt;&lt;br&gt;SELECT notice_no, vehicle_no, subsystem_label,&lt;br&gt;computer_rule_code, composition_amount,&lt;br&gt;notice_date_and_time, offence_notice_type,&lt;br&gt;an_flag, cre_date&lt;br&gt;FROM ocms_valid_offence_notice&lt;br&gt;WHERE cre_date BETWEEN [dateFrom] AND [dateTo]&lt;br&gt;AND (an_flag = &#39;N&#39; OR an_flag IS NULL)&lt;br&gt;AND subsystem_label IN (&#39;REPCCS&#39;, &#39;CES&#39;)&lt;br&gt;ORDER BY subsystem_label, cre_date ASC&lt;br&gt;&lt;br&gt;-- Daily cron sends previous day&#39;s unqualified records" vertex="1">
-          <mxGeometry height="200" width="400" x="120" y="340" as="geometry" />
+        <mxCell id="info_query_310" parent="lane_backend_310" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;verticalAlign=top;fontSize=12;" value="&lt;b&gt;SELECT&amp;nbsp;&lt;/b&gt;&lt;div&gt;notice_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;vehicle_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;subsystem_label,&lt;br&gt;computer_rule_code,&amp;nbsp;&lt;/div&gt;&lt;div&gt;composition_amount,&lt;br&gt;notice_date_and_time,&amp;nbsp;&lt;/div&gt;&lt;div&gt;offence_notice_type,&lt;br&gt;an_flag, cre_date&lt;br&gt;&lt;b&gt;FROM &lt;/b&gt;ocms_valid_offence_notice&lt;br&gt;&lt;b&gt;WHERE &lt;/b&gt;cre_date BETWEEN [dateFrom] AND [dateTo]&lt;br&gt;&lt;b&gt;AND &lt;/b&gt;(an_flag = &#39;N&#39; OR an_flag IS NULL)&lt;br&gt;&lt;b&gt;AND &lt;/b&gt;subsystem_label IN (&#39;REPCCS&#39;, &#39;CES&#39;)&lt;br&gt;&lt;b&gt;ORDER BY&lt;/b&gt; subsystem_label, cre_date ASC&lt;br&gt;&lt;br&gt;-- Daily cron sends previous day&#39;s unqualified records&lt;/div&gt;" vertex="1">
+          <mxGeometry height="240" width="390" x="120" y="340" as="geometry" />
         </mxCell>
         <mxCell id="x6ROZ4C58ZNDYvBh47Pb-2" edge="1" parent="lane_backend_310" source="x6ROZ4C58ZNDYvBh47Pb-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="info_query_310">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="start_310" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;fontSize=13;fontColor=#333333;" value="Start" vertex="1">
+        <mxCell id="start_310" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;fontSize=13;" value="Start" vertex="1">
           <mxGeometry height="60" width="120" x="200" y="160" as="geometry" />
         </mxCell>
         <mxCell id="edge_start_calc_310" edge="1" parent="1" source="start_310" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="x6ROZ4C58ZNDYvBh47Pb-1" value="">

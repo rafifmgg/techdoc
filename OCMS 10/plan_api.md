@@ -1,14 +1,19 @@
 # API Planning Document - OCMS 10: Advisory Notices Processing
 
 ## Document Information
-- **Version:** 1.1
-- **Date:** 2026-01-15
+- **Version:** 1.2
+- **Date:** 2026-01-22
 - **Source Documents:**
   - Functional Document: v1.2_OCMS 10_Functional Document.md
   - Backend Code: ura-project-ocmsadminapi-5e962080c0b4
   - Key Files: AdvisoryNoticeHelper.java, CreateNoticeServiceImpl.java, CreateNoticeController.java
+- **Related Documents:**
+  - OCMS 3 Technical Document (REPCCS API Specification)
+  - OCMS 5 Technical Document (Notice Creation)
+  - OCMS 21 Technical Document (Double Booking)
 
 **Change Log:**
+- v1.2 (2026-01-22): Aligned with corrected Technical Document. Added database tables for notifications (ocms_email_notification_records, ocms_sms_notification_records, ocms_an_letter, ocms_offence_notice_owner_driver). Added references to OCMS 3, 5, 21 documents.
 - v1.1 (2026-01-15): Updated to align with FD v1.2 - Added REPCCS/CES AN flag handling notes
 
 ---
@@ -100,6 +105,8 @@
 **Endpoint:** `POST /v1/repccsWebhook`
 
 **Description:** Webhook endpoint to receive notice data from REPCCS system
+
+**Reference:** Refer to OCMS 3 Technical Document section 1.1.3 for detailed API specification and section 2.1 for data mapping.
 
 **Request:**
 - **Method:** POST
@@ -638,6 +645,98 @@ END IF
 
 ---
 
+#### 3.1.5 ocms_offence_notice_owner_driver
+**Schema:** ocmsizmgr
+
+**Purpose:** Store vehicle owner particulars from LTA/DataHive/MHA
+
+**Key Fields:**
+- `notice_no` (PK): Notice number
+- `owner_driver_indicator`: O (Owner) or D (Driver)
+- `owner_nric_no`: Owner NRIC/FIN
+- `owner_name`: Owner name
+- `owner_blk_hse_no`: Block/House number
+- `owner_street`: Street name
+- `owner_floor`: Floor number
+- `owner_unit`: Unit number
+- `owner_bldg`: Building name
+- `owner_postal_code`: Postal code
+- `cre_user_id`: ocmsiz_app_conn
+- `cre_date`: Timestamp
+
+**Operations:**
+- INSERT: Create owner record after LTA/MHA retrieval
+
+---
+
+#### 3.1.6 ocms_email_notification_records
+**Schema:** ocmsizmgr
+
+**Purpose:** Log email notifications sent
+
+**Key Fields:**
+- `notice_no`: Notice number
+- `processing_stage`: Processing stage (RD1)
+- `content`: Email content
+- `date_sent`: Sent timestamp
+- `email_addr`: Recipient email
+- `status`: sent/failed
+- `subject`: Email subject
+- `cre_user_id`: ocmsiz_app_conn
+- `cre_date`: Timestamp
+
+**Operations:**
+- INSERT: Create record after sending email notification
+
+---
+
+#### 3.1.7 ocms_sms_notification_records
+**Schema:** ocmsizmgr
+
+**Purpose:** Log SMS notifications sent
+
+**Key Fields:**
+- `notice_no`: Notice number
+- `processing_stage`: Processing stage (RD1)
+- `content`: SMS content
+- `date_sent`: Sent timestamp
+- `mobile_no`: Recipient mobile number
+- `status`: sent/failed
+- `cre_user_id`: ocmsiz_app_conn
+- `cre_date`: Timestamp
+
+**Operations:**
+- INSERT: Create record after sending SMS notification
+
+---
+
+#### 3.1.8 ocms_an_letter
+**Schema:** ocmsizmgr
+
+**Purpose:** Track AN letters sent via SLIFT/SFTP
+
+**Key Fields:**
+- `notice_no`: Notice number
+- `date_of_processing`: Processing date
+- `date_of_an_letter`: Letter date
+- `owner_nric_no`: Owner NRIC
+- `owner_name`: Owner name
+- `owner_id_type`: ID type (N=NRIC, F=FIN, P=Passport)
+- `owner_blk_hse_no`: Block/House number
+- `owner_street`: Street name
+- `owner_floor`: Floor number
+- `owner_unit`: Unit number
+- `owner_bldg`: Building name
+- `owner_postal_code`: Postal code
+- `processing_stage`: Processing stage (RD1)
+- `cre_user_id`: ocmsiz_app_conn
+- `cre_date`: Timestamp
+
+**Operations:**
+- INSERT: Create record after sending AN letter
+
+---
+
 ### 3.2 Query Patterns
 
 #### Same-Day AN Check Query [STILL ACTIVE in code]
@@ -674,13 +773,19 @@ WHERE vehicle_no = ?
 
 [ASSUMPTION] MHA API timeout and retry logic follow standard 30-second timeout with 3 retries.
 
-[ASSUMPTION] SLIFT/SFTP letter format (PDF vs XML) needs confirmation from SLIFT system documentation.
+[ASSUMPTION] SLIFT is used for encryption before SFTP upload to Toppan printing vendor (confirmed from code: ToppanLettersGeneratorJob.java).
 
 [ASSUMPTION] eNotification exclusion list is maintained in a separate table (not found in current codebase).
 
 [ASSUMPTION] LTA API authentication mechanism uses API key stored in Azure Key Vault.
 
 [ASSUMPTION] Advisory Notice suspension duration (due_date_of_revival) is calculated as current date + 30 days (configurable via system parameters).
+
+[CONFIRMED] AN SMS/Email messages are currently hardcoded in NotificationSmsEmailHelper.java (method generateAnMessages). There is a TODO comment: "Replace with actual approved template from BA/Product Owner".
+
+[CONFIRMED] Notification records are stored in ocms_email_notification_records and ocms_sms_notification_records tables.
+
+[CONFIRMED] AN Letter records are stored in ocms_an_letter table.
 
 ---
 

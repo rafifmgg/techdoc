@@ -1,16 +1,19 @@
 # Flowchart Planning Document - OCMS 10: Advisory Notices Processing
 
 ## Document Information
-- **Version:** 1.1
-- **Date:** 2026-01-15
+- **Version:** 1.9
+- **Date:** 2026-01-22
 - **Source Documents:**
   - Functional Document: v1.2_OCMS 10_Functional Document.md
+  - Functional Flow: OCMS_10_Functional_Flow.drawio
   - plan_api.md
   - plan_condition.md
 - **Reference Guidelines:** Docs/guidelines/plan_flowchart.md
 
 **Change Log:**
-- v1.1 (2026-01-15): Updated to align with FD v1.2 - Removed Same-Day AN Check, updated CES handling
+- v1.9 (2026-01-22): Major update - Aligned all flows with corrected Technical Document. Removed assumed template content from Tab 3.5 and 3.6. Updated data mappings to use actual tables (ocms_email_notification_records, ocms_sms_notification_records, ocms_an_letter). Added references to OCMS 3, OCMS 5, OCMS 21 documents.
+- v1.8 (2026-01-21): Data Dictionary validation fixes - Tab 3.1.1: ocms_ans_exemption_rules → ocms_an_exemption_rules, effective_start_date → start_effective_date, effective_end_date → end_effective_date, rule_remark → rule_remarks, removed is_active clause. Tab 3.1.2: code_value → code, code_description → description, is_active = 'Y' → code_status = 'A'.
+- v1.7 (2026-01-21): Simplified Tab 3.1.2 - Moved exclude 2pm notice logic from Code to SQL query (AND notice_no != newNotice.notice_no). Removed code filter step.
 
 ---
 
@@ -32,24 +35,12 @@
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | Entry point | Notice data received from external source or manual creation |
-| Notice Creation | Create notice record | Validate mandatory fields and create notice in system |
-| AN Verification | Check qualification | Verify if notice qualifies as Advisory Notice (exemption rules + past offense check). Note: CES notices with an_flag='Y' skip qualification and go directly to PS-ANS |
-| Decision: Qualifies? | AN qualification result | Check if notice passed all AN qualification criteria |
-| Update AN Flags | Mark as AN | Set an_flag='Y', payment_acceptance_allowed='N' |
-| Retrieve Owner Info | Get vehicle owner | Call LTA API to retrieve vehicle owner particulars |
-| Decision: eAN Eligible? | Check contact availability | Determine if eNotification is possible based on contact info |
-| Send eNotification | Electronic notification | Send SMS/Email to vehicle owner |
-| Send AN Letter | Physical letter | Generate and send physical letter via SLIFT |
+| Notice Creation | Create notice record | Refer to Technical Document OCMS 5 |
+| AN Verification | Check qualification | Refer to Section 2 |
+| Send eNotification | Electronic notification | Refer to Section 5 |
+| Send AN Letter | Physical letter | Refer to Section 6 |
 | Suspend with PS-ANS | Create suspension | Create PS-ANS suspension record for qualified AN |
 | End | Process complete | AN processing completed |
-
-#### Decision Logic
-
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Qualifies as AN? | Verification result | Passes all checks (offense type, vehicle type, exemption rules, past offense with ANS PS reasons). For CES: if an_flag='Y' in payload, skip checks and create PS-ANS | Update AN flags | Process as standard notice |
-| eAN Eligible? | Owner contact info | Mobile OR email available AND not in exclusion list AND not suspended | Send eNotification | Send physical letter |
 
 #### Swimlanes Definition
 
@@ -60,22 +51,11 @@
 | Database | Yellow (#fff2cc) | Intranet DB, Internet DB |
 | External System | Green (#d5e8d4) | REPCCS, CES, LTA, DataHive, MHA, SLIFT |
 
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| Notice Creation | Validation failure | Return error response OCMS-4000 | User corrects input |
-| LTA API Call | Timeout/Error | Retry 3 times, then manual review queue | Staff manual verification |
-| DataHive API Call | No contact found | Proceed to physical letter flow | AN letter sent via SLIFT |
-| SLIFT Submission | Submission failure | Retry 3 times, then manual review queue | Staff manual follow-up |
-
 ---
 
 ## Section 3: Detailed Flows
 
 ### Tab 3.1: AN Verification - Qualification Check
-
-> **Note:** FD v1.2 states Same-Day AN Check should be removed, but it is **STILL ACTIVE** in actual code implementation (AdvisoryNoticeHelper.java:104-107, 142-182).
 
 #### Process Overview
 
@@ -91,84 +71,113 @@
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | Qualification check | Check if notice qualifies as Advisory Notice |
-| Check Offense Type | Validate offense type | Apply BR-AN-GATE-001: offence_notice_type must be 'O' |
-| Decision: Offense Type = 'O'? | Gate check 1 | Check if offense type is 'O' (Offender) |
-| Check Vehicle Type | Validate vehicle type | Apply BR-AN-GATE-002: vehicle_registration_type must be in [S,D,V,I] |
-| Decision: Vehicle Type Valid? | Gate check 2 | Check if vehicle type is local (S/D/V/I) |
-| Check Exemption Rules | Exemption validation | Apply BR-AN-EXEMPT-001 and BR-AN-EXEMPT-002 |
-| Decision: Exempt? | Exemption check | Check if offense is exempt from AN |
-| Check Past Offense | 24-month window check | Apply BR-AN-QUAL-002: Check for past qualifying offense |
-| Decision: Has Past Offense? | Past offense validation | Check if vehicle has offense in past 24 months |
+| Check Offense Type | Validate offense type | Offense type must be 'O' |
+| Check Vehicle Type | Validate vehicle type | Vehicle registration type must be in [S, D, V, I]. |
+| Check Exemption Rules | Exemption validation | Refer to Section 2.3 |
+| Check Past Offense | 24-month window check | Refer to Section 2.4 |
 | Return Qualified | Pass qualification | Return qualified=true with AN details |
 | Return Not Qualified | Fail qualification | Return qualified=false with reason |
 | End | Check complete | Qualification result returned |
-
-#### Decision Logic
-
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Offense Type = 'O'? | offence_notice_type | offence_notice_type == 'O' | Continue to vehicle type check | Return not qualified ("Offense type must be 'O'") |
-| Vehicle Type Valid? | vehicle_registration_type | vehicle_registration_type IN ['S','D','V','I'] | Continue to exemption check | Return not qualified ("Vehicle type must be S/D/V/I") |
-| Exempt? | Rule code + composition/category | (Rule 20412 AND amount=$80) OR (Rule 11210 AND category in [LB,HL]) | Return not qualified ("Offense exempt from AN") | Continue to past offense check |
-| Has Past Offense? | Query result | count > 0 | Return qualified | Return not qualified ("No qualifying offense in past 24 months") |
-
-#### Business Rules Applied
-
-**BR-AN-GATE-001: Offense Type Check**
-- Rule: Offense type must be 'O' (Offender) for AN eligibility
-- Implementation: AdvisoryNoticeHelper.checkQualification()
-- Action: If offenseType != 'O', return not qualified
-
-**BR-AN-GATE-002: Vehicle Type Check**
-- Rule: Vehicle registration type must be S, D, V, or I (local vehicles only)
-- Implementation: AdvisoryNoticeHelper.checkQualification()
-- Action: If vehicleRegType NOT IN ['S','D','V','I'], return not qualified
-
-**BR-AN-EXEMPT-001: Rule Code 20412 with $80 Composition**
-- Rule: Offense code 20412 with composition amount = $80 is exempt from AN
-- Implementation: AdvisoryNoticeHelper.isExemptFromAN()
-- Action: If computerRuleCode = 20412 AND compositionAmount = 80.00, return exempt
-
-**BR-AN-EXEMPT-002: Rule Code 11210 with Vehicle Category LB or HL**
-- Rule: Offense code 11210 with vehicle category "LB" (Loading Bay) or "HL" (Handicap Lot) is exempt from AN
-- Implementation: AdvisoryNoticeHelper.isExemptFromAN()
-- Action: If computerRuleCode = 11210 AND vehicleCategory IN ['LB','HL'], return exempt
-
-**BR-AN-QUAL-002: Past Offense Check (24-month window)**
-- Rule: Vehicle must have qualifying offense in past 24 months
-- Implementation: AdvisoryNoticeHelper.hasPastQualifyingOffense()
-- Action: Query for past offenses from (currentDate - 24 months) to currentNoticeDate
-
-#### Database Query (Past Offense Check)
-
-**Table:** `ocms_valid_offence_notice` (Intranet)
-
-**Query Logic:**
-```
-SELECT * FROM ocms_valid_offence_notice
-WHERE vehicle_no = [current vehicle]
-  AND notice_date_and_time >= [currentDate - 24 months]
-  AND notice_date_and_time < [currentNoticeDate]
-```
-
-**Fields Used:**
-- `vehicle_no`: Vehicle registration number
-- `notice_date_and_time`: Notice date and time
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| Past Offense Query | SQLException | Return qualification failed | Process as standard notice |
-| Null Parameters | Validation error | Return not qualified | Standard notice processing |
 
 #### Swimlanes Definition
 
 | Swimlane | Color | Steps |
 |----------|-------|-------|
-| Backend | Purple (#e1d5e7) | All validation steps (Offense type check, Vehicle type check, Exemption check, Return result) |
-| Database | Yellow (#fff2cc) | Query past offenses |
+| Backend | Purple (#e1d5e7) | All validation steps |
+| Database | Yellow (#fff2cc) | Query exemption rules, Query past offenses |
+
+---
+
+### Tab 3.1.1: ANS Exemption Rule Code Check Sub-Flow
+
+#### Process Overview
+
+| Attribute | Value |
+|-----------|-------|
+| Process Name | ANS Exemption Rule Code Check |
+| Section | 3.1.1 (Sub-flow of Tab 3.1) |
+| Trigger | Called from AN Qualification Check (Tab 3.1) when checking exemption rules |
+| Frequency | Real-time (per notice creation) |
+| Systems Involved | Backend (OCMS API), Database (Intranet - ocms_an_exemption_rules) |
+
+#### Process Steps Table
+
+| Step | Definition | Brief Description |
+|------|-----------|-------------------|
+| Identify Rule Code | Get computer_rule_code | Identify new Notice's Offence Rule Code. |
+| Query Exemption DB | Database query | Query ocms_an_exemption_rules to check if Rule Code is in exemption list |
+| Record Found? | Decision | Check if exemption record found for this rule code |
+| Compare Dates | Date validation | Compare Notice's offence_date with Exemption Rule's |
+| Within Period? | Decision | If no, notice will eligible for ANS. If yes, next checking |
+| Rule 20412? | Specific rule check | If no, check another rule. If yes, check composition amount |
+| Amount $80? | Amount check | Check if composition_amount = $80. If no, notice is eligible for ANS. If yes, notice not eligible for ANS |
+| Decision: Rule 11210? | Specific rule check | Continue check when rule not 20412. If no, notice not eligible for ANS. If yes, will continue check |
+| Loading Bay? | Remarks check | If yes, notice not eligible for ANS. If no, will continue check |
+| Handicap Lot? | Remarks check | If no, notice eligible for ANS. If yes, notice not eligible for ANS |
+| End | Sub-flow complete | ANS Exemption Rule Code Check completed |
+
+#### Database Operations
+
+| Operation | Table | Query/Action |
+|-----------|-------|--------------|
+| SELECT | ocms_an_exemption_rules | SELECT rule_code, start_effective_date, end_effective_date, rule_remarks, composition_amount FROM ocms_an_exemption_rules WHERE rule_code = [notice.computer_rule_code] |
+
+#### Swimlanes Definition
+
+| Swimlane | Color Code | Components |
+|----------|-----------|------------|
+| Backend | Purple (#e1d5e7) | OCMS API |
+| Database | Yellow (#fff2cc) | ocms_an_exemption_rules |
+
+---
+
+### Tab 3.1.2: Past Offences Check Sub-Flow
+
+#### Process Overview
+
+| Attribute | Value |
+|-----------|-------|
+| Process Name | Past Offences Check |
+| Section | 3.1.2 (Sub-flow of Tab 3.1) |
+| Trigger | Called from AN Qualification Check (Tab 3.1) after exemption check passes |
+| Frequency | Real-time (per notice creation) |
+| Systems Involved | Backend (OCMS API), Database (Intranet - ocms_valid_offence_notice, ocms_standard_code) |
+
+#### Process Steps Table
+
+| Step | Definition | Brief Description |
+|------|-----------|-------------------|
+| Query Past Offences | Database query | Query ocms_valid_offence_notice for offences in last 24 months |
+| Any Record Found? | Past offence check | Check if any past offence records found |
+| Query ANS PS Reasons | Get valid reasons | Query ocms_standard_code for active ANS PS Reasons |
+| Batch Check | Suspension check | For each past offence, check if it is suspended with one of the ANS PS Reasons |
+| All Suspended? | Decision | Check if ALL past Notices are suspended with ANS PS Reasons |
+| Return Qualified | Qualified result | Notice QUALIFIES as AN |
+| Return Not Qualified | Not qualified result | Notice does NOT QUALIFY as AN |
+| End | Sub-flow complete | Past Offences Check completed |
+
+#### Database Operations
+
+| Operation | Table | Query/Action |
+|-----------|-------|--------------|
+| SELECT | ocms_valid_offence_notice | SELECT notice_no, notice_date_and_time, suspension_type, epr_reason_of_suspension FROM ocms_valid_offence_notice WHERE vehicle_no = [newNotice.vehicle_no] AND notice_date_and_time BETWEEN DATEADD(month, -24, GETDATE()) AND GETDATE() AND notice_no != [newNotice.notice_no] |
+| SELECT | ocms_standard_code | SELECT code, description FROM ocms_standard_code WHERE reference_code = 'ANS_PS_Reason' AND code_status = 'A' |
+
+#### ANS PS Reasons Reference
+
+| Code | Description | Effect |
+|------|-------------|--------|
+| CAN | Cancelled | Offence cancelled - still allows AN qualification |
+| CFA | Court Fine Adjusted | Court adjusted - still allows AN qualification |
+| DBB | Double Booking | Duplicate notice - still allows AN qualification |
+| VST | Vehicle Stolen | Vehicle was stolen - still allows AN qualification |
+
+#### Swimlanes Definition
+
+| Swimlane | Color Code | Components |
+|----------|-----------|------------|
+| Backend | Purple (#e1d5e7) | OCMS API |
+| Database | Yellow (#fff2cc) | ocms_valid_offence_notice, ocms_standard_code |
 
 ---
 
@@ -190,101 +199,26 @@ WHERE vehicle_no = [current vehicle]
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | Webhook received | REPCCS sends notice data to OCMS webhook endpoint |
 | Receive Webhook Payload | Parse request | Receive and parse RepWebHookPayloadDto |
-| Validate Mandatory Fields | Field validation | Apply BR-AN-REP-001: Check all mandatory fields present |
-| Decision: Valid Payload? | Validation result | Check if payload has all required fields |
-| Check Duplicate Notice | Duplicate detection | Apply BR-AN-DUP-001: Check if notice number already exists |
-| Decision: Duplicate? | Duplicate check result | Check if notice number found in database |
-| Detect Vehicle Type | Vehicle type detection | Apply special vehicle detection (MID/MINDEF, UNLICENSED_PARKING) |
+| Validate Mandatory Fields | Field validation | Check all mandatory fields present |
+| Check Duplicate Notice | Duplicate detection | Check if notice number already exists |
+| Detect Vehicle Type | Vehicle type detection | Apply special vehicle detection. |
 | Generate Notice Number | Create notice ID | Generate notice number if not provided |
 | Insert Notice Records | Create records | Insert into ocms_valid_offence_notice and ocms_offence_notice_detail |
-| Check Double Booking | DBB detection | Apply BR-AN-DUP-002: Query for duplicate offense details |
-| Decision: Duplicate Offense? | DBB check result | Check if matching offense found |
-| Create PS-DBB Suspension | Suspend notice | Create PS-DBB suspension record, early return |
-| Run AN Qualification | Qualification check | Call checkQualification() for offence_notice_type='O' and vehicle_type in [S,D,V,I] |
-| Decision: Qualifies as AN? | AN qualification result | Check if notice passed all AN checks |
-| Update AN Flags | Mark as AN | Set an_flag='Y', payment_acceptance_allowed='N' |
-| Process Uploaded File | File handling | Process any uploaded photos/videos |
-| Return Success Response | Response to REPCCS | Return modified response: message="OK", no notice number |
-| Return Error Response | Error to REPCCS | Return error response with app code and message |
+| Check Double Booking | DBB detection | Refer to Technical Document OCMS 21 |
+| Run AN Qualification | Qualification check | Refer to Section 2 |
+| Update AN Flags | Mark as AN | Set an_flag='Y' if qualified |
+| Return Success Response | Response to REPCCS | Return success message |
+| Return Error Response | Error to REPCCS | Return error message |
 | End | Webhook complete | REPCCS webhook processing finished |
 
-#### Decision Logic
+#### API Specification
 
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Valid Payload? | Validation result | All mandatory fields present and valid | Continue to duplicate check | Return error OCMS-4000 |
-| Duplicate? | Query result | Notice number exists in database | Return error OCMS-4000 "Duplicate notice detected" | Continue to vehicle type detection |
-| Duplicate Offense? | DBB query result | Matching offense found (same vehicle, rule code, date/time) | Create PS-DBB suspension, early return | Continue to AN qualification |
-| Qualifies as AN? | Qualification result | Passes all AN checks | Update AN flags | Continue to file processing |
+**Refer to OCMS 3 Technical Document section 1.1.3**
 
-#### API Call
+#### Data Mapping
 
-**Endpoint:** POST /v1/repccsWebhook
-
-**Request Payload (RepWebHookPayloadDto):**
-```json
-{
-  "transactionId": "string",
-  "subsystemLabel": "string (8)",
-  "anFlag": "string (1)",
-  "noticeNo": "string (10)",
-  "vehicleNo": "string (14)",
-  "computerRuleCode": "integer",
-  "compositionAmount": "decimal",
-  "noticeDateAndTime": "datetime",
-  "offenceNoticeType": "string (1)",
-  "vehicleCategory": "string (1)",
-  "vehicleRegistrationType": "string (1)",
-  "ppCode": "string (5)",
-  "ppName": "string (100)",
-  "creUserId": "string",
-  "creDate": "datetime"
-}
-```
-
-**Success Response (HTTP 200):**
-```json
-{
-  "data": {
-    "appCode": "OCMS-2000",
-    "message": "OK"
-  }
-}
-```
-
-**Error Response (HTTP 400):**
-```json
-{
-  "data": {
-    "appCode": "OCMS-4000",
-    "message": "Missing mandatory fields / Duplicate notice detected"
-  }
-}
-```
-
-**Note:** REPCCS webhook uses OCMS-4000 (HTTP 400) for ALL errors including duplicate notice.
-
-#### Database Operations
-
-**Insert Tables:**
-1. `ocms_valid_offence_notice` (Intranet) - Parent record
-2. `ocms_offence_notice_detail` (Intranet) - Detail record
-3. `eocms_valid_offence_notice` (Internet) - Mirror record
-4. `ocms_suspended_notice` (Intranet) - If PS-DBB detected
-
-**Update Tables:**
-- `ocms_valid_offence_notice`: Set an_flag='Y', payment_acceptance_allowed='N' if qualified
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| Mandatory Fields Validation | Missing fields | Return OCMS-4000 error | REPCCS retries with complete data |
-| Duplicate Notice Check | Notice exists | Return OCMS-4000 error | REPCCS does not retry |
-| Database Insert | SQLException | Return OCMS-5000 error | REPCCS retries |
-| DBB Query Retry | SQLException | Retry 3 times, apply TS-OLD fallback | Create TS-OLD suspension |
+**Refer to OCMS 3 Technical Document section 2.1**
 
 #### Swimlanes Definition
 
@@ -292,7 +226,7 @@ WHERE vehicle_no = [current vehicle]
 |----------|-------|-------|
 | External System | Green (#d5e8d4) | Send webhook payload, Receive response |
 | Backend | Purple (#e1d5e7) | Validate fields, Detect vehicle type, Run qualification, Return response |
-| Database | Yellow (#fff2cc) | Check duplicate, Insert notice records, Query DBB, Update AN flags |
+| Database | Yellow (#fff2cc) | Check duplicate, Insert notice records, Update AN flags |
 
 ---
 
@@ -314,131 +248,44 @@ WHERE vehicle_no = [current vehicle]
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | Webhook received | CES sends notice data to OCMS webhook endpoint |
 | Receive Webhook Payload | Parse request | Receive and parse CesCreateNoticeDto |
-| Validate Mandatory Fields | Field validation | Apply BR-AN-CES-001: Check all mandatory fields present |
-| Decision: Valid Payload? | Validation result | Check if payload has all required fields |
-| Validate Subsystem Label | Subsystem validation | Apply BR-AN-CES-001: Check subsystemLabel format (3-8 chars, 030-999 range) |
-| Decision: Valid Subsystem? | Subsystem check result | Check if subsystem label passes all validations |
-| Check Duplicate Notice | Duplicate detection | Apply BR-AN-DUP-001: Check if notice number already exists |
-| Decision: Duplicate? | Duplicate check result | Check if notice number found in database |
-| Validate Offense Rule Code | Rule code validation | Apply BR-AN-CES-002: Check if computer_rule_code exists in offense_rule_code table |
-| Decision: Valid Rule Code? | Rule validation result | Check if rule code exists |
-| Detect Vehicle Type | Vehicle type detection | Apply special vehicle detection (MID/MINDEF, UNLICENSED_PARKING) |
-| Check EHT/Certis AN Flag | EHT check | Apply BR-AN-EHT-001: If subsystem 030-999 AND an_flag='Y' in payload |
+| Validate Mandatory Fields | Field validation | Check all mandatory fields present |
+| Validate Subsystem Label | Subsystem validation | Check subsystemLabel format. |
+| Check Duplicate Notice | Duplicate detection | Check if notice number already exists |
+| Validate Offense Rule Code | Rule code validation | Check if computer_rule_code exists in offense_rule_code table |
+| Detect Vehicle Type | Vehicle type detection | Apply special vehicle detection |
+| Check EHT/Certis AN Flag | EHT check | Checking if EHT identified as AN |
 | Decision: EHT with AN Flag? | EHT AN check | Check if EHT subsystem with an_flag='Y' |
 | Create PS-ANS Suspension | Immediate suspension | Create notice, trigger PS-ANS suspension, early return |
 | Insert Notice Records | Create records | Insert into ocms_valid_offence_notice and ocms_offence_notice_detail |
-| Check Double Booking | DBB detection | Apply BR-AN-DUP-002: Query for duplicate offense details |
-| Decision: Duplicate Offense? | DBB check result | Check if matching offense found |
-| Create PS-DBB Suspension | Suspend notice | Create PS-DBB suspension record, early return |
-| Run AN Qualification | Qualification check | Call checkQualification() for offence_notice_type='O' and vehicle_type in [S,D,V,I] |
-| Decision: Qualifies as AN? | AN qualification result | Check if notice passed all AN checks |
-| Update AN Flags | Mark as AN | Set an_flag='Y', payment_acceptance_allowed='N' |
-| Process Uploaded File | File handling | Process any uploaded photos/videos |
-| Return Success Response | Response to CES | Return success response with app code and message |
-| Return Error Response | Error to CES | Return error response with specific error code |
+| Run AN Qualification | Qualification check | Refer to section 2 |
+| Update AN Flags | Mark as AN | Set an_flag='Y' if qualified |
+| Return Success Response | Response to CES | Return success message |
+| Return Error Response | Error to CES | Return error message |
 | End | Webhook complete | CES webhook processing finished |
 
-#### Decision Logic
+#### API Specification
 
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Valid Payload? | Validation result | All mandatory fields present and valid | Continue to subsystem validation | Return error OCMS-4000 (HTTP 400) |
-| Valid Subsystem? | Subsystem validation | Length 3-8 chars AND first 3 chars numeric 030-999 | Continue to duplicate check | Return error OCMS-4000 (HTTP 400) with specific message |
-| Duplicate? | Query result | Notice number exists in database | Return error **OCMS-2026 (HTTP 226)** "Notice no Already exists" | Continue to rule code validation |
-| Valid Rule Code? | Rule validation | Rule code exists in offense_rule_code table | Continue to vehicle detection | Return error **OCMS-2026 (HTTP 226)** "Invalid Offence Rule Code" |
-| EHT with AN Flag? | Subsystem + flag check | Subsystem 030-999 AND an_flag='Y' | Create PS-ANS, early return | Continue to standard flow |
-| Duplicate Offense? | DBB query result | Matching offense found (same vehicle, rule code, date/time) | Create PS-DBB suspension, early return | Continue to AN qualification |
-| Qualifies as AN? | Qualification result | Passes all AN checks | Update AN flags | Continue to file processing |
+**CES Webhook API**
 
-#### API Call
-
-**Endpoint:** POST /v1/cesWebhook-create-notice
-
-**Request Payload (CesCreateNoticeDto):**
-```json
-{
-  "transactionId": "string",
-  "subsystemLabel": "string (3-8, 030-999)",
-  "anFlag": "string (1)",
-  "noticeNo": "string (10)",
-  "vehicleNo": "string (14)",
-  "computerRuleCode": "integer",
-  "compositionAmount": "decimal",
-  "noticeDateAndTime": "datetime",
-  "offenceNoticeType": "string (1)",
-  "vehicleCategory": "string (1)",
-  "vehicleRegistrationType": "string (1)",
-  "ppCode": "string (5)",
-  "ppName": "string (100)",
-  "creUserId": "string",
-  "creDate": "datetime"
-}
-```
-
-**Success Response (HTTP 200):**
-```json
-{
-  "data": {
-    "appCode": "OCMS-2000",
-    "message": "Resource created successfully"
-  }
-}
-```
-
-**Error Response - Validation Errors (HTTP 400):**
-```json
-{
-  "data": {
-    "appCode": "OCMS-4000",
-    "message": "Invalid input format or failed validation"
-  }
-}
-```
-
-**Error Response - Duplicate Notice / Invalid Rule Code (HTTP 226 IM Used):**
-```json
-{
-  "data": {
-    "appCode": "OCMS-2026",
-    "message": "Notice no Already exists / Invalid Offence Rule Code"
-  }
-}
-```
-
-**Note:** CES webhook uses different error codes than REPCCS:
-- **OCMS-4000 (HTTP 400):** For validation errors (mandatory fields, subsystem label format)
-- **OCMS-2026 (HTTP 226):** For duplicate notice and invalid rule code errors
-
-#### Database Operations
-
-**Insert Tables:**
-1. `ocms_valid_offence_notice` (Intranet) - Parent record
-2. `ocms_offence_notice_detail` (Intranet) - Detail record
-3. `eocms_valid_offence_notice` (Internet) - Mirror record
-4. `ocms_suspended_notice` (Intranet) - If PS-ANS or PS-DBB
-
-**Update Tables:**
-- `ocms_valid_offence_notice`: Set an_flag='Y', payment_acceptance_allowed='N' if qualified
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| Subsystem Label Validation | Invalid format | Return OCMS-4000 (HTTP 400) | CES corrects subsystem label |
-| Duplicate Notice Check | Notice exists | Return **OCMS-2026 (HTTP 226)** | CES does not retry |
-| Rule Code Validation | Invalid rule code | Return **OCMS-2026 (HTTP 226)** | CES corrects rule code |
-| Database Insert | SQLException | Return OCMS-5000 error | CES retries |
-| DBB Query Retry | SQLException | Retry 3 times, apply TS-OLD fallback | Create TS-OLD suspension |
+| Field | Value |
+| --- | --- |
+| API Name | cesWebhook-create-notice |
+| URL | POST /v1/cesWebhook-create-notice |
+| Description | Webhook endpoint to receive notice data from CES (Certis) system |
+| Method | POST |
+| Header | `{ "Content-Type": "application/json", "API-Key": "[API_KEY]" }` |
+| Payload | `{ "transactionId": "CESNOPO823000001G", "subsystemLabel": "3030", "anFlag": "N", "noticeNo": "823000001G", "vehicleNo": "MGC1234X", "computerRuleCode": "30301", "compositionAmount": "70,00", "noticeDateAndTime": "2026-01-11T14:30:00", "offenceNoticeType": "O", "vehicleCategory": "I", "vehicleRegistrationType": "S", "ppCode": "A002", "ppName": "ALBERT Road", "creUserId": "ocmsiz_app_conn", "creDate": "2026-01-11T14:30:00" }` |
+| Response | `{ "data": { "appCode": "OCMS-2000", "message": "Resource created successfully" } }` |
+| Response Failure (Validation) | `{ "data": { "appCode": "OCMS-4000", "message": "Invalid input format or failed validation" } }` |
 
 #### Swimlanes Definition
 
 | Swimlane | Color | Steps |
 |----------|-------|-------|
 | External System | Green (#d5e8d4) | Send webhook payload, Receive response |
-| Backend | Purple (#e1d5e7) | Validate fields, Validate subsystem, Check EHT flag, Run qualification, Return response |
-| Database | Yellow (#fff2cc) | Check duplicate, Validate rule code, Insert notice records, Query DBB, Update AN flags |
+| Backend | Purple (#e1d5e7) | Validate fields, Check EHT flag, Run qualification, Return response |
+| Database | Yellow (#fff2cc) | Check duplicate, Validate rule code, Insert notice records, Update AN flags |
 
 ---
 
@@ -458,131 +305,37 @@ WHERE vehicle_no = [current vehicle]
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | Owner retrieval | Begin vehicle owner particulars retrieval for qualified AN |
-| Check Vehicle Type | Vehicle type validation | Apply OP-AN-LTA-001: Check vehicle registration type |
+| Check Vehicle Type | Vehicle type validation | Check vehicle registration type |
 | Decision: Military Vehicle? | Military check | Check if vehicle_registration_type = 'I' (Military) |
 | Set Military Owner | Military handling | Set owner = MINDEF, skip LTA API call |
-| Call LTA API | Ownership query | Apply OP-AN-LTA-001: Call LTA API with vehicle number to retrieve owner details |
-| Decision: LTA Success? | LTA response check | Check if LTA API returned owner information |
+| Call LTA API | Ownership query | Call LTA API with vehicle number to retrieve owner details |
 | Store Owner Details | Save owner info | Store vehicle owner name, NRIC/FIN, registration details in database |
-| Check Suspension Status | Suspension validation | Apply OP-AN-DATAHIVE-001: Check if notice is suspended |
-| Decision: Notice Suspended? | Suspension check | Check if suspension_type is not NULL |
-| Skip Notification | No notification | Do not send notification for suspended notice, end process |
-| Check Exclusion List | Exclusion validation | Apply OP-AN-DATAHIVE-001: Check if owner in eNotification exclusion list |
-| Decision: In Exclusion List? | Exclusion check | Check if owner NRIC in exclusion list |
-| Call DataHive API | Contact retrieval | Apply OP-AN-DATAHIVE-001: Call DataHive API with owner NRIC to get mobile/email |
+| Check Suspension Status | Suspension validation | Check if notice is suspended |
+| Check Exclusion List | Exclusion validation | Check if owner in eNotification exclusion list |
+| Call DataHive API | Contact retrieval | Call DataHive API with owner NRIC to get mobile/email |
 | Decision: Contact Found? | Contact availability | Check if mobile OR email retrieved from DataHive |
-| Qualify for eAN | eNotification path | Set eAN eligible flag, proceed to eAN sending (Tab 3.5) |
-| Call MHA API | Address retrieval | Apply OP-AN-MHA-001: Call MHA API with owner NRIC to get registered address |
-| Decision: Address Found? | Address availability | Check if registered address retrieved from MHA |
-| Qualify for AN Letter | Physical letter path | Set AN letter flag, proceed to letter generation (Tab 3.6) |
+| Qualify for eAN | eNotification path | Set eAN eligible flag, proceed to eAN sending |
+| Call MHA API | Address retrieval | Call MHA API with owner NRIC to get registered address |
+| Qualify for AN Letter | Physical letter path | Set AN letter flag, proceed to letter generation |
 | Manual Review Queue | Manual handling | Add to manual review queue for staff follow-up |
 | End | Retrieval complete | Owner particulars retrieval process finished |
 
-#### Decision Logic
+#### Data Mapping - Storing owner particulars from LTA/DataHive/MHA
 
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Military Vehicle? | vehicle_registration_type | vehicle_registration_type == 'I' | Set owner=MINDEF, skip LTA | Call LTA API |
-| LTA Success? | LTA API response | Response contains owner info AND status=success | Store owner details | Manual review queue |
-| Notice Suspended? | suspension_type | suspension_type != NULL | Skip notification, end | Continue to exclusion check |
-| In Exclusion List? | Exclusion query | Owner NRIC found in exclusion table | Skip DataHive, call MHA | Call DataHive API |
-| Contact Found? | DataHive response | mobile != NULL OR email != NULL | Qualify for eAN | Call MHA API |
-| Address Found? | MHA response | Registered address retrieved | Qualify for AN letter | Manual review queue |
-
-#### External API Calls
-
-**OP-AN-LTA-001: LTA Vehicle Ownership Check**
-
-**Pre-call Validation:**
-- Vehicle number must not be "UNLICENSED_PARKING"
-- Vehicle registration type must not be 'I' (military)
-- Vehicle registration type must not be 'X' (UPL)
-
-**Request:**
-```
-GET LTA_API/vehicle/owner?vehicleNo=[vehicle_number]
-Headers:
-  API-Key: [from Azure Key Vault]
-```
-
-**Response:**
-```json
-{
-  "ownerName": "string",
-  "ownerNRIC": "string",
-  "vehicleMake": "string",
-  "vehicleModel": "string",
-  "roadTaxExpiry": "date",
-  "diplomaticFlag": "boolean"
-}
-```
-
-**Timeout:** 30 seconds
-**Retry:** 3 attempts with exponential backoff
-
-**OP-AN-DATAHIVE-001: DataHive Contact Retrieval**
-
-**Pre-call Validation:**
-- Owner NRIC/FIN must be available from LTA response
-- Notice must NOT be suspended
-- Owner must NOT be in eNotification exclusion list
-
-**Request:**
-```
-GET DATAHIVE_API/contact?nric=[owner_nric]
-Headers:
-  API-Key: [from Azure Key Vault]
-```
-
-**Response:**
-```json
-{
-  "mobileNumber": "string",
-  "emailAddress": "string"
-}
-```
-
-**Timeout:** 30 seconds
-**Retry:** 3 attempts with exponential backoff
-
-**OP-AN-MHA-001: MHA Address Retrieval**
-
-**Pre-call Validation:**
-- Owner NRIC/FIN must be available
-- eNotification qualification failed
-
-**Request:**
-```
-GET MHA_API/address?nric=[owner_nric]
-Headers:
-  API-Key: [from Azure Key Vault]
-```
-
-**Response:**
-```json
-{
-  "buildingName": "string",
-  "streetName": "string",
-  "postalCode": "string",
-  "unitNumber": "string"
-}
-```
-
-**Timeout:** 30 seconds
-**Retry:** 3 attempts with exponential backoff
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| LTA API Timeout | Timeout (>30s) | Retry 3 times with exponential backoff | Manual review queue |
-| LTA API Error | 500 Internal Server Error | Log error, retry | Manual review queue after 3 failures |
-| LTA Owner Not Found | 404 Not Found | Log warning | Manual review queue |
-| DataHive API Error | Any error | Log error, fallback to physical letter | Call MHA API |
-| DataHive No Contact | Empty response | Proceed to physical letter flow | Call MHA API |
-| MHA API Error | Any error | Retry 3 times | Manual review queue after failures |
-| MHA Address Not Found | Empty response | Log warning | Manual review queue |
+| Zone | Database Table | Field Name | Update Value |
+| --- | --- | --- | --- |
+| Intranet | ocms_offence_notice_owner_driver | notice_no | [notice_no] |
+| Intranet | ocms_offence_notice_owner_driver | owner_driver_indicator | O |
+| Intranet | ocms_offence_notice_owner_driver | owner_nric_no | [from LTA] |
+| Intranet | ocms_offence_notice_owner_driver | owner_name | [from LTA] |
+| Intranet | ocms_offence_notice_owner_driver | owner_blk_hse_no | [from MHA] |
+| Intranet | ocms_offence_notice_owner_driver | owner_street | [from MHA] |
+| Intranet | ocms_offence_notice_owner_driver | owner_floor | [from MHA] |
+| Intranet | ocms_offence_notice_owner_driver | owner_unit | [from MHA] |
+| Intranet | ocms_offence_notice_owner_driver | owner_bldg | [from MHA] |
+| Intranet | ocms_offence_notice_owner_driver | owner_postal_code | [from MHA] |
+| Intranet | ocms_offence_notice_owner_driver | cre_user_id | ocmsiz_app_conn |
+| Intranet | ocms_offence_notice_owner_driver | cre_date | Current timestamp |
 
 #### Swimlanes Definition
 
@@ -612,145 +365,58 @@ Headers:
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | eAN sending | Begin eNotification sending process for qualified AN |
 | Retrieve Notice Details | Get notice info | Retrieve notice number, offense details, composition amount from database |
 | Retrieve Owner Contact | Get contact info | Retrieve mobile number and/or email address from previous step |
 | Generate eAN Content | Create message | Generate eAN message content with notice details, offense info, appeal instructions |
 | Decision: Mobile Available? | Mobile check | Check if mobile number exists |
 | Send SMS | SMS notification | Call SMS Gateway API to send eAN SMS to mobile number |
 | Log SMS Sent | SMS logging | Log SMS sent status, timestamp, recipient |
-| Decision: SMS Success? | SMS result check | Check if SMS sent successfully |
 | Decision: Email Available? | Email check | Check if email address exists |
 | Send Email | Email notification | Call Email Service API to send eAN email |
 | Log Email Sent | Email logging | Log email sent status, timestamp, recipient |
-| Decision: Email Success? | Email result check | Check if email sent successfully |
 | Update eAN Status | Update database | Update notice with eAN sent flag, sent timestamp, notification method |
-| Log Notification Complete | Completion logging | Log eAN notification completion |
-| Retry Notification | Retry logic | Retry failed notification (max 3 times) |
-| Fallback to Letter | Physical letter path | If all retries fail, proceed to AN letter sending (Tab 3.6) |
+| Fallback to Letter | Physical letter path | If all retries fail, proceed to AN letter sending |
 | End | eAN complete | eNotification sending process finished |
 
-#### Decision Logic
+#### Data Mapping - Update after Sending email
 
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Mobile Available? | Mobile number | mobile != NULL AND mobile != "" | Send SMS | Skip to email check |
-| SMS Success? | SMS API response | Response status = success | Log SMS sent | Retry SMS (max 3 times) |
-| Email Available? | Email address | email != NULL AND email != "" | Send Email | End process |
-| Email Success? | Email API response | Response status = success | Log email sent | Retry email (max 3 times) |
+| Zone | Database Table | Field Name | Correct Value |
+| --- | --- | --- | --- |
+| Intranet | ocms_email_notification_records | notice_no | [notice_no] |
+| Intranet | ocms_email_notification_records | processing_stage | RD1 |
+| Intranet | ocms_email_notification_records | content | [enotification content] |
+| Intranet | ocms_email_notification_records | date_sent | [current timestamp] |
+| Intranet | ocms_email_notification_records | email_addr | [owner email] |
+| Intranet | ocms_email_notification_records | status | sent |
+| Intranet | ocms_email_notification_records | subject | [notification subject] |
+| Intranet | ocms_email_notification_records | cre_user_id | ocmsiz_app_conn |
+| Intranet | ocms_email_notification_records | cre_date | [current timestamp] |
 
-#### eAN Message Content
+#### Data Mapping - Update after sending SMS
 
-**SMS Content Template:**
-```
-Advisory Notice [NoticeNo]
-Offense: [OffenseDescription]
-Location: [PPName]
-Date: [NoticeDate]
-Amount: $[CompositionAmount]
-Payment not accepted. You may appeal via OCMS portal.
-```
+| Zone | Database Table | Field Name | Correct Value |
+| --- | --- | --- | --- |
+| Intranet | ocms_sms_notification_records | notice_no | [notice_no] |
+| Intranet | ocms_sms_notification_records | processing_stage | RD1 |
+| Intranet | ocms_sms_notification_records | content | [enotification content] |
+| Intranet | ocms_sms_notification_records | date_sent | [current timestamp] |
+| Intranet | ocms_sms_notification_records | mobile_no | [owner mobile] |
+| Intranet | ocms_sms_notification_records | status | sent |
+| Intranet | ocms_sms_notification_records | cre_user_id | ocmsiz_app_conn |
+| Intranet | ocms_sms_notification_records | cre_date | [current timestamp] |
 
-**Email Content Template:**
-```
-Subject: Advisory Notice [NoticeNo] - [VehicleNo]
+#### Data Mapping - Suspend after sending eNotification
 
-Dear Vehicle Owner,
-
-This is an Advisory Notice for the following offense:
-
-Notice Number: [NoticeNo]
-Vehicle Number: [VehicleNo]
-Offense: [OffenseDescription]
-Location: [PPName]
-Date: [NoticeDate]
-Composition Amount: $[CompositionAmount]
-
-This is an advisory notice only. Payment is not accepted at this time.
-
-You may appeal this notice via the OCMS portal at [PortalURL].
-
-Regards,
-Urban Redevelopment Authority
-```
-
-#### External API Calls
-
-**SMS Gateway API**
-
-**Request:**
-```
-POST SMS_GATEWAY_API/send
-{
-  "mobileNumber": "[owner_mobile]",
-  "message": "[eAN SMS content]",
-  "sender": "URA_OCMS"
-}
-```
-
-**Response:**
-```json
-{
-  "status": "success/failed",
-  "messageId": "string",
-  "timestamp": "datetime"
-}
-```
-
-**Timeout:** 10 seconds
-**Retry:** 3 attempts
-
-**Email Service API**
-
-**Request:**
-```
-POST EMAIL_SERVICE_API/send
-{
-  "emailAddress": "[owner_email]",
-  "subject": "[eAN email subject]",
-  "body": "[eAN email content]",
-  "sender": "noreply@ura.gov.sg"
-}
-```
-
-**Response:**
-```json
-{
-  "status": "success/failed",
-  "messageId": "string",
-  "timestamp": "datetime"
-}
-```
-
-**Timeout:** 10 seconds
-**Retry:** 3 attempts
-
-#### Database Operations
-
-**Update Tables:**
-- `ocms_valid_offence_notice`:
-  - Set eAN_sent_flag = 'Y'
-  - Set eAN_sent_timestamp = current timestamp
-  - Set notification_method = 'SMS' or 'EMAIL' or 'BOTH'
-
-**Insert Tables:**
-- `ocms_ean_notification_log`:
-  - notice_no
-  - recipient_mobile/email
-  - message_content
-  - sent_timestamp
-  - status (SUCCESS/FAILED)
-  - retry_count
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| SMS Gateway Timeout | Timeout (>10s) | Retry 3 times with exponential backoff | Proceed to email if mobile fails |
-| SMS Gateway Error | API error | Log error, retry | Try email after 3 failures |
-| Email Service Timeout | Timeout (>10s) | Retry 3 times | Fallback to physical letter if both fail |
-| Email Service Error | API error | Log error, retry | Fallback to physical letter after 3 failures |
-| All Notifications Failed | All retries exhausted | Log critical error | Proceed to AN letter sending (Tab 3.6) |
+| Zone | Database Table | Field Name | Correct Value |
+| --- | --- | --- | --- |
+| Intranet | ocms_suspended_notice | notice_no | [notice_no] |
+| Intranet | ocms_suspended_notice | date_of_suspension | [current timestamp] |
+| Intranet | ocms_suspended_notice | sr_no | [sequential] |
+| Intranet | ocms_suspended_notice | suspension_type | PS |
+| Intranet | ocms_suspended_notice | reason_of_suspension | ANS |
+| Intranet | ocms_suspended_notice | suspension_source | OCMS |
+| Intranet | ocms_suspended_notice | cre_user_id | ocmsiz_app_conn |
+| Intranet | ocms_suspended_notice | cre_date | [current timestamp] |
 
 #### Swimlanes Definition
 
@@ -759,7 +425,7 @@ POST EMAIL_SERVICE_API/send
 | Backend | Purple (#e1d5e7) | Retrieve details, Generate content, Update status, Log completion |
 | External System (SMS) | Green (#d5e8d4) | Send SMS, Return SMS result |
 | External System (Email) | Green (#d5e8d4) | Send Email, Return email result |
-| Database | Yellow (#fff2cc) | Retrieve notice details, Update eAN status, Log notification |
+| Database | Yellow (#fff2cc) | Retrieve notice details, Insert notification records |
 
 ---
 
@@ -779,140 +445,39 @@ POST EMAIL_SERVICE_API/send
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | AN letter sending | Begin AN letter generation and sending process |
 | Retrieve Notice Details | Get notice info | Retrieve notice number, offense details, composition amount from database |
 | Retrieve Owner Address | Get address info | Retrieve registered address from MHA API response |
 | Retrieve Owner Name | Get owner name | Retrieve vehicle owner name from LTA API response |
 | Generate Letter Template | Create letter | Generate AN letter PDF/XML with notice details, owner address, letter content |
-| Populate Letter Fields | Fill template | Populate letter with notice number, vehicle number, offense details, owner name/address |
+| Populate Letter Fields | Fill template | Combine all fields |
 | Format Letter Content | Format PDF/XML | Format letter content according to SLIFT requirements |
-| Decision: Valid Letter? | Letter validation | Check if letter PDF/XML generated successfully |
-| Call SLIFT API | Submit for printing | Apply OP-AN-SLIFT-001: Submit letter to SLIFT/SFTP for printing and mailing |
+| Call SLIFT API | Submit for printing | Submit letter to SLIFT/SFTP for printing and mailing |
 | Decision: SLIFT Success? | Submission result | Check if SLIFT accepted letter submission |
-| Update Letter Status | Update database | Update notice with letter_sent_flag='Y', sent_timestamp, submission_id |
+| Update Letter Status | Update database | Update notice with letter_sent_flag='Y' |
 | Log Letter Sent | Completion logging | Log AN letter sent status, timestamp, recipient |
 | Retry Submission | Retry logic | Retry failed submission (max 3 times with exponential backoff) |
 | Manual Review Queue | Manual handling | Add to manual review queue if all retries fail |
 | End | Letter complete | AN letter sending process finished |
 
-#### Decision Logic
+#### Data Mapping - Insert after sending AN Letter
 
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Valid Letter? | Letter generation result | PDF/XML generated successfully AND size > 0 | Call SLIFT API | Log error, manual review queue |
-| SLIFT Success? | SLIFT API response | Response status = success AND submission_id returned | Update letter status | Retry submission (max 3 times) |
-
-#### AN Letter Content Template
-
-**Letter Structure:**
-```
-Urban Redevelopment Authority
-Car Parks Department
-
-[Owner Name]
-[Building Name]
-[Street Name]
-[Unit Number]
-[Postal Code]
-
-Date: [Current Date]
-
-Advisory Notice Number: [NoticeNo]
-
-Dear Sir/Madam,
-
-RE: ADVISORY NOTICE - VEHICLE [VehicleNo]
-
-This is an Advisory Notice for the following parking offense:
-
-Offense Details:
-- Notice Number: [NoticeNo]
-- Vehicle Number: [VehicleNo]
-- Offense: [OffenseDescription]
-- Location: [PPName]
-- Date and Time: [NoticeDateAndTime]
-- Composition Amount: $[CompositionAmount]
-
-This is an advisory notice only. Payment is not accepted for this notice.
-
-You have the right to appeal this notice. Please visit the OCMS portal
-at [PortalURL] to submit your appeal.
-
-If you have any questions, please contact us at [ContactNumber].
-
-Yours faithfully,
-Urban Redevelopment Authority
-```
-
-#### External API Call
-
-**OP-AN-SLIFT-001: SLIFT Letter Submission**
-
-**Pre-call Validation:**
-- Owner's registered address must be available
-- Notice must have an_flag = 'Y'
-- Letter PDF/XML must be generated
-
-**Request:**
-```
-POST SLIFT_API/submit
-Headers:
-  API-Key: [from Azure Key Vault]
-Body (multipart/form-data):
-  {
-    "noticeNumber": "[notice_no]",
-    "vehicleNumber": "[vehicle_no]",
-    "letterFile": "[PDF/XML file]",
-    "letterType": "ADVISORY_NOTICE",
-    "recipientName": "[owner_name]",
-    "recipientAddress": "[full_address]",
-    "priority": "NORMAL"
-  }
-```
-
-**Response:**
-```json
-{
-  "status": "success/failed",
-  "submissionId": "string",
-  "timestamp": "datetime",
-  "estimatedPrintDate": "date"
-}
-```
-
-**Timeout:** 30 seconds
-**Retry:** 3 attempts with exponential backoff (1s, 2s, 4s)
-
-**File Format:** PDF (preferred) or XML based on SLIFT requirements
-
-#### Database Operations
-
-**Update Tables:**
-- `ocms_valid_offence_notice`:
-  - Set letter_sent_flag = 'Y'
-  - Set letter_sent_timestamp = current timestamp
-  - Set slift_submission_id = submission ID from SLIFT
-
-**Insert Tables:**
-- `ocms_an_letter_log`:
-  - notice_no
-  - recipient_name
-  - recipient_address
-  - letter_file_path
-  - slift_submission_id
-  - sent_timestamp
-  - status (SUCCESS/FAILED)
-  - retry_count
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| Letter Generation | Generation failure | Log error, retry generation | Manual review queue if fails |
-| SLIFT API Timeout | Timeout (>30s) | Retry 3 times with exponential backoff | Manual review queue after 3 failures |
-| SLIFT API Error | API error | Log error, retry | Manual review queue after 3 failures |
-| SLIFT Rejection | Validation error | Log error with reason | Manual review queue |
-| File Too Large | File size error | Compress PDF, retry | Manual review queue if compression fails |
+| Zone | Database Table | Field Name | Correct Value |
+| --- | --- | --- | --- |
+| Intranet | ocms_an_letter | notice_no | [notice_no] |
+| Intranet | ocms_an_letter | date_of_processing | [current timestamp] |
+| Intranet | ocms_an_letter | date_of_an_letter | [current timestamp] |
+| Intranet | ocms_an_letter | owner_nric_no | [owner nric] |
+| Intranet | ocms_an_letter | owner_name | [owner name] |
+| Intranet | ocms_an_letter | owner_id_type | [id type] |
+| Intranet | ocms_an_letter | owner_blk_hse_no | [blk hse no] |
+| Intranet | ocms_an_letter | owner_street | [street] |
+| Intranet | ocms_an_letter | owner_floor | [floor] |
+| Intranet | ocms_an_letter | owner_unit | [unit] |
+| Intranet | ocms_an_letter | owner_bldg | [building] |
+| Intranet | ocms_an_letter | owner_postal_code | [postal code] |
+| Intranet | ocms_an_letter | processing_stage | RD1 |
+| Intranet | ocms_an_letter | cre_user_id | ocmsiz_app_conn |
+| Intranet | ocms_an_letter | cre_date | [current timestamp] |
 
 #### Swimlanes Definition
 
@@ -920,7 +485,7 @@ Body (multipart/form-data):
 |----------|-------|-------|
 | Backend | Purple (#e1d5e7) | Retrieve details, Generate letter, Format content, Update status, Log completion |
 | External System (SLIFT) | Green (#d5e8d4) | Submit letter, Return submission result |
-| Database | Yellow (#fff2cc) | Retrieve notice/owner details, Update letter status, Log letter sent |
+| Database | Yellow (#fff2cc) | Retrieve notice/owner details, Insert letter record |
 
 ---
 
@@ -940,72 +505,46 @@ Body (multipart/form-data):
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | Suspension process | Begin PS-ANS suspension creation for qualified AN |
 | Retrieve Notice Details | Get notice info | Retrieve notice number, notice date from database |
-| Calculate Suspension Date | Set suspension date | Set date_of_suspension = current date |
-| Calculate Revival Date | Set revival date | Calculate due_date_of_revival = current date + 30 days (configurable) |
 | Generate SR Number | Create serial number | Generate sequential sr_no for suspension record |
 | Create Suspension Record | Insert suspension | Insert record into ocms_suspended_notice table |
 | Update Notice with Suspension | Update notice | Update ocms_valid_offence_notice with suspension details |
-| Sync to Internet DB | Mirror record | Insert/update suspension record in eocms_suspended_notice (Internet) |
+| Sync to Internet DB | Mirror record | Insert/update suspension record in eocms_valid_offence_notice (Internet) |
 | Log Suspension Created | Logging | Log PS-ANS suspension creation with timestamp |
 | End | Suspension complete | PS-ANS suspension process finished |
 
-#### Database Operations
+#### Data Mapping - Suspend notice PS - ANS
 
-**Insert Table: ocms_suspended_notice (Intranet)**
+| Zone | Database Table | Field Name | Correct Value |
+| --- | --- | --- | --- |
+| Intranet | ocms_suspended_notice | notice_no | [notice_no] |
+| Intranet | ocms_suspended_notice | date_of_suspension | [current timestamp] |
+| Intranet | ocms_suspended_notice | sr_no | [sequential] |
+| Intranet | ocms_suspended_notice | suspension_type | PS |
+| Intranet | ocms_suspended_notice | reason_of_suspension | ANS |
+| Intranet | ocms_suspended_notice | suspension_source | OCMS |
+| Intranet | ocms_suspended_notice | officer_authorising_suspension | ocmsizmgr_conn |
+| Intranet | ocms_suspended_notice | due_date_of_revival | [current date + 30 days] |
+| Intranet | ocms_suspended_notice | suspension_remarks | Advisory Notice detected - qualified AN |
+| Intranet | ocms_suspended_notice | cre_user_id | ocmsiz_app_conn |
+| Intranet | ocms_suspended_notice | cre_date | Current timestamp |
 
-**Fields:**
-- `notice_no`: Notice number (PK)
-- `date_of_suspension`: Current date (PK)
-- `sr_no`: Sequential number (PK)
-- `suspension_type`: 'PS' (Permanent Suspension)
-- `reason_of_suspension`: 'ANS' (Advisory Notice Suspension)
-- `suspension_source`: 'ocmsiz_app_conn'
-- `officer_authorising_suspension`: 'ocmsizmgr_conn'
-- `due_date_of_revival`: current date + 30 days
-- `suspension_remarks`: 'Advisory Notice detected - qualified AN'
-- `created_by`: 'ocmsiz_app_conn'
-- `created_date`: Current timestamp
+#### Data Mapping - Update after suspend notice
 
-**Update Table: ocms_valid_offence_notice (Intranet)**
-
-**Fields:**
-- `suspension_type`: 'PS'
-- `epr_reason_of_suspension`: 'ANS'
-- `epr_date_of_suspension`: Current date
-- `due_date_of_revival`: current date + 30 days
-- `modified_by`: 'ocmsiz_app_conn'
-- `modified_date`: Current timestamp
-
-**Insert/Update Table: eocms_valid_offence_notice (Internet)**
-
-Mirror same suspension fields from intranet table.
-
-#### Suspension Parameters
-
-| Parameter | Value | Source |
-|-----------|-------|--------|
-| Suspension Type | PS (Permanent Suspension) | Fixed |
-| Reason of Suspension | ANS (Advisory Notice Suspension) | Fixed |
-| Suspension Source | ocmsiz_app_conn | System parameter |
-| Officer Authorising | ocmsizmgr_conn | System parameter |
-| Revival Period | 30 days (configurable) | System configuration table |
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| Suspension Insert | SQLException | Log error, rollback | Retry insert, manual review if fails |
-| Notice Update | SQLException | Log error, rollback | Retry update, ensure data consistency |
-| Internet Sync | Sync failure | Log error | Retry sync, manual verification |
-| Revival Date Calculation | Date error | Use default 30 days | Log warning, continue with default |
+| Zone | Database Table | Field Name | Correct Value |
+| --- | --- | --- | --- |
+| Intranet & Internet | ocms_valid_offence_notice | suspension_type | PS |
+| Intranet & Internet | ocms_valid_offence_notice | epr_reason_of_suspension | ANS |
+| Intranet & Internet | ocms_valid_offence_notice | epr_date_of_suspension | Current timestamp |
+| Intranet & Internet | ocms_valid_offence_notice | due_date_of_revival | Current date + 30 days |
+| Intranet & Internet | ocms_valid_offence_notice | upd_user_id | ocmsiz_app_conn |
+| Intranet & Internet | ocms_valid_offence_notice | upd_date | Current timestamp |
 
 #### Swimlanes Definition
 
 | Swimlane | Color | Steps |
 |----------|-------|-------|
-| Backend | Purple (#e1d5e7) | Calculate dates, Generate SR number, Log suspension |
+| Backend | Purple (#e1d5e7) | Generate SR number, Log suspension |
 | Database | Yellow (#fff2cc) | Retrieve notice details, Create suspension record, Update notice, Sync to Internet |
 
 ---
@@ -1026,11 +565,10 @@ Mirror same suspension fields from intranet table.
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | Report generation | Staff requests ANS report from portal |
 | Receive Report Parameters | Get report criteria | Receive date range, vehicle number, subsystem filter from user |
-| Validate Parameters | Parameter validation | Validate date range (max 31 days), required fields |
+| Validate Parameters | Parameter validation | Validate date range and required fields |
 | Decision: Valid Parameters? | Validation result | Check if parameters are valid |
-| Query ANS Suspension Data | Database query | Query ocms_suspended_notice joined with ocms_valid_offence_notice for reason_of_suspension='ANS' |
+| Query ANS Suspension Data | Database query | Query ocms_suspended_notice joined with ocms_valid_offence_notice |
 | Apply Filters | Filter results | Apply vehicle number, subsystem, date range filters |
 | Decision: Any Records? | Record check | Check if query returned any records |
 | Sort Results | Order data | Sort by suspension date descending |
@@ -1041,87 +579,6 @@ Mirror same suspension fields from intranet table.
 | Return No Data Message | Empty result | Return message "No records found for the selected criteria" |
 | Return Error Response | Error handling | Return error message for invalid parameters |
 | End | Report complete | ANS report generation finished |
-
-#### Decision Logic
-
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Valid Parameters? | Validation result | Date range <= 31 days AND required fields present | Query suspended notices | Return error response |
-| Any Records? | Query result | count > 0 | Sort results and generate report | Return no data message |
-
-#### Report Parameters
-
-| Parameter | Type | Required | Validation |
-|-----------|------|----------|------------|
-| Date From | Date | Yes | Must be <= Date To |
-| Date To | Date | Yes | Date range max 31 days |
-| Vehicle Number | String | No | Alphanumeric |
-| Subsystem | String | No | Valid subsystem code |
-
-#### Database Query
-
-**Query Logic:**
-```sql
-SELECT
-  sn.notice_no,
-  sn.date_of_suspension,
-  sn.due_date_of_revival,
-  sn.suspension_remarks,
-  von.vehicle_no,
-  von.subsystem_label,
-  von.computer_rule_code,
-  von.composition_amount,
-  von.notice_date_and_time,
-  von.pp_code,
-  von.pp_name,
-  von.offense_notice_type
-FROM ocms_suspended_notice sn
-INNER JOIN ocms_valid_offence_notice von
-  ON sn.notice_no = von.notice_no
-WHERE sn.reason_of_suspension = 'ANS'
-  AND sn.date_of_suspension BETWEEN [dateFrom] AND [dateTo]
-  AND ([vehicleNo] IS NULL OR von.vehicle_no = [vehicleNo])
-  AND ([subsystem] IS NULL OR von.subsystem_label = [subsystem])
-ORDER BY sn.date_of_suspension DESC
-```
-
-#### Report Output Format
-
-**Excel Report Columns:**
-1. Notice Number
-2. Vehicle Number
-3. Subsystem
-4. Suspension Date
-5. Revival Date
-6. Offense Code
-7. Composition Amount
-8. Notice Date
-9. Parking Place
-10. Suspension Remarks
-
-**PDF Report Structure:**
-```
-Advisory Notice Suspension Report
-Generated: [Current Date Time]
-Date Range: [Date From] to [Date To]
-
-+--------------+-------------+----------+----------------+-------------+
-| Notice No    | Vehicle No  | Subsystem| Suspension Date| Revival Date|
-+--------------+-------------+----------+----------------+-------------+
-| [NoticeNo]   | [VehicleNo] | [System] | [SuspDate]     | [RevDate]   |
-+--------------+-------------+----------+----------------+-------------+
-
-Total Records: [Count]
-```
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| Parameter Validation | Invalid date range | Return error "Date range exceeds 31 days" | User corrects parameters |
-| Database Query | SQLException | Log error, return error message | User retries |
-| Report Generation | File creation error | Log error, return error message | User retries |
-| No Data | Empty result | Return friendly message | User adjusts criteria |
 
 #### Swimlanes Definition
 
@@ -1149,186 +606,36 @@ Total Records: [Count]
 
 | Step | Definition | Brief Description |
 |------|-----------|-------------------|
-| Start | Cron job triggered | Daily scheduled job to send unqualified AN list |
-| Calculate Date Range | Determine period | Calculate date range for notices to process (e.g., previous day) |
-| Query Unqualified ANs | Database query | Query notices where an_flag='N' or NULL for REPCCS/CES subsystems |
+| Calculate Date Range | Determine period | Calculate date range for notices to process |
+| Query Unqualified ANs | Database query | Query notices where an_flag='N' or NULL |
 | Filter by Subsystem | Separate lists | Separate unqualified notices by subsystem (REPCCS vs CES) |
 | Decision: Any REPCCS Records? | REPCCS check | Check if any unqualified notices for REPCCS |
 | Format REPCCS List | Create payload | Format unqualified AN list for REPCCS API |
-| Call REPCCS API | Send to REPCCS | Send unqualified AN list to REPCCS webhook |
-| Decision: REPCCS Success? | REPCCS response | Check if REPCCS accepted the list |
+| Call REPCCS API | Send to REPCCS | Send unqualified AN list to REPCCS |
 | Log REPCCS Sent | REPCCS logging | Log successful transmission to REPCCS |
-| Retry REPCCS | Retry logic | Retry failed REPCCS transmission (max 3 times) |
 | Decision: Any CES Records? | CES check | Check if any unqualified notices for CES |
 | Format CES List | Create payload | Format unqualified AN list for CES API |
-| Call CES API | Send to CES | Send unqualified AN list to CES webhook |
-| Decision: CES Success? | CES response | Check if CES accepted the list |
+| Call CES API | Send to CES | Send unqualified AN list to CES |
 | Log CES Sent | CES logging | Log successful transmission to CES |
-| Retry CES | Retry logic | Retry failed CES transmission (max 3 times) |
-| Update Notice Status | Mark as sent | Update notices with unqualified_list_sent_flag='Y', sent_timestamp |
+| Update Notice Status | Mark as sent | Update notices with unqualified_list_sent_flag='Y' |
 | Log Cron Complete | Completion logging | Log cron job completion with summary |
 | End | Cron job finished | Unqualified AN list sending complete |
 
-#### Decision Logic
+#### Unqualified AN Conditions
 
-| Decision | Input | Condition | True Action | False Action |
-|----------|-------|-----------|-------------|--------------|
-| Any REPCCS Records? | Query result | count > 0 for REPCCS subsystem | Format REPCCS list | Skip REPCCS transmission |
-| REPCCS Success? | REPCCS API response | Response status = success | Log sent | Retry REPCCS (max 3 times) |
-| Any CES Records? | Query result | count > 0 for CES subsystem | Format CES list | Skip CES transmission |
-| CES Success? | CES API response | Response status = success | Log sent | Retry CES (max 3 times) |
-
-#### Database Query
-
-**Query for Unqualified ANs:**
-```sql
-SELECT
-  notice_no,
-  vehicle_no,
-  subsystem_label,
-  computer_rule_code,
-  composition_amount,
-  notice_date_and_time,
-  offense_notice_type,
-  an_flag,
-  created_date
-FROM ocms_valid_offence_notice
-WHERE created_date BETWEEN [dateFrom] AND [dateTo]
-  AND (an_flag = 'N' OR an_flag IS NULL)
-  AND subsystem_label IN ([REPCCS_subsystems], [CES_subsystems])
-  AND unqualified_list_sent_flag = 'N'
-ORDER BY created_date ASC
-```
-
-**REPCCS Subsystems:** Configured list of REPCCS subsystem codes
-**CES Subsystems:** Subsystems starting with 030-999
-
-#### Unqualified AN Conditions (Actual Code Implementation)
-
-Notices are considered unqualified if:
-1. `offence_notice_type` != 'O'
-2. `vehicle_registration_type` NOT IN ['S','D','V','I']
-3. Vehicle already has AN today (same-day limit - still active in code)
-4. Exempt offense (Rule 20412 + $80 OR Rule 11210 + LB/HL)
-5. No past offense in 24 months (simplified logic - any past offense qualifies)
-
-> **Note:** Code uses simplified logic. FD v1.2 requires ANS PS reason check, but code just checks for any past offense.
-
-#### External API Calls
-
-**REPCCS Unqualified List API**
-
-**Request:**
-```
-POST REPCCS_API/unqualified-an-list
-Headers:
-  API-Key: [from Azure Key Vault]
-Body:
-{
-  "transmissionDate": "[current_date]",
-  "unqualifiedNotices": [
-    {
-      "noticeNo": "string",
-      "vehicleNo": "string",
-      "subsystemLabel": "string",
-      "noticeDate": "datetime",
-      "reason": "string"
-    }
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "status": "success/failed",
-  "receivedCount": "integer",
-  "timestamp": "datetime"
-}
-```
-
-**CES Unqualified List API**
-
-**Request:**
-```
-POST CES_API/unqualified-an-list
-Headers:
-  API-Key: [from Azure Key Vault]
-Body:
-{
-  "transmissionDate": "[current_date]",
-  "unqualifiedNotices": [
-    {
-      "noticeNo": "string",
-      "vehicleNo": "string",
-      "subsystemLabel": "string",
-      "noticeDate": "datetime",
-      "reason": "string"
-    }
-  ]
-}
-```
-
-**Response:**
-```json
-{
-  "status": "success/failed",
-  "receivedCount": "integer",
-  "timestamp": "datetime"
-}
-```
-
-**Timeout:** 60 seconds (can be large list)
-**Retry:** 3 attempts with exponential backoff
-
-#### Database Operations
-
-**Update Table: ocms_valid_offence_notice**
-
-**Fields:**
-- `unqualified_list_sent_flag`: 'Y'
-- `unqualified_list_sent_timestamp`: Current timestamp
-- `modified_by`: 'ocmsiz_cron'
-- `modified_date`: Current timestamp
-
-**Insert Table: ocms_unqualified_an_transmission_log**
-
-**Fields:**
-- `transmission_date`: Current date
-- `subsystem`: 'REPCCS' or 'CES'
-- `total_count`: Number of notices sent
-- `success_count`: Number successfully transmitted
-- `failed_count`: Number failed
-- `retry_count`: Number of retries
-- `status`: 'SUCCESS' / 'PARTIAL' / 'FAILED'
-- `created_date`: Current timestamp
-
-#### Error Handling
-
-| Error Point | Error Type | Handling | Recovery |
-|-------------|-----------|----------|----------|
-| REPCCS API Timeout | Timeout (>60s) | Retry 3 times with exponential backoff | Log failure, alert admin |
-| REPCCS API Error | API error | Log error, retry | Alert admin after 3 failures |
-| CES API Timeout | Timeout (>60s) | Retry 3 times with exponential backoff | Log failure, alert admin |
-| CES API Error | API error | Log error, retry | Alert admin after 3 failures |
-| Database Update | SQLException | Log error | Continue to next batch |
-
-#### Cron Job Configuration
-
-| Parameter | Value |
-|-----------|-------|
-| Schedule | Daily at 02:00 AM SGT |
-| Date Range | Previous day (00:00:00 to 23:59:59) |
-| Batch Size | 1000 notices per API call |
-| Max Retry | 3 attempts |
-| Timeout | 60 seconds per API call |
+| Step | Condition | Add to Unqualified ANS vehicle? |
+|------|-----------|--------------------------------|
+| 1 | The vehicle doesn't have the offence in last 24 months | No |
+| 2 | If the vehicle has past offence in last 24 months, check the suspension type of the notice | |
+| 2.a | If the notice is not under suspension or suspended with TS (temporary suspension), add the vehicle to Unqualified list | Yes |
+| 2.b | If PS, check the ANS_PS_Reason for the following PS reasons: CAN, CFA, DBB, VST. If PS reason for ALL offence records within the last 2 years does not fall in any of the ANS_PS_Reasons above, add vehicle number to unqualified ANS list | Yes |
 
 #### Swimlanes Definition
 
 | Swimlane | Color | Steps |
 |----------|-------|-------|
 | Backend | Purple (#e1d5e7) | Calculate date range, Filter by subsystem, Format lists, Update status, Log completion |
-| Database | Yellow (#fff2cc) | Query unqualified ANs, Update notice status, Log transmission |
+| Database | Yellow (#fff2cc) | Query unqualified ANs, Update notice status |
 | External System (REPCCS) | Green (#d5e8d4) | Receive REPCCS list, Return response |
 | External System (CES) | Green (#d5e8d4) | Receive CES list, Return response |
 
