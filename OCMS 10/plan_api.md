@@ -1,18 +1,19 @@
 # API Planning Document - OCMS 10: Advisory Notices Processing
 
 ## Document Information
-- **Version:** 1.2
+- **Version:** 1.3
 - **Date:** 2026-01-22
 - **Source Documents:**
   - Functional Document: v1.2_OCMS 10_Functional Document.md
-  - Backend Code: ura-project-ocmsadminapi-5e962080c0b4
-  - Key Files: AdvisoryNoticeHelper.java, CreateNoticeServiceImpl.java, CreateNoticeController.java
+  - Backend Code: ura-project-ocmsadminapi-5e962080c0b4, ura-project-ocmsadmincron
+  - Key Files: AdvisoryNoticeHelper.java, CreateNoticeServiceImpl.java, CreateNoticeController.java, cron-schedules.properties
 - **Related Documents:**
   - OCMS 3 Technical Document (REPCCS API Specification)
   - OCMS 5 Technical Document (Notice Creation)
   - OCMS 21 Technical Document (Double Booking)
 
 **Change Log:**
+- v1.3 (2026-01-22): Added Section 2.5 Cron Job Schedules (from cron-schedules.properties). Added DataHive Dataset IDs to Section 2.2. Added Type E exclusion note. Updated Assumptions Log with confirmed findings.
 - v1.2 (2026-01-22): Aligned with corrected Technical Document. Added database tables for notifications (ocms_email_notification_records, ocms_sms_notification_records, ocms_an_letter, ocms_offence_notice_owner_driver). Added references to OCMS 3, 5, 21 documents.
 - v1.1 (2026-01-15): Updated to align with FD v1.2 - Added REPCCS/CES AN flag handling notes
 
@@ -477,10 +478,20 @@ END IF
 - Mobile phone number
 - Email address
 
+**DataHive Dataset IDs (FD v1.2 Reference):**
+
+| Owner Type | Dataset ID | Table Name | Purpose |
+|------------|------------|------------|---------|
+| Individual (NRIC/FIN) | D75 | V_DH_SNDGO_SINGPASSCONTACT_MASTER | Mobile number via Singpass |
+| Business Entity (UEN) | D37 | V_DH_CORPPASS_DELTA | Email address via Corppass |
+| Company Address | D30, D29 | Basic firm information (registered/de-registered) | Registered address for UEN |
+
+**Note:** [ASSUMPTION] Specific Dataset IDs are referenced in FD but implementation may use dynamic dataset selection based on ID type. Refer to `DatahiveContactInfoHelper.java` for actual implementation.
+
 **Qualification for eNotification:**
 - Mobile number OR email must be available
-- Owner must NOT be in eNotification exclusion list
-- Notice must NOT be suspended
+- Owner must NOT be in eNotification exclusion list (`ocms_enotification_exclusion_list`)
+- Notice must NOT be suspended (except TS-HST)
 
 **Error Handling:**
 - Timeout: 30 seconds
@@ -535,6 +546,31 @@ END IF
 - Retry: 3 attempts with exponential backoff (see Section 2.0.2)
 - Email Alert: Triggered after 3 failed retries (see Section 2.0.2)
 - Fallback: Manual review queue, letter pending status
+
+---
+
+### 2.5 Cron Job Schedules
+
+**Source:** `cron-schedules.properties` (ocmsadmincron)
+
+**AN-Related Cron Jobs:**
+
+| Cron Job | Schedule | Time | Description | ShedLock Name |
+|----------|----------|------|-------------|---------------|
+| eNotification SMS/Email | `0 0 10 * * ?` | 10:00 AM | Send eAN SMS and emails | `send_ena_reminder` |
+| eNotification Retry | `0 0 14 * * ?` | 14:00 (2:00 PM) | Retry failed eAN SMS and emails | `send_ena_reminder_retry` |
+| AN Letter Generation | End of day | ~00:30 AM | Prepare AN letters for printing vendor | `toppan_letters_generator` |
+| ANS Letter Reconciliation | Daily | Scheduled | Reconcile AN letters with Toppan acknowledgement | `ans_letter_reconciliation` |
+| LTA Report (TS-ROV) | `0 0 1 * * ?` | 01:00 AM | Generate TS-ROV report | `lta_report` |
+| RIP Hirer/Driver Report | `0 0 2 * * ?` | 02:00 AM | Generate RIP furnish report | `rip_hirer_driver_report` |
+| VIP Vehicle Report | `0 0 8 * * ?` | 08:00 AM | Generate VIP vehicle classification report | `vip_vehicle_report` |
+| Unqualified AN List | End of day | Scheduled | Send unqualified AN list to REPCCS/CES | `unqualified_an_list` |
+
+**Cron Expression Format:** `seconds minutes hours day-of-month month day-of-week`
+
+**Location in Code:**
+- Configuration: `src/main/resources/cron-schedules.properties`
+- Jobs: `src/main/java/com/ocmsintranet/cronservice/framework/workflows/*/jobs/`
 
 ---
 
@@ -769,23 +805,37 @@ WHERE vehicle_no = ?
 
 ## 4. Assumptions Log
 
+### Assumptions (Need Confirmation)
+
 [ASSUMPTION] DataHive API response format and error codes need to be confirmed with actual API specification.
 
 [ASSUMPTION] MHA API timeout and retry logic follow standard 30-second timeout with 3 retries.
-
-[ASSUMPTION] SLIFT is used for encryption before SFTP upload to Toppan printing vendor (confirmed from code: ToppanLettersGeneratorJob.java).
-
-[ASSUMPTION] eNotification exclusion list is maintained in a separate table (not found in current codebase).
 
 [ASSUMPTION] LTA API authentication mechanism uses API key stored in Azure Key Vault.
 
 [ASSUMPTION] Advisory Notice suspension duration (due_date_of_revival) is calculated as current date + 30 days (configurable via system parameters).
 
+[ASSUMPTION] DataHive Dataset IDs (D75, D37, D30, D29) are referenced in FD but may use dynamic dataset selection in actual implementation.
+
+### Confirmed Findings (From Code Analysis)
+
+[CONFIRMED] SLIFT is used for encryption before SFTP upload to Toppan printing vendor. Reference: `ToppanLettersGeneratorJob.java`.
+
 [CONFIRMED] AN SMS/Email messages are currently hardcoded in NotificationSmsEmailHelper.java (method generateAnMessages). There is a TODO comment: "Replace with actual approved template from BA/Product Owner".
 
-[CONFIRMED] Notification records are stored in ocms_email_notification_records and ocms_sms_notification_records tables.
+[CONFIRMED] Notification records are stored in `ocms_email_notification_records` and `ocms_sms_notification_records` tables.
 
-[CONFIRMED] AN Letter records are stored in ocms_an_letter table.
+[CONFIRMED] AN Letter records are stored in `ocms_an_letter` table.
+
+[CONFIRMED] eNotification Exclusion List is stored in `ocms_enotification_exclusion_list` table with fields: `id_no`, `remarks`, audit fields. Reference: `OcmsEnotificationExclusionList.java`.
+
+[CONFIRMED] Type E (Enforcement/Payment Evasion) notices are **NOT eligible for ANS** - AN qualification check is skipped entirely. Reference: `NoticeValidationHelper.java` lines 447-498. (BA confirmed 2026-01-22)
+
+[CONFIRMED] Cron schedules are defined in `cron-schedules.properties`. eNotification at 10:00 AM, Retry at 14:00 (2:00 PM).
+
+[CONFIRMED] ANS Letter Reconciliation Report job exists to reconcile letters sent to Toppan vs printed. Reference: `AnsLetterReconciliationJob.java`, `AnsLetterReconciliationHelper.java`.
+
+[CONFIRMED] Manual PS-ANS suspension by OIC is supported via Staff Portal. Reference: `Ocms41ManualReviewService.java`, PS Report Section 6.3.2.
 
 ---
 

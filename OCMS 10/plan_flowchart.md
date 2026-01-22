@@ -1,16 +1,18 @@
 # Flowchart Planning Document - OCMS 10: Advisory Notices Processing
 
 ## Document Information
-- **Version:** 1.9
+- **Version:** 2.0
 - **Date:** 2026-01-22
 - **Source Documents:**
   - Functional Document: v1.2_OCMS 10_Functional Document.md
   - Functional Flow: OCMS_10_Functional_Flow.drawio
   - plan_api.md
   - plan_condition.md
+  - Backend Code: ocmsadminapi, ocmsadmincron
 - **Reference Guidelines:** Docs/guidelines/plan_flowchart.md
 
 **Change Log:**
+- v2.0 (2026-01-22): Added Type E exclusion (BA confirmed). Added Tab 3.5.1 for Resend eAN Cron (1400hrs). Added Tab 3.8.1 for ANS Letter Reconciliation Report. Updated Tab 3.1 with Type E skip logic. Added Manual PS-ANS by OIC to Tab 3.7. Added TS-ROV/TS-NRO/TS-HST handling to relevant tabs.
 - v1.9 (2026-01-22): Major update - Aligned all flows with corrected Technical Document. Removed assumed template content from Tab 3.5 and 3.6. Updated data mappings to use actual tables (ocms_email_notification_records, ocms_sms_notification_records, ocms_an_letter). Added references to OCMS 3, OCMS 5, OCMS 21 documents.
 - v1.8 (2026-01-21): Data Dictionary validation fixes - Tab 3.1.1: ocms_ans_exemption_rules → ocms_an_exemption_rules, effective_start_date → start_effective_date, effective_end_date → end_effective_date, rule_remark → rule_remarks, removed is_active clause. Tab 3.1.2: code_value → code, code_description → description, is_active = 'Y' → code_status = 'A'.
 - v1.7 (2026-01-21): Simplified Tab 3.1.2 - Moved exclude 2pm notice logic from Code to SQL query (AND notice_no != newNotice.notice_no). Removed code filter step.
@@ -63,7 +65,7 @@
 |-----------|-------|
 | Process Name | AN Qualification Check |
 | Section | 3.1 |
-| Trigger | Notice creation with offence_notice_type='O' and vehicle_type in [S,D,V,I]. **Note:** CES notices with an_flag='Y' skip this check and go directly to PS-ANS (per FD v1.2 Section 4.2) |
+| Trigger | Notice creation with offence_notice_type='O' and vehicle_type in [S,D,V,I]. **Note:** CES notices with an_flag='Y' skip this check and go directly to PS-ANS (per FD v1.2 Section 4.2). **Important:** Type E (Enforcement) notices are NOT eligible for ANS - skip AN qualification entirely and proceed to standard flow (BA confirmed 2026-01-22). |
 | Frequency | Real-time (per notice creation) |
 | Systems Involved | Backend (AdvisoryNoticeHelper), Database (Intranet) |
 
@@ -429,6 +431,72 @@
 
 ---
 
+### Tab 3.5.1: Resend eAN SMS and Email (Retry Cron)
+
+#### Process Overview
+
+| Attribute | Value |
+|-----------|-------|
+| Process Name | Resend Failed eAN SMS and Email |
+| Section | 3.5.1 |
+| Trigger | Scheduled cron job runs daily at **14:00 (1400hrs)** |
+| Frequency | Daily |
+| Systems Involved | Backend (OCMS Cron), Database (Intranet), External Systems (SMS Gateway, Email Service) |
+
+#### Cron Schedule
+
+| Cron Job | Schedule | Time |
+|----------|----------|------|
+| NotificationSmsEmailRetryJob | `0 0 14 * * ?` | Daily at 14:00 (2:00 PM) |
+| ShedLock Name | `send_ena_reminder_retry` | - |
+
+#### Process Steps Table
+
+| Step | Definition | Brief Description |
+|------|-----------|-------------------|
+| Pre-condition | Scheduled cron | Scheduled cron job runs daily at 1400hrs to retry sending failed eAN SMSes and emails |
+| Query DB for Failed Notifications | Get failed records | Query `ocms_sms_notification_records` and `ocms_email_notification_records` where status='E' and date_sent=today |
+| Retry Sending | Resend notifications | System resends the failed SMS and email notifications |
+| Update Status | Update records | If successful: Update status to 'S', suspend notice with PS-ANS. If failed again: Update processing stage from ENA → RD1 (redirect to letter flow) |
+| Process All Records | Batch processing | Cron runs until re-send status for all records is updated |
+| End | Cron job ends | Retry process completed |
+
+#### Retry Logic
+
+```
+Query failed records:
+  - ocms_sms_notification_records WHERE status='E' AND date_sent=TODAY
+  - ocms_email_notification_records WHERE status='E' AND date_sent=TODAY
+
+FOR each failed record DO
+  Resend SMS/Email
+
+  IF resend successful THEN
+    Update status = 'S'
+    Suspend notice with PS-ANS
+  ELSE
+    Update processing_stage from ENA → RD1
+    Notice redirected to AN Letter flow
+  END IF
+END FOR
+```
+
+#### Location in Code
+
+- Job File: `NotificationSmsEmailRetryJob.java`
+- Schedule: `cron-schedules.properties` line 172
+
+#### Swimlanes Definition
+
+| Swimlane | Color | Steps |
+|----------|-------|-------|
+| Backend | Purple (#e1d5e7) | Query failed records, Retry sending, Update status |
+| External System (SMS) | Green (#d5e8d4) | Resend SMS |
+| External System (Email) | Green (#d5e8d4) | Resend Email |
+| Database | Yellow (#fff2cc) | Query failed notifications, Update notification records |
+
+---
+
 ### Tab 3.6: Send AN Letter (SLIFT)
 
 #### Process Overview
@@ -497,9 +565,19 @@
 |-----------|-------|
 | Process Name | Suspend Notice with PS-ANS |
 | Section | 3.7 |
-| Trigger | After AN qualification and notification (eAN or letter) sent |
-| Frequency | Real-time (per qualified AN) |
-| Systems Involved | Backend (OCMS API), Database (Intranet) |
+| Trigger | After AN qualification and notification (eAN or letter) sent, OR manual suspension by OIC via Staff Portal |
+| Frequency | Real-time (per qualified AN) or On-demand (OIC manual) |
+| Systems Involved | Backend (OCMS API), Database (Intranet), Frontend (Staff Portal for manual) |
+
+#### Suspension Methods
+
+| Method | Trigger | Source |
+|--------|---------|--------|
+| Automatic | After eAN sent successfully | `suspension_source` = 'OCMS' |
+| Automatic | After AN Letter dropped to SFTP | `suspension_source` = 'OCMS' |
+| Manual | OIC manually suspends via Staff Portal | `suspension_source` = 'STAFF_PORTAL' |
+
+**Note:** OCMS OICs can manually suspend Notices with PS-ANS via the OCMS Staff Portal. Reference: `Ocms41ManualReviewService.java`, PS Report Section 6.3.2.
 
 #### Process Steps Table
 
@@ -587,6 +665,68 @@
 | Frontend | Blue (#dae8fc) | Receive report request, Download report |
 | Backend | Purple (#e1d5e7) | Validate parameters, Apply filters, Format data, Generate report, Return response |
 | Database | Yellow (#fff2cc) | Query suspended notices, Join notice details |
+
+---
+
+### Tab 3.8.1: ANS Letter Reconciliation Report
+
+#### Process Overview
+
+| Attribute | Value |
+|-----------|-------|
+| Process Name | ANS Letter Reconciliation Report |
+| Section | 3.8.1 |
+| Trigger | Scheduled cron job (daily) |
+| Frequency | Daily |
+| Systems Involved | Backend (OCMS Cron), Database (Intranet), External System (Toppan SFTP), Azure Blob Storage |
+
+#### Purpose
+
+Reconcile AN letters sent to Toppan (printing vendor) vs letters successfully printed:
+- Compare letters in `ocms_an_letter` table with Toppan acknowledgement file
+- Generate Excel report with reconciliation statistics
+- Upload report to Azure Blob Storage
+- Send report via email to support recipients
+
+#### Process Steps Table
+
+| Step | Definition | Brief Description |
+|------|-----------|-------------------|
+| Read Control Summary | Get sent letters | Read Control Summary Report from SFTP (letters sent to Toppan) |
+| Read Acknowledgement File | Get printed letters | Read Toppan Acknowledgement File (letters successfully printed) |
+| Query AN Letter Database | Get DB records | Query `ocms_an_letter` table for letters in the date range |
+| Compare Records | Reconciliation | Compare sent letters vs printed letters vs database records |
+| Calculate Statistics | Generate metrics | Calculate: total sent, printed successfully, missing, errors, match rate |
+| Generate Excel Report | Create report | Generate Excel report with reconciliation details |
+| Upload to Azure Blob | Store report | Upload report file to Azure Blob Storage |
+| Send Email Report | Notify recipients | Send report via email to support team |
+| Log Completion | Logging | Log reconciliation job completion |
+| End | Job complete | ANS Letter Reconciliation Report finished |
+
+#### Reconciliation Metrics
+
+| Metric | Description |
+|--------|-------------|
+| Total Letters Sent | Count of letters in Control Summary Report |
+| Letters Printed | Count of letters in Toppan Acknowledgement |
+| Missing Letters | Letters sent but not in acknowledgement |
+| Errors | Letters with printing errors |
+| Match Rate | Percentage of successful prints |
+
+#### Location in Code
+
+- Job File: `AnsLetterReconciliationJob.java`
+- Helper File: `AnsLetterReconciliationHelper.java`
+- Database Table: `ocms_an_letter`
+
+#### Swimlanes Definition
+
+| Swimlane | Color | Steps |
+|----------|-------|-------|
+| Backend | Purple (#e1d5e7) | Read files, Compare records, Calculate statistics, Generate report |
+| Database | Yellow (#fff2cc) | Query AN letter records |
+| External System (Toppan) | Green (#d5e8d4) | Provide Control Summary, Provide Acknowledgement File |
+| External System (Azure) | Green (#d5e8d4) | Store report file |
 
 ---
 

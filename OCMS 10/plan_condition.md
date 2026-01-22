@@ -1,18 +1,19 @@
 # Condition and Validation Planning Document - OCMS 10: Advisory Notices Processing
 
 ## Document Information
-- **Version:** 1.2
+- **Version:** 1.3
 - **Date:** 2026-01-22
 - **Source Documents:**
   - Functional Document: v1.2_OCMS 10_Functional Document.md
-  - Backend Code: ura-project-ocmsadminapi-5e962080c0b4
-  - Key Files: AdvisoryNoticeHelper.java, CreateNoticeServiceImpl.java, ValidationServices.java
+  - Backend Code: ura-project-ocmsadminapi-5e962080c0b4, ura-project-ocmsadmincron
+  - Key Files: AdvisoryNoticeHelper.java, CreateNoticeServiceImpl.java, ValidationServices.java, NoticeValidationHelper.java
 - **Related Documents:**
   - OCMS 3 Technical Document (REPCCS API Specification)
   - OCMS 5 Technical Document (Notice Creation)
   - OCMS 21 Technical Document (Double Booking)
 
 **Change Log:**
+- v1.3 (2026-01-22): Added Type E exclusion from ANS (BA confirmed). Added eNotification Exclusion List details. Added TS-ROV, TS-NRO, TS-HST suspension conditions. Added Furnishing Hirer/Driver restriction. Added Passport/VIP/DIP handling rules.
 - v1.2 (2026-01-22): Aligned with corrected Technical Document. Updated assumptions log with confirmed findings (hardcoded AN messages, actual database tables). Added references to OCMS 3, 5, 21 documents.
 - v1.1 (2026-01-15): Updated to align with FD v1.2 - Removed Same-Day AN Check, updated Past Offense logic
 
@@ -86,12 +87,22 @@ Same as Section 1.1, with automatic subsystem label set to PLUS code.
 ### 2.1 Gating Conditions (Pre-qualification)
 
 #### Offence Notice Type Check
-**Rule:** Offence notice type must be 'O' (Offender) for AN eligibility
+**Rule:** Offence notice type must be 'O' (Parking Offence) for AN eligibility
 
-**Implementation:** `AdvisoryNoticeHelper.checkQualification()`
+**Important Clarification (BA Confirmed 2026-01-22):**
+- **Type O (Parking Offence):** Eligible for ANS qualification check
+- **Type E (Enforcement/Payment Evasion):** **NOT eligible for ANS** - skip AN qualification, proceed to next step
+- **Type U (Unauthorised Parking Lot):** NOT eligible for ANS
+
+**Implementation:** `AdvisoryNoticeHelper.checkQualification()`, `NoticeValidationHelper.java`
 
 **Logic:**
 ```
+IF offenceNoticeType = 'E' THEN
+  SKIP AN qualification check entirely
+  PROCEED to next step (standard notice processing)
+END IF
+
 IF offenceNoticeType != 'O' THEN
   RETURN not qualified
   REASON: "Offense type must be 'O'"
@@ -99,12 +110,13 @@ END IF
 ```
 
 **Location in Code:**
-- File: AdvisoryNoticeHelper.java
-- Lines: 89-93
+- File: AdvisoryNoticeHelper.java (Lines: 89-93)
+- File: NoticeValidationHelper.java (Lines: 447-498) - Type E vs Type O differentiation
 
 **Test Cases:**
-- ✓ offenseType = 'O' → Pass
-- ✗ offenseType = 'U' → Fail
+- ✓ offenseType = 'O' → Pass (proceed to AN qualification)
+- ✗ offenseType = 'E' → Skip AN check entirely (proceed to standard flow)
+- ✗ offenseType = 'U' → Fail (not AN eligible)
 - ✗ offenseType = NULL → Fail
 
 ---
@@ -285,8 +297,22 @@ END IF
 **Response Handling:**
 - **Success:** Store owner details in database
 - **Timeout:** Retry 3 times with exponential backoff (1s, 2s, 4s)
-- **Owner Not Found:** Mark notice for manual review
+- **Owner Not Found (Error Code 1/2/3/4):** Suspend notice with **TS-ROV**
 - **API Error:** Log error, trigger email alert, mark notice for manual review
+
+**TS-ROV Suspension (Owner Not Found):**
+```
+IF LTA returns error code 1/2/3/4 (owner not found) THEN
+  Suspend notice with TS-ROV
+  Set suspension_type = 'TS'
+  Set epr_reason_of_suspension = 'ROV'
+  Note: TS-ROV will be re-applied after revival if owner still unavailable
+END IF
+```
+
+**Location in Code:**
+- Report Job: `LtaReportJob.java`
+- Test Data: `ts_rov_scenarios.json`
 
 **Error Decision (Yi Jie Compliance):**
 ```
@@ -307,12 +333,12 @@ END IF
 
 **Pre-call Validation:**
 - Owner NRIC/FIN must be available from LTA response
-- Notice must NOT be suspended
-- Owner must NOT be in eNotification exclusion list
+- Notice must NOT be suspended (except TS-HST - see Section 2.10)
+- Owner must NOT be in eNotification exclusion list (see Section 2.9)
 
 **Call Conditions:**
 ```
-IF ownerNRIC != NULL AND suspensionType = NULL AND notInExclusionList() THEN
+IF ownerNRIC != NULL AND (suspensionType = NULL OR suspensionType = 'TS-HST') AND notInExclusionList() THEN
   CALL DataHive API
 END IF
 ```
@@ -351,8 +377,22 @@ END IF
 **Response Handling:**
 - **Success:** Proceed to SLIFT letter generation
 - **Timeout:** Retry 3 times with exponential backoff (1s, 2s, 4s)
-- **Address Not Found:** Mark notice for manual review
-- **API Error:** Retry 3 times, trigger email alert after all retries fail, then manual review
+- **Address Not Found:** Suspend notice with **TS-NRO**
+- **API Error:** Retry 3 times, trigger email alert after all retries fail, then TS-NRO suspension
+
+**TS-NRO Suspension (No Registered Owner Address):**
+```
+IF MHA/DataHive returns no address THEN
+  Suspend notice with TS-NRO
+  Set suspension_type = 'TS'
+  Set epr_reason_of_suspension = 'NRO'
+  Continue to process next record
+END IF
+```
+
+**Location in Code:**
+- File: `MhaTsNroSuspensionFlowService.java`
+- Test Data: `ps_mha_nric_scenarios.json`
 
 ---
 
@@ -758,6 +798,153 @@ END IF
 
 ---
 
+### 2.10 eNotification Exclusion List
+
+**Rule:** Owners who have opted out of receiving eNotifications must be routed to physical letter flow
+
+**Implementation:** Check against `ocms_enotification_exclusion_list` table
+
+**Database Table:**
+| Field | Type | Description |
+|-------|------|-------------|
+| id_no | VARCHAR | Owner's NRIC/FIN/UEN |
+| remarks | VARCHAR | Reason for exclusion |
+| cre_user_id | VARCHAR | Created by |
+| cre_date | DATETIME | Created date |
+
+**Logic:**
+```
+Query ocms_enotification_exclusion_list WHERE id_no = owner.idNo
+
+IF record exists THEN
+  Owner is in exclusion list
+  SKIP eNotification
+  PROCEED to physical letter flow
+ELSE
+  Continue to eNotification flow
+END IF
+```
+
+**Location in Code:**
+- Entity: `OcmsEnotificationExclusionList.java`
+- API: `EnotificationExclusion.java`, `EnotificationExclusionHistory.java`
+
+**Test Cases:**
+- Owner in exclusion list → Skip eAN, send physical letter
+- Owner NOT in exclusion list → Proceed to eAN flow
+
+---
+
+### 2.11 TS-HST Exception
+
+**Rule:** AN processing continues for notices suspended with TS-HST (HST = High-risk Suspension Table)
+
+**Implementation:** `HstAutoSuspendService.java`, `HstManagementService.java`
+
+**Logic:**
+```
+IF notice is suspended THEN
+  IF suspension_type = 'TS' AND reason = 'HST' THEN
+    CONTINUE AN processing (exception - do not halt)
+  ELSE
+    HALT AN processing for all other suspension types
+  END IF
+END IF
+```
+
+**Location in Code:**
+- Auto-Suspend: `HstAutoSuspendService.java`
+- Looping: `HstLoopingSuspendService.java`
+- Report: `HstReportJob.java`
+- API: `HstManagementService.java`
+
+**HST Processing:**
+- OCMS 20: Auto-suspend new notices with HST IDs when address is invalid
+- Checks `ocms_hst` table for new notices
+- Applies TS-HST suspension if address is invalid
+- HST notices can still proceed with AN notification
+
+**Test Cases:**
+- Notice with TS-HST suspension → Continue AN processing
+- Notice with TS-ROV suspension → Halt AN processing
+- Notice with PS-DBB suspension → Halt AN processing
+
+---
+
+### 2.12 Passport/VIP/DIP Owner Routing
+
+**Rule:** Notices for Passport holders, VIP, DIP (Diplomatic), and MID (Military) owners are routed to physical letter flow
+
+**Implementation:** Owner type detection after LTA ownership check
+
+**Logic:**
+```
+IF ownerIdType = 'PASSPORT' THEN
+  SKIP eNotification
+  Use LTA registered address for physical letter
+  PROCEED to AN letter flow
+END IF
+
+IF ownerType IN ['VIP', 'DIP'] THEN
+  SKIP eNotification
+  Apply special handling (OIC investigation for VIP)
+  PROCEED to AN letter flow
+END IF
+
+IF vehicleRegType = 'I' (Military/MID) THEN
+  Owner = MINDEF
+  SKIP LTA ownership check
+  Use MINDEF address from database
+  PROCEED to AN letter flow
+END IF
+```
+
+**Location in Code:**
+- VIP: `VipVehicle.java` (Note: CAS database connection required)
+- Passport: `MhaPassportProcessingFlowService.java`
+- Diplomat: `MhaEmbassyDiplomatFlowService.java`
+- DIP Report: `DipMidForRecheckJob.java`
+
+**VIP Suspension:**
+- Suspension remarks: "VIP vehicle detected - under OIC investigation"
+
+**Test Cases:**
+- Passport owner → Physical letter with LTA address
+- VIP owner → Physical letter + OIC review
+- DIP owner → Physical letter with embassy handling
+- MID owner → Physical letter with MINDEF address
+
+---
+
+### 2.13 Furnishing Hirer/Driver Restriction
+
+**Rule:** ANS notices do NOT allow furnishing of hirer/driver particulars in e-Service
+
+**Implementation:** Restrict furnish submission for AN-flagged notices
+
+**Logic:**
+```
+IF notice.an_flag = 'Y' THEN
+  Disable "Furnish Hirer/Driver Particulars" option in e-Service
+  Return error if furnish submission attempted for AN notice
+END IF
+```
+
+**Location in Code:**
+- Entity: `OcmsRequestDriverParticulars.java`
+- Controller: `FurnishSubmissionController.java`
+- Report: `RipHirerDriverReportJob.java` (Daily at 02:00 AM for PS-RP2)
+
+**Database Table:** `ocms_request_driver_particulars`
+- Composite key: (date_of_processing, notice_no)
+- Tracks owner details, processing stages, unclaimed reasons
+
+**Test Cases:**
+- AN notice (an_flag='Y') → Furnishing NOT allowed
+- Standard notice (an_flag='N') → Furnishing allowed
+
+---
+
 ## 3. Decision Trees
 
 ### 3.1 AN Qualification Decision Tree (Actual Code Implementation)
@@ -942,8 +1129,6 @@ START: AN Qualified
 
 ### Assumptions (Need Confirmation)
 
-[ASSUMPTION] eNotification exclusion list table structure and query method need to be confirmed.
-
 [ASSUMPTION] LTA API authentication uses API key stored in Azure Key Vault (secret name: "lta-api-key").
 
 [ASSUMPTION] DataHive API timeout is 30 seconds with 3 retry attempts and exponential backoff.
@@ -977,6 +1162,20 @@ START: AN Qualified
 [CONFIRMED] ANS Exemption rules are stored in `ocms_an_exemption_rules` table with fields: `rule_code`, `start_effective_date`, `end_effective_date`, `rule_remarks`, `composition_amount`.
 
 [CONFIRMED] ANS PS Reasons are stored in `ocms_standard_code` table WHERE `reference_code = 'ANS_PS_Reason'` AND `code_status = 'A'`. Valid codes: CAN, CFA, DBB, VST.
+
+[CONFIRMED] eNotification Exclusion List is stored in `ocms_enotification_exclusion_list` table with fields: `id_no`, `remarks`, audit fields. Reference: `OcmsEnotificationExclusionList.java`.
+
+[CONFIRMED] Type E (Enforcement/Payment Evasion) notices are **NOT eligible for ANS** - AN qualification check is skipped entirely. Reference: `NoticeValidationHelper.java` lines 447-498. (BA confirmed 2026-01-22)
+
+[CONFIRMED] TS-ROV suspension is applied when LTA returns owner not found (error codes 1/2/3/4). Reference: `LtaReportJob.java`, `ts_rov_scenarios.json`.
+
+[CONFIRMED] TS-NRO suspension is applied when MHA/DataHive returns no registered address. Reference: `MhaTsNroSuspensionFlowService.java`.
+
+[CONFIRMED] TS-HST is an exception - AN processing continues for notices suspended with TS-HST. Reference: `HstAutoSuspendService.java`, `HstManagementService.java`.
+
+[CONFIRMED] Passport/VIP/DIP owners are routed to physical letter flow, skipping eNotification. Reference: `MhaPassportProcessingFlowService.java`, `MhaEmbassyDiplomatFlowService.java`, `VipVehicle.java`.
+
+[CONFIRMED] ANS notices do NOT allow furnishing of hirer/driver particulars. Reference: `FurnishSubmissionController.java`, `OcmsRequestDriverParticulars.java`.
 
 ---
 
