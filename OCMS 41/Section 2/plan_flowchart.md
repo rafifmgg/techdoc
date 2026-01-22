@@ -1,4 +1,4 @@
-# OCMS 41 - Furnish Hirer/Driver Flowchart Plan
+# OCMS 41 Section 3 - Staff Portal Manual Review Flowchart Plan
 
 ## Document Information
 
@@ -6,16 +6,16 @@
 |-------|-------|
 | Version | 1.0 |
 | Date | 2026-01-07 |
-| Source | Functional Document v1.1, Existing Drawio Flowcharts |
-| Module | OCMS 41 - Section 2: Processing Furnished Hirer and Driver from eService |
+| Source | Functional Document v1.1, Existing Drawio Flowcharts, plan_api.md, plan_condition.md |
+| Module | OCMS 41 - Section 3: Staff Portal Manual Review |
 
 ---
 
 ## Table of Contents
 
 1. [Diagram Structure Overview](#1-diagram-structure-overview)
-2. [Section 2: High-Level Flows](#2-section-2-high-level-flows)
-3. [Section 3: Detailed Flows](#3-section-3-detailed-flows)
+2. [High-Level Flows](#2-high-level-flows)
+3. [Detailed Flows](#3-detailed-flows)
 4. [Swimlane Definitions](#4-swimlane-definitions)
 5. [Cross-Reference](#5-cross-reference)
 
@@ -27,494 +27,453 @@
 
 | Tab ID | Tab Name | Flow Type | Description |
 |--------|----------|-----------|-------------|
-| 2.2 | eService High-Level Flow | High-Level | Overview of end-to-end eService furnish processing |
-| 2.4.2 | Sync Furnish Cron | High-Level | Cron job orchestration flow |
-| 2.4.2.1 | Retrieve Data from Internet | Detailed | Detailed process for fetching furnished submissions |
-| 2.4.2.2 | Sync Supporting Documents | Detailed | Document synchronization from Internet to Intranet |
-| 2.4.3 | Auto-Approval Review | Detailed | Auto-approval validation checks flow |
-| 2.4.4 | Manual OIC Review | Detailed | Officer manual review and decision flow |
-| 2.4.5 | Update Internet Outcome | Detailed | Sync approval/rejection outcome to Internet |
+| 3.2 | Manual Review High-Level | High-Level | End-to-end manual review process overview |
+| 3.3 | Email Report Cron | Detailed | Scheduled job for pending submissions report email |
+| 3.4 | List Furnished Applications | Detailed | API flow for fetching and filtering applications |
+| 3.5 | Get Application Detail | Detailed | API flow for retrieving submission details |
+| 3.6 | Approve Furnished Submission | Detailed | API flow for OIC approval decision |
+| 3.7 | Reject Furnished Submission | Detailed | API flow for OIC rejection decision |
 
 ### 1.2 Diagram Hierarchy
 
 ```
-Section 2: Processing Furnished Hirer and Driver from eService
+Section 3: Staff Portal Manual Review
 │
-├── 2.2 eService High-Level Flow (Overview)
+├── 3.2 Manual Review High-Level (Overview)
 │
-├── 2.4 Intranet Processing
-│   │
-│   ├── 2.4.2 Sync Furnish Cron (Orchestrator)
-│   │   ├── 2.4.2.1 Retrieve Data from Internet
-│   │   └── 2.4.2.2 Sync Supporting Documents
-│   │
-│   ├── 2.4.3 Auto-Approval Review
-│   │   └── 2.4.3.1 Auto-Approval Checks
-│   │
-│   ├── 2.4.4 Manual OIC Review
-│   │   ├── 2.4.4.1 Approve Submission
-│   │   └── 2.4.4.2 Reject Submission
-│   │
-│   └── 2.4.5 Update Internet Outcome
+├── 3.3 Email Report Cron
+│   └── Scheduled daily job to notify OICs of pending submissions
 │
-└── 2.5 eService Portal Display
+├── 3.4 List Furnished Applications
+│   └── POST /furnish/officer/list
+│
+├── 3.5 Get Application Detail
+│   └── GET /furnish/officer/{txnNo}
+│
+├── 3.6 Approve Furnished Submission
+│   ├── POST /furnish/officer/approve
+│   ├── Update Furnish Application Status
+│   ├── Create Hirer/Driver Record
+│   ├── Update Processing Stage
+│   ├── Revive TS-PDP Suspension
+│   ├── Sync to Internet
+│   └── Send Notifications
+│
+└── 3.7 Reject Furnished Submission
+    ├── POST /furnish/officer/reject
+    ├── Update Furnish Application Status
+    ├── Sync to Internet
+    ├── Resend to eService Portal
+    └── Send Notifications
 ```
 
 ---
 
-## 2. Section 2: High-Level Flows
+## 2. High-Level Flows
 
-### 2.2 eService High-Level Flow
+### 2.1 Manual Review High-Level Flow (Tab 3.2)
 
-**Purpose**: Provide overview of the complete eService furnished hirer/driver processing flow.
+**Purpose**: Provide overview of the complete manual review process from email notification to outcome.
 
 #### Swimlanes (4 Lanes)
 
-| Lane | System | Network Zone |
-|------|--------|--------------|
-| 1 | OCMS Intranet Backend | Intranet |
-| 2 | Staff Portal (Intranet) | Intranet |
-| 3 | OCMS Internet Backend | Internet |
-| 4 | eService Portal (Internet) | Internet |
+| Lane | System | Color Code |
+|------|--------|------------|
+| 1 | Staff Portal | Blue (#dae8fc) |
+| 2 | OCMS Admin API | Green (#d5e8d4) |
+| 3 | Intranet Database | Yellow (#fff2cc) |
+| 4 | Internet Database | Yellow (#fff2cc) |
 
 #### Process Steps
 
 | Step | Lane | Process | Description |
 |------|------|---------|-------------|
-| 1 | Intranet Backend | Notice Created/Updated | Notice creation or status change triggers sync |
-| 2 | Intranet Backend | Save to Internet DB | Backend saves notice data directly to Internet DB |
-| 3 | Internet Backend | Notice Available | Updated notice available in Internet zone |
-| 4 | eService Portal | Motorist Retrieves Notice | User views notice in eService |
-| 5 | eService Portal | Motorist Furnishes H/D | User submits furnish request |
-| 6 | Internet Backend | Save Submission | Furnished submission saved to Internet DB |
-| 7 | Intranet Backend | Cron Sync | Scheduled job retrieves submissions (every 5 mins) |
-| 8 | Intranet Backend | Retrieve & Save Data | Fetch furnished data from Internet |
-| 9 | Intranet Backend | Sync Attachments | Sync supporting documents |
-| 10 | Intranet Backend | Auto-Approval Review | Check if submission qualifies for auto-approval |
-| 11 | Staff Portal | OIC Manual Review | Officer reviews submissions requiring manual review |
-| 12 | Intranet Backend | Update Outcome | Update submission status in Internet DB |
-| 13 | eService Portal | View Outcome | Motorist views submission result / resubmits |
+| 1 | Backend | Cron: Email Report | Daily cron sends email with pending submissions |
+| 2 | Staff Portal | OIC Login | OIC accesses Staff Portal |
+| 3 | Staff Portal | View Summary List | OIC views list of pending submissions |
+| 4 | Backend | List API | Fetch filtered submissions from database |
+| 5 | Database | Query Applications | Retrieve from ocms_furnish_application |
+| 6 | Staff Portal | Select Submission | OIC clicks on a submission to review |
+| 7 | Backend | Detail API | Fetch submission details |
+| 8 | Database | Query Detail + Notice | Retrieve application and notice details |
+| 9 | Staff Portal | Review & Decide | OIC reviews and enters decision |
+| 10 | Staff Portal | Compose Email/SMS | Optional: OIC composes notification message |
+| 11 | Staff Portal | Submit Decision | OIC submits approval or rejection |
+| 12 | Backend | Process Decision | Backend processes approval or rejection |
+| 13 | Database | Update Records | Update application status and related records |
+| 14 | Internet DB | Sync Outcome | Sync decision to Internet database |
+| 15 | Backend | Send Notifications | Send email/SMS if requested |
+| 16 | Staff Portal | Display Result | Show success or error message |
 
 #### Decision Points
 
 | ID | Decision | Yes Path | No Path |
 |----|----------|----------|---------|
-| D1 | Auto-approval passed? | Update as Approved | Route to Manual Review |
-| D2 | OIC Approve? | Update as Approved | Update as Rejected |
+| D1 | Pending submissions exist? | Send email report | Skip (no email) |
+| D2 | Notice still furnishable? | Continue review | Prompt to reject |
+| D3 | Decision = Approve? | Approve flow | Reject flow |
+| D4 | Send notification checked? | Send email/SMS | Skip notification |
 
 ---
 
-### 2.4.2 Sync Furnish Cron (Orchestrator)
+## 3. Detailed Flows
 
-**Purpose**: Orchestrate the scheduled synchronization of furnished submissions from Internet to Intranet.
+### 3.1 Email Report Cron (Tab 3.3)
 
-#### Job Configuration
+**Purpose**: Generate and send daily email report to OICs for pending submissions.
 
-| Setting | Value |
-|---------|-------|
-| **Shedlock Name** | `sync_furnish_submission` |
-| **Schedule** | Every 5 minutes |
-| **Lock Duration** | 4 minutes |
-| **Batch Size** | 50 records |
-
-#### Swimlanes (1 Lane)
-
-| Lane | System |
-|------|--------|
-| 1 | Cron Tier |
-
-#### Process Steps
-
-| Step | Process | Description |
-|------|---------|-------------|
-| 1 | Cron Trigger | Scheduled trigger (Daily, every 5 mins) |
-| 2 | Cron Start | Job initialization |
-| 3 | Check Job Lock | Query ocms_shedlock for existing running job |
-| 4 | Continue/Abort | If locked, abort; otherwise continue |
-| 5 | PROCESS: Retrieve Data | Sub-process to fetch furnished data from Internet |
-| 6 | PROCESS: Sync Attachments | Sub-process to sync supporting documents |
-| 7 | PROCESS: Auto-Approval | Sub-process to review for auto-approval |
-| 8 | Check Errors | Check for record-level errors during processing |
-| 9 | Consolidate Errors | Aggregate all errors from processing |
-| 10 | Send Error Email | Notify support team of interface errors |
-| 11 | Log Job Status | Record job outcome in ocms_batch_job table |
-| 12 | Cron End | Job completion |
-
-#### Decision Points
-
-| ID | Decision | Yes Path | No Path |
-|----|----------|----------|---------|
-| D1 | Existing job running? | Log & Abort | Continue processing |
-| D2 | Retrieve data successful? | Continue to Sync Attachments | Log error, Stop processing |
-| D3 | Sync attachments successful? | Continue to Auto-Approval | Log error, Stop processing |
-| D4 | Auto-approval successful? | Continue to Error Check | Log error, Stop processing |
-| D5 | Any record-level errors? | Consolidate & Send Email | Log success status |
-
-#### Job Status Outcomes
-
-| Status | Condition | Database Record |
-|--------|-----------|-----------------|
-| Success | All processes completed | run_status = 'Success' |
-| Failed - Fetch | Retrieve data process failed | run_status = 'Failed', log_text = error |
-| Failed - Sync | Sync documents failed | run_status = 'Failed', log_text = error |
-| Failed - Approval | Auto-approval process failed | run_status = 'Failed', log_text = error |
-
----
-
-## 3. Section 3: Detailed Flows
-
-### 2.4.2.1 Retrieve Data from Internet
-
-**Purpose**: Detailed flow for fetching and storing furnished submissions from Internet DB to Intranet DB.
-
-#### Swimlanes (1 Lane)
-
-| Lane | System |
-|------|--------|
-| 1 | Cron Tier |
-
-#### Process Steps
-
-| Step | Process | Description |
-|------|---------|-------------|
-| 1 | Process Start | Function receives batch data (max 50 records) |
-| 2 | Process Next Record | Iterate through each record in batch |
-| 3 | Create Record in Intranet | Insert furnished submission to Intranet DB |
-| 4 | Check Create Success | Verify record creation |
-| 5 | Retry Create (x3) | Retry on failure up to 3 times |
-| 6 | Check Duplicate Error | If error due to existing record |
-| 7 | Patch is_sync Flag | Update Internet DB record as synced |
-| 8 | Connect to Internet DB | Establish connection to Internet database |
-| 9 | Retry Connection (x3) | Retry connection on failure |
-| 10 | Update Sync Flag | Set is_sync = 'Y' in Internet record |
-| 11 | Retry Patch (x3) | Retry patch on failure |
-| 12 | Record Processing Complete | Mark individual record as processed |
-| 13 | Check More Records | Loop to next record or exit |
-| 14 | Consolidate Errors | Aggregate all record-level errors |
-| 15 | Return Status | Return processing status and errors |
-
-#### Decision Points
-
-| ID | Decision | Yes Path | No Path |
-|----|----------|----------|---------|
-| D1 | Create record success? | Patch is_sync flag | Check if duplicate error |
-| D2 | Duplicate error? | Add to error list, Skip | Retry create (x3) |
-| D3 | Retry successful? | Continue | Add to error list, Skip |
-| D4 | Connect to Internet success? | Patch sync flag | Retry connection (x3) |
-| D5 | Retry connection success? | Continue | Log error, Add to error list |
-| D6 | Patch sync success? | Record complete | Retry patch (x3) |
-| D7 | Retry patch success? | Record complete | Add to error list |
-| D8 | More records? | Process next record | Consolidate errors |
-
-#### Database Operations
-
-**Intranet DB - Create Record:**
-```
-Table: ocms_furnish_application
-Fields: txn_no*, notice_no*, vehicle_no*, offence_date*, pp_code*, pp_name*,
-        last_processing_stage*, furnish_name*, furnish_id_type*, furnish_id_no*,
-        furnish_mail_blk_no*, furnish_mail_floor, furnish_mail_street_name*,
-        furnish_mail_unit_no, furnish_mail_bldg_name, furnish_mail_postal_code*,
-        furnish_tel_code, furnish_tel_no, furnish_email_addr,
-        owner_driver_indicator*, hirer_owner_relationship*, others_relationship_desc,
-        ques_one_ans*, ques_two_ans*, ques_three_ans,
-        rental_period_to, rental_period_from, status*,
-        owner_name*, owner_id_no*, owner_tel_code, owner_tel_no, owner_email_addr,
-        corppass_staff_name, reason_for_review, remarks,
-        cre_date*, cre_user_id*, upd_date, upd_user_id
-```
-
-**Internet DB - Patch Sync Flag:**
-```
-Table: eocms_furnish_application
-Fields: is_sync*, reason_for_review, remarks, upd_date, upd_user_id
-```
-
----
-
-### 2.4.2.2 Sync Supporting Documents
-
-**Purpose**: Synchronize supporting document metadata from Internet to Intranet.
-
-#### Process Steps
-
-| Step | Process | Description |
-|------|---------|-------------|
-| 1 | Process Start | Receive list of submissions for document sync |
-| 2 | Process Next Record | Iterate through each submission |
-| 3 | Query Document Metadata | Fetch document info from Internet DB |
-| 4 | Create Document Record | Insert metadata to Intranet DB |
-| 5 | Sync Blob to Intranet | Copy document from Internet to Intranet blob storage |
-| 6 | Retry Blob Sync (x3) | Retry on failure |
-| 7 | Update Sync Flag | Mark document as synced in Internet DB |
-| 8 | Record Complete | Individual document processed |
-| 9 | Check More Documents | Loop or exit |
-| 10 | Consolidate Errors | Aggregate errors |
-| 11 | Return Status | Return processing status |
-
-#### Decision Points
-
-| ID | Decision | Yes Path | No Path |
-|----|----------|----------|---------|
-| D1 | Blob sync success? | Update sync flag | Retry (x3) |
-| D2 | Retry success? | Continue | Add to error list, Skip |
-| D3 | More documents? | Process next | Consolidate errors |
-
----
-
-### 2.4.3.1 Auto-Approval Review
-
-**Purpose**: Validate furnished submissions against auto-approval criteria.
-
-#### Swimlanes (1 Lane)
-
-| Lane | System |
-|------|--------|
-| 1 | Cron Tier |
-
-#### Process Steps
-
-| Step | Process | Description |
-|------|---------|-------------|
-| 1 | Process Start | Receive Intranet furnished records for review |
-| 2 | Process Next Record | Iterate through each submission |
-| 3 | Read Furnished Details | Load submission data for checks |
-| 4 | CHECK 1: Permanent Suspension | Query if notice has active PS suspension |
-| 5 | CHECK 2: HST ID | Verify furnished ID is not HST ID |
-| 6 | CHECK 3: FIN/Passport | Check if ID type is FIN or Passport |
-| 7 | CHECK 4: Furnishable Stage | Verify notice is still at furnishable stage |
-| 8 | CHECK 5: Prior Submission | Check for existing submissions under notice |
-| 9 | CHECK 6: Existing H/D | Compare with existing hirer/driver records |
-| 10 | Apply TS-PDP Suspension | Suspend notice with TS-PDP (for manual review) |
-| 11 | Update Status - Pending | Set submission status to 'P' (Pending) |
-| 12 | Update Status - Approved | Set submission status to 'A' (Approved) |
-| 13 | Add Furnished Particulars | Create hirer/driver record as current offender |
-| 14 | Change Processing Stage | Update notice stage (DN for Driver, RD for Hirer) |
-| 15 | Record Complete | Individual submission processed |
-| 16 | Check More Records | Loop or consolidate results |
-| 17 | Return Results | List of auto-approved and manual-review submissions |
-
-#### Auto-Approval Checks (8 Checks)
-
-| Check | Function | Pass Condition | Fail Reason |
-|-------|----------|----------------|-------------|
-| 1 | Permanent Suspension | Notice NOT permanently suspended | "Notice is permanently suspended" |
-| 2 | HST ID | Furnished ID NOT in HST database | "HST ID" |
-| 3 | FIN/Passport | ID type is NOT FIN or Passport | "FIN or Passport ID" |
-| 4 | Furnishable Stage | Stage IN (ENA, RD1, RD2, RR3) | "Notice no longer at furnishable stage" |
-| 5 | Prior Submission | No prior submissions for notice | "Prior submission under notice" |
-| 6 | Existing H/D | No existing H/D with furnished ID | "H/D particulars already present" |
-| 7 | Furnished ID Exists | Furnished ID NOT already in H/D | "Furnished ID already in H/D Details" |
-| 8 | Owner Current Offender | Owner IS current offender | "Owner no longer current offender" |
-
-#### Decision Points
-
-| ID | Decision | Yes Path | No Path |
-|----|----------|----------|---------|
-| D1 | Notice permanently suspended? | Fail - Manual Review | Continue |
-| D2 | Furnished ID is HST? | Fail - Manual Review | Continue |
-| D3 | ID type FIN/Passport? | Fail - Manual Review | Continue |
-| D4 | Notice at furnishable stage? | Continue | Fail - Manual Review |
-| D5 | Prior submission exists? | Fail - Manual Review | Continue |
-| D6 | Existing H/D particulars? | Fail - Manual Review | Continue |
-| D7 | Furnished ID in H/D? | Fail - Manual Review | Continue |
-| D8 | Owner is current offender? | PASS - Auto Approve | Fail - Manual Review |
-| D9 | TS-PDP suspension success? | Continue | Retry (x3) |
-| D10 | Retry success? | Continue | Add to error list |
-| D11 | More records? | Process next | Return results |
-
-#### Processing Paths
-
-**Auto-Approval Path (All Checks Pass):**
-```
-Pass All Checks → Update Status='A' → Add Furnished Particulars
-→ Change Processing Stage → Record Complete
-```
-
-**Manual Review Path (Any Check Fails):**
-```
-Fail Any Check → Result: "Does not qualify" → Apply TS-PDP
-→ Update Status='P' + Reason → Record Complete
-```
-
----
-
-### 2.4.4 Manual OIC Review (To Be Created)
-
-**Purpose**: Officer reviews submissions requiring manual approval.
+| Attribute | Value |
+|-----------|-------|
+| Process Name | Email Report Cron |
+| Trigger | Scheduled (Monday-Friday 9:00 AM) |
+| Frequency | Daily |
+| Systems | Cron Tier, Intranet Database |
 
 #### Swimlanes (2 Lanes)
 
-| Lane | System |
-|------|--------|
-| 1 | Staff Portal (Intranet) |
-| 2 | OCMS Intranet Backend |
+| Lane | System | Color Code |
+|------|--------|------------|
+| 1 | Cron Tier | Purple (#e1d5e7) |
+| 2 | Intranet Database | Yellow (#fff2cc) |
 
 #### Process Steps
 
-| Step | Lane | Process | Description |
-|------|------|---------|-------------|
-| 1 | Staff Portal | OIC Login | Officer authenticates |
-| 2 | Staff Portal | View Dashboard | Display pending submissions count |
-| 3 | Staff Portal | Select Submission | Choose submission to review |
-| 4 | Backend | Load Submission Details | Fetch full submission data |
-| 5 | Staff Portal | Display Review Form | Show submission with editable fields |
-| 6 | Staff Portal | View Supporting Docs | Display uploaded documents |
-| 7 | Staff Portal | Make Decision | Select Approve Hirer/Approve Driver/Reject |
-| 8 | Staff Portal | Enter Remarks | Optional remarks input |
-| 9 | Staff Portal | Select Notification | Check email/SMS options |
-| 10 | Staff Portal | Submit Decision | Send decision to backend |
-| 11 | Backend | Validate Decision | Verify submission status is still 'P' |
-| 12 | Backend | Process Approval | If approved - see 2.4.4.1 |
-| 13 | Backend | Process Rejection | If rejected - see 2.4.4.2 |
-| 14 | Backend | Send Notifications | Email/SMS if selected |
-| 15 | Staff Portal | Display Success | Show confirmation message |
+| Step | Lane | Type | Process | Description |
+|------|------|------|---------|-------------|
+| 1 | Cron | Start | Cron Start | Daily scheduled trigger (9:00 AM weekdays) |
+| 2 | Database | Process | Query Pending Submissions | Query ocms_furnish_application WHERE status IN ('P', 'S') |
+| 3 | Cron | Decision | Any record? | Check if query returns results |
+| 4 | Cron | Process | Generate Report | Build email content with submission details |
+| 5 | Cron | Process | Send Email | Send email to OIC distribution list |
+| 6 | Cron | Decision | Email sent? | Check email sending result |
+| 7 | Cron | Process | Log Success | Log successful email send |
+| 8 | Cron | Process | Log Error | Log email send failure |
+| 9 | Cron | End | Cron End | Job completion |
 
 #### Decision Points
 
-| ID | Decision | Yes Path | No Path |
-|----|----------|----------|---------|
-| D1 | Decision = Approve? | Process Approval | Process Rejection |
-| D2 | Send Notification? | Send Email/SMS | Skip notification |
+| ID | Decision | Condition | Yes Path | No Path |
+|----|----------|-----------|----------|---------|
+| D1 | Any record? | count > 0 | Generate Report | Log "No pending records", End |
+| D2 | Email sent? | sendResult == success | Log Success | Log Error |
 
 ---
 
-### 2.4.5 Update Internet Outcome (To Be Created)
+### 3.2 List Furnished Applications (Tab 3.4)
 
-**Purpose**: Sync approval/rejection outcome from Intranet to Internet DB.
+**Purpose**: API flow for fetching and filtering furnished applications for OIC dashboard.
+
+| Attribute | Value |
+|-----------|-------|
+| Process Name | List Furnished Applications |
+| Endpoint | POST /furnish/officer/list |
+| Trigger | OIC accesses Summary List page |
+| Systems | Staff Portal, OCMS Admin API, Intranet Database |
+
+#### Swimlanes (3 Lanes)
+
+| Lane | System | Color Code |
+|------|--------|------------|
+| 1 | Staff Portal | Blue (#dae8fc) |
+| 2 | OCMS Admin API | Green (#d5e8d4) |
+| 3 | Intranet Database | Yellow (#fff2cc) |
 
 #### Process Steps
 
-| Step | Process | Description |
-|------|---------|-------------|
-| 1 | Receive Outcome | Get approved/rejected submission data |
-| 2 | Connect to Internet DB | Establish database connection |
-| 3 | Retry Connection (x3) | Retry on failure |
-| 4 | Update Status | Set status field (A or R) |
-| 5 | Update Remarks | Set approval/rejection remarks |
-| 6 | Update Timestamps | Set upd_date and upd_user_id |
-| 7 | Commit Transaction | Persist changes |
-| 8 | Return Status | Return success/failure |
+| Step | Lane | Type | Process | Description |
+|------|------|------|---------|-------------|
+| 1 | Portal | Start | Start | Page load or search trigger |
+| 2 | Portal | Process | Build Request | Construct list request with filters |
+| 3 | API | Process | Receive Request | POST /furnish/officer/list |
+| 4 | API | Process | Apply Default Filters | Default status = ['P', 'S'] if not specified |
+| 5 | API | Process | Build Query | Construct SQL with filters and pagination |
+| 6 | Database | Process | Execute Query | Query ocms_furnish_application with joins |
+| 7 | Database | Process | Return Results | Return paginated results |
+| 8 | API | Process | Map Response | Map entity to DTO |
+| 9 | API | Process | Return Response | Return JSON response with pagination info |
+| 10 | Portal | Process | Display Results | Render in Summary List table |
+| 11 | Portal | End | End | Complete |
+
+#### API Request/Response
+
+**Request Payload:**
+```json
+{
+  "statuses": ["P", "S"],
+  "noticeNo": "500500303J",
+  "vehicleNo": "SNC7392R",
+  "page": 0,
+  "pageSize": 10,
+  "sortBy": "submissionDate",
+  "sortDirection": "DESC"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "total": 100,
+  "page": 0,
+  "pageSize": 10,
+  "data": [...]
+}
+```
+
+---
+
+### 3.3 Get Application Detail (Tab 3.5)
+
+**Purpose**: API flow for retrieving detailed submission information for OIC review.
+
+| Attribute | Value |
+|-----------|-------|
+| Process Name | Get Application Detail |
+| Endpoint | POST /furnish/officer/detail |
+| Trigger | OIC clicks on a submission from Summary List |
+| Systems | Staff Portal, OCMS Admin API, Intranet Database |
+
+#### Swimlanes (3 Lanes)
+
+| Lane | System | Color Code |
+|------|--------|------------|
+| 1 | Staff Portal | Blue (#dae8fc) |
+| 2 | OCMS Admin API | Green (#d5e8d4) |
+| 3 | Intranet Database | Yellow (#fff2cc) |
+
+#### Process Steps
+
+| Step | Lane | Type | Process | Description |
+|------|------|------|---------|-------------|
+| 1 | Portal | Start | Start | OIC clicks Notice No. |
+| 2 | Portal | Process | Navigate | Navigate to Detail page |
+| 3 | API | Process | Receive Request | POST /furnish/officer/detail |
+| 4 | Database | Process | Query Application | Query ocms_furnish_application by txnNo |
+| 5 | API | Decision | Application exists? | Check if record found |
+| 6 | Database | Process | Query Notice Details | Join with ocms_valid_offence_notice |
+| 7 | Database | Process | Query Suspension | Get active suspension info |
+| 8 | Database | Process | Query Documents | Get supporting documents list |
+| 9 | API | Process | Check Furnishability | Validate notice is still furnishable |
+| 10 | API | Process | Build Response | Construct detailed response |
+| 11 | API | Process | Return Response | Return JSON with all details |
+| 12 | Portal | Decision | Furnishable? | Check furnishability flag |
+| 13 | Portal | Process | Display Prompt | Show "Not furnishable" prompt if needed |
+| 14 | Portal | Process | Display Details | Render Submission Details page |
+| 15 | Portal | End | End | Complete |
+
+#### Decision Points
+
+| ID | Decision | Condition | Yes Path | No Path |
+|----|----------|-----------|----------|---------|
+| D1 | Application exists? | record != null | Query Notice Details | Return NOT_FOUND (404) |
+| D2 | Furnishable? | isFurnishable == true | Display Details | Display Prompt (Reject/Continue) |
+
+---
+
+### 3.4 Approve Furnished Submission (Tab 3.6)
+
+**Purpose**: API flow for OIC approval of furnished submission.
+
+| Attribute | Value |
+|-----------|-------|
+| Process Name | Approve Furnished Submission |
+| Endpoint | POST /furnish/officer/approve |
+| Trigger | OIC clicks Confirm after selecting Approve decision |
+| Systems | Staff Portal, OCMS Admin API, Intranet Database, Internet Database |
+
+#### Swimlanes (4 Lanes)
+
+| Lane | System | Color Code |
+|------|--------|------------|
+| 1 | Staff Portal | Blue (#dae8fc) |
+| 2 | OCMS Admin API | Green (#d5e8d4) |
+| 3 | Intranet Database | Yellow (#fff2cc) |
+| 4 | Internet Database | Yellow (#fff2cc) |
+
+#### Process Steps
+
+| Step | Lane | Type | Process | Description |
+|------|------|------|---------|-------------|
+| 1 | Portal | Start | Start | OIC clicks Confirm |
+| 2 | API | Process | Receive Request | POST /furnish/officer/approve |
+| 3 | API | Process | Bean Validation | Validate txnNo, officerId required |
+| 4 | API | Decision | Valid? | Check validation result |
+| 5 | Database | Process | Query Application | Find application by txnNo |
+| 6 | API | Decision | Exists? | Check if application found |
+| 7 | API | Decision | Status = P or S? | Check if pending or resubmission |
+| 8 | Database | Process | Update Application | Set status='A', remarks, upd_user_id, upd_date |
+| 9 | Database | Process | Insert H/D Record | Insert into ocms_offence_notice_owner_driver |
+| 10 | Database | Process | Insert Address | Insert into ocms_offence_notice_owner_driver_addr |
+| 11 | Database | Process | Set Current Offender | Set offender_indicator='Y' |
+| 12 | Database | Process | Update Previous | Set previous offender's indicator='N' |
+| 13 | Database | Process | Update Stage | Update notice processing stage (RD or DN) |
+| 14 | Database | Process | Revive Suspension | Set TS-PDP date_of_revival = NOW() |
+| 15 | Internet DB | Process | Sync Application | Update eocms_furnish_application |
+| 16 | Internet DB | Process | Sync H/D Record | Sync offender to Internet |
+| 17 | API | Decision | Send notifications? | Check notification flags |
+| 18 | API | Process | Send Email/SMS | Send notifications if requested |
+| 19 | API | Process | Build Response | Construct success response |
+| 20 | Portal | Process | Display Result | Show success message |
+| 21 | Portal | End | End | Complete |
+
+#### Decision Points
+
+| ID | Decision | Condition | Yes Path | No Path |
+|----|----------|-----------|----------|---------|
+| D1 | Valid? | validation passed | Query Application | Return VALIDATION_ERROR (400) |
+| D2 | Exists? | application != null | Check Status | Return NOT_FOUND (404) |
+| D3 | Status = P or S? | status IN ('P','S') | Update Application | Return ALREADY_PROCESSED (409) |
+| D4 | Send notifications? | any notification flag = true | Send Email/SMS | Skip notifications |
+
+#### Processing Stage Logic
+
+| Hirer/Driver Indicator | New Stage | Description |
+|------------------------|-----------|-------------|
+| H (Hirer) | RD | Reminder Driver/Hirer stage |
+| D (Driver) | DN | Driver Notice stage |
+
+---
+
+### 3.5 Reject Furnished Submission (Tab 3.7)
+
+**Purpose**: API flow for OIC rejection of furnished submission.
+
+| Attribute | Value |
+|-----------|-------|
+| Process Name | Reject Furnished Submission |
+| Endpoint | POST /furnish/officer/reject |
+| Trigger | OIC clicks Confirm after selecting Reject decision |
+| Systems | Staff Portal, OCMS Admin API, Intranet Database, Internet Database |
+
+#### Swimlanes (4 Lanes)
+
+| Lane | System | Color Code |
+|------|--------|------------|
+| 1 | Staff Portal | Blue (#dae8fc) |
+| 2 | OCMS Admin API | Green (#d5e8d4) |
+| 3 | Intranet Database | Yellow (#fff2cc) |
+| 4 | Internet Database | Yellow (#fff2cc) |
+
+#### Process Steps
+
+| Step | Lane | Type | Process | Description |
+|------|------|------|---------|-------------|
+| 1 | Portal | Start | Start | OIC clicks Confirm |
+| 2 | API | Process | Receive Request | POST /furnish/officer/reject |
+| 3 | API | Process | Bean Validation | Validate txnNo, officerId, rejectionReason required |
+| 4 | API | Decision | Valid? | Check validation result |
+| 5 | Database | Process | Query Application | Find application by txnNo |
+| 6 | API | Decision | Exists? | Check if application found |
+| 7 | API | Decision | Status = P or S? | Check if pending or resubmission |
+| 8 | Database | Process | Update Application | Set status='R', rejection_reason, remarks, upd_user_id, upd_date |
+| 9 | Internet DB | Process | Sync Application | Update eocms_furnish_application status='R' |
+| 10 | Internet DB | Process | Resend to Portal | Make notice available for resubmission |
+| 11 | API | Decision | Send email? | Check sendEmailToOwner flag |
+| 12 | API | Process | Send Email | Send rejection email to owner |
+| 13 | API | Process | Build Response | Construct success response |
+| 14 | Portal | Process | Display Result | Show success message |
+| 15 | Portal | End | End | Complete |
+
+#### Decision Points
+
+| ID | Decision | Condition | Yes Path | No Path |
+|----|----------|-----------|----------|---------|
+| D1 | Valid? | validation passed | Query Application | Return VALIDATION_ERROR (400) |
+| D2 | Exists? | application != null | Check Status | Return NOT_FOUND (404) |
+| D3 | Status = P or S? | status IN ('P','S') | Update Application | Return ALREADY_PROCESSED (409) |
+| D4 | Send email? | sendEmailToOwner = true | Send Email | Skip email |
+
+#### Key Difference from Approval
+
+| Aspect | Approval | Rejection |
+|--------|----------|-----------|
+| Status Update | 'A' (Approved) | 'R' (Rejected) |
+| H/D Record | Created | Not created |
+| Processing Stage | Updated (RD/DN) | No change |
+| TS-PDP Suspension | Revived | Remains active |
+| Notice in eService | Removed | Resent for resubmission |
 
 ---
 
 ## 4. Swimlane Definitions
 
-### 4.1 Standard 4-Lane Template (High-Level)
+### 4.1 Standard Swimlane Colors
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    OCMS Intranet Backend                            │
-├─────────────────────────────────────────────────────────────────────┤
-│                    Staff Portal (Intranet)                          │
-├─────────────────────────────────────────────────────────────────────┤
-│                    OCMS Internet Backend                            │
-├─────────────────────────────────────────────────────────────────────┤
-│                    eService Portal (Internet)                       │
-└─────────────────────────────────────────────────────────────────────┘
-```
+| System | Color | Hex Code | Usage |
+|--------|-------|----------|-------|
+| Staff Portal | Blue | #dae8fc | Frontend/UI operations |
+| OCMS Admin API | Green | #d5e8d4 | Backend API processing |
+| Cron Tier | Purple | #e1d5e7 | Scheduled batch jobs |
+| Intranet Database | Yellow | #fff2cc | Intranet DB operations |
+| Internet Database | Yellow | #fff2cc | Internet DB operations |
 
-### 4.2 Standard 3-Lane Template (Detailed - Processing)
+### 4.2 Shape Standards
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         Cron Tier                                   │
-├─────────────────────────────────────────────────────────────────────┤
-│                    OCMS Intranet Backend                            │
-├─────────────────────────────────────────────────────────────────────┤
-│                    OCMS Internet Backend                            │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-### 4.3 Standard 2-Lane Template (Detailed - Staff Portal)
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    Staff Portal (Intranet)                          │
-├─────────────────────────────────────────────────────────────────────┤
-│                    OCMS Intranet Backend                            │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-### 4.4 Swimlane Colors
-
-| Swimlane | Fill Color | Border Color | Notes |
-|----------|------------|--------------|-------|
-| Cron Tier | #1ba1e2 | #006EAF | Blue - Background jobs |
-| Intranet Backend | White | Black | Default |
-| Staff Portal | White | Black | Default |
-| Internet Backend | White | Black | Default |
-| eService Portal | White | Black | Default |
-| Database Box | #e1d5e7 | #9673a6 | Purple - DB operations |
-| Note/Info Box | #dae8fc | #6c8ebf | Light Blue - Notes |
-| Outcome Box | #fff2cc | #d6b656 | Yellow - Results |
-| Error Box | #eeeeee | #36393d | Gray - Error states |
+| Shape | Usage | Example |
+|-------|-------|---------|
+| Rounded Rectangle | Start/End terminators | Start, End |
+| Rectangle | Process step | Update Application |
+| Diamond | Decision point | Status = P? |
+| Parallelogram | Input/Output | Receive Request |
 
 ---
 
 ## 5. Cross-Reference
 
-### 5.1 Flow to API Mapping
+### 5.1 Mapping to API Endpoints
 
-| Flow | API Endpoints (from plan_api.md) |
-|------|----------------------------------|
-| 2.4.2.1 Retrieve Data | Internal sync operations (no external API) |
-| 2.4.3.1 Auto-Approval | Internal processing (no external API) |
-| 2.4.4 Manual Review | GET /furnish/pending, GET /furnish/{txnNo} |
-| 2.4.4.1 Approve | POST /furnish/approve |
-| 2.4.4.2 Reject | POST /furnish/reject |
-| 2.4.5 Update Outcome | PATCH /furnish/sync-status |
+| Diagram | API Endpoint | plan_api.md Section |
+|---------|--------------|---------------------|
+| 3.4 List | POST /furnish/officer/list | 2.1 |
+| 3.5 Detail | POST /furnish/officer/detail | 2.2 |
+| 3.6 Approve | POST /furnish/officer/approve | 2.3 |
+| 3.7 Reject | POST /furnish/officer/reject | 2.4 |
 
-### 5.2 Flow to Condition Mapping
+### 5.2 Mapping to Conditions
 
-| Flow | Conditions (from plan_condition.md) |
-|------|-------------------------------------|
-| 2.4.3.1 Auto-Approval | AA-001 to AA-008 (8 checks) |
-| 2.4.4 Manual Review | FE-060 to FE-065 (form validations) |
-| 2.4.4.1 Approve | BE-020 to BE-024 (business validations) |
-| Error Handling | Retry conditions (DB x3, Patch x3, Blob x3) |
+| Diagram | plan_condition.md Section |
+|---------|--------------------------|
+| 3.4 List | 2.1 (Search Parameters) |
+| 3.5 Detail | 4.1 (Furnishability Check) |
+| 3.6 Approve | 5.2 (Approval Decision Tree) |
+| 3.7 Reject | 5.3 (Rejection Decision Tree) |
 
-### 5.3 Shape Legend
+### 5.3 Mapping to Database Tables
 
-| Shape | Meaning |
-|-------|---------|
-| Rectangle | Process step |
-| Diamond | Decision point |
-| Rounded Rectangle | Sub-process (PROCESS) |
-| Parallelogram | Data input/output |
-| Circle | Start/End node |
-| Document | Database operation |
-| Dashed Rectangle | Optional/Conditional step |
+| Diagram | Tables Used |
+|---------|-------------|
+| 3.3 Cron | ocms_furnish_application |
+| 3.4 List | ocms_furnish_application |
+| 3.5 Detail | ocms_furnish_application, ocms_valid_offence_notice, ocms_notice_suspension |
+| 3.6 Approve | ocms_furnish_application, ocms_offence_notice_owner_driver, ocms_offence_notice_owner_driver_addr, eocms_* tables |
+| 3.7 Reject | ocms_furnish_application, eocms_furnish_application |
+
+### 5.4 Mapping to User Stories
+
+| Diagram | User Stories |
+|---------|--------------|
+| 3.2 High-Level | OCMS41.9-41.33 (all Section 3) |
+| 3.3 Cron | OCMS41.9 (email report) |
+| 3.4 List | OCMS41.9-41.12 |
+| 3.5 Detail | OCMS41.13-41.14 |
+| 3.6 Approve | OCMS41.15-41.23 |
+| 3.7 Reject | OCMS41.24-41.33 |
 
 ---
 
 ## Appendix A: Flowchart Checklist
 
-### Before Creating Flowchart
+Before creating diagrams:
 
-- [ ] plan_api.md exists and is reviewed
-- [ ] plan_condition.md exists and is reviewed
-- [ ] All swimlanes identified
-- [ ] All process steps documented
-- [ ] All decision points defined
-- [ ] Error handling paths included
-
-### During Creation
-
-- [ ] Use consistent colors per swimlane definitions
-- [ ] Include shape legend in each diagram
-- [ ] Number each decision point (D1, D2, etc.)
-- [ ] Add notes for complex logic
-- [ ] Include database operation details
-- [ ] Show retry logic where applicable
-
-### After Creation
-
-- [ ] Verify all paths lead to end nodes
-- [ ] Cross-check with API endpoints
-- [ ] Cross-check with validation rules
-- [ ] Review with stakeholders
+- [x] All steps have clear names
+- [x] All decision points have Yes/No paths defined
+- [x] All paths lead to an End point
+- [x] Error handling paths are included
+- [x] Database operations identified
+- [x] Swimlanes defined for each system
+- [x] Color coding specified
+- [x] API endpoints mapped
 
 ---
 
-*Document generated for OCMS 41 Section 2 flowchart planning*
+*Document generated for OCMS 41 Section 3 flowchart planning*
