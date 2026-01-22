@@ -1,0 +1,763 @@
+================================================================================
+EXTRACTED CONTENT FROM: v1.2_OCMS15_Change_Processing_Stage.docx
+================================================================================
+
+OCMS 15 – Manage Change Processing Stage
+
+Functional Specifications Document
+
+Prepared by:
+
+Version History
+
+
+[TABLE]
+| Version | Updated By | Date | Changes/Remarks |
+|---------|------------|------|-----------------|
+| v1.0 | Ei Mar Htun | 10/09/2025 |  |
+| v1.1 | Ei Mar Htun | 01/12/2025 | Section 2.3.1 Search Notices for Manual Change Processing Stage: Updated Check eligible notices for processing stage in Search.
+Section 2.4.1 User Journey for Change Notice Processing: added handling for user confirmation of existing change processing stage record.
+Section 2.4.2 Portal Validation for New Processing Stage: Updated the portal check for eligible to change processing stage.
+Section 2.5.1 Backend Processing for Manual Change Processing Stage: Updated the entire backend process
+Section 2.5.1.1 Change Notice's Next Processing Stage Sub-flow 
+Section2.5.1.3 Handling amount payable for Change Processing Stage
+Section 2.5.2 Handling for Manual Stage Change Notice in the Generate_toppan_letters cron  
+Added Section 2.6 OCMS Staff Portal displays for successful Change Processing Stage
+Added Section 2.7 OCMS Staff Portal display for unsuccessful payment
+Accessing Stage Change Reports: Manual download report from OCMS Staff Portal
+Section3.2 Manual Change Processing Stage via PLUS Staff Portal Processing Flow |
+|  |  |  |  |
+|  |  |  |  |
+| V1.2 | Ei Mar Htun | 13/01/2025 | Section 2.1- Use Case was revised to remove unnecessary notes. 
+
+Section 2.4.1 - Updated the User Journey for Change Notice Processing Screen by adding mising required field scheck and send for DH/MHA check is unchecked.
+
+Section 2.4.2 - Portal Validation for New Processing Stage by adding mising required field scheck and send for DH/MHA check is unchecked.
+
+Section 2.5.1 - Updated Backend Processin for Manual Change Processing Stage process flow and description for checking exising record for same notice in db for today.
+
+Section 2.5.1.1 - Updated Change Notice's Next Processing Stage Sub-flow process flow and description
+
+Section 2.5.1.3 - Handling amount payable for Change Processing Stage
+
+Section 2.7 - Update UI display for for failed Change Processing Stage Notices |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+
+Review and Sign Off
+
+
+[TABLE]
+| Submitted by Guthrie : | Submitted by Guthrie : | Submitted by Guthrie : |
+|------------------------|------------------------|------------------------|
+|  |  |  |
+| Reviewed by URA : | Reviewed by URA : | Reviewed by URA : |
+| Joey Lee / Executive Manager
+DD/MM/YYYY | Tang Puay Ling / Executive Manager
+DD/MM/YYYY | Tang Puay Ling / Executive Manager
+DD/MM/YYYY |
+| Neo Yi Jie / Executive Systems Analyst
+DD/MM/YYYY | {name} / {Designation}
+DD/MM/YYYY | {name} / {Designation}
+DD/MM/YYYY |
+| Approved By URA : | Approved By URA : | Approved By URA : |
+| {name} / {Designation}
+DD/MM/YYYY | {name} / {Designation}
+DD/MM/YYYY | {name} / {Designation}
+DD/MM/YYYY |
+
+Table of Contents
+
+
+[TABLE]
+| Section | Contents | Page |
+|---------|----------|------|
+| 1 | User Story | 7 |
+| 1 | 1.1 EPIC Story | 8 |
+| 1 | 1.2 User Stories & Requirements | 8 |
+| 1 | 1.3 Key Functions & Features | 8 |
+| 2 | Function: Manual Change Processing Stage | 9 |
+| 2 | Use Case | 10 |
+| 2 | High-Level Process Flow | 11 |
+| 2 | Change Notice Processing Stage Screen | 12 |
+| 2 | Submission of the Notice Change Processing Stage | 14 |
+| 2 | Backend |  |
+| 2 |  | 39 |
+| 2 |  |  |
+| 2 |  |  |
+| 2 |  | 47 |
+| 2 |  |  |
+| 2 |  |  |
+| 3 | Function: Manual Change Processing Stage initiated by PLUS |  |
+| 3 | Use Case |  |
+| 3 |  |  |
+| 3 | Integration with PLUS |  |
+| 3 | Processing of Manual Change Processing Stage in OCMS Backend |  |
+
+Section 1: User Story
+
+Epic Story
+As a Notice Processing Officer who needs to follow up against notices in the OCMS, I want the OCMS to allow me to change the processing stage of a notice, so that the OCMS can revert to an earlier processing stage to resend reminders or escalate to speed up the processing of a notice.
+
+User Stories
+
+Key Functions & Features
+
+
+[TABLE]
+| Functions | Description |
+|-----------|-------------|
+| Manual Change Processing Stage | Change Processing Stage is the function to allow the OICs to update the current stage of the notice processing workflow.
+
+The OCMS Staff Portal provides a user interface for authorised OICs to manually change the notice’s processing stage. |
+| Manual Change Processing Stage via PLUS Staff Portal | The PLUS Staff Portal enables authorised officers from PLUS to request changes to a notice’s processing stage. OCMS validates these requests and updates the workflow accordingly, returning confirmation or error messages to PLUS. |
+
+Section 2: Manual Change Processing Stage
+
+2.1 Use Case
+
+The Change Processing Stage module allows OICs to manually change a notice's processing stage, which in turn changes its workflow.
+
+The OCMS Staff Portal has a Change Notice Processing Stage module that allows OCMS OICs to:
+
+Search for notice(s) to be updated with a new processing stage.
+
+Display the search results which are applicable to change the new processing stage on screen.
+
+Change the new processing stage by selecting the notice and completing the new processing stage form.
+
+Perform a validity check for the new processing stage is allowed to change before sending the change request to the OCMS backend.
+
+Retrieve and download the Change Notice Processing Stage Data Report from the backend to view the Notices that manually change the new processing stage.
+
+When the Change Processing Stage is initiated from the Portal, the OCMS Backend will:
+
+2.2 High-Level Process Flow for Manual Change Processing Stage via OCMS Staff Portal
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+
+[TABLE]
+| No. | Process | Description |
+|-----|---------|-------------|
+|  | Pre-condition | The Change Processing Stage process begins when an OIC decides to update the current processing stage of a notice through the OCMS Staff Portal. |
+| 1 | OIC launches the OCMS Staff Portal Change Processing Stage module | The OCMS OIC accesses the OCMS Staff Portal’s Change Processing Stage module to search the notice(s) and change the processing stage. |
+| 2 | OIC enters search criteria to retrieve notice(s) | The OIC enters one of the search criteria to retrieve the notice(s) for processing stage change.
+
+Search Criteria:
+Notice number, ID number, Vehicle number, Current processing stage, Date of current processing stage 
+
+Refer to Section 2.3 for details on the Change Processing Stage module in the Staff Portal |
+| 3 | OIC selects notice(s) and fills up Change Processing Stage form | The OIC selects the retrieved notice(s) and fills in the new processing stage, reason for change, and remarks.
+
+Refer to Section 2.4 for details on the Change Processing Stage form. |
+| 4 | OIC submits the new processing stage and portal exports Change Processing Report | The OIC submits the change processing stage form to the backend. 
+
+The portal exports the data submitted as the Change Processing Stage Report.
+  
+Note: After backend processing, the data will be generated as a Change Processing Stage Report and the report will be downloaded automatically. |
+| 5 | OCMS Backend processes to change the | The backend receives the submission and begins processing the change processing stage of the notice.
+Refer to Section 2.5 for details on backend processing |
+| 8 | Respond to Staff Portal | The backend responds to the Staff Portal with the status of the notice(s) change processing stage (success or failure). |
+| 9 | OCMS Staff Portal displays stage change status and report link | The OCMS Staff Portal displays the stage change status of the notice(s) and provides a download link for the exported Change Processing Stage Report. |
+| 10 | End | The process concludes. |
+
+2.3 Change Notice Processing Stage Screen
+
+The Change Processing Stage Screen is a function of the Change Processing Stage module in the OCMS Staff Portal.
+
+The key function of the module is to enable OICs to update a notice's processing stage, which in turn changes its workflow.
+
+The Change Processing Stage screen provides the following features:
+
+Search for notice(s) to be updated with a new processing stage. (This section focuses on the search function.)
+
+Select the notice(s) and submit a stage change request by completing the new processing stage form. (Details of the form and validity check for stage change submission are described in Section 2.4)
+
+The Change Processing Stage screen allows OICs to search for notice(s) by entering one of the available search criteria.
+
+
+[TABLE]
+| Search Parameter | Description | Sample Value |
+|------------------|-------------|--------------|
+| Notice No. | Notice number. 
+Alphanumeric, 10 chars including spaces
+
+Page will validate if Notice Number entered is in the correct format | 441000001X |
+| ID No. | Identification type and number
+
+Alphanumeric, 20 chars | S1234567A |
+| Vehicle No. | Vehicle license plate number.
+
+Alphanumeric, up to 14 chars including spaces
+
+Page will display the warning message "Number does not match the local vehicle number format." when the input does not match the local vehicle number format. Users can still proceed to search. | SNC7392R |
+| Current Processing Stage | Drop-down list for user to select Processing Stage:
+NPA 
+ROV
+DR3 
+ENA 
+RD1 
+RD2 
+RR3
+DN1 
+DN2 | RR3 |
+| Date of Current Processing Stage | The page displays a date picker tool for user to select the date, month and year. | 25/02/2025 |
+
+After the user has entered the search data and submitted to the OCMS backend, the backend will:
+
+Retrieve the notice(s) from “ocms_valid_offence_notice” data table by applying the search filter
+
+If the record is found, check if the notice(s) are eligible to change the processing stage. If the notice(s) are eligible, return the matching notices with the details to the Staff Portal.
+
+If the record is not found or the notice(s) are not eligible for the change processing stage, return the error message to the Staff Portal.
+
+The Change Processing Stage screen displays the result notices when matching data is returned. The notices are shown in a list with their details, and each notice includes a checkbox for selection. The details displayed on the screen include:
+
+Notice No
+
+Offence Type
+
+Offence Date and Time
+
+Offender Address
+
+Checkbox with label ‘Send DH/MHA check’ to indicate whether to send DH/MHA check
+
+Vehicle No.
+
+Offender ID
+
+Offender Name
+
+Current processing Stage
+
+Current processing Date
+
+Suspension Type
+
+Reason for Suspension
+
+Note: Refer to Section 2.4.3 for Notice Details
+
+2.3.1 Search Notices for Manual Change Processing Stage
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+
+[TABLE]
+| No. | Process | Description |
+|-----|---------|-------------|
+|  | Pre-condition | The search process begins when the OCMS OIC wants to retrieve notice(s) in order to initiate a processing stage change through the OCMS Staff Portal. |
+| 1 | OIC launches the OCMS Staff Portal Change Processing Stage module | The OIC accesses the OCMS Staff Portal and opens the Change Processing Stage module. |
+| 2 | OIC enters search criteria and submits | The OIC enters one of the valid search criteria to retrieve the notice(s) and submits the search request.
+
+Search Criteria:
+Notice number, ID number, Vehicle number, Current processing stage, Date of current processing stage |
+| 3 | The OCMS Staff Portal validates search data | The OCMS Staff Portal checks if the entered search data is valid. 
+If invalid, an error message is displayed “Invalid <search data>” e.g. Invalid Notice no.
+
+If valid, the request is sent to the OCMS Backend. |
+| 4 | OCMS Backend queries records | The backend receives the request and |
+| 5 |  | The backend checks if any record matches the search criteria. 
+
+If no record is found, respond to Staff Portal: “No record found.” 
+If a record is found, OCMS Backend |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+2.4 Submission of the Notice Change Processing Stage
+
+The OCMS OIC selects the notice(s) from the search notice list and clicks on the ‘Change Processing Stage’ button to initiate the manual change process stage.
+
+The OCMS Staff Portal redirects to the Change Notice Processing Stage Form Page, which displays two sections:
+
+List of selected Notice(s) with the details
+
+Change Notice Processing Details Form
+
+The OCMS Staff Portal validates that the selected new processing stage is allowed before submitting to the OCMS Backend.
+
+If the new processing stage is not valid for the notice(s), the OCMS Staff Portal displays the error message, prompting the OIC that those notices are not applicable for changing the processing stage. The user has to uncheck those notices(s) and submit again.
+
+If the new processing stage is valid to change, the OCMS Staff Portal display the summary page, enabling the OIC to review the selected notices and the new processing stage.
+
+Once the OIC confirms the change of the new processing stage on the summary page, the OCMS Staff Portal send a request to OCMS Backend to update the notice’s processing stage.
+
+2.4.1 User Journey for Change Notice Processing Screen
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+
+[TABLE]
+| No. | Process | Description |
+|-----|---------|-------------|
+|  | Pre-condition | The process begins when an OIC decides to update the processing stage of notice(s) through the OCMS Staff Portal. |
+| 1 | OIC launches the OCMS Staff Portal Change Processing Stage module | The OIC accesses the OCMS Staff Portal and opens the Change Processing Stage module. |
+| 2 | OIC enters search criteria and submits | The OIC enters one of the valid search criteria to retrieve the notice(s) and submits the search request.
+
+Search Criteria:
+Notice number, ID number, Vehicle number, Current processing stage, Date of current processing stage |
+| 3 | System validates search data | If invalid, an error message is displayed “Invalid <search data>” e.g. Invalid Notice no.
+
+If valid, the request is sent to the OCMS Backend. |
+| 4 | Page displays search result list | The Staff Portal displays the list of notices matching the search criteria. |
+| 5 | OIC selects notice(s) for change | The OIC selects the notice(s) from the list and clicks Change Processing Stage button to apply the notice(s) to change processing stage. |
+| 6 | Page displays Change Processing Stage Form | The system displays the Change Processing Stage Form to review the selected notice details and enter the new processing stage details. |
+| 7 | OIC fills in Change Processing Stage form | OIC selects the new processing stage and reason of the change and enters remarks data fields. |
+| 8 | OIC submits the form | The OIC submits the Change Processing Stage form for new processing stage update. |
+| 9 | Validation of the form | After submission the change processing form, the Staff Portal validates these:
+
+
+. If thesend DH/MHA check the notices in notice list. If the , prompt user to confirm that the notice will not o for DH/MHA check. 
+. Once user confirm  uncheck, it proceed to check 
+whether the new processing stage is allowed to for the selected notice(s).
+
+If the new processing stage is not eligible , error messageinform to uncheck the inapplicable notices.
+
+(b) If the new processing stage is eligible, proceed to display the summary of Change Notice Processing Stage. |
+| 10 | Display summary page | The Staff Portal displays a summary of the new processing stage update for review. |
+| 11 | OIC reviews and confirms | The OIC reviews the summary and confirms the update to the notice(s). |
+|  |  |  |
+|  | Backend processes change | The backend processes the Change Processing Stage update and applies it to the selected notice(s).
+
+Refer to Section 2.5 for details on backend processing |
+|  |  |  |
+|  | Portal displays | The Staff Portal displays |
+|  | Report auto-download | The generated report is automatically downloaded onto the OIC’s laptop. |
+|  | End | The process concludes once the report is downloaded, completing the Change Processing Stage update. |
+
+2.4.2 Portal Validation for New Processing Stage
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+
+[TABLE]
+| No. | Process | Description |
+|-----|---------|-------------|
+|  | Change Processing Form displayed | The OIC has selected notice(s) for stage change, and the Change Processing Form is displayed. |
+| 1 | OIC enters new processing details | The OIC selects a new processing stagechoose the reason of the change,provides remarks in the form |
+| 2 | OIC submits the form | The OIC submits the Change Processing Stage form for validation. |
+| 3 | Validates Change Procesing Form fields and DH/MHA check option | After submission,the Staff Portal whether the required form fields are missing an the Send for DH/MHA Check box is unchecked in the notice details list.
+
+
+
+
+Once the user confirmed, it continue validation for new processing stage. |
+| 4 | Validate new processing stage | The OCMS Staff Portal validates that the new processing stage is allowed for the selected notice(s) |
+| 5 | Offender type check | The OCMS Staff Portal  whether the offender is the driver or owner/hirer/director.
+
+(a) If the offender is driver, the notice is allowed to change the new processing stage to DN1/DN2/DR3
+(b) If the offender is Owner/Hirer/Director,the notice is allowed to change the new processing stage to ROV/RD1/RD2/RR3 |
+| 6 |  | Based on validation:
+
+(a) If the new processing stage matches with the predefined eligible stages, the notice is valid to change and marked as the changeable notice.  
+(b) If the new processing  not in the predefined eligible stage, the notice is not valid to change and  non-changeable notice. |
+| 7 | Last record check | The OCMS Staff Portal checks if the current record is the last record
+(a) If not, continue with the next notice (repeat Step 4–).
+(b) If yes, proceed to check the results. |
+| 8 | Has non-changeable notices? | The OCMS Staff Portal performs a check to determine if a Non-Changeable Notice is present.
+
+(a) 
+
+
+
+
+
+(b) |
+| 9 | Display summary page | The OCMS Staff Portal displays the summary page for the OIC to review before submission to backend processing. |
+| 10 | End | The portal validation process concludes once the summary page is displayed or an error message is shown for invalid notices. |
+
+2.4.3 Change Notice Processing Stage Details Online Form Fields
+
+It displays a list view of Notices that allows users to update the processing stage and includes the following fields in the Data Table view.
+
+2.4.3.1 Notice Details – display as Data Table
+
+
+[TABLE]
+| UI Field | Description | Input Method | Functionality |
+|----------|-------------|--------------|---------------|
+| Checkbox | Selected Notice to apply change processing stage | Autochecked on the checkbox for selected notice | Editable
+(Check / Uncheck ) |
+| Notice No. | Notice Number | Autopopulated from selected notice on Search Notice Page | Non-editable |
+| Offence Type | Type of Offence | Autopopulated from selected notice on Search Notice Page | Not editable |
+| Offence Date and time* | Date and Time when the offence was committed | Autopopulated from selected notice on Search Notice Page | Not editable |
+| Latest registered address | Offender’s address as recorded in the system | Autopopulated from selected notice on Search Notice Page | Not editable |
+| Send for DH/MHA checkbox | Option to indicate if the notice should be sent to DH/MHA |  | Editable
+(Check / Uncheck ) |
+| Vehicle No | Vehicle license plate number | Autopopulated from selected notice on Search Notice Page | Not editable |
+| Current Offender ID No | Offender’s ID Number | Autopopulated from selected notice on Search Notice Page | Not editable |
+| Current Offender Name | Offender’s Name | Autopopulated from selected notice on Search Notice Page | Not editable |
+| Current processing Stage | Notice’s Last Processing Stage | Autopopulated from selected notice on Search Notice Page | Not editable |
+| Current Processing Date | Notice’s Last Processing Date | Autopopulated from selected notice on Search Notice Page | Not editable |
+|  |  |  |  |
+| Suspension Status | Type of suspension | Autopopulated from selected notice on Search Notice Page | Not editable |
+| Reason of Suspension | Suspension Code that indicates the reason for the suspension | Autopopulated from selected notice on Search Notice Page | Not editable |
+| New Processing Stage* | Notice’s next processing stage changed by the OIC | User selects from drop-down list showing values from Standard Code DB. | Editable |
+| Reason of Change* | Reason for the change processing stage | User selects from drop-down list showing values from Standard Code DB | Editable |
+| Remark | Stage Change remarks entered by the OIC | Text field (Alphanumeric, chars) | Editable |
+
+*Denotes mandatory fields
+
+Backend Processing for Change Notice Processing Stage Submission
+
+When a new change notice processing stage is initiated from the Staff Portal, the OCMS backend executes the stage transition.
+
+2.5.1 Backend
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+
+[TABLE]
+| No. | Process | Description |
+|-----|---------|-------------|
+|  | Pre-condition | Staff Portal submits a manual stage change request via API to the backend. |
+| 1 | Receive API Request | OCMS Backend receives the stage change request payload from the Staff Portal. |
+| 2 | Validate Request Data | OCMS Backend |
+| 3 | Check |  |
+| 4 | Check the notice has Existing Stage Change Record | OCMS Backend erify whether a stage change record for the same notice:
+Query ocms_change_processing_stage table using the notice number and currentdate
+If the notice exists , OCMS Backend respond to Staff Portal with a message — “Notice No. xxx has existing stage change update.”
+If no record exists: OCMS proceed with processing the new stage change request. |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+2.5.1. Change Notice's Next Processing Stage Sub-flow
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+2.5.1.2 Data Update for Change Processing Stage of Manual Stage Change Submission
+
+Database Tables:
+
+ocms_valid_offence_notice – change the next processing stage of notice
+
+ocms_change_processing_stage – save the submitted record for a manual stage change request
+
+ocms_offence_notice_owner_driver – save the notice for DataHive or MHA check
+
+The following fields for the affected Change Processing Stage in the VON tables will be updated
+
+
+[TABLE]
+| Database Field | Description | Sample Value |
+|----------------|-------------|--------------|
+|  |  |  |
+|  |  |  |
+| next_processing_stage | The stage that the notice is scheduled to move to next. | RD2 |
+| next_processing_date | Date and time when the notice should transition to the next processing stage. | 2025-09-19T 00:00:02 |
+|  |  |  |
+|  |  |  |
+
+The following field will be updated to send DH/MHA address check in ONOD table
+
+
+[TABLE]
+| Database Field | Description | Sample Value |
+|----------------|-------------|--------------|
+| DH/MHA_check_allow | Indicator showing whether the notice is allowed for address verification through DataHive (DH) or MHA. (Y = Allowed, N = Not Allowed) | N |
+
+The following fields for saving Change Processing Stage Data in the C tables will be updated
+
+
+[TABLE]
+| Database Field | Description | Sample Value |
+|----------------|-------------|--------------|
+| notice _no | Notice number | 441000000X |
+| date_of_change | Date and time when the processing stage change was applied. | 2025-09-02T19:00:02 |
+| last_processing_stage | The current processing stage of the notice before the change is applied. |  |
+| new_processing_stage |  |  |
+| reason_of_change | Reason for applying the stage change. | SUP- Speed up processing |
+| authorised_officer | Name of Officer who initiated the change processing stage | JOHNLEE |
+| remarks | Additional remarks or comments related to the stage change. |  |
+| cre_date | Date and time the change processing stage record was created | 2025-09-02 19:00:02 |
+| cre_user_id | User who created the record | JOHNLEE |
+
+
+[TABLE]
+|  |  |
+|--|--|
+|  |  |
+|  |  |
+
+
+[TABLE]
+|  |  |
+|--|--|
+|  |  |
+
+Generate Change Notice Processing Report Sub-flow
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+When the Change Notice Processing Stage online form has been submitted, the OCMS generates the report and returns the report URL so that the Staff Portal can download the report automatically.
+
+
+[TABLE]
+|  |  |  |
+|--|--|--|
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+NOTE: Due to page size limit, the full-sized image is appended
+
+
+[TABLE]
+|  |  |  |
+|--|--|--|
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+2.5.2.Data Update for Change Processing Stage of Stage Change Scheduler
+
+Database Tables:
+
+ocms_valid_offence_notice – change the processing stage and payment data of notice
+
+The following fields for affected Change Processing Stage in the VON tables will be updated
+
+
+[TABLE]
+| Database Field | Description | Sample Value |
+|----------------|-------------|--------------|
+| prev_processing_stage | The stage where the notice was before the last transition. | RR3 |
+| prev_processing_date | Date and time when the previous processing stage started. | 2025-08-15T10:30:00 |
+| last_processing_stage | The current processing stage of the notice before the update. | RD1 |
+| last_processing_date | Date and time when the current processing stage started. | 2025-09-01T09:00:00 |
+| next_processing_stage | The stage that the notice is scheduled to move to next. | RD2 |
+| next_processing_date | Date and time when the notice should transition to the next processing stage. | 2025-09-19T 00:00:02 |
+| amount_payable | Total amount payable for the notice after the stage change. | 70.00 |
+| payment_acceptance_allowed | Indicates whether payment is allowed for this stage (Y = Yes, N = No). | Y |
+|  |  |  |
+|  |  |  |
+
+
+[TABLE]
+|  |  |  |
+|--|--|--|
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+
+[TABLE]
+|  |  |  |
+|--|--|--|
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+|  |  |  |
+
+
+[TABLE]
+|  |  |  |  |
+|--|--|--|--|
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+
+Section 3 – Manual Stage Change Initiated by PLUS
+
+3.1 Use case
+
+1. The Change Processing Stage refers to the scenario where PLUS triggers a request to OCMS to manually change a notice's processing stage, which in turn changes its workflow.
+
+2. This occurs when PLUS officers need to change the current processing stage of a notice, and the change is carried out manually within the notice processing workflow.
+
+3. The PLUS system will perform validation to decide whether a Notice is eligible for a  before the request is sent to the OCMS Intranet Backend.
+
+4. When the OCMS Intranet Backend receives a stage change request, it performs the following actions for change processing stage submission:
+
+Validate the request and update the next_processing_stage of the notice in the VON table..
+
+Generate the report for internal tracking.
+
+Return the notice details (with the updated next_processing_stage) together with the report link to the OCMS Staff Portal
+
+Note : 
+Since PLUS is not allowed to change the stage to CFC, option should not be displayed in the dropdown list of New Processing Stage.
+
+3.2 Manual Change Processing Stage via PLUS Staff Portal Processing Flow
+
+NOTE: Due to page size limit, the full-sized image is appended.
+
+
+[TABLE]
+| No. | Process | Description |
+|-----|---------|-------------|
+| 1 | Pre-condition: 
+Initiate Change Notice Processing Stage | The PLUS office initiates the stage change request for the Notice(s) in PLUS Staff Portal. |
+| 2 | Pre-condition: | The PLUS system checks if the notice is applicable for change processing stage based on pre-defined rules and conditions. |
+| 3 | Pre-condition: 
+PLUS sends Request 
+to OCMS | If eligible, PLUS sends a request to OCMS Intranet Backend for Manual Change Processing Stage via API. |
+| 4 | OCMS Receives 
+Request | OCMS Intranet Backend receives the request routed through APIM. |
+| 5 | Manual Stage Change Process in OCMS Backend | OCMS Intranet Backend process:
+Data Validation: OCMS verifies whether the request data has completed or missing required data. If the data validation failed, OCMS responds to PLUS with the error message. (e.g. Invalid format, Missing data).
+
+Check the notice is eligible for manual stage change: OCMS verifies whether the request notice(s) are eligible to change the new processing stage. If the notice does not meet the pre-defined eligible rule, OCMS responds with an error message along with the list of changeable and non-changeable notices.
+
+If the notice(s) are applicable to change, OCMS perform the change processing stage:
+(a) Update the notice’s next_processing_stage with the new processing stage.
+(b) Save the stage change request in the ocms_change_processing_stage table.
+(c) Generate Change Processing Stage Report for the internal review.
+Refer to Section 2.5 for details on OCMS Backend Real Time Action for Manual Stage Change. |
+| 7 | Respond to PLUS | OCMS Backend Response to PLUS
+Manual Stage Change Submission Success
+After the change processing stage is completed, OCMS returns the updated notice(s) together with the report URL to PLUS.
+
+Manual Stage Change Submission Failed
+If inapplicable notice(s) are detected, OCMS responds with an error message and provides a list of both changeable and non-changeable notices.
+
+If the failure is due to other reasons, OCMS responds with an error message only. |
+|  |  |  |
+
+3.3 Integration with PLUS
+
+The PLUS Backend is integrated with the OCMS Backend via an API provided by OCMS.
+Note: Refer to the OCMS 15 Technical Document for the API specifications.
+
+3.3.1 PLUS Backend requests parameter data via API call
+
+
+[TABLE]
+| Field Name | Description | Sample Value |
+|------------|-------------|--------------|
+| notice_data | Data JSON object containing the details list of selected notices. |  |
+| new_processing_stage* | Notice’s next processing stage changed by the OIC |  |
+| reason_of_change* | Reason for the change processing stage |  |
+| remark | Stage Change remarks entered by the OIC |  |
+| cre_date | Date and time the reduction record was created | 2025-08-01 19:00:02 |
+| cre_user_ID | The Officer who did the reduction | JOHNLEE |
+
+* Denotes mandatory fiel
+
+The notice details data is the same as the OCMS UI fields. Refer to Section 2.4.3.1 for the complete notice detail structure.
+
+3.4 Processing of in OCMS Backend
+
+Refer to Section 2.5 – Manual Stage Change Process in OCMS Backend
+
+
+================================================================================
+END OF EXTRACTION
+================================================================================
