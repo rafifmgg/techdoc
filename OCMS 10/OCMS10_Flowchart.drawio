@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0" version="29.3.4" pages="12">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2" pages="12">
   <diagram id="tab2_1" name="2.1_High_Level_AN_Processing">
     <mxGraphModel dx="661" dy="387" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
@@ -271,162 +271,145 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_1_1" name="3.1.1_ANS_Exemption_Rule_Code_Check">
-    <mxGraphModel dx="972" dy="569" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="2200" math="0" shadow="0">
+    <mxGraphModel dx="5210" dy="3130" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="2200" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="title_2_3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.1.1: ANS Exemption Rule Code Check Sub-Flow" vertex="1">
-          <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
+        <mxCell id="title_2_3" value="Section 3.1.1: ANS Exemption Rule Code Check Sub-Flow" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_2_3" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
-          <mxGeometry height="920" width="2690" x="20" y="60" as="geometry" />
+        <mxCell id="sw_backend_2_3" value="ocmsadminapi" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="20" y="60" width="2690" height="920" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_step1" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Identify new Notice&#39;s Offence Rule Code" vertex="1">
-          <mxGeometry height="80" width="160" x="310" y="70" as="geometry" />
+        <mxCell id="s2_3_step1" value="Identify new Notice&#39;s Offence Rule Code" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="310" y="70" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_step2" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query ANS Exemption DB to check if Rule Code is in exemption list" vertex="1">
-          <mxGeometry height="80" width="160" x="540" y="70" as="geometry" />
+        <mxCell id="s2_3_step2" value="Query ANS Exemption DB to check if Rule Code is in exemption list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="540" y="70" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_dec1" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Exemption Record Found?" vertex="1">
-          <mxGeometry height="100" width="120" x="790" y="60" as="geometry" />
+        <mxCell id="s2_3_dec1" value="Exemption Record Found?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="790" y="60" width="120" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_eligible1" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice IS ELIGIBLE for ANS (Rule Code NOT in exemption list)" vertex="1">
-          <mxGeometry height="80" width="180" x="1000" y="360" as="geometry" />
+        <mxCell id="s2_3_eligible1" value="Notice IS ELIGIBLE for ANS (Rule Code NOT in exemption list)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1000" y="360" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_step3" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Compare Notice&#39;s offence_date with Exemption Rule&#39;s start_effective_date and end_effective_date" vertex="1">
-          <mxGeometry height="80" width="200" x="1000" y="70" as="geometry" />
+        <mxCell id="s2_3_not_eligible1" value="Return: Notice is NOT ELIGIBLE for ANS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1900" y="70" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_not_eligible1" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return: Notice is NOT ELIGIBLE for ANS" vertex="1">
-          <mxGeometry height="80" width="180" x="1900" y="70" as="geometry" />
+        <mxCell id="s2_3_eligible3" value="Notice IS ELIGIBLE for ANS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1680" y="220" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_eligible3" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Notice IS ELIGIBLE for ANS" vertex="1">
-          <mxGeometry height="80" width="180" x="1680" y="220" as="geometry" />
+        <mxCell id="s2_3_not_eligible2" value="Return: Notice is NOT ELIGIBLE for ANS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1920" y="440" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_not_eligible2" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return: Notice is NOT ELIGIBLE for ANS" vertex="1">
-          <mxGeometry height="80" width="180" x="1920" y="440" as="geometry" />
+        <mxCell id="s2_3_eligible4" value="Return: Notice IS ELIGIBLE for ANS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1690" y="670" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_eligible4" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return: Notice IS ELIGIBLE for ANS" vertex="1">
-          <mxGeometry height="80" width="180" x="1690" y="670" as="geometry" />
+        <mxCell id="s2_3_not_eligible4" value="Return: Notice is NOT ELIGIBLE for ANS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1240" y="360" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_not_eligible4" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return: Notice is NOT ELIGIBLE for ANS" vertex="1">
-          <mxGeometry height="80" width="180" x="1240" y="360" as="geometry" />
+        <mxCell id="s2_3_return" value="Return result to main AN Qualification Process Flow" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="2240" y="440" width="200" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_return" parent="sw_backend_2_3" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return result to main AN Qualification Process Flow" vertex="1">
-          <mxGeometry height="80" width="200" x="2240" y="440" as="geometry" />
+        <mxCell id="s2_3_end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="2490" y="450" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="s2_3_end" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
-          <mxGeometry height="60" width="120" x="2490" y="450" as="geometry" />
+        <mxCell id="05_PdX5-xt_YHOxjkQOR-1" value="Start: ANS Exemption Rule Code Check" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="80" y="75" width="160" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="05_PdX5-xt_YHOxjkQOR-1" parent="sw_backend_2_3" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="Start: ANS Exemption Rule Code Check" vertex="1">
-          <mxGeometry height="70" width="160" x="80" y="75" as="geometry" />
-        </mxCell>
-        <mxCell id="c2_3_1" edge="1" parent="sw_backend_2_3" source="05_PdX5-xt_YHOxjkQOR-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="s2_3_step1">
+        <mxCell id="c2_3_1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="sw_backend_2_3" source="05_PdX5-xt_YHOxjkQOR-1" target="s2_3_step1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="240" y="110" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="s2_3_db_note" parent="sw_backend_2_3" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SELECT&amp;nbsp;&lt;div&gt;rule_code,&amp;nbsp;&lt;/div&gt;&lt;div&gt;start_effective_date,&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;end_effective_date,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;rule_remarks,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;composition_amount&lt;/span&gt;&lt;/div&gt;&lt;div&gt;FROM ocms_an_exemption_rules&amp;nbsp;&lt;br&gt;WHERE rule_code = [notice.computer_rule_code]&lt;/div&gt;" vertex="1">
-          <mxGeometry height="140" width="270" x="485" y="210" as="geometry" />
+        <mxCell id="s2_3_db_note" value="SELECT&amp;nbsp;&lt;div&gt;rule_code,&amp;nbsp;&lt;/div&gt;&lt;div&gt;start_effective_date,&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;end_effective_date,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;rule_remarks,&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;composition_amount&lt;/span&gt;&lt;/div&gt;&lt;div&gt;FROM ocms_an_exemption_rules&amp;nbsp;&lt;br&gt;WHERE rule_code = [notice.computer_rule_code]&lt;/div&gt;&lt;div&gt;AND @noticeDate BETWEEN start_effective_date AND end_effective_date;&amp;nbsp;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="485" y="210" width="270" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="c2_3_4" edge="1" parent="sw_backend_2_3" source="s2_3_step2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="s2_3_db_note">
+        <mxCell id="c2_3_4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="sw_backend_2_3" source="s2_3_step2" target="s2_3_db_note" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="610.0526315789473" y="470" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_8" edge="1" parent="sw_backend_2_3" source="05_PdX5-xt_YHOxjkQOR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_eligible1" value="no">
-          <mxGeometry relative="1" x="-0.8235" as="geometry">
-            <mxPoint as="offset" />
-            <Array as="points">
-              <mxPoint x="1330" y="300" />
-              <mxPoint x="1090" y="300" />
-            </Array>
-            <mxPoint x="1335.0000000000005" y="160" as="sourcePoint" />
-            <mxPoint x="1335" y="220" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="05_PdX5-xt_YHOxjkQOR-3" value="Offence Date within exemption period?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1270" y="60" width="120" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="05_PdX5-xt_YHOxjkQOR-3" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Offence Date within exemption period?" vertex="1">
-          <mxGeometry height="100" width="120" x="1270" y="60" as="geometry" />
-        </mxCell>
-        <mxCell id="c2_3_7" edge="1" parent="sw_backend_2_3" source="s2_3_step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="05_PdX5-xt_YHOxjkQOR-3">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="1260" y="107.57142857142867" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="c2_3_9" edge="1" parent="sw_backend_2_3" source="05_PdX5-xt_YHOxjkQOR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-1" value="yes">
+        <mxCell id="c2_3_9" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="sw_backend_2_3" source="05_PdX5-xt_YHOxjkQOR-3" target="7qNYoynsUAsgdYpXGzDD-1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1390" y="107.57142857142867" as="sourcePoint" />
             <mxPoint x="1480" y="110" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="7qNYoynsUAsgdYpXGzDD-1" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="computer_rule_code = 20412?" vertex="1">
-          <mxGeometry height="100" width="120" x="1490" y="60" as="geometry" />
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-1" value="computer_rule_code = 20412?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1490" y="60" width="120" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="7qNYoynsUAsgdYpXGzDD-5" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="composition_amount = $80?" vertex="1">
-          <mxGeometry height="100" width="120" x="1710" y="60" as="geometry" />
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-5" value="composition_amount = $80?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1710" y="60" width="120" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="7qNYoynsUAsgdYpXGzDD-4" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="computer_rule_code = 11210?" vertex="1">
-          <mxGeometry height="100" width="120" x="1490" y="350" as="geometry" />
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-4" value="computer_rule_code = 11210?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1490" y="350" width="120" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="7qNYoynsUAsgdYpXGzDD-3" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Notice remarks contains &#39;Loading Bay&#39;?" vertex="1">
-          <mxGeometry height="100" width="120" x="1720" y="350" as="geometry" />
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-3" value="Notice remarks contains &#39;Loading Bay&#39;?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1720" y="350" width="120" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="7qNYoynsUAsgdYpXGzDD-2" parent="sw_backend_2_3" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Notice remarks contains &#39;Handicap Lot&#39;?" vertex="1">
-          <mxGeometry height="100" width="120" x="1720" y="510" as="geometry" />
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-2" value="Notice remarks contains &#39;Handicap Lot&#39;?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="1720" y="510" width="120" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="c2_3_10" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-5" value="yes">
+        <mxCell id="c2_3_10" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-1" target="7qNYoynsUAsgdYpXGzDD-5" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1620" y="110" as="sourcePoint" />
             <mxPoint x="1700" y="110" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_12" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_not_eligible1" value="yes">
+        <mxCell id="c2_3_12" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-5" target="s2_3_not_eligible1" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1840" y="110" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_15" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_not_eligible4" value="no">
+        <mxCell id="c2_3_15" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-4" target="s2_3_not_eligible4" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1480" y="400" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_14" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-3" value="yes">
+        <mxCell id="c2_3_14" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-4" target="7qNYoynsUAsgdYpXGzDD-3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1620" y="400" as="sourcePoint" />
             <mxPoint x="1700" y="400" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_16" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_not_eligible2" value="yes">
-          <mxGeometry relative="1" x="-0.75" as="geometry">
+        <mxCell id="c2_3_16" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-3" target="s2_3_not_eligible2" edge="1">
+          <mxGeometry x="-0.75" relative="1" as="geometry">
             <mxPoint as="offset" />
             <mxPoint x="1860" y="400" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_19" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="s2_3_eligible4" value="no">
+        <mxCell id="c2_3_19" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-2" target="s2_3_eligible4" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1780" y="610" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_18" edge="1" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="s2_3_not_eligible2" value="yes">
-          <mxGeometry relative="1" x="-0.75" as="geometry">
+        <mxCell id="c2_3_18" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="sw_backend_2_3" source="7qNYoynsUAsgdYpXGzDD-2" target="s2_3_not_eligible2" edge="1">
+          <mxGeometry x="-0.75" relative="1" as="geometry">
             <mxPoint as="offset" />
             <mxPoint x="1860" y="560" as="sourcePoint" />
             <mxPoint x="1920" y="560" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="7qNYoynsUAsgdYpXGzDD-7" parent="sw_backend_2_3" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;rounded=0;" value="&lt;p dir=&quot;ltr&quot; style=&quot;font-size: 10px; text-align: left; line-height: 1.2; margin-top: 0pt; margin-bottom: 0pt;&quot;&gt;&lt;span style=&quot;font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;&quot;&gt;&lt;b&gt;Note to User for 11210: &lt;/b&gt;&lt;br&gt;Based on the unified API data format, which field will be used by CES and REP to record the remark &quot;Loading Bay&quot; and &quot;Handicap Lot&quot;? The current API mapping is listed below:&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p dir=&quot;ltr&quot; style=&quot;font-size: 10px; text-align: left; line-height: 1.2; margin-top: 0pt; margin-bottom: 0pt;&quot;&gt;&lt;span style=&quot;font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;&quot;&gt;&lt;b&gt;Current mapping of CES/REP Operator remarks (&lt;/b&gt;&lt;/span&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); white-space-collapse: preserve; font-family: Arial, sans-serif;&quot;&gt;AN Remark) &lt;/b&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); white-space-collapse: preserve; font-family: Arial, sans-serif; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline;&quot;&gt;&lt;b&gt;to &lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Offence Notice Details DB:&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;div style=&quot;font-size: 10px; text-align: left;&quot;&gt;Rule Remarks1 =&amp;nbsp;rule_remark_1&lt;/div&gt;" vertex="1">
-          <mxGeometry height="210" width="370" x="170" y="540" as="geometry" />
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-6" value="&lt;div&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;(a) If new Notice is eligible for ANS, OCMS will initiate the&lt;/span&gt;&lt;/i&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;i&gt;&amp;nbsp;Past Offences check.&amp;nbsp;&lt;br&gt;&lt;/i&gt;&lt;/span&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;(b) If new Notice is not eligible for ANS, OCMS will stop the AN Qualification process. The&amp;nbsp;&lt;/span&gt;&lt;/i&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Notice will continue along the standard Type O processing flow as per OCMS 11.&lt;/i&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" parent="sw_backend_2_3" vertex="1">
+          <mxGeometry x="2362" y="550" width="248" height="137" as="geometry" />
         </mxCell>
-        <mxCell id="7qNYoynsUAsgdYpXGzDD-6" parent="sw_backend_2_3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" value="&lt;div&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;(a) If new Notice is eligible for ANS, OCMS will initiate the&lt;/span&gt;&lt;/i&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;i&gt;&amp;nbsp;Past Offences check.&amp;nbsp;&lt;br&gt;&lt;/i&gt;&lt;/span&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;(b) If new Notice is not eligible for ANS, OCMS will stop the AN Qualification process. The&amp;nbsp;&lt;/span&gt;&lt;/i&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Notice will continue along the standard Type O processing flow as per OCMS 11.&lt;/i&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="137" width="248" x="2362" y="550" as="geometry" />
+        <mxCell id="c2_3_6" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw_backend_2_3" source="s2_3_dec1" target="05_PdX5-xt_YHOxjkQOR-3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1000" y="110" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_2" edge="1" parent="1" source="s2_3_step1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_step2">
+        <mxCell id="c2_3_2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s2_3_step1" target="s2_3_step2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c2_3_3" edge="1" parent="1" source="s2_3_step2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_dec1">
+        <mxCell id="c2_3_3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s2_3_step2" target="s2_3_dec1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c2_3_5" edge="1" parent="1" source="s2_3_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="s2_3_eligible1" value="no">
-          <mxGeometry relative="1" x="-0.6875" as="geometry">
+        <mxCell id="c2_3_5" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="s2_3_dec1" target="s2_3_eligible1" edge="1">
+          <mxGeometry x="-0.6875" relative="1" as="geometry">
             <mxPoint as="offset" />
             <Array as="points">
               <mxPoint x="870" y="360" />
@@ -434,27 +417,24 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_6" edge="1" parent="1" source="s2_3_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_step3" value="yes">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="c2_3_11" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-4" value="no">
+        <mxCell id="c2_3_11" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="7qNYoynsUAsgdYpXGzDD-4" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1570" y="220" as="sourcePoint" />
             <mxPoint x="1570" y="410" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_13" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_eligible3" value="no">
+        <mxCell id="c2_3_13" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" target="s2_3_eligible3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1790" y="220" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_17" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="7qNYoynsUAsgdYpXGzDD-2" value="no">
+        <mxCell id="c2_3_17" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="7qNYoynsUAsgdYpXGzDD-2" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1800" y="510" as="sourcePoint" />
             <mxPoint x="1800" y="570" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_20" edge="1" parent="1" source="s2_3_eligible1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="s2_3_return">
+        <mxCell id="c2_3_20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="s2_3_eligible1" target="s2_3_return" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1110" y="910" />
@@ -462,19 +442,19 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_22" edge="1" parent="1" source="s2_3_eligible3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+        <mxCell id="c2_3_22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s2_3_eligible3" target="s2_3_return" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c2_3_23" edge="1" parent="1" source="s2_3_not_eligible1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+        <mxCell id="c2_3_23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s2_3_not_eligible1" target="s2_3_return" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c2_3_24" edge="1" parent="1" source="s2_3_not_eligible2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+        <mxCell id="c2_3_24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s2_3_not_eligible2" target="s2_3_return" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c2_3_26" edge="1" parent="1" source="s2_3_eligible4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+        <mxCell id="c2_3_26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s2_3_eligible4" target="s2_3_return" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c2_3_27" edge="1" parent="1" source="s2_3_not_eligible4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_return">
+        <mxCell id="c2_3_27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s2_3_not_eligible4" target="s2_3_return" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1350" y="910" />
@@ -482,8 +462,11 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c2_3_28" edge="1" parent="1" source="s2_3_return" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s2_3_end">
+        <mxCell id="c2_3_28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s2_3_return" target="s2_3_end" edge="1">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="7qNYoynsUAsgdYpXGzDD-7" value="&lt;p dir=&quot;ltr&quot; style=&quot;font-size: 10px; text-align: left; line-height: 1.2; margin-top: 0pt; margin-bottom: 0pt;&quot;&gt;&lt;span style=&quot;font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;&quot;&gt;&lt;b&gt;Note to User for 11210: &lt;/b&gt;&lt;br&gt;Based on the unified API data format, which field will be used by CES and REP to record the remark &quot;Loading Bay&quot; and &quot;Handicap Lot&quot;? The current API mapping is listed below:&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;&lt;p dir=&quot;ltr&quot; style=&quot;font-size: 10px; text-align: left; line-height: 1.2; margin-top: 0pt; margin-bottom: 0pt;&quot;&gt;&lt;span style=&quot;font-family: Arial, sans-serif; background-color: transparent; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline; white-space-collapse: preserve;&quot;&gt;&lt;b&gt;Current mapping of CES/REP Operator remarks (&lt;/b&gt;&lt;/span&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); white-space-collapse: preserve; font-family: Arial, sans-serif;&quot;&gt;AN Remark) &lt;/b&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); white-space-collapse: preserve; font-family: Arial, sans-serif; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; font-variant-emoji: normal; vertical-align: baseline;&quot;&gt;&lt;b&gt;to &lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;Offence Notice Details DB:&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;&lt;div style=&quot;font-size: 10px; text-align: left;&quot;&gt;Rule Remarks1 =&amp;nbsp;rule_remark_1&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=center;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="150" y="1050" width="370" height="210" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
@@ -1169,124 +1152,118 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_4" name="3.4_Retrieve_Owner_Particulars">
-    <mxGraphModel dx="1180" dy="691" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="2316" dy="1391" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="title_tab3_5" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.4: Retrieve Vehicle Owner Particulars (LTA + DataHive/MHA)" vertex="1">
-          <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
+        <mxCell id="title_tab3_5" value="Section 3.4: Retrieve Vehicle Owner Particulars (LTA + DataHive/MHA)" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_3_5" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
-          <mxGeometry height="760" width="3630" x="20" y="80" as="geometry" />
+        <mxCell id="sw_backend_3_5" value="ocmsadminapi" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="20" y="80" width="3630" height="760" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_start" parent="sw_backend_3_5" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
-          <mxGeometry height="60" width="120" x="40" y="60" as="geometry" />
+        <mxCell id="s3_5_start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="40" y="60" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step1" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check vehicle registration type" vertex="1">
-          <mxGeometry height="80" width="160" x="220" y="50" as="geometry" />
+        <mxCell id="s3_5_step1" value="Check vehicle registration type" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="220" y="50" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_dec1" parent="sw_backend_3_5" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Military Vehicle? (vehicle_registration_type = &#39;I&#39;)" vertex="1">
-          <mxGeometry height="100" width="140" x="440" y="40" as="geometry" />
+        <mxCell id="s3_5_dec1" value="Military Vehicle? (vehicle_registration_type = &#39;I&#39;)" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="440" y="40" width="140" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step2_military" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Set Military Owner: owner = MINDEF, skip LTA API call" vertex="1">
-          <mxGeometry height="80" width="160" x="430" y="220" as="geometry" />
+        <mxCell id="s3_5_step2_military" value="Set Military Owner: owner = MINDEF, skip LTA API call" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="430" y="220" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step3" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Call LTA API to get vehicle owner particulars" vertex="1">
-          <mxGeometry height="80" width="160" x="640" y="50" as="geometry" />
+        <mxCell id="s3_5_step3" value="Call LTA API to get vehicle owner particulars" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="640" y="50" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_dec2" parent="sw_backend_3_5" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="LTA Success?" vertex="1">
-          <mxGeometry height="100" width="140" x="860" y="40" as="geometry" />
+        <mxCell id="s3_5_dec2" value="LTA Success?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="860" y="40" width="140" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_manual1" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Manual Review Queue" vertex="1">
-          <mxGeometry height="60" width="160" x="850" y="220" as="geometry" />
+        <mxCell id="s3_5_manual1" value="Manual Review Queue" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="850" y="220" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step4" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Store Owner Details: Save vehicle owner name, NRIC/FIN, registration details" vertex="1">
-          <mxGeometry height="80" width="180" x="1060" y="50" as="geometry" />
+        <mxCell id="s3_5_step4" value="Store Owner Details: Save vehicle owner name, NRIC/FIN, registration details" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="1060" y="50" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step5" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check if notice is suspended" vertex="1">
-          <mxGeometry height="80" width="180" x="1300" y="50" as="geometry" />
+        <mxCell id="s3_5_step5" value="Check if notice is suspended" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="1300" y="50" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_dec3" parent="sw_backend_3_5" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Notice Suspended? (suspension_type != NULL)" vertex="1">
-          <mxGeometry height="100" width="140" x="1540" y="40" as="geometry" />
+        <mxCell id="s3_5_dec3" value="Notice Suspended? (suspension_type != NULL)" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="1540" y="40" width="140" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_skip" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Skip Notification: Do not send notification for suspended notice" vertex="1">
-          <mxGeometry height="80" width="160" x="1530" y="220" as="geometry" />
+        <mxCell id="s3_5_skip" value="Skip Notification: Do not send notification for suspended notice" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="1530" y="220" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step6" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Check if owner is in eNotification exclusion list" vertex="1">
-          <mxGeometry height="80" width="180" x="1740" y="50" as="geometry" />
+        <mxCell id="s3_5_step6" value="Check if owner is in eNotification exclusion list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="1740" y="50" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_dec4" parent="sw_backend_3_5" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="In Exclusion List?" vertex="1">
-          <mxGeometry height="100" width="140" x="1980" y="40" as="geometry" />
+        <mxCell id="s3_5_dec4" value="In Exclusion List?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="1980" y="40" width="140" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step7_datahive" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Call DataHive API to get mobile/email" vertex="1">
-          <mxGeometry height="80" width="160" x="2180" y="50" as="geometry" />
+        <mxCell id="s3_5_step7_datahive" value="Call DataHive API to get mobile/email" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="2180" y="50" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step8_ean" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Qualify for eAN: Set eAN eligible flag" vertex="1">
-          <mxGeometry height="80" width="160" x="2430" y="230" as="geometry" />
+        <mxCell id="s3_5_step8_ean" value="Qualify for eAN: Set eAN eligible flag" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="2430" y="230" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step9_mha" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Call MHA API to get registered address" vertex="1">
-          <mxGeometry height="80" width="160" x="2700" y="50" as="geometry" />
+        <mxCell id="s3_5_step9_mha" value="Send MHA enquiry SFTP to get registered address" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="2700" y="50" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_dec6" parent="sw_backend_3_5" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Address Found?" vertex="1">
-          <mxGeometry height="100" width="140" x="2980" y="40" as="geometry" />
+        <mxCell id="s3_5_dec6" value="Address Found?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="2980" y="40" width="140" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_step10_letter" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Qualify for AN Letter: Set AN letter flag" vertex="1">
-          <mxGeometry height="80" width="160" x="3240" y="50" as="geometry" />
+        <mxCell id="s3_5_step10_letter" value="Qualify for AN Letter: Set AN letter flag" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="3240" y="50" width="160" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_manual2" parent="sw_backend_3_5" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Manual Review Queue" vertex="1">
-          <mxGeometry height="60" width="160" x="2970" y="220" as="geometry" />
+        <mxCell id="s3_5_manual2" value="Manual Review Queue" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="2970" y="220" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_end" parent="sw_backend_3_5" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
-          <mxGeometry height="60" width="120" x="3460" y="60" as="geometry" />
+        <mxCell id="s3_5_end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="3460" y="60" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_check_exclusion" parent="sw_backend_3_5" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT&amp;nbsp;&lt;div&gt;id_no&amp;nbsp;&lt;/div&gt;&lt;div&gt;FROM ocms_enotification_exclusion_list&lt;br&gt;WHERE id_no = &#39;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;S1234567A&#39;&lt;/span&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="220" x="1720" y="170" as="geometry" />
+        <mxCell id="s3_5_check_exclusion" value="SELECT&amp;nbsp;&lt;div&gt;id_no&amp;nbsp;&lt;/div&gt;&lt;div&gt;FROM ocms_enotification_exclusion_list&lt;br&gt;WHERE id_no = &#39;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;S1234567A&#39;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="1720" y="170" width="220" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_16" edge="1" parent="sw_backend_3_5" source="s3_5_step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_5_check_exclusion">
+        <mxCell id="c3_5_16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="sw_backend_3_5" source="s3_5_step6" target="s3_5_check_exclusion" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_check_suspension" parent="sw_backend_3_5" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT&amp;nbsp;&lt;div&gt;sn.suspension_type&amp;nbsp;&lt;/div&gt;&lt;div&gt;FROM ocms_suspended_notice AS sn&lt;br&gt;WHERE sn.notice_no = &#39;500400058A&#39;&lt;br&gt;AND sn.suspension_type IS NOT NULL&lt;/div&gt;" vertex="1">
-          <mxGeometry height="90" width="220" x="1280" y="170" as="geometry" />
+        <mxCell id="s3_5_check_suspension" value="SELECT&amp;nbsp;&lt;div&gt;sn.suspension_type&amp;nbsp;&lt;/div&gt;&lt;div&gt;FROM ocms_suspended_notice AS sn&lt;br&gt;WHERE sn.notice_no = &#39;500400058A&#39;&lt;br&gt;AND sn.suspension_type IS NOT NULL&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="1280" y="170" width="220" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_12" edge="1" parent="sw_backend_3_5" source="s3_5_step5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_5_check_suspension">
+        <mxCell id="c3_5_12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="sw_backend_3_5" source="s3_5_step5" target="s3_5_check_suspension" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="s3_5_store_owner" parent="sw_backend_3_5" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;INSERT ocms_offence_notice_owner_driver:&lt;/b&gt;&lt;br&gt;notice_no =&#39;500400058A&#39;&lt;br&gt;owner_driver_indicator = &#39;O&#39;&lt;br&gt;owner_id_type = [idType]&lt;br&gt;owner_nric_no = [ownerNric]&lt;br&gt;owner_name = [ownerName]&lt;br&gt;owner_blk_hse_no = [blkHseNo]&lt;br&gt;owner_street = [street]&lt;br&gt;owner_floor = [floor]&lt;br&gt;owner_unit = [unit]&lt;br&gt;owner_bldg = [bldg]&lt;br&gt;owner_postal_code = [postalCode]&lt;br&gt;cre_date = CURRENT_TIMESTAMP&lt;br&gt;cre_user_id = &#39;ocmsiz_app_conn&#39;" vertex="1">
-          <mxGeometry height="230" width="300" x="1046" y="360" as="geometry" />
+        <mxCell id="s3_5_dec5" value="Contact Found? (mobile OR email)" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_3_5" vertex="1">
+          <mxGeometry x="2440" y="40" width="140" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_10" edge="1" parent="sw_backend_3_5" source="s3_5_step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" target="s3_5_store_owner">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="s3_5_dec5" parent="sw_backend_3_5" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Contact Found? (mobile OR email)" vertex="1">
-          <mxGeometry height="100" width="140" x="2440" y="40" as="geometry" />
-        </mxCell>
-        <mxCell id="c3_5_22" edge="1" parent="sw_backend_3_5" source="s3_5_dec5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="yes">
+        <mxCell id="c3_5_22" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw_backend_3_5" source="s3_5_dec5" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="2510" y="230" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="c3_5_1" edge="1" parent="1" source="s3_5_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step1">
+        <mxCell id="c3_5_1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_start" target="s3_5_step1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_2" edge="1" parent="1" source="s3_5_step1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_dec1">
+        <mxCell id="c3_5_2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_step1" target="s3_5_dec1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_3" edge="1" parent="1" source="s3_5_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step2_military" value="yes">
+        <mxCell id="c3_5_3" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec1" target="s3_5_step2_military" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_4" edge="1" parent="1" source="s3_5_dec1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step3" value="no">
+        <mxCell id="c3_5_4" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec1" target="s3_5_step3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_6" edge="1" parent="1" source="s3_5_step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_dec2">
+        <mxCell id="c3_5_6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_step3" target="s3_5_dec2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_7" edge="1" parent="1" source="s3_5_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step4" value="yes">
+        <mxCell id="c3_5_7" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec2" target="s3_5_step4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_8" edge="1" parent="1" source="s3_5_dec2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_manual1" value="no">
+        <mxCell id="c3_5_8" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec2" target="s3_5_manual1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_9" edge="1" parent="1" source="s3_5_step2_military" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step4">
+        <mxCell id="c3_5_9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_step2_military" target="s3_5_step4" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="530" y="420" />
@@ -1294,22 +1271,22 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c3_5_11" edge="1" parent="1" source="s3_5_step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step5">
+        <mxCell id="c3_5_11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_step4" target="s3_5_step5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_13" edge="1" parent="1" source="s3_5_step5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_dec3">
+        <mxCell id="c3_5_13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_step5" target="s3_5_dec3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_14" edge="1" parent="1" source="s3_5_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_skip" value="yes">
+        <mxCell id="c3_5_14" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec3" target="s3_5_skip" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_15" edge="1" parent="1" source="s3_5_dec3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step6" value="no">
+        <mxCell id="c3_5_15" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec3" target="s3_5_step6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_17" edge="1" parent="1" source="s3_5_step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_dec4">
+        <mxCell id="c3_5_17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_step6" target="s3_5_dec4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_18" edge="1" parent="1" source="s3_5_dec4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step9_mha" value="yes">
+        <mxCell id="c3_5_18" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec4" target="s3_5_step9_mha" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="2070" y="110" />
@@ -1317,13 +1294,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c3_5_19" edge="1" parent="1" source="s3_5_dec4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step7_datahive" value="no">
+        <mxCell id="c3_5_19" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec4" target="s3_5_step7_datahive" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_21" edge="1" parent="1" source="s3_5_step7_datahive" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_dec5">
+        <mxCell id="c3_5_21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_step7_datahive" target="s3_5_dec5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_23" edge="1" parent="1" source="s3_5_dec5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="s3_5_step9_mha" value="no">
+        <mxCell id="c3_5_23" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="s3_5_dec5" target="s3_5_step9_mha" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="2760" y="170" />
@@ -1331,7 +1308,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c3_5_24" edge="1" parent="1" source="s3_5_step8_ean" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="s3_5_end">
+        <mxCell id="c3_5_24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="s3_5_step8_ean" target="s3_5_end" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="2530" y="540" />
@@ -1339,19 +1316,19 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c3_5_26" edge="1" parent="1" source="s3_5_step9_mha" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_dec6">
+        <mxCell id="c3_5_26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_step9_mha" target="s3_5_dec6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_27" edge="1" parent="1" source="s3_5_dec6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_step10_letter" value="yes">
+        <mxCell id="c3_5_27" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec6" target="s3_5_step10_letter" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_28" edge="1" parent="1" source="s3_5_dec6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_manual2" value="no">
+        <mxCell id="c3_5_28" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_dec6" target="s3_5_manual2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_29" edge="1" parent="1" source="s3_5_step10_letter" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_end">
+        <mxCell id="c3_5_29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_step10_letter" target="s3_5_end" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_5_30" edge="1" parent="1" source="s3_5_manual1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_end">
+        <mxCell id="c3_5_30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_manual1" target="s3_5_end" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="950" y="700" />
@@ -1359,7 +1336,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c3_5_31" edge="1" parent="1" source="s3_5_skip" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_5_end">
+        <mxCell id="c3_5_31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_5_skip" target="s3_5_end" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1630" y="540" />
@@ -1367,7 +1344,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c3_5_32" edge="1" parent="1" source="s3_5_manual2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="s3_5_end">
+        <mxCell id="c3_5_32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="s3_5_manual2" target="s3_5_end" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="3540" y="330" />
@@ -1779,230 +1756,230 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_7" name="3.7_Suspend_PS_ANS">
-    <mxGraphModel dx="1377" dy="807" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="1500" math="0" shadow="0">
+    <mxGraphModel dx="5210" dy="3130" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="1500" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="title_3_8" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.7: Suspend Notice with PS-ANS" vertex="1">
-          <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
+        <mxCell id="title_3_8" value="Section 3.7: Suspend Notice with PS-ANS" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_3_8" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
-          <mxGeometry height="480" width="2180" x="20" y="60" as="geometry" />
+        <mxCell id="sw_backend_3_8" value="ocmsadminapi" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="20" y="60" width="2180" height="480" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_start" parent="sw_backend_3_8" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
-          <mxGeometry height="60" width="120" x="40" y="80" as="geometry" />
+        <mxCell id="s3_8_start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="40" y="80" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_step1" parent="sw_backend_3_8" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Notice Details (notice number, notice date)" vertex="1">
-          <mxGeometry height="100" width="160" x="220" y="60" as="geometry" />
+        <mxCell id="s3_8_step1" value="Retrieve Notice Details (notice number, notice date)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="220" y="60" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_step2" parent="sw_backend_3_8" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Calculate Suspension Date: Set date_of_suspension = current date" vertex="1">
-          <mxGeometry height="100" width="160" x="440" y="60" as="geometry" />
+        <mxCell id="s3_8_step2" value="Calculate Suspension Date: Set date_of_suspension = current date" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="440" y="60" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_step3" parent="sw_backend_3_8" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Calculate Revival Date: Set due_date_of_revival = current date + 30 days (configurable)" vertex="1">
-          <mxGeometry height="100" width="180" x="660" y="60" as="geometry" />
+        <mxCell id="s3_8_step3" value="Calculate Revival Date: Set due_date_of_revival = current date + 30 days (configurable)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="660" y="60" width="180" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_step4" parent="sw_backend_3_8" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate SR Number: Create sequential sr_no" vertex="1">
-          <mxGeometry height="100" width="160" x="900" y="60" as="geometry" />
+        <mxCell id="s3_8_step4" value="Generate SR Number: Create sequential sr_no" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="900" y="60" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_step5" parent="sw_backend_3_8" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Create Suspension Record in ocms_suspended_notice" vertex="1">
-          <mxGeometry height="100" width="160" x="1120" y="60" as="geometry" />
+        <mxCell id="s3_8_step5" value="Create Suspension Record in ocms_suspended_notice" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="1120" y="60" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_step6" parent="sw_backend_3_8" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Update Notice with Suspension details in ocms_valid_offence_notice" vertex="1">
-          <mxGeometry height="100" width="180" x="1340" y="60" as="geometry" />
+        <mxCell id="s3_8_step6" value="Update Notice with Suspension details in ocms_valid_offence_notice" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="1340" y="60" width="180" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_step7" parent="sw_backend_3_8" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Sync to Internet DB to eocms_valid_offence_notice" vertex="1">
-          <mxGeometry height="100" width="180" x="1580" y="60" as="geometry" />
+        <mxCell id="s3_8_step7" value="Sync to Internet DB to eocms_valid_offence_notice" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="1580" y="60" width="180" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_step8" parent="sw_backend_3_8" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log Suspension Created with timestamp" vertex="1">
-          <mxGeometry height="100" width="160" x="1820" y="60" as="geometry" />
+        <mxCell id="s3_8_step8" value="Log Suspension Created with timestamp" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="1820" y="60" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_end" parent="sw_backend_3_8" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
-          <mxGeometry height="60" width="120" x="2040" y="80" as="geometry" />
+        <mxCell id="s3_8_end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="2040" y="80" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_insert_susp" parent="sw_backend_3_8" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="INSERT ocms_suspended_notice:&lt;br&gt;&lt;br&gt;- notice_no&lt;br&gt;- date_of_suspension: Current date&lt;br&gt;- sr_no: Sequential number&lt;br&gt;- suspension_type: &#39;PS&#39;&lt;br&gt;- reason_of_suspension: &#39;ANS&#39;&lt;br&gt;- suspension_source: &#39;ocmsiz_app_conn&#39;&lt;br&gt;- officer_authorising_suspension: &#39;ocmsizmgr_conn&#39;&lt;br&gt;- due_date_of_revival: current date + 30 days&lt;br&gt;- suspension_remarks: &#39;Advisory Notice detected - qualified AN&#39;&lt;br&gt;- cre_user_id: &#39;ocmsiz_app_conn&#39;&lt;br&gt;- cre_date: Current timestamp" vertex="1">
-          <mxGeometry height="200" width="340" x="950" y="220" as="geometry" />
+        <mxCell id="s3_8_insert_susp" value="INSERT ocms_suspended_notice:&lt;br&gt;&lt;br&gt;- notice_no&lt;br&gt;- date_of_suspension: Current date&lt;br&gt;- sr_no: Sequential number&lt;br&gt;- suspension_type: &#39;PS&#39;&lt;br&gt;- reason_of_suspension: &#39;ANS&#39;&lt;br&gt;- suspension_source: &#39;ocmsiz_app_conn&#39;&lt;br&gt;- officer_authorising_suspension: &#39;ocmsizmgr_conn&#39;&lt;br&gt;- due_date_of_revival: null&lt;br&gt;- suspension_remarks: &#39;Advisory Notice detected - qualified AN&#39;&lt;br&gt;- cre_user_id: &#39;ocmsiz_app_conn&#39;&lt;br&gt;- cre_date: Current timestamp" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="948" y="220" width="340" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_6" edge="1" parent="sw_backend_3_8" source="s3_8_step5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_8_insert_susp">
+        <mxCell id="c3_8_6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="sw_backend_3_8" source="s3_8_step5" target="s3_8_insert_susp" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_sync_internet" parent="sw_backend_3_8" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="UPDATE eocms_valid_offence_notice:&lt;br&gt;&lt;br&gt;Mirror same suspension fields from intranet table:&lt;br&gt;- suspension_type&lt;br&gt;- epr_reason_of_suspension&lt;br&gt;- epr_date_of_suspension&lt;br&gt;- due_date_of_revival&lt;br&gt;&lt;br&gt;&lt;br&gt;Note: Sync is eventual consistency - intranet is source of truth" vertex="1">
-          <mxGeometry height="160" width="350" x="1580" y="220" as="geometry" />
+        <mxCell id="s3_8_sync_internet" value="UPDATE eocms_valid_offence_notice:&lt;br&gt;&lt;br&gt;Mirror same suspension fields from intranet table:&lt;br&gt;- suspension_type&lt;br&gt;- epr_reason_of_suspension&lt;br&gt;- epr_date_of_suspension&lt;br&gt;- due_date_of_revival&lt;br&gt;&lt;br&gt;&lt;br&gt;Note: Sync is eventual consistency - intranet is source of truth" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="1580" y="220" width="350" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_10" edge="1" parent="sw_backend_3_8" source="s3_8_step7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_8_sync_internet">
+        <mxCell id="c3_8_10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="sw_backend_3_8" source="s3_8_step7" target="s3_8_sync_internet" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="s3_8_update_notice" parent="sw_backend_3_8" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="UPDATE ocms_valid_offence_notice:&lt;br&gt;&lt;br&gt;- suspension_type: &#39;PS&#39;&lt;br&gt;- epr_reason_of_suspension: &#39;ANS&#39;&lt;br&gt;- epr_date_of_suspension: Current date&lt;br&gt;- due_date_of_revival: current date + 30 days&lt;br&gt;- upd_user_id: &#39;ocmsiz_app_conn&#39;&lt;br&gt;- upd_date: Current timestamp" vertex="1">
-          <mxGeometry height="130" width="250" x="1305" y="200" as="geometry" />
+        <mxCell id="s3_8_update_notice" value="UPDATE ocms_valid_offence_notice:&lt;br&gt;&lt;br&gt;- suspension_type: &#39;PS&#39;&lt;br&gt;- epr_reason_of_suspension: &#39;ANS&#39;&lt;br&gt;- epr_date_of_suspension: Current date&lt;br&gt;- due_date_of_revival: null&lt;br&gt;- upd_user_id: &#39;ocmsiz_app_conn&#39;&lt;br&gt;- upd_date: Current timestamp" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" parent="sw_backend_3_8" vertex="1">
+          <mxGeometry x="1305" y="200" width="250" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_8" edge="1" parent="sw_backend_3_8" source="s3_8_step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_8_update_notice">
+        <mxCell id="c3_8_8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="sw_backend_3_8" source="s3_8_step6" target="s3_8_update_notice" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_1" edge="1" parent="1" source="s3_8_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_8_step1">
+        <mxCell id="c3_8_1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_8_start" target="s3_8_step1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_2" edge="1" parent="1" source="s3_8_step1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_8_step2">
+        <mxCell id="c3_8_2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_8_step1" target="s3_8_step2" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_3" edge="1" parent="1" source="s3_8_step2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_8_step3">
+        <mxCell id="c3_8_3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_8_step2" target="s3_8_step3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_4" edge="1" parent="1" source="s3_8_step3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_8_step4">
+        <mxCell id="c3_8_4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_8_step3" target="s3_8_step4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_5" edge="1" parent="1" source="s3_8_step4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_8_step5">
+        <mxCell id="c3_8_5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_8_step4" target="s3_8_step5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_7" edge="1" parent="1" source="s3_8_step5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_8_step6">
+        <mxCell id="c3_8_7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_8_step5" target="s3_8_step6" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_9" edge="1" parent="1" source="s3_8_step6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_8_step7">
+        <mxCell id="c3_8_9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_8_step6" target="s3_8_step7" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_11" edge="1" parent="1" source="s3_8_step7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_8_step8">
+        <mxCell id="c3_8_11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_8_step7" target="s3_8_step8" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_8_12" edge="1" parent="1" source="s3_8_step8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_8_end">
+        <mxCell id="c3_8_12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_8_step8" target="s3_8_end" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_8" name="3.8_Generate_ANS_Reports">
-    <mxGraphModel dx="718" dy="421" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="1226" dy="736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="title_tab3_9" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" value="Section 3.8: Generate ANS Reports" vertex="1">
-          <mxGeometry height="30" width="600" x="40" y="20" as="geometry" />
+        <mxCell id="title_tab3_9" value="Section 3.8: Generate ANS Reports" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="sw_frontend_3_9" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Staff Portal" vertex="1">
-          <mxGeometry height="280" width="3420" x="20" y="80" as="geometry" />
+        <mxCell id="sw_frontend_3_9" value="Staff Portal" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+          <mxGeometry x="20" y="80" width="3420" height="280" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_start" parent="sw_frontend_3_9" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
-          <mxGeometry height="60" width="120" x="40" y="100" as="geometry" />
+        <mxCell id="s3_9_start" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw_frontend_3_9" vertex="1">
+          <mxGeometry x="40" y="100" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_receive_request" parent="sw_frontend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Receive Report Parameters&#xa;(Date From, Date To, Vehicle Number, Subsystem)" vertex="1">
-          <mxGeometry height="100" width="160" x="220" y="80" as="geometry" />
+        <mxCell id="s3_9_receive_request" value="Receive Report Parameters&#xa;(Date From, Date To, Vehicle Number, Subsystem)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_frontend_3_9" vertex="1">
+          <mxGeometry x="220" y="80" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_display_error" parent="sw_frontend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display Error Message&#xa;(Invalid Parameters)" vertex="1">
-          <mxGeometry height="100" width="160" x="1070" y="70" as="geometry" />
+        <mxCell id="s3_9_display_error" value="Display Error Message&#xa;(Invalid Parameters)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_frontend_3_9" vertex="1">
+          <mxGeometry x="1070" y="70" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_display_nodata" parent="sw_frontend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display No Data Message&#xa;&#39;No records found for the selected criteria&#39;" vertex="1">
-          <mxGeometry height="100" width="180" x="3150" y="140" as="geometry" />
+        <mxCell id="s3_9_display_nodata" value="Display No Data Message&#xa;&#39;No records found for the selected criteria&#39;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_frontend_3_9" vertex="1">
+          <mxGeometry x="3150" y="140" width="180" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="sw_backend_3_9" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="ocmsadminapi" vertex="1">
-          <mxGeometry height="800" width="3420" x="20" y="385" as="geometry" />
+        <mxCell id="sw_backend_3_9" value="ocmsadminapi" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="20" y="385" width="3420" height="800" as="geometry" />
         </mxCell>
-        <mxCell id="9VMB-lNLdUTSCDfsktMN-2" edge="1" parent="sw_backend_3_9" source="s3_9_validate_params" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" target="9VMB-lNLdUTSCDfsktMN-1">
+        <mxCell id="9VMB-lNLdUTSCDfsktMN-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;dashPattern=8 8;" parent="sw_backend_3_9" source="s3_9_validate_params" target="9VMB-lNLdUTSCDfsktMN-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_validate_params" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Validate Parameters" vertex="1">
-          <mxGeometry height="100" width="180" x="440" y="80" as="geometry" />
+        <mxCell id="s3_9_validate_params" value="Validate Parameters" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="440" y="80" width="180" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_dec_valid" parent="sw_backend_3_9" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Valid Parameters?" vertex="1">
-          <mxGeometry height="120" width="140" x="730" y="70" as="geometry" />
+        <mxCell id="s3_9_dec_valid" value="Valid Parameters?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="730" y="70" width="140" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_return_error" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" value="Return Error Response:&#xa;&#39;Invalid parameters - Date range exceeds 31 days&#39;" vertex="1">
-          <mxGeometry height="100" width="180" x="1060" y="80" as="geometry" />
+        <mxCell id="s3_9_return_error" value="Return Error Response:&#xa;&#39;Invalid parameters - Date range exceeds 31 days&#39;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="1060" y="80" width="180" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_apply_filters" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Apply Filters:&#xa;- Vehicle number&#xa;- Subsystem&#xa;- Date range" vertex="1">
-          <mxGeometry height="100" width="160" x="1460" y="80" as="geometry" />
+        <mxCell id="s3_9_apply_filters" value="Apply Filters:&#xa;- Vehicle number&#xa;- Subsystem&#xa;- Date range" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="1460" y="80" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_dec_records" parent="sw_backend_3_9" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any Records?" vertex="1">
-          <mxGeometry height="120" width="140" x="1690" y="70" as="geometry" />
+        <mxCell id="s3_9_dec_records" value="Any Records?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="1690" y="70" width="140" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_return_nodata" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return No Data Message:&#xa;&#39;No records found for the selected criteria&#39;" vertex="1">
-          <mxGeometry height="100" width="180" x="2080" y="370" as="geometry" />
+        <mxCell id="s3_9_return_nodata" value="Return No Data Message:&#xa;&#39;No records found for the selected criteria&#39;" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="2080" y="370" width="180" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_sort_results" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Sort Results&#xa;by Suspension Date Descending" vertex="1">
-          <mxGeometry height="100" width="160" x="1900" y="80" as="geometry" />
+        <mxCell id="s3_9_sort_results" value="Sort Results&#xa;by Suspension Date Descending" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="1900" y="80" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_format_data" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Format Report Data&#xa;(Excel/PDF columns)" vertex="1">
-          <mxGeometry height="100" width="160" x="2120" y="80" as="geometry" />
+        <mxCell id="s3_9_format_data" value="Format Report Data&#xa;(Excel/PDF columns)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="2120" y="80" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_generate_file" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Generate Report File&#xa;(Excel/PDF format)" vertex="1">
-          <mxGeometry height="100" width="160" x="2340" y="80" as="geometry" />
+        <mxCell id="s3_9_generate_file" value="Generate Report File&#xa;(Excel/PDF format)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="2340" y="80" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_batch_note" parent="sw_backend_3_9" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;Large Dataset Handling:&lt;/b&gt;&lt;br&gt;&lt;br&gt;Max Records: 10,000 per report&lt;br&gt;&lt;br&gt;If records &gt; 10,000:&lt;br&gt;1. Return warning to user&lt;br&gt;2. Suggest narrowing date range&lt;br&gt;3. Apply limit to query (FETCH FIRST 10000)&lt;br&gt;&lt;br&gt;Note: Date range max 31 days also&lt;br&gt;helps limit result size" vertex="1">
-          <mxGeometry height="200" width="280" x="2290" y="205" as="geometry" />
+        <mxCell id="s3_9_batch_note" value="&lt;b&gt;Large Dataset Handling:&lt;/b&gt;&lt;br&gt;&lt;br&gt;Max Records: 10,000 per report&lt;br&gt;&lt;br&gt;If records &gt; 10,000:&lt;br&gt;1. Return warning to user&lt;br&gt;2. Suggest narrowing date range&lt;br&gt;3. Apply limit to query (FETCH FIRST 10000)&lt;br&gt;&lt;br&gt;Note: Date range max 31 days also&lt;br&gt;helps limit result size" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="2290" y="205" width="280" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_log_report" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Log Report Generated&#xa;(Parameters, Timestamp, User)" vertex="1">
-          <mxGeometry height="100" width="180" x="2560" y="80" as="geometry" />
+        <mxCell id="s3_9_log_report" value="Log Report Generated&#xa;(Parameters, Timestamp, User)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="2560" y="80" width="180" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_query_notices" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query ANS Suspension Data" vertex="1">
-          <mxGeometry height="80" width="180" x="710" y="265" as="geometry" />
+        <mxCell id="s3_9_query_notices" value="Query ANS Suspension Data" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="710" y="265" width="180" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_6" edge="1" parent="sw_backend_3_9" source="s3_9_dec_valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_query_notices" value="yes">
+        <mxCell id="c3_9_6" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw_backend_3_9" source="s3_9_dec_valid" target="s3_9_query_notices" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_7" edge="1" parent="sw_backend_3_9" source="s3_9_query_notices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_apply_filters">
+        <mxCell id="c3_9_7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw_backend_3_9" source="s3_9_query_notices" target="s3_9_apply_filters" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_query_box" parent="sw_backend_3_9" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SELECT&lt;br&gt;  sn.notice_no,&lt;br&gt;  sn.date_of_suspension,&lt;br&gt;  sn.due_date_of_revival,&lt;br&gt;  sn.suspension_remarks,&lt;br&gt;  von.vehicle_no,&lt;br&gt;  von.subsystem_label,&lt;br&gt;  von.computer_rule_code,&lt;br&gt;  von.composition_amount,&lt;br&gt;  von.notice_date_and_time,&lt;br&gt;  von.pp_code,&lt;br&gt;  von.pp_name,&lt;br&gt;  von.offence_notice_type&lt;br&gt;FROM ocms_suspended_notice sn&lt;br&gt;INNER JOIN ocms_valid_offence_notice von&lt;br&gt;  ON sn.notice_no = von.notice_no&lt;br&gt;WHERE sn.reason_of_suspension = &#39;ANS&#39;&lt;br&gt;  AND sn.date_of_suspension BETWEEN [dateFrom] AND [dateTo]&lt;br&gt;  AND ([vehicleNo] IS NULL OR von.vehicle_no = [vehicleNo])&lt;br&gt;  AND ([subsystem] IS NULL OR von.subsystem_label = [subsystem])&lt;br&gt;ORDER BY sn.date_of_suspension DESC, sn.notice_no ASC" vertex="1">
-          <mxGeometry height="325" width="380" x="610" y="385" as="geometry" />
+        <mxCell id="s3_9_query_box" value="SELECT&lt;br&gt;  sn.notice_no,&lt;br&gt;  sn.date_of_suspension,&lt;br&gt;  sn.due_date_of_revival,&lt;br&gt;  sn.suspension_remarks,&lt;br&gt;  von.vehicle_no,&lt;br&gt;  von.subsystem_label,&lt;br&gt;  von.computer_rule_code,&lt;br&gt;  von.composition_amount,&lt;br&gt;  von.notice_date_and_time,&lt;br&gt;  von.pp_code,&lt;br&gt;  von.pp_name,&lt;br&gt;  von.offence_notice_type&lt;br&gt;FROM ocms_suspended_notice sn&lt;br&gt;INNER JOIN ocms_valid_offence_notice von&lt;br&gt;  ON sn.notice_no = von.notice_no&lt;br&gt;WHERE sn.reason_of_suspension = &#39;ANS&#39;&lt;br&gt;  AND sn.date_of_suspension BETWEEN [dateFrom] AND [dateTo]&lt;br&gt;  AND ([vehicleNo] IS NULL OR von.vehicle_no = [vehicleNo])&lt;br&gt;  AND ([subsystem] IS NULL OR von.subsystem_label = [subsystem])&lt;br&gt;ORDER BY sn.date_of_suspension DESC, sn.notice_no ASC" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="610" y="385" width="380" height="325" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_sort_note" parent="sw_backend_3_9" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="&lt;b&gt;Sort Criteria:&lt;/b&gt;&lt;br&gt;&lt;br&gt;Primary: date_of_suspension DESC&lt;br&gt;(Newest suspensions first)&lt;br&gt;&lt;br&gt;Secondary: notice_no ASC&lt;br&gt;(Consistent order when same date)" vertex="1">
-          <mxGeometry height="130" width="200" x="1880" y="220" as="geometry" />
+        <mxCell id="s3_9_sort_note" value="&lt;b&gt;Sort Criteria:&lt;/b&gt;&lt;br&gt;&lt;br&gt;Primary: date_of_suspension DESC&lt;br&gt;(Newest suspensions first)&lt;br&gt;&lt;br&gt;Secondary: notice_no ASC&lt;br&gt;(Consistent order when same date)" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="1880" y="220" width="200" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_sort_link" edge="1" parent="sw_backend_3_9" source="s3_9_sort_results" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_9_sort_note">
+        <mxCell id="c3_9_sort_link" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="sw_backend_3_9" source="s3_9_sort_results" target="s3_9_sort_note" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_8" edge="1" parent="sw_backend_3_9" source="s3_9_query_notices" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_9_query_box">
+        <mxCell id="c3_9_8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="sw_backend_3_9" source="s3_9_query_notices" target="s3_9_query_box" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="9VMB-lNLdUTSCDfsktMN-1" parent="sw_backend_3_9" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" value="- Date range max 31 days&lt;br&gt;- Date From &amp;lt;= Date To&lt;br&gt;- Required fields present" vertex="1">
-          <mxGeometry height="60" width="160" x="450" y="220" as="geometry" />
+        <mxCell id="9VMB-lNLdUTSCDfsktMN-1" value="- Date range max 31 days&lt;br&gt;- Date From &amp;lt;= Date To&lt;br&gt;- Required fields present" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;autosize=1;resizable=0;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="450" y="220" width="160" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_return_report" parent="sw_backend_3_9" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Return Report File&#xa;for Download" vertex="1">
-          <mxGeometry height="100" width="160" x="2805" y="80" as="geometry" />
+        <mxCell id="s3_9_return_report" value="Return Report File&#xa;for Download" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="2805" y="80" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="s3_9_output_box" parent="sw_backend_3_9" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="Report Output Format:&lt;br&gt;&lt;br&gt;Notice Number&lt;br&gt;Vehicle Number&lt;br&gt;Subsystem&lt;br&gt;Suspension Date&lt;br&gt;Revival Date&lt;br&gt;Offence Code&lt;br&gt;Composition Amount&lt;br&gt;Notice Date&lt;br&gt;Parking Place&lt;br&gt;Suspension Remarks" vertex="1">
-          <mxGeometry height="215" width="160" x="2805" y="225" as="geometry" />
+        <mxCell id="s3_9_output_box" value="Report Output Format:&lt;br&gt;&lt;br&gt;Notice Number&lt;br&gt;Vehicle Number&lt;br&gt;Subsystem&lt;br&gt;Suspension Date&lt;br&gt;Revival Date&lt;br&gt;Offence Code&lt;br&gt;Composition Amount&lt;br&gt;Notice Date&lt;br&gt;Parking Place&lt;br&gt;Suspension Remarks" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" parent="sw_backend_3_9" vertex="1">
+          <mxGeometry x="2805" y="225" width="160" height="215" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_17" edge="1" parent="sw_backend_3_9" source="s3_9_return_report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_9_output_box">
+        <mxCell id="c3_9_17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" parent="sw_backend_3_9" source="s3_9_return_report" target="s3_9_output_box" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_1" edge="1" parent="1" source="s3_9_start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_receive_request">
+        <mxCell id="c3_9_1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_start" target="s3_9_receive_request" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_2" edge="1" parent="1" source="s3_9_receive_request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_validate_params">
+        <mxCell id="c3_9_2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_receive_request" target="s3_9_validate_params" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_4" edge="1" parent="1" source="s3_9_validate_params" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_dec_valid">
+        <mxCell id="c3_9_4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_validate_params" target="s3_9_dec_valid" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_5" edge="1" parent="1" source="s3_9_dec_valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_return_error" value="no">
+        <mxCell id="c3_9_5" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_dec_valid" target="s3_9_return_error" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_10" edge="1" parent="1" source="s3_9_apply_filters" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_dec_records">
+        <mxCell id="c3_9_10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_apply_filters" target="s3_9_dec_records" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_11" edge="1" parent="1" source="s3_9_dec_records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="s3_9_return_nodata" value="no">
+        <mxCell id="c3_9_11" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="s3_9_dec_records" target="s3_9_return_nodata" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="1780" y="800" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="c3_9_12" edge="1" parent="1" source="s3_9_dec_records" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_sort_results" value="yes">
+        <mxCell id="c3_9_12" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_dec_records" target="s3_9_sort_results" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_13" edge="1" parent="1" source="s3_9_sort_results" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_format_data">
+        <mxCell id="c3_9_13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_sort_results" target="s3_9_format_data" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_14" edge="1" parent="1" source="s3_9_format_data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_generate_file">
+        <mxCell id="c3_9_14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_format_data" target="s3_9_generate_file" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_15" edge="1" parent="1" source="s3_9_generate_file" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_log_report">
+        <mxCell id="c3_9_15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_generate_file" target="s3_9_log_report" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_16" edge="1" parent="1" source="s3_9_log_report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_return_report">
+        <mxCell id="c3_9_16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_log_report" target="s3_9_return_report" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_19" edge="1" parent="1" source="s3_9_return_error" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_display_error">
+        <mxCell id="c3_9_19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_return_error" target="s3_9_display_error" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_20" edge="1" parent="1" source="s3_9_return_nodata" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_display_nodata">
+        <mxCell id="c3_9_20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_return_nodata" target="s3_9_display_nodata" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="2190" y="970" />
@@ -2010,10 +1987,10 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="s3_9_download_report" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Download Report&#xa;(Excel/PDF)" vertex="1">
-          <mxGeometry height="100" width="160" x="2825" y="220" as="geometry" />
+        <mxCell id="s3_9_download_report" value="Download Report&lt;br&gt;(Excel)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="2825" y="220" width="160" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="c3_9_18" edge="1" parent="1" source="s3_9_return_report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s3_9_download_report">
+        <mxCell id="c3_9_18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s3_9_return_report" target="s3_9_download_report" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>

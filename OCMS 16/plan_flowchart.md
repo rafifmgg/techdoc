@@ -5,14 +5,18 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Reduction |
-| Version | v1.0 |
+| Version | v1.1 |
 | Author | Claude |
 | Created Date | 18/01/2026 |
-| Last Updated | 18/01/2026 |
+| Last Updated | 22/01/2026 |
 | Status | Draft |
 | Related Documents | plan_api.md, plan_condition.md |
 | Functional Document | OCMS 16 FD v1.3 |
 | Functional Flowchart | OCMS16-Functional-Flowchart.drawio |
+
+**Scope Note (MVP1):**
+- For MVP1, manual reduction can only be performed from the PLUS system
+- Court stages (CFC to CWT) are NOT implemented - future scope beyond MVP1
 
 ---
 
@@ -349,7 +353,9 @@ Based on CLAUDE.md guidelines and reference flowcharts, the Technical Flowchart 
 | 15 | UPDATE | ocms_valid_offence_notice | Intranet | suspension_type='TS', epr_reason_of_suspension='RED', amount_payable, epr_date_of_suspension, due_date_of_revival | Apply reduction |
 | 16 | INSERT | ocms_suspended_notice | Intranet | notice_no, date_of_suspension, sr_no, suspension_source, suspension_type, reason_of_suspension, officer_authorising_suspension, due_date_of_revival, suspension_remarks | Record suspension |
 | 17 | INSERT | ocms_reduced_offence_amount | Intranet | notice_no, date_of_reduction, sr_no, amount_reduced, amount_payable, reason_of_reduction, expiry_date, officer_authorising_reduction, remarks | Log reduction |
-| 18 | UPDATE | eocms_valid_offence_notice | Internet | suspension_type='TS', epr_reason_of_suspension='RED', epr_date_of_suspension, amount_payable | Mirror to internet |
+| 18 | UPDATE | eocms_valid_offence_notice | Internet | suspension_type='TS', epr_reason_of_suspension='RED', epr_date_of_suspension, amount_payable | Mirror to internet (4 fields only) |
+
+**Note (Code Verified):** Internet DB only updates `eocms_valid_offence_notice`. There is NO insert to `eocms_suspended_notice` - the FD documentation mentioning internet suspended_notice is incorrect.
 
 ### 3.6 Error Handling
 
@@ -475,4 +481,19 @@ Before creating the .drawio flowchart:
 
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
+| 1.1 | 22/01/2026 | Claude | Code verification update: Added MVP1 scope note. Confirmed transaction flow matches code (ReductionPersistenceService.java). Note: Internet DB only updates eVON (no eSN insert). |
 | 1.0 | 18/01/2026 | Claude | Initial version based on plan_api.md, plan_condition.md, and Functional Flowchart |
+
+---
+
+## 7. Code Verification Notes
+
+**Verified from Codebase (22/01/2026):**
+
+| Step | Code File | Status |
+| --- | --- | --- |
+| API Endpoint | `ReductionController.java:27` | ✅ POST /v1/plus-apply-reduction |
+| Validation Flow | `ReductionValidator.java`, `ReductionRuleService.java` | ✅ Matches flowchart |
+| Transaction Steps | `ReductionPersistenceService.java:54` | ✅ @Transactional with rollback |
+| Internet DB Update | `ReductionPersistenceService.java` | ⚠️ Only eVON updated, NOT eSN inserted |
+| Idempotency | `ReductionPersistenceService.java:213-233` | ✅ TS-RED check before processing |

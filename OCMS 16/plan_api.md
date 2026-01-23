@@ -5,13 +5,18 @@
 | Attribute | Value |
 | --- | --- |
 | API Name | PLUS Apply Reduction API |
-| Version | v1.0 |
+| Version | v1.1 |
 | Author | Claude |
 | Created Date | 18/01/2026 |
-| Last Updated | 18/01/2026 |
+| Last Updated | 22/01/2026 |
 | Status | Draft |
 | Related Document | OCMS 16 Technical Doc |
 | Source | Functional Document v1.3, Backend Code, Functional Flowchart |
+
+**Scope Note (MVP1):**
+- For MVP1, manual reduction can only be performed from the PLUS system
+- OCMS backend is only responsible for updating the notice with data provided in the reduction request
+- Court stages (CFC to CWT) are NOT implemented in MVP1 - will be discussed after MVP1
 
 ---
 
@@ -210,7 +215,7 @@ This API allows the PLUS system to request a reduction of the composition amount
 | noticeNo | notice_no | Direct mapping | API request payload from PLUS |
 | dateOfReduction | date_of_suspension | Direct mapping | API request payload from PLUS |
 | - | sr_no | Auto-generated | Application-level: MAX(sr_no) + 1 per notice |
-| suspensionSource | suspension_source | Direct mapping | API request payload from PLUS |
+| suspensionSource | suspension_source | Direct mapping (accepts any value) | API request payload from PLUS (e.g., "005" or "PLUS") |
 | - | suspension_type | Set to "TS" | System constant |
 | - | reason_of_suspension | Set to "RED" | System constant |
 | authorisedOfficer | officer_authorising_suspension | Direct mapping | API request payload from PLUS |
@@ -231,11 +236,14 @@ This API allows the PLUS system to request a reduction of the composition amount
 | amountPayable | amount_payable | Original amount BEFORE reduction | Calculated from VON.composition_amount |
 | reasonOfReduction | reason_of_reduction | Direct mapping | API request payload from PLUS |
 | expiryDateOfReduction | expiry_date | Direct mapping | API request payload from PLUS |
-| authorisedOfficer | authorised_officer | Direct mapping | API request payload from PLUS | API request payload from PLUS |
+| authorisedOfficer | authorised_officer | Direct mapping | API request payload from PLUS |
 | remarks | remarks | Direct mapping | API request payload from PLUS |
 | - | cre_user_id | Database connection user | Connection pool: ocmsiz_app_conn |
+| - | cre_date | Auto-set on INSERT | JPA @PrePersist: `LocalDateTime.now()` |
 
-**Note:** The `amount_payable` in this table refers to the original composition amount before reduction, per FD Section 3.4.3.
+**Notes:**
+- The `amount_payable` in this table refers to the original composition amount before reduction, per FD Section 3.4.3.
+- The `cre_date` field is automatically populated via JPA `@PrePersist` hook in `BaseEntity.java` - no need to explicitly set in API request.
 
 **Reference:** FD Section 3.4.3
 
@@ -248,9 +256,11 @@ This API allows the PLUS system to request a reduction of the composition amount
 | epr_date_of_suspension | epr_date_of_suspension | Direct mapping |
 | amount_payable | amount_payable | Direct mapping |
 
-**Note:** The `due_date_of_revival` field does NOT exist in the Internet database schema. Only 4 fields are synced.
+**Notes:**
+- The `due_date_of_revival` field does NOT exist in the Internet database schema. Only 4 fields are synced.
+- **IMPORTANT (Code Verified):** Only `eocms_valid_offence_notice` is UPDATED in Internet DB. There is NO INSERT to `eocms_suspended_notice` - the FD documentation mentioning internet suspended_notice is incorrect.
 
-**Reference:** FD Section 3.4.1
+**Reference:** FD Section 3.4.1, Code: `ReductionPersistenceService.java`
 
 ---
 
@@ -432,4 +442,5 @@ curl -X POST \
 
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
+| 1.1 | 22/01/2026 | Claude | Code verification update: Added MVP1 scope note. Added cre_date auto-population via @PrePersist. Clarified eocms_suspended_notice NOT inserted (FD documentation error). Verified field name is epr_date_of_suspension (not epr_reason_suspension_date). Added suspension_source flexibility note. |
 | 1.0 | 18/01/2026 | Claude | Initial version based on FD v1.3, Backend Code, and Functional Flowchart |

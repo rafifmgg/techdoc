@@ -5,14 +5,19 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Reduction |
-| Version | v1.0 |
+| Version | v1.1 |
 | Author | Claude |
 | Created Date | 18/01/2026 |
-| Last Updated | 18/01/2026 |
+| Last Updated | 22/01/2026 |
 | Status | Draft |
 | Functional Document | OCMS 16 Functional Document v1.3 |
 | Technical Document | OCMS 16 Technical Doc |
 | Source | Functional Document, Backend Code, Functional Flowchart |
+
+**Scope Note (MVP1):**
+- For MVP1, manual reduction can only be performed from the PLUS system
+- OCMS backend is only responsible for updating the notice with data provided in the reduction request
+- **Future Scope:** Court stages (CFC to CWT) are NOT implemented in MVP1 - will be discussed after MVP1
 
 ---
 
@@ -22,7 +27,7 @@
 | --- | --- | --- |
 | Functional Document | OCMS 16 FD v1.3 | Reduction Functional Specification |
 | Functional Flowchart | OCMS16-Functional-Flowchart.drawio | High Level Reduction & Backend Reduction flows |
-| Backend Code | ReductionController.java, ReductionValidator.java, ReductionRuleService.java | Implementation reference |
+| Backend Code | ReductionController.java, ReductionValidator.java, ReductionRuleService.java, ReductionPersistenceService.java | Implementation reference |
 
 ---
 
@@ -601,4 +606,19 @@ END
 
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
+| 1.1 | 22/01/2026 | Claude | Code verification update: Added MVP1 scope note. Added future scope for court stages (CFC-CWT). Verified eligibility logic matches code (ComputerRuleCode.java, ProcessingStage.java). Confirmed idempotency check implementation (ReductionPersistenceService.java). |
 | 1.0 | 18/01/2026 | Claude | Initial version based on FD v1.3, Backend Code, and Functional Flowchart |
+
+---
+
+## 9. Code Verification Notes
+
+**Verified from Codebase (22/01/2026):**
+
+| Item | Code File | Status |
+| --- | --- | --- |
+| Eligible Computer Rule Codes | `ComputerRuleCode.java` | ✅ 30305, 31302, 30302, 21300 confirmed |
+| Eligible Processing Stages | `ProcessingStage.java` | ✅ NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3 confirmed |
+| Idempotency Check (TS-RED) | `ReductionPersistenceService.java:213-233` | ✅ Implemented |
+| Transaction Handling | `@Transactional(rollbackFor = Exception.class)` | ✅ Implemented |
+| Court Stages (CFC-CWT) | Not in `ProcessingStage.java` | ⚠️ Future scope - not implemented in MVP1 |

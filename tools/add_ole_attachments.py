@@ -126,11 +126,17 @@ def add_ole_objects_with_word(docx_path, images):
                 found_range.Collapse(0)
 
                 # Insert OLE object as icon
+                # Use image/picture icon from imageres.dll (index 67 = image file icon)
                 try:
+                    icon_path = r"C:\Windows\System32\imageres.dll"
+                    icon_index = 67  # Image/picture file icon
+
                     ole_shape = found_range.InlineShapes.AddOLEObject(
                         ClassType="Package",
                         FileName=str(img_info['path']),
                         DisplayAsIcon=True,
+                        IconFileName=icon_path,
+                        IconIndex=icon_index,
                         IconLabel=img_info['name']
                     )
                     print(f"  [{found_count}] Added: {img_info['name']}")

@@ -544,7 +544,7 @@ No separate query needed - idempotency check uses data already loaded for valida
 | reasonOfReduction | VARCHAR | 100 | No | - | Not blank, trimmed |
 | authorisedOfficer | VARCHAR | 50 | No | - | Not blank, trimmed |
 | suspensionSource | VARCHAR | 10 | No | - | Not blank (e.g., "005" for PLUS) |
-| remarks | VARCHAR | 500 | Yes | NULL | Optional, trimmed if provided |
+| remarks | VARCHAR | 200 | Yes | NULL | Optional, trimmed if provided |
 
 ### 2.3.9 Integration Testing Approach
 
