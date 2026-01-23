@@ -1,9 +1,9 @@
 # API Plan - OCMS 15: Manage Change Processing Stage
 
 **Document Information**
-- Version: 1.0
-- Date: 2026-01-21
-- Source: Backend Code Analysis + Functional Document v1.2
+- Version: 1.3
+- Date: 2026-01-22
+- Source: Backend Code Analysis + Functional Document v1.2 + Data Dictionary
 - Feature: Manual Change Processing Stage & PLUS Integration
 
 ---
@@ -47,11 +47,13 @@
       "offenceDateTime": "2025-12-01T10:30:00",
       "offenderName": "John Doe",
       "offenderId": "S1234567A",
+      "offenderAddress": "BLK 123 TAMPINES ST 11 #01-234 SINGAPORE 520123",
       "vehicleNo": "SBA1234A",
       "currentProcessingStage": "DN1",
       "currentProcessingStageDate": "2025-12-15T09:00:00",
       "suspensionType": null,
       "suspensionStatus": null,
+      "suspensionReason": null,
       "ownerDriverIndicator": "D",
       "entityType": null
     }
@@ -63,10 +65,14 @@
       "offenceDateTime": "2025-12-01T11:00:00",
       "offenderName": "Jane Smith",
       "offenderId": "S9876543B",
+      "offenderAddress": "BLK 456 BEDOK NORTH AVE 1 #05-678 SINGAPORE 460456",
       "vehicleNo": "SBA5678B",
       "currentProcessingStage": "CRT",
       "currentProcessingStageDate": "2025-12-18T14:00:00",
-      "reasonCode": "OCMS.CPS.SEARCH.COURT_STAGE",
+      "suspensionType": null,
+      "suspensionStatus": null,
+      "suspensionReason": null,
+      "reasonCode": "OCMS.CPS.ELIG.COURT_STAGE",
       "reasonMessage": "Notice is in court stage"
     }
   ],
@@ -444,6 +450,9 @@
 **Request Rules:**
 - `noticeNo` is array of notice numbers
 - Stage transition must be allowed according to stage map
+- **PLUS cannot request CFC stage** - will return OCMS-4004 error
+- **PLUS cannot request ENA stage** - will return OCMS-4000 error
+- If `offenceType='U'` (Unidentified) and `nextStageName` IN (DN1, DN2, DR3, CPC), notice will be skipped
 
 **Response (Success):**
 ```json
@@ -454,12 +463,21 @@
 }
 ```
 
-**Response (Failure):**
+**Response (Failure - Invalid Transition):**
 ```json
 {
   "status": "FAILED",
   "code": "OCMS-4000",
   "message": "Stage transition not allowed: DN1 -> CFC"
+}
+```
+
+**Response (Failure - CFC Not Allowed for PLUS):**
+```json
+{
+  "status": "FAILED",
+  "code": "OCMS-4004",
+  "message": "CFC not allowed from PLUS source"
 }
 ```
 
@@ -525,19 +543,45 @@
 
 ## 4. Error Codes
 
+### 4.1 General Error Codes
+
 | Code | Category | Description | User Message |
 |------|----------|-------------|--------------|
 | OCMS-2000 | Success | Operation successful | Success |
 | OCMS-4000 | Client Error | Bad Request / Invalid Data | Invalid request. Please check and try again. |
+| OCMS-4004 | Client Error | CFC not allowed from PLUS | CFC not allowed from PLUS source |
 | OCMS-5000 | Server Error | Internal Server Error | Something went wrong. Please try again later. |
+
+### 4.2 Eligibility Error Codes
+
+| Code | Category | Description | User Message |
+|------|----------|-------------|--------------|
+| OCMS.CPS.ELIG.NOT_FOUND | Eligibility | Notice not found in VON or ONOD | Notice not found |
+| OCMS.CPS.ELIG.ROLE_CONFLICT | Eligibility | Cannot determine offender role | Cannot determine offender role |
+| OCMS.CPS.ELIG.NO_STAGE_RULE | Eligibility | Cannot derive next stage | Cannot derive next stage |
+| OCMS.CPS.ELIG.INELIGIBLE_STAGE | Eligibility | Stage not eligible for role | Stage not eligible for offender type |
+| OCMS.CPS.ELIG.COURT_STAGE | Eligibility | Notice at court stage (NOT in Allowed Stages) | Notice is in court stage |
+| OCMS.CPS.ELIG.PS_BLOCKED | Eligibility | Permanent suspension active | Notice has permanent suspension |
+| OCMS.CPS.ELIG.TS_BLOCKED | Eligibility | Temporary suspension active | Notice has temporary suspension |
+| OCMS.CPS.ELIG.EXISTING_CHANGE_TODAY | Eligibility | Duplicate change today | Existing change record found for this notice today |
+
+### 4.3 Validation Error Codes
+
+| Code | Category | Description | User Message |
+|------|----------|-------------|--------------|
 | OCMS.CPS.INVALID_FORMAT | Validation | Invalid request format | Items list cannot be empty |
 | OCMS.CPS.MISSING_DATA | Validation | Required field missing | noticeNo is required |
-| OCMS.CPS.REMARKS_REQUIRED | Validation | Remarks mandatory for OTH reason | Remarks are mandatory when reason for change is 'OTH' (Others) |
-| OCMS.CPS.NOT_FOUND | Business Logic | Notice not found in database | VON not found |
-| OCMS.CPS.COURT_STAGE | Business Logic | Notice is in court stage | Notice is in court stage and cannot be changed |
-| OCMS.CPS.DUPLICATE_RECORD | Business Logic | Duplicate change record exists | Existing change record found for this notice today |
-| OCMS.CPS.SEARCH.COURT_STAGE | Search | Notice ineligible due to court stage | Notice is in court stage |
-| OCMS.CPS.UNEXPECTED | System Error | Unexpected error occurred | Unexpected error: [details] |
+| OCMS.CPS.REMARKS_REQUIRED | Validation | Remarks mandatory for OTH | Remarks are mandatory when reason for change is 'OTH' |
+| OCMS.CPS.VALIDATION_ERROR | Validation | General validation error | Validation error |
+
+### 4.4 PLUS API Error Codes
+
+| Code | Category | Description | User Message |
+|------|----------|-------------|--------------|
+| NOTICE_NOT_FOUND | PLUS | Notice not found in VON | Notice not found |
+| STAGE_NOT_ELIGIBLE | PLUS | Stage not eligible | Stage not eligible |
+| EXISTING_STAGE_CHANGE | PLUS | Duplicate stage change | Existing stage change |
+| PROCESSING_FAILED | PLUS | Multiple notices failed | Processing failed |
 
 ---
 
@@ -549,12 +593,101 @@
 | Intranet | ocms_offence_notice_owner_driver | Offender details (for ID search) |
 | Intranet | ocms_change_of_processing | Change processing stage records |
 | Intranet | ocms_stage_map | Stage transition rules |
+| Intranet | ocms_parameter | System parameters (STAGEDAYS, ADM, SURCHARGE) |
 | Intranet | ocmsiz_app_conn | Audit trail (Intranet) |
 | Internet | ocmsez_app_conn | Audit trail (Internet) |
 
+### 5.1 ocms_change_of_processing Table Structure
+
+**Composite Primary Key:** (notice_no, date_of_change, new_processing_stage)
+
+| Column | Type | Nullable | Description |
+|--------|------|----------|-------------|
+| notice_no | varchar(10) | NO (PK) | Offence notice number |
+| date_of_change | datetime2(7) | NO (PK) | Date when processing stage was changed |
+| new_processing_stage | varchar(3) | NO (PK) | New processing stage after the change |
+| last_processing_stage | varchar(3) | YES | Previous processing stage |
+| reason_of_change | varchar(3) | YES | Reason code for changing |
+| authorised_officer | varchar(50) | YES | Officer who authorized the change |
+| source | varchar(8) | YES | Source: OCMS/PLUS/AVSS/SYSTEM |
+| remarks | varchar(200) | YES | Additional remarks |
+| cre_date | datetime2(7) | NO | Record creation timestamp |
+| cre_user_id | varchar(10) | NO | User who created the record |
+| upd_date | datetime2(7) | YES | Last update timestamp |
+| upd_user_id | varchar(50) | YES | User who last updated |
+
+### 5.2 Key Field Constraints
+
+| Field | Table | Type | Max Length |
+|-------|-------|------|------------|
+| notice_no | VON/ONOD/COP | varchar | 10 |
+| id_no | ONOD | varchar | 12 |
+| processing_stage | VON | varchar | 3 |
+| remarks | COP | varchar | 200 |
+| authorised_officer | COP | varchar | 50 |
+
 ---
 
-## 6. Notes
+## 6. Report Specification
+
+### 6.1 Report Columns (16 columns)
+
+| # | Column Name | Source |
+|---|-------------|--------|
+| 1 | S/N | Sequential number |
+| 2 | Notice Number | ocms_valid_offence_notice.notice_no |
+| 3 | Offence Type | ocms_valid_offence_notice.offence_notice_type |
+| 4 | Offence Date & Time | ocms_valid_offence_notice.notice_date_and_time |
+| 5 | Vehicle No | ocms_valid_offence_notice.vehicle_no |
+| 6 | Offender ID | ocms_offence_notice_owner_driver.id_no |
+| 7 | Offender Name | ocms_offence_notice_owner_driver.name |
+| 8 | Previous Processing Stage | ocms_valid_offence_notice.last_processing_stage (before change) |
+| 9 | Previous Processing Date | ocms_valid_offence_notice.last_processing_date (before change) |
+| 10 | Current Processing Stage | ocms_change_of_processing.new_processing_stage |
+| 11 | Current Processing Date | ocms_change_of_processing.date_of_change |
+| 12 | Reason for Change | ocms_change_of_processing.reason_of_change |
+| 13 | Remarks | ocms_change_of_processing.remarks |
+| 14 | Authorised Officer | ocms_change_of_processing.authorised_officer |
+| 15 | Submitted Date | ocms_change_of_processing.cre_date |
+| 16 | Source | ocms_change_of_processing.source |
+
+### 6.2 Report File Naming
+
+**Format:** `ChangeStageReport_yyyyMMdd_HHmmss_[userID].xlsx`
+
+**Example:** `ChangeStageReport_20260122_143022_JOHNLEE.xlsx`
+
+### 6.3 Storage Location
+
+**Path:** `reports/change-stage/`
+
+**Storage:** Azure Blob Storage
+
+---
+
+## 7. Configuration
+
+### 7.1 Retry Configuration
+
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| MAX_GENERATION_RETRIES | 1 | Max retries for Excel generation |
+| MAX_UPLOAD_RETRIES | 1 | Max retries for Azure Blob upload |
+| RETRY_DELAY_MS | 1000 | Delay between retries (milliseconds) |
+
+### 7.2 Toppan Cron Schedule
+
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| Cron Expression | `0 30 0 * * ?` | Daily at 00:30 |
+| ShedLock Name | `generate_toppan_letters` | Distributed lock name |
+| Min Lock Duration | PT5M | 5 minutes |
+| Max Lock Duration | PT3H | 3 hours |
+| Config Property | `cron.toppan.upload.enabled` | Enable/disable flag |
+
+---
+
+## 8. Notes
 
 1. **Search Optimization:**
    - When searching by ID Number, system queries ONOD table first, then joins with VON
@@ -563,27 +696,38 @@
 2. **Eligibility Check:**
    - Search API returns pre-segregated lists (eligible vs ineligible)
    - Validate API performs deeper validation before submission
-   - Court stage notices are always ineligible
+   - Court stage notices (any stage NOT IN Allowed Stages: NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC) are ineligible
+   - Note: CPC and CFC are court stages but still ALLOWED for change
+   - **ENA stage is not allowed as target stage** (for both OCMS and PLUS)
 
 3. **Duplicate Handling:**
-   - System checks for existing change record on same date
-   - First attempt returns warning
+   - System checks for existing change record on same date using composite key
+   - First attempt returns warning (OCMS.CPS.ELIG.EXISTING_CHANGE_TODAY)
    - Second attempt with `isConfirmation=true` proceeds with update
 
 4. **Report Generation:**
    - Reports generated automatically upon successful change
-   - Stored in Azure Blob Storage
+   - Stored in Azure Blob Storage with retry logic
    - Accessible via download API or signed URL
 
 5. **PLUS Integration:**
    - PLUS uses separate endpoint with different payload structure
    - Source code "005" identifies PLUS origin
+   - **PLUS cannot request CFC stage** (returns OCMS-4004)
+   - **PLUS cannot request ENA stage** (returns OCMS-4000)
    - Validates stage transition rules before processing
 
 6. **Toppan Integration:**
-   - Internal endpoint for cron job only
+   - Internal endpoint for cron job only (runs daily at 00:30)
    - Differentiates between manual vs automatic stage changes
-   - Updates VON records after Toppan file generation
+   - Manual changes (source=OCMS/PLUS) skip amount_payable recalculation
+   - Automatic changes recalculate amount_payable
+
+7. **Source Constants:**
+   - OCMS = "OCMS" (Staff Portal)
+   - PLUS = "PLUS" (PLUS Portal)
+   - AVSS = "AVSS" (AVSS System)
+   - SYSTEM = "SYSTEM" (Cron/Batch)
 
 ---
 

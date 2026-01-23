@@ -100,6 +100,10 @@
     - **Who**: Who uses this? (user roles, system actors)
     - **How**: How to implement? (technical details, step-by-step)
 
+31. Report output format must be in **Excel** (.xlsx). Do not use other formats like CSV or PDF for report downloads.
+
+32. For date range checks (e.g., checking if a date is between two dates), use **SQL query** to filter records directly in the database. Do not retrieve all records and compare dates manually in application code.
+
 ---
 
 ## Part 2: Review Comments (Questions/Clarifications)

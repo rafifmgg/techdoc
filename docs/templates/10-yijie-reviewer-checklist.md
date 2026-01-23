@@ -61,6 +61,7 @@ Use this to verify compliance with project standards.
 ### SQL Query
 - [ ] **No `SELECT *`** used in queries
 - [ ] Only **required fields** specified in SELECT statements
+- [ ] Date range checks use **SQL query** (not manual comparison in code)
 
 ### Data Dictionary Compliance
 - [ ] Table names match **data dictionary** (`docs/data-dictionary/`)
@@ -77,6 +78,7 @@ Use this to verify compliance with project standards.
 
 - [ ] Upload flow: **Temp folder → Permanent folder**
 - [ ] Excel templates stored in **blob storage**
+- [ ] Report output format is **Excel (.xlsx)** (not CSV/PDF)
 
 ---
 
@@ -242,6 +244,8 @@ Ask yourself: "If I'm a programmer, will I need to ask about..."
 | **Missing in data dictionary** | New tables/columns not documented in data dictionary |
 | **Not self-sufficient** | Programmer needs to ask tech writer for missing info |
 | **Missing 5W1H** | What/Why/Where/When/Who/How not fully answered |
+| **Wrong report format** | Using CSV/PDF instead of Excel for reports |
+| **Manual date comparison** | Comparing dates in code instead of using SQL query |
 
 ---
 

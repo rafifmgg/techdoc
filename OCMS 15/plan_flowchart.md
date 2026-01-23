@@ -5,9 +5,10 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Manage Change Processing Stage |
-| Version | v1.0 |
+| Version | v1.3 |
 | Author | Claude |
 | Created Date | 21/01/2026 |
+| Updated Date | 22/01/2026 |
 | Status | Active |
 | FD Reference | OCMS 15 - Section 2 & Section 3 |
 | TD Reference | OCMS 15 - Section 1 & Section 2 |
@@ -186,11 +187,11 @@ The Technical Flowchart will contain the following tabs/sections:
 | 6 | Process | Backend queries ocms_valid_offence_notice | If ID No: Query ONOD first, then join VON. Otherwise: Query VON directly | 7 |
 | 7 | Decision | Any record found? | Check if query returns any result | Yes→8, No→E2 |
 | 8 | Process | Check notice eligibility | Backend checks if notice is eligible for stage change | 9 |
-| 9 | Decision | Is in Court Stage? | Check if current_processing_stage IN (CRT, CS1, CS2) | Yes→10, No→11 |
+| 9 | Decision | Is in Court Stage? | Check if current_processing_stage NOT IN Reminder Stages (NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC) | Yes→10, No→11 |
 | 10 | Process | Mark as INELIGIBLE | Add to ineligibleNotices list with reason COURT_STAGE | 12 |
-| 11 | Decision | Is in PS Stage? | Check if current_processing_stage IN (PS1, PS2) | Yes→13, No→14 |
+| 11 | Decision | Is PS/TS Blocked? | Check if permanent or temporary suspension active | Yes→13, No→14 |
 | 12 | Decision | Last record? | Check if current record is last in result set | Yes→15, No→8 |
-| 13 | Process | Mark as INELIGIBLE | Add to ineligibleNotices list with reason PS_STAGE | 12 |
+| 13 | Process | Mark as INELIGIBLE | Add to ineligibleNotices list with reason PS_BLOCKED or TS_BLOCKED | 12 |
 | 14 | Process | Mark as ELIGIBLE | Add to eligibleNotices list | 12 |
 | 15 | Process | Return segregated lists | Return eligibleNotices and ineligibleNotices to Portal | 16 |
 | 16 | Process | Portal displays results | Display notice list with details and checkboxes | End |
@@ -204,8 +205,8 @@ The Technical Flowchart will contain the following tabs/sections:
 | --- | --- | --- | --- | --- | --- |
 | D1 | Search data valid? | Form input | Passes FE-001 to FE-005 validation | Continue to Step 5 | Error E1 |
 | D2 | Any record found? | Query result | count > 0 | Continue to Step 8 | Error E2 |
-| D3 | Is in Court Stage? | current_processing_stage | IN (CRT, CS1, CS2, etc.) | Mark INELIGIBLE | Go to D4 |
-| D4 | Is in PS Stage? | current_processing_stage | IN (PS1, PS2, etc.) | Mark INELIGIBLE | Mark ELIGIBLE |
+| D3 | Is in Court Stage? | current_processing_stage | NOT IN Reminder Stages | Mark INELIGIBLE | Go to D4 |
+| D4 | Is PS/TS Blocked? | suspension_status | PS or TS suspension active | Mark INELIGIBLE | Mark ELIGIBLE |
 | D5 | Last record? | Loop counter | current == total | Return results | Continue to next record |
 
 #### 3.2.4 Database Operations
@@ -340,7 +341,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | Step | Operation | Database | Table | Query/Action |
 | --- | --- | --- | --- | --- |
 | 5 | SELECT | Intranet | ocms_valid_offence_notice | Query by notice_no |
-| 7 | SELECT | Intranet | ocms_change_of_processing | Query by notice_no and today's cre_dtm |
+| 7 | SELECT | Intranet | ocms_change_of_processing | Query by notice_no and today's date_of_change |
 | 11 | SELECT | Intranet | ocms_stage_map | Validate stage transition |
 | 13 | UPDATE | Intranet | ocms_valid_offence_notice | Update next_processing_stage (see sub-flow) |
 | 13 | INSERT | Intranet | ocms_change_of_processing | Insert change record (see sub-flow) |
@@ -381,7 +382,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | 7 | Process | Insert change record | INSERT into ocms_change_of_processing | 8 |
 | 8 | Decision | Insert change record success? | Check if INSERT succeeded | Yes→9, No→E2 |
 | 9 | Decision | DH/MHA check required? | Check if dhMhaCheck flag = true | Yes→10, No→12 |
-| 10 | Process | Update ONOD DH/MHA flag | UPDATE ocms_offence_notice_owner_driver SET DH_MHA_check_allow = 'Y' | 11 |
+| 10 | Process | Update ONOD DH/MHA flag | UPDATE ocms_offence_notice_owner_driver SET mha_dh_check_allow = 'Y' | 11 |
 | 11 | Decision | ONOD update success? | Check if UPDATE succeeded | Yes→12, No→E3 |
 | 12 | Process | Return success | Return success to main flow | End |
 | E1 | Error | Return error (VON update failed) | Return error to main flow | End |
@@ -402,9 +403,9 @@ The Technical Flowchart will contain the following tabs/sections:
 
 | Step | Operation | Database | Table | Fields Updated |
 | --- | --- | --- | --- | --- |
-| 5 | UPDATE | Intranet | ocms_valid_offence_notice | next_processing_stage, next_processing_date, amount_payable, upd_user_id, upd_dtm |
-| 7 | INSERT | Intranet | ocms_change_of_processing | notice_no, date_of_change, last_processing_stage, new_processing_stage, reason_of_change, authorised_officer, remarks, cre_date, cre_user_id |
-| 10 | UPDATE | Intranet | ocms_offence_notice_owner_driver | DH_MHA_check_allow, upd_user_id, upd_dtm |
+| 5 | UPDATE | Intranet | ocms_valid_offence_notice | prev_processing_stage, prev_processing_date, last_processing_stage, last_processing_date, next_processing_stage, next_processing_date, amount_payable, payment_acceptance_allowed, upd_user_id, upd_dtm |
+| 7 | INSERT | Intranet | ocms_change_of_processing | notice_no, date_of_change, last_processing_stage, new_processing_stage, reason_of_change, authorised_officer, source, remarks, cre_date, cre_user_id |
+| 10 | UPDATE | Intranet | ocms_offence_notice_owner_driver | mha_dh_check_allow, upd_user_id, upd_dtm |
 
 **Audit User:** ocmsiz_app_conn (Do NOT use "SYSTEM")
 
@@ -588,7 +589,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | 7 | Process | Initialize batch processing | Start processing each notice in noticeNo array | 8 |
 | 8 | Process | Query VON by notice_no | Query ocms_valid_offence_notice | 9 |
 | 9 | Decision | VON exists? | Check if query returns record | Yes→10, No→E4 |
-| 10 | Decision | Is in Court Stage? | Check if current_processing_stage IN (CRT, CS1, CS2) | Yes→E5, No→11 |
+| 10 | Decision | Is in Court Stage? | Check if current_processing_stage NOT IN Allowed Stages (NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC) | Yes→E5, No→11 |
 | 11 | Process | Call Change Stage Sub-flow | Execute sub-flow to update VON and insert change record | 12 |
 | 12 | Decision | Change stage success? | Check if sub-flow completed successfully | Yes→13, No→E6 |
 | 13 | Process | Add to success list | Increment noticeCount | 14 |
@@ -613,7 +614,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | D2 | Source = '005'? | source field | = '005' | Continue | Error E2 |
 | D3 | Stage transition allowed? | stage_map query | Transition rule exists | Continue | Error E3 |
 | D4 | VON exists? | Query result | VON found | Continue | Error E4 |
-| D5 | Is in Court Stage? | current_processing_stage | IN (CRT, CS1, CS2) | Error E5 | Continue |
+| D5 | Is in Court Stage? | current_processing_stage | NOT IN Allowed Stages | Error E5 | Continue |
 | D6 | Change stage success? | Sub-flow result | Success returned | Add to success | Error E6 |
 | D7 | Last notice? | Loop counter | current == total | Check any success | Continue |
 | D8 | Any success? | noticeCount | > 0 | Generate report | Return failure |
@@ -638,7 +639,9 @@ The Technical Flowchart will contain the following tabs/sections:
 | Process Name | Toppan Stage Update (Internal Cron) |
 | Section | 3.1 |
 | Trigger | generate_toppan_letters cron job completes |
-| Frequency | Daily (after Toppan file generation) |
+| Frequency | Daily at 00:30 (0030hr) |
+| Cron Expression | `0 30 0 * * ?` |
+| ShedLock Name | generate_toppan_letters |
 | Systems Involved | Toppan Cron, OCMS Backend, Database |
 | Expected Outcome | VON stages updated automatically or skipped if manual change exists |
 
@@ -682,8 +685,8 @@ The Technical Flowchart will contain the following tabs/sections:
 | Step | Operation | Database | Table | Query/Action |
 | --- | --- | --- | --- | --- |
 | 5 | SELECT | Intranet | ocms_valid_offence_notice | Query by notice_no |
-| 7 | SELECT | Intranet | ocms_change_of_processing | Query by notice_no and today's cre_dtm |
-| 13 | UPDATE | Intranet | ocms_valid_offence_notice | Update last_processing_stage, last_processing_date, next_processing_stage |
+| 7 | SELECT | Intranet | ocms_change_of_processing | Query by notice_no and today's date_of_change |
+| 13 | UPDATE | Intranet | ocms_valid_offence_notice | Update prev_processing_stage, prev_processing_date, last_processing_stage, last_processing_date, next_processing_stage, next_processing_date, amount_payable (for automatic only) |
 
 #### 5.1.5 API Specification Reference
 
@@ -717,12 +720,17 @@ The Technical Flowchart will contain the following tabs/sections:
 | --- | --- | --- | --- |
 | OCMS.CPS.INVALID_FORMAT | Request validation | Items list empty | Items list cannot be empty |
 | OCMS.CPS.MISSING_DATA | Request validation | Required field missing | noticeNo is required |
-| OCMS.CPS.NOT_FOUND | Business logic | VON not found | VON not found |
-| OCMS.CPS.COURT_STAGE | Business logic | Notice in court stage | Notice is in court stage |
-| OCMS.CPS.DUPLICATE_RECORD | Business logic | Duplicate change record | Existing change record found for this notice today |
+| OCMS.CPS.ELIG.NOT_FOUND | Eligibility | Notice not found | Notice not found |
+| OCMS.CPS.ELIG.COURT_STAGE | Eligibility | Notice in court stage (NOT in Reminder Stages) | Notice is in court stage |
+| OCMS.CPS.ELIG.PS_BLOCKED | Eligibility | Permanent suspension active | Notice has permanent suspension |
+| OCMS.CPS.ELIG.TS_BLOCKED | Eligibility | Temporary suspension active | Notice has temporary suspension |
+| OCMS.CPS.ELIG.EXISTING_CHANGE_TODAY | Eligibility | Duplicate change record | Existing change record found for this notice today |
+| OCMS.CPS.ELIG.ROLE_CONFLICT | Eligibility | Cannot determine offender role | Cannot determine offender role |
+| OCMS.CPS.ELIG.NO_STAGE_RULE | Eligibility | Cannot derive next stage | Cannot derive next stage |
+| OCMS.CPS.ELIG.INELIGIBLE_STAGE | Eligibility | Stage not eligible for role | Stage not eligible for offender type |
 | OCMS.CPS.REMARKS_REQUIRED | Business logic | Remarks missing for OTH | Remarks are mandatory when reason for change is 'OTH' (Others) |
-| OCMS.CPS.INVALID_TRANSITION | Business logic | Stage transition not allowed | Stage transition not allowed: [current] -> [new] |
 | OCMS-4000 | External API | Bad request | Invalid request / data |
+| OCMS-4004 | External API | CFC not allowed from PLUS | CFC not allowed from PLUS source |
 | OCMS-5000 | System error | Internal server error | Something went wrong. Please try again later. |
 
 ---
@@ -786,6 +794,35 @@ Before creating the technical flowchart:
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
 | v1.0 | 21/01/2026 | Claude | Initial version based on plan_api.md and plan_condition.md |
+| v1.1 | 22/01/2026 | Claude | Updated based on code analysis and FD review: Fixed court stages definition (NOT in Reminder Stages), added prev_processing fields, fixed mha_dh_check_allow field name, added Toppan schedule details, updated error codes, added ENA restriction |
+| v1.2 | 22/01/2026 | Claude | Removed specific court stage codes (CRT, CS1, CS2). Court stage check now uses: NOT IN Allowed Stages (NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC). Note: CPC and CFC are court stages but still allowed. |
+| v1.3 | 22/01/2026 | Claude | Updated per Data Dictionary: Changed cre_dtm to date_of_change for duplicate check query, added source field to INSERT columns |
+
+---
+
+## 10. VON Update Pattern (Universal)
+
+When updating VON processing stage, the following pattern is applied:
+
+```
+prev_processing_stage = old last_processing_stage
+prev_processing_date = old last_processing_date
+last_processing_stage = old next_processing_stage (or newStage if specified)
+last_processing_date = current timestamp
+next_processing_stage = NEXT_STAGE_{newStage} from parameter table
+next_processing_date = current timestamp + STAGEDAYS from parameter table
+```
+
+### 10.1 Manual vs Automatic Updates
+
+| Source | Type | Amount Payable |
+| --- | --- | --- |
+| OCMS (Staff Portal) | Manual | Calculated based on matrix |
+| PLUS (PLUS Portal) | Manual | Calculated based on matrix |
+| SYSTEM (Toppan Cron) | Automatic | Calculated based on matrix |
+| AVSS | Manual | Calculated based on matrix |
+
+**Note:** For Toppan cron, if a manual change record exists (source=OCMS or PLUS), the VON update is skipped (counted as manual update).
 
 ---
 

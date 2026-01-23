@@ -1,9 +1,9 @@
 # Condition Plan - OCMS 15: Manage Change Processing Stage
 
 **Document Information**
-- Version: 1.0
-- Date: 2026-01-21
-- Source: Functional Document v1.2 + Backend Code Analysis
+- Version: 1.3
+- Date: 2026-01-22
+- Source: Functional Document v1.2 + Backend Code Analysis + Data Dictionary
 - Feature: Manual Change Processing Stage & PLUS Integration
 
 ---
@@ -15,7 +15,7 @@
 | Rule ID | Field | Validation Rule | Error Message | When |
 |---------|-------|----------------|---------------|------|
 | FE-001 | Notice No | Format validation: Alphanumeric, 10 chars including spaces | Invalid Notice no. | On submit |
-| FE-002 | ID No | Format validation: Alphanumeric, max 20 chars | Invalid ID no. | On submit |
+| FE-002 | ID No | Format validation: Alphanumeric, max 12 chars (NRIC/FIN format) | Invalid ID no. | On submit |
 | FE-003 | Vehicle No | Format warning: Local vehicle number format check | Number does not match the local vehicle number format. | On input (warning only, can proceed) |
 | FE-004 | Search Criteria | At least one search criterion must be provided | Please enter at least one search criterion | On submit |
 | FE-005 | Date of Current Processing Stage | Valid date format: dd/MM/yyyy | Invalid date format | On date picker |
@@ -65,18 +65,20 @@
 | Rule ID | Validation Check | Logic | Error Code | Error Message | Source |
 |---------|-----------------|-------|------------|---------------|---------|
 | BE-010 | VON Exists | Query ocms_valid_offence_notice by notice_no | OCMS.CPS.NOT_FOUND | VON not found | FD §2.5.1 Step 3 |
-| BE-011 | Court Stage Check | Check if current_processing_stage in court stages (CRT, etc.) | OCMS.CPS.COURT_STAGE | Notice is in court stage | FD §2.3.1 Step 5 |
-| BE-012 | Duplicate Record Check | Query ocms_change_of_processing by notice_no and cre_dtm (today) | OCMS.CPS.DUPLICATE_RECORD | Existing change record found for this notice today | FD §2.5.1 Step 4 |
+| BE-011 | Court Stage Check | Check if current_processing_stage NOT IN Allowed Stages (NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC) | OCMS.CPS.COURT_STAGE | Notice is in court stage | FD §2.3.1 Step 5 |
+| BE-012 | Duplicate Record Check | Query ocms_change_of_processing by notice_no and date_of_change (today) | OCMS.CPS.DUPLICATE_RECORD | Existing change record found for this notice today | FD §2.5.1 Step 4 |
 | BE-013 | Stage Transition Allowed | Validate stage transition using ocms_stage_map | OCMS.CPS.INVALID_TRANSITION | Stage transition not allowed: [current] -> [new] | FD §2.4.2 Step 4-6 |
 | BE-014 | Remarks Required | If reason = "OTH", remarks must not be empty | OCMS.CPS.REMARKS_REQUIRED | Remarks are mandatory when reason for change is 'OTH' (Others) | Code: ValidateChangeProcessingStageRequest |
 | BE-015 | Offender Type Match | Driver → DN1/DN2/DR3, Owner/Hirer/Director → ROV/RD1/RD2/RR3 | OCMS.CPS.INVALID_STAGE_FOR_OFFENDER | Stage [stage] not allowed for offender type [type] | FD §2.4.2 Step 5 |
+| BE-016 | **ENA Stage Blocked** | **newProcessingStage = 'ENA' is not allowed** | **OCMS.CPS.ENA_NOT_ALLOWED** | **ENA stage change is not allowed** | FD §3 Note |
 
 ### 2.3 Search Eligibility Checks
 
 | Rule ID | Check | Condition | Result | Reason Code |
 |---------|-------|-----------|--------|-------------|
-| BE-020 | Court Stage | current_processing_stage IN ('CRT', 'CS1', 'CS2', etc.) | Ineligible | OCMS.CPS.SEARCH.COURT_STAGE |
-| BE-021 | PS Stage | current_processing_stage IN ('PS1', 'PS2', etc.) | Ineligible | OCMS.CPS.SEARCH.PS_STAGE |
+| BE-020 | Court Stage | current_processing_stage NOT IN Reminder Stages (NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC) | Ineligible | OCMS.CPS.ELIG.COURT_STAGE |
+| BE-021 | PS Blocked | Permanent suspension active | Ineligible | OCMS.CPS.ELIG.PS_BLOCKED |
+| BE-021a | TS Blocked | Temporary suspension active | Ineligible | OCMS.CPS.ELIG.TS_BLOCKED |
 | BE-022 | Suspended Notice | suspension_status = 'ACTIVE' | Check suspension type | - |
 | BE-023 | Offender Type | owner_driver_indicator = 'D' | Eligible for DN stages | - |
 | BE-024 | Offender Type | owner_driver_indicator IN ('O', 'H', 'R') | Eligible for ROV/RD stages | - |
@@ -110,6 +112,9 @@
 | EXT-010 | All notices in court stage | Reject request | OCMS-4000 | All notices are in court stage |
 | EXT-011 | Mixed valid/invalid notices | Process valid, return errors for invalid | OCMS-4000 | Partial success: [X] succeeded, [Y] failed |
 | EXT-012 | Stage transition not in stage map | Reject request | OCMS-4000 | Stage transition not allowed |
+| EXT-013 | **PLUS requests CFC stage** | **Reject request** | **OCMS-4004** | **CFC not allowed from PLUS source** |
+| EXT-014 | offenceType='U' AND nextStage IN (DN1,DN2,DR3,CPC) | Skip notice | - | Unidentified offender cannot change to driver stages |
+| EXT-015 | **PLUS requests ENA stage** | **Reject request** | **OCMS-4000** | **ENA not allowed from PLUS source** |
 
 ---
 
@@ -134,9 +139,101 @@
 
 ---
 
-## 5. Decision Trees
+## 5. Amount Payable Calculation Matrix
 
-### 5.1 Search Notice Eligibility Decision Tree
+### 5.1 Calculation Rules
+
+When processing stage changes, the `amount_payable` field in VON is recalculated based on the stage transition:
+
+| Previous Stage | New Stage | Formula | Description |
+|----------------|-----------|---------|-------------|
+| ROV, ENA, RD1, RD2 | RR3 | composition + adminFee | Final reminder to owner adds admin fee |
+| DN1, DN2 | DR3 | composition + adminFee | Final reminder to driver adds admin fee |
+| ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3 | CFC, CPC | composition + surcharge | Court stage adds surcharge |
+| CFC, CPC | RR3, DR3 | composition + adminFee | Return from court to final reminder |
+| CFC, CPC | ROV, RD1, RD2, DN1, DN2 | composition | Return from court to earlier stage |
+| RR3 | ROV, RD1, RD2 | composition | Revert from final to earlier owner stage |
+| DR3 | DN1, DN2 | composition | Revert from final to earlier driver stage |
+| ROV, ENA, RD1 | RD1, RD2 | composition | Progress within owner stages |
+| DN1 | DN2 | composition | Progress within driver stages |
+| RD1, RD2, RR3 | DN1, DN2 | composition | Switch from owner to driver |
+| DN1, DN2, DR3 | ROV, RD1, RD2 | composition | Switch from driver to owner |
+
+### 5.2 Fee Parameters
+
+| Parameter | Source | Description |
+|-----------|--------|-------------|
+| adminFee | `ocms_parameter` table (code='ADM', type='AMOUNT') | Administration fee for final reminders |
+| surcharge | `ocms_parameter` table (code='SURCHARGE', type='AMOUNT') | Surcharge for court stages |
+| composition | `ocms_valid_offence_notice.composition_amount` | Base composition amount |
+
+### 5.3 Calculation Logic
+
+```
+IF newStage IN (RR3, DR3) AND previousStage NOT IN (CFC, CPC):
+    amountPayable = compositionAmount + adminFee
+
+ELSE IF newStage IN (CFC, CPC):
+    amountPayable = compositionAmount + surcharge
+
+ELSE IF previousStage IN (CFC, CPC) AND newStage IN (RR3, DR3):
+    amountPayable = compositionAmount + adminFee
+
+ELSE:
+    amountPayable = compositionAmount
+```
+
+---
+
+## 6. Error Codes Reference
+
+### 6.1 Eligibility Error Codes
+
+| Error Code | Description | User Message |
+|------------|-------------|--------------|
+| OCMS.CPS.ELIG.NOT_FOUND | Notice not found in VON or ONOD | Notice not found |
+| OCMS.CPS.ELIG.ROLE_CONFLICT | Cannot determine offender role | Cannot determine offender role |
+| OCMS.CPS.ELIG.NO_STAGE_RULE | Cannot derive next stage from stage map | Cannot derive next stage |
+| OCMS.CPS.ELIG.INELIGIBLE_STAGE | Stage not eligible for this offender role | Stage not eligible for offender type |
+| OCMS.CPS.ELIG.COURT_STAGE | Notice is at court stage (NOT in Allowed Stages) | Notice is in court stage |
+| OCMS.CPS.ELIG.PS_BLOCKED | Permanent suspension active | Notice has permanent suspension |
+| OCMS.CPS.ELIG.TS_BLOCKED | Temporary suspension active | Notice has temporary suspension |
+| OCMS.CPS.ELIG.EXISTING_CHANGE_TODAY | Duplicate change exists for today | Existing change record found for this notice today |
+
+### 6.2 Validation Error Codes
+
+| Error Code | Description | User Message |
+|------------|-------------|--------------|
+| OCMS.CPS.INVALID_FORMAT | Request format invalid | Items list cannot be empty |
+| OCMS.CPS.MISSING_DATA | Required field missing | noticeNo is required |
+| OCMS.CPS.REMARKS_REQUIRED | Remarks required for OTH reason | Remarks are mandatory when reason for change is 'OTH' |
+| OCMS.CPS.ENA_NOT_ALLOWED | ENA stage not allowed | ENA stage change is not allowed |
+| OCMS.CPS.VALIDATION_ERROR | General validation error | Validation error |
+
+### 6.3 Search Error Codes
+
+| Error Code | Description | User Message |
+|------------|-------------|--------------|
+| OCMS.CPS.SEARCH.COURT_STAGE | Notice in court stage | Notice is in court stage |
+| OCMS.CPS.SEARCH.PS_ACTIVE | Permanent suspension active | Notice has permanent suspension |
+| OCMS.CPS.SEARCH.ERROR | Search error | Search error occurred |
+
+### 6.4 PLUS API Error Codes
+
+| Error Code | Description | User Message |
+|------------|-------------|--------------|
+| OCMS-4000 | Bad request / Invalid data | Invalid request |
+| OCMS-4004 | CFC not allowed from PLUS | CFC not allowed from PLUS source |
+| NOTICE_NOT_FOUND | Notice not found in VON | Notice not found |
+| STAGE_NOT_ELIGIBLE | Stage not eligible | Stage not eligible |
+| EXISTING_STAGE_CHANGE | Duplicate stage change | Existing stage change |
+| PROCESSING_FAILED | Multiple notices failed | Processing failed |
+
+---
+
+## 7. Decision Trees
+
+### 7.1 Search Notice Eligibility Decision Tree
 
 ```
 START
@@ -145,12 +242,12 @@ Is VON found?
   ├─ NO → Return "No record found"
   ├─ YES → Check Court Stage
        ↓
-Is in Court Stage (CRT, CS1, CS2)?
+Is in Court Stage (NOT in Reminder Stages)?
   ├─ YES → Mark as INELIGIBLE (reason: COURT_STAGE)
-  ├─ NO → Check PS Stage
+  ├─ NO → Check Suspension Status
        ↓
-Is in PS Stage (PS1, PS2)?
-  ├─ YES → Mark as INELIGIBLE (reason: PS_STAGE)
+Is PS/TS Blocked?
+  ├─ YES → Mark as INELIGIBLE (reason: PS_BLOCKED or TS_BLOCKED)
   ├─ NO → Mark as ELIGIBLE
        ↓
 Return segregated lists (eligible + ineligible)
@@ -158,7 +255,7 @@ Return segregated lists (eligible + ineligible)
 END
 ```
 
-### 5.2 Validate Processing Stage Decision Tree
+### 7.2 Validate Processing Stage Decision Tree
 
 ```
 START
@@ -186,7 +283,7 @@ Return changeable + non-changeable lists
 END
 ```
 
-### 5.3 Submit Change Processing Stage Decision Tree
+### 7.3 Submit Change Processing Stage Decision Tree
 
 ```
 START
@@ -220,7 +317,7 @@ Return batch response (SUCCESS / PARTIAL / FAILED)
 END
 ```
 
-### 5.4 Toppan Stage Update Decision Tree
+### 7.4 Toppan Stage Update Decision Tree
 
 ```
 START (for each notice)
@@ -246,9 +343,9 @@ END
 
 ---
 
-## 6. Validation Sequence
+## 8. Validation Sequence
 
-### 6.1 Search API Validation Sequence
+### 8.1 Search API Validation Sequence
 
 1. **Request Validation** (Frontend)
    - At least one search criterion provided (FE-004)
@@ -262,7 +359,7 @@ END
 3. **Response**
    - Return eligible + ineligible lists
 
-### 6.2 Validate API Validation Sequence
+### 8.2 Validate API Validation Sequence
 
 1. **Request Validation**
    - notices array not empty (BE-003)
@@ -278,7 +375,7 @@ END
 3. **Response**
    - Return changeable + non-changeable lists
 
-### 6.3 Submit API Validation Sequence
+### 8.3 Submit API Validation Sequence
 
 1. **Request Format Validation**
    - items array not empty (BE-001)
@@ -307,17 +404,33 @@ END
 
 ---
 
-## 7. Assumptions Log
+## 9. Assumptions Log
 
 | ID | Assumption | Rationale | Status |
 |----|------------|-----------|--------|
-| A-001 | Court stages include: CRT, CS1, CS2 | Based on common OCMS stage naming | [ASSUMPTION] |
-| A-002 | PS stages include: PS1, PS2 | Based on common OCMS stage naming | [ASSUMPTION] |
-| A-003 | Stage map table contains all valid transitions | Required for validation logic | Confirmed in Code |
-| A-004 | Toppan cron runs daily at fixed time | Based on Section 2.5.2 description | [ASSUMPTION] |
-| A-005 | Report files stored in Azure Blob Storage path: reports/change-stage/ | Based on code implementation | Confirmed in Code |
-| A-006 | User ID extracted from X-User-Id header or defaults to "SYSTEM" | Based on code implementation | Confirmed in Code |
-| A-007 | DH/MHA check flag updates separate database field | Based on FD mention of checkbox | [ASSUMPTION] |
+| A-001 | Court stages = Any stage NOT IN Allowed Stages (NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC). Note: CPC and CFC are court stages but still ALLOWED for change. | Per FD: "Court Stages (after CFC and CPC)" | ✅ Confirmed in FD |
+| A-002 | Suspension blocking: PS_BLOCKED, TS_BLOCKED | Confirmed from EligibilityService.java | ✅ Confirmed in Code |
+| A-003 | Stage map table contains all valid transitions | Required for validation logic | ✅ Confirmed in Code |
+| A-004 | Toppan cron runs daily at 00:30 (0030hr) | Cron expression: 0 30 0 * * ? | ✅ Confirmed in Code |
+| A-005 | Report files stored in Azure Blob Storage path: reports/change-stage/ | Based on code implementation | ✅ Confirmed in Code |
+| A-006 | User ID extracted from X-User-Id header or defaults to "SYSTEM" | Based on code implementation | ✅ Confirmed in Code |
+| A-007 | DH/MHA check field name: `mha_dh_check_allow` in ONOD table | Confirmed from Data Dictionary | ✅ Confirmed in DD |
+| A-008 | id_no field max length: 12 chars (varchar(12)) | Confirmed from Data Dictionary | ✅ Confirmed in DD |
+| A-009 | Table name: `ocms_change_of_processing` | Confirmed from Data Dictionary | ✅ Confirmed in DD |
+| A-010 | remarks field max length: 200 chars (varchar(200)) | Confirmed from Data Dictionary | ✅ Confirmed in DD |
+
+---
+
+## 10. Source Constants
+
+| Constant | Value | Description |
+|----------|-------|-------------|
+| SOURCE_OCMS | "OCMS" | Change from OCMS Staff Portal |
+| SOURCE_PLUS | "PLUS" | Change from PLUS Staff Portal |
+| SOURCE_AVSS | "AVSS" | Change from AVSS system |
+| SOURCE_SYSTEM | "SYSTEM" | Change from system/cron |
+| PLUS_CODE | "005" | PLUS subsystem code |
+| OCMS_CODE | "004" | OCMS subsystem code |
 
 ---
 

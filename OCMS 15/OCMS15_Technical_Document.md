@@ -20,6 +20,7 @@ refer to FD instead of duplicating content.
 | v1.0 | Claude | 21/01/2026 | Document Initiation |
 | v1.1 | Claude | 22/01/2026 | Updated based on revised flowchart structure (9 tabs) |
 | v1.2 | Claude | 22/01/2026 | Review fixes - Yi Jie standards compliance (0 critical, 3 major, 8 minor issues resolved) |
+| v1.3 | Claude | 22/01/2026 | Aligned with plan files v1.3, drawio, and Data Dictionary: Fixed court stages definition, id_no length, DH/MHA field name, VON field names, Toppan query field, added prev_processing fields, ENA restrictions, source field in INSERT |
 
 ---
 
@@ -140,7 +141,7 @@ Refer to FD Section 2.1 for detailed use case description.
 | --- | --- | --- |
 | DN1, DN2, DR3 | Driver processing stages - Demand Notice stages for drivers | Driver (owner_driver_indicator = 'D') |
 | ROV, RD1, RD2, RR3 | Owner/Hirer/Director processing stages - Registered Owner stages | Owner/Hirer/Director (owner_driver_indicator IN ('O', 'H', 'R')) |
-| Court Stages (CRT, CS1, CS2, CS3, CFC) | Court processing - Always ineligible for manual change | All offender types |
+| Court Stages (NOT IN Allowed Stages) | Court processing - Always ineligible for manual change. Court stages are any stage NOT IN Allowed Stages (NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC) | All offender types |
 | PS Stages (PS1, PS2, PS-FOR, PS-MSF, PS-CUS) | Payment Scheme stages - Always ineligible for manual change | All offender types |
 
 ---
@@ -183,7 +184,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Query Database | Database operation | If ID No: Query ONOD first, then join VON. Otherwise: Query VON directly by search filters |
 | Record Found Check | Decision point | Check if query returns any result |
 | Check Eligibility | Process loop | Backend checks each notice for eligibility based on current processing stage |
-| Court Stage Check | Decision point | Check if current_processing_stage IN (CRT, CS1, CS2, CS3, CFC) |
+| Court Stage Check | Decision point | Check if current_processing_stage NOT IN Allowed Stages (NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC) |
 | Mark Ineligible (Court) | Process | Add to ineligibleNotices list with reason OCMS.CPS.SEARCH.COURT_STAGE |
 | PS Stage Check | Decision point | Check if current_processing_stage IN (PS1, PS2, PS-FOR, PS-MSF, PS-CUS) |
 | Mark Ineligible (PS) | Process | Add to ineligibleNotices list with reason OCMS.CPS.SEARCH.PS_STAGE |
@@ -234,7 +235,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Parameter | Data Type | Max Length | Required | Nullable | Source | Description |
 | --- | --- | --- | --- | --- | --- | --- |
 | noticeNo | varchar | 10 | No | Yes | User input | Notice number. Alphanumeric, 10 chars including spaces |
-| idNo | varchar | 20 | No | Yes | User input | Identification number. Alphanumeric, max 20 chars |
+| idNo | varchar | 12 | No | Yes | User input | Identification number. Alphanumeric, max 12 chars |
 | vehicleNo | varchar | 14 | No | Yes | User input | Vehicle registration number. Alphanumeric, up to 14 chars |
 | currentProcessingStage | varchar | 10 | No | Yes | User selection | Current processing stage code from dropdown |
 | dateOfCurrentProcessingStage | date | - | No | Yes | User selection | Date of current processing stage (dd/MM/yyyy format) |
@@ -245,13 +246,13 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | --- | --- | --- | --- | --- | --- |
 | ocms_valid_offence_notice | notice_no | varchar | 10 | No | Notice number (Primary Key) |
 | ocms_valid_offence_notice | vehicle_no | varchar | 14 | No | Vehicle registration number |
-| ocms_valid_offence_notice | current_processing_stage | varchar | 10 | Yes | Current processing stage code |
-| ocms_valid_offence_notice | current_processing_date | timestamp | - | Yes | Date and time of current processing stage |
+| ocms_valid_offence_notice | last_processing_stage | varchar | 10 | Yes | Last/current processing stage code |
+| ocms_valid_offence_notice | last_processing_date | timestamp | - | Yes | Date and time of last/current processing stage |
 | ocms_valid_offence_notice | offence_type | varchar | 2 | No | Type of offence |
 | ocms_valid_offence_notice | offence_datetime | timestamp | - | No | Date and time of offence |
 | ocms_valid_offence_notice | suspension_type | varchar | 10 | Yes | Type of suspension (if applicable) |
 | ocms_valid_offence_notice | suspension_status | varchar | 10 | Yes | Status of suspension |
-| ocms_offence_notice_owner_driver | id_no | varchar | 20 | No | Offender ID number |
+| ocms_offence_notice_owner_driver | id_no | varchar | 12 | No | Offender ID number |
 | ocms_offence_notice_owner_driver | offender_name | varchar | 200 | Yes | Offender name |
 | ocms_offence_notice_owner_driver | owner_driver_indicator | varchar | 1 | No | D=Driver, O=Owner, H=Hirer, R=Director |
 | ocms_offence_notice_owner_driver | entity_type | varchar | 10 | Yes | Entity type (if applicable) |
@@ -276,7 +277,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 - Backend successfully queries database and retrieves matching notices
 - Notices are segregated into eligible and ineligible lists based on current processing stage
-- Court stage notices (CRT, CS1, CS2, CS3, CFC) are marked as ineligible with reason code OCMS.CPS.SEARCH.COURT_STAGE
+- Court stage notices (NOT IN Allowed Stages: NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC) are marked as ineligible with reason code OCMS.CPS.SEARCH.COURT_STAGE
 - PS stage notices (PS1, PS2, PS-FOR, PS-MSF, PS-CUS) are marked as ineligible with reason code OCMS.CPS.SEARCH.PS_STAGE
 - Other notices are marked as eligible
 - Response includes summary with total count, eligible count, and ineligible count
@@ -291,7 +292,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Error Scenario | Validation Rule | Error Message | Action |
 | --- | --- | --- | --- |
 | Invalid Notice No Format | Alphanumeric, 10 chars including spaces | Invalid Notice no. | Display error, block submission |
-| Invalid ID No Format | Alphanumeric, max 20 chars | Invalid ID no. | Display error, block submission |
+| Invalid ID No Format | Alphanumeric, max 12 chars | Invalid ID no. | Display error, block submission |
 | Invalid Vehicle No Format | Local vehicle number format check | Number does not match the local vehicle number format. | Display warning, allow proceed |
 | No Search Criteria | At least one field must be filled | Please enter at least one search criterion | Display error, block submission |
 | Invalid Date Format | Valid date format dd/MM/yyyy | Invalid date format | Display error, block submission |
@@ -441,6 +442,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | BE-012 | Duplicate record check | Query ocms_change_of_processing by notice_no and today's date | OCMS.CPS.DUPLICATE_RECORD |
 | BE-013 | Stage transition allowed | Validate stage transition using ocms_stage_map | OCMS.CPS.INVALID_TRANSITION |
 | BE-014 | Remarks required | If reason = "OTH", remarks must not be empty | OCMS.CPS.REMARKS_REQUIRED |
+| BE-016 | ENA stage restriction | Cannot change to ENA stage via OCMS Staff Portal | OCMS.CPS.ENA_NOT_ALLOWED |
 
 ---
 
@@ -494,6 +496,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Field Name | Data Type | Max Length | Nullable | Description | Updated By |
 | --- | --- | --- | --- | --- | --- |
 | notice_no | varchar | 10 | No | Notice number (Primary Key) | - |
+| prev_processing_stage | varchar | 10 | Yes | Previous processing stage (backup) | Backend update |
+| prev_processing_date | timestamp | - | Yes | Previous processing date (backup) | Backend update |
+| last_processing_stage | varchar | 10 | Yes | Last/current processing stage | Backend update |
+| last_processing_date | timestamp | - | Yes | Last/current processing date | Backend update |
 | next_processing_stage | varchar | 10 | Yes | New processing stage after change | Backend update |
 | next_processing_date | timestamp | - | Yes | Date for next processing stage | Backend update |
 | amount_payable | decimal | 10,2 | Yes | Amount payable after stage change | Backend calculation |
@@ -511,6 +517,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | reason_of_change | varchar | 10 | No | Reason code for change | Request payload |
 | authorised_officer | varchar | 50 | No | Officer who initiated change | X-User-Id header |
 | remarks | varchar | 500 | Yes | Additional remarks | Request payload |
+| source | varchar | 10 | No | Source system code (PORTAL/005) | Request payload |
 | cre_date | timestamp | - | No | Record creation date | System generated |
 | cre_user_id | varchar | 50 | No | Audit user who created record | ocmsiz_app_conn |
 
@@ -523,7 +530,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Field Name | Data Type | Max Length | Nullable | Description | Updated By |
 | --- | --- | --- | --- | --- | --- |
 | notice_no | varchar | 10 | No | Notice number | - |
-| DH_MHA_check_allow | varchar | 1 | Yes | DH/MHA check flag (Y/N) | Backend update |
+| mha_dh_check_allow | varchar | 1 | Yes | DH/MHA check flag (Y/N) | Backend update |
 | upd_user_id | varchar | 50 | No | Audit user who updated record | ocmsiz_app_conn |
 | upd_dtm | timestamp | - | No | Audit timestamp of update | System generated |
 
@@ -607,7 +614,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Insert Change Record | Database operation | INSERT into ocms_change_of_processing with change details |
 | Insert Success Check | Decision point | Check if INSERT succeeded (rows affected > 0) |
 | DH/MHA Check Required | Decision point | Check if dhMhaCheck flag = true |
-| Update ONOD DH/MHA Flag | Database operation | UPDATE ocms_offence_notice_owner_driver SET DH_MHA_check_allow = 'Y' |
+| Update ONOD DH/MHA Flag | Database operation | UPDATE ocms_offence_notice_owner_driver SET mha_dh_check_allow = 'Y' |
 | ONOD Update Success Check | Decision point | Check if UPDATE succeeded (rows affected > 0) |
 | Return Success | Subflow return | Return success to main flow |
 | End | Exit point | Control returns to main flow |
@@ -630,6 +637,10 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 | Field | Value | Source |
 | --- | --- | --- |
+| prev_processing_stage | Previous processing stage (backup) | VON last_processing_stage |
+| prev_processing_date | Previous processing date (backup) | VON last_processing_date |
+| last_processing_stage | Current processing stage before change | VON last_processing_stage |
+| last_processing_date | Current processing date before change | VON last_processing_date |
 | next_processing_stage | New processing stage code | Request payload newStage |
 | next_processing_date | Calculated date based on stage rules | Business logic calculation |
 | amount_payable | Calculated amount based on stage | Business logic calculation |
@@ -639,7 +650,11 @@ NOTE: Due to page size limit, the full-sized image is appended.
 **SQL Operation:**
 ```sql
 UPDATE ocms_valid_offence_notice
-SET next_processing_stage = ?,
+SET prev_processing_stage = last_processing_stage,
+    prev_processing_date = last_processing_date,
+    last_processing_stage = ?,
+    last_processing_date = ?,
+    next_processing_stage = ?,
     next_processing_date = ?,
     amount_payable = ?,
     upd_user_id = 'ocmsiz_app_conn',
@@ -662,6 +677,7 @@ WHERE notice_no = ?
 | reason_of_change | Reason code | Request payload reason |
 | authorised_officer | Officer user ID | X-User-Id header |
 | remarks | Additional remarks | Request payload remark |
+| source | Source system code | Request payload source (PORTAL/005) |
 | cre_date | Current timestamp | System generated |
 | cre_user_id | ocmsiz_app_conn | Database connection user |
 
@@ -669,8 +685,8 @@ WHERE notice_no = ?
 ```sql
 INSERT INTO ocms_change_of_processing
 (notice_no, date_of_change, last_processing_stage, new_processing_stage,
- reason_of_change, authorised_officer, remarks, cre_date, cre_user_id)
-VALUES (?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 'ocmsiz_app_conn')
+ reason_of_change, authorised_officer, remarks, source, cre_date, cre_user_id)
+VALUES (?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 'ocmsiz_app_conn')
 ```
 
 **Query Standards**:
@@ -681,14 +697,14 @@ VALUES (?, CURRENT_TIMESTAMP, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, 'ocmsiz_app_conn
 
 | Field | Value | Source |
 | --- | --- | --- |
-| DH_MHA_check_allow | 'Y' or 'N' | Request payload dhMhaCheck |
+| mha_dh_check_allow | 'Y' or 'N' | Request payload dhMhaCheck |
 | upd_user_id | ocmsiz_app_conn | Database connection user |
 | upd_dtm | Current timestamp | System generated |
 
 **SQL Operation:**
 ```sql
 UPDATE ocms_offence_notice_owner_driver
-SET DH_MHA_check_allow = ?,
+SET mha_dh_check_allow = ?,
     upd_user_id = 'ocmsiz_app_conn',
     upd_dtm = CURRENT_TIMESTAMP
 WHERE notice_no = ?
@@ -709,7 +725,7 @@ WHERE notice_no = ?
 - amount_payable is calculated based on new stage payment rules
 - VON record is successfully updated with new stage, date, and amount
 - Change record is successfully inserted into ocms_change_of_processing
-- If dhMhaCheck is true, ONOD record is successfully updated with DH_MHA_check_allow = 'Y'
+- If dhMhaCheck is true, ONOD record is successfully updated with mha_dh_check_allow = 'Y'
 - Sub-flow returns success to main flow
 - Main flow proceeds to generate report
 
@@ -889,7 +905,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Initialize Batch | Process loop | Start processing each notice in noticeNo array |
 | Query VON | Database operation | Query ocms_valid_offence_notice by notice_no |
 | VON Exists Check | Decision point | Check if query returns record |
-| Court Stage Check | Decision point | Check if current_processing_stage IN (CRT, CS1, CS2, CS3, CFC) |
+| Court Stage Check | Decision point | Check if current_processing_stage NOT IN Allowed Stages (NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC) |
 | Call Change Stage Subflow | Subflow call | Execute sub-flow to update VON and insert change record |
 | Subflow Success Check | Decision point | Check if sub-flow completed successfully |
 | Add to Success List | Process | Increment noticeCount for successful changes |
@@ -962,6 +978,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | EXT-003 | nextStageName | Required | OCMS-4000 | Next stage name is required |
 | EXT-004 | Stage Transition | Validate using stage_map | OCMS-4000 | Stage transition not allowed: [last] -> [next] |
 | EXT-005 | Source Code | Must be "005" for PLUS | OCMS-4000 | Invalid source code |
+| EXT-015 | ENA stage restriction | Cannot change to ENA stage via PLUS | OCMS-4000 | ENA stage not allowed for PLUS |
 
 #### Database Tables
 
@@ -1063,7 +1080,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Initialize Processing | Process loop | Start processing each notice in noticeNumbers array |
 | Query VON | Database operation | Query ocms_valid_offence_notice by notice_no |
 | VON Exists Check | Decision point | Check if query returns record |
-| Check Manual Record | Database operation | Query ocms_change_of_processing for today's manual change by notice_no and cre_dtm |
+| Check Manual Record | Database operation | Query ocms_change_of_processing for today's manual change by notice_no and date_of_change |
 | Manual Record Exists Check | Decision point | Check if manual change record exists for today |
 | Skip VON Update | Process | Count as manual update (already updated manually by OIC) |
 | Validate Transition | Database operation | Check if currentStage → next stage is allowed in stage_map |
@@ -1145,12 +1162,12 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Field Name | Data Type | Description | Query Purpose |
 | --- | --- | --- | --- |
 | notice_no | varchar(10) | Notice number | Check if manual change exists |
-| cre_dtm | timestamp | Record creation timestamp | Check if created today |
+| date_of_change | timestamp | Date of change record | Check if changed today |
 
 **Query Logic:**
 ```sql
 SELECT notice_no FROM ocms_change_of_processing
-WHERE notice_no = ? AND DATE(cre_dtm) = CURRENT_DATE
+WHERE notice_no = ? AND DATE(date_of_change) = CURRENT_DATE
 ```
 
 **Query Standards**:

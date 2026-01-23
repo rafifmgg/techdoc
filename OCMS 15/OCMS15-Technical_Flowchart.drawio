@@ -198,8 +198,8 @@
         <mxCell id="20003" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT von.notice_no, von.vehicle_no,&lt;br/&gt;       von.last_processing_stage,&lt;br/&gt;       von.last_processing_date, von.offender_name&lt;br/&gt;FROM ocms_valid_offence_notice von&lt;br/&gt;WHERE (:searchCriteria)" vertex="1">
           <mxGeometry height="110" width="250" x="985" y="240" as="geometry" />
         </mxCell>
-        <mxCell id="20010" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" value="Court Stages (Ineligible):&lt;br/&gt;CRT, CS1, CS2, CS3, CFC" vertex="1">
-          <mxGeometry height="50" width="180" x="1555" y="30" as="geometry" />
+        <mxCell id="20010" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" value="Court Stages (Ineligible):&lt;br/&gt;NOT IN Allowed Stages&lt;br/&gt;(NPA,ROV,ENA,RD1,RD2,RR3,&lt;br/&gt;DN1,DN2,DR3,CPC,CFC)" vertex="1">
+          <mxGeometry height="80" width="200" x="1555" y="30" as="geometry" />
         </mxCell>
         <mxCell id="20011" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" value="PS Stages (Ineligible):&lt;br/&gt;PS1, PS2, PS-FOR, PS-MSF, PS-CUS" vertex="1">
           <mxGeometry height="60" width="180" x="1747" y="30" as="geometry" />
@@ -344,8 +344,8 @@
         <mxCell id="30021" parent="swim_fe" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="Owner/Hirer/Director (O/H/R):&lt;br/&gt;Allowed stages: ROV, RD1, RD2, RR3" vertex="1">
           <mxGeometry height="50" width="260" x="748" y="630" as="geometry" />
         </mxCell>
-        <mxCell id="30022" parent="swim_fe" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="Required Field Rules:&lt;br/&gt;- New Processing Stage: Required&lt;br/&gt;- Reason of Change: Required&lt;br/&gt;- Remarks: Required if Reason = OTH" vertex="1">
-          <mxGeometry height="80" width="300" x="1748" y="430" as="geometry" />
+        <mxCell id="30022" parent="swim_fe" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="Required Field Rules:&lt;br/&gt;- New Processing Stage: Required&lt;br/&gt;- Reason of Change: Required&lt;br/&gt;- Remarks: Required if Reason = OTH&lt;br/&gt;- ENA stage is NOT allowed as target" vertex="1">
+          <mxGeometry height="100" width="300" x="1748" y="430" as="geometry" />
         </mxCell>
         <mxCell id="207" edge="1" parent="swim_fe" source="184" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="185" value="yes">
           <mxGeometry relative="1" as="geometry">
@@ -575,14 +575,14 @@
         <mxCell id="4901" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, last_processing_stage,&lt;br/&gt;       last_processing_date&lt;br/&gt;FROM ocms_valid_offence_notice&lt;br/&gt;WHERE notice_no = :noticeNo" vertex="1">
           <mxGeometry height="90" width="265" x="617.5" y="404" as="geometry" />
         </mxCell>
-        <mxCell id="4902" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, cre_dtm&lt;br/&gt;FROM ocms_change_of_processing&lt;br/&gt;WHERE notice_no = :noticeNo&lt;br/&gt;  AND CAST(cre_dtm AS DATE) = CAST(GETDATE() AS DATE)" vertex="1">
-          <mxGeometry height="90" width="250" x="985" y="404" as="geometry" />
+        <mxCell id="4902" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, date_of_change&lt;br/&gt;FROM ocms_change_of_processing&lt;br/&gt;WHERE notice_no = :noticeNo&lt;br/&gt;  AND CAST(date_of_change AS DATE) = CAST(GETDATE() AS DATE)" vertex="1">
+          <mxGeometry height="90" width="280" x="985" y="404" as="geometry" />
         </mxCell>
-        <mxCell id="4903" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br&gt;SET last_processing_stage = :newStage,&lt;br&gt;    last_processing_date = GETDATE()&lt;div&gt;WHERE notice_no = :noticeNo&lt;/div&gt;" vertex="1">
-          <mxGeometry height="100" width="240" x="1920" y="404" as="geometry" />
+        <mxCell id="4903" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br&gt;SET prev_processing_stage = last_processing_stage,&lt;br&gt;    prev_processing_date = last_processing_date,&lt;br&gt;    last_processing_stage = :newStage,&lt;br&gt;    last_processing_date = GETDATE()&lt;br&gt;WHERE notice_no = :noticeNo" vertex="1">
+          <mxGeometry height="130" width="280" x="1920" y="404" as="geometry" />
         </mxCell>
-        <mxCell id="4904" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_change_of_processing&lt;br/&gt;(notice_no, old_stage, new_stage, reason,&lt;br/&gt; remarks, source, cre_user_id, cre_dtm)&lt;br/&gt;VALUES (:noticeNo, :oldStage, :newStage, :reason,&lt;br/&gt;        :remarks, &#39;PORTAL&#39;, &#39;ocmsiz_app_conn&#39;, GETDATE())" vertex="1">
-          <mxGeometry height="120" width="240" x="1920" y="724" as="geometry" />
+        <mxCell id="4904" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_change_of_processing&lt;br/&gt;(notice_no, date_of_change, last_processing_stage,&lt;br/&gt; new_processing_stage, reason_of_change,&lt;br/&gt; authorised_officer, source, remarks,&lt;br/&gt; cre_date, cre_user_id)&lt;br/&gt;VALUES (:noticeNo, GETDATE(), :lastStage,&lt;br/&gt; :newStage, :reason, :officer,&lt;br/&gt; &#39;PORTAL&#39;, :remarks, GETDATE(), &#39;ocmsiz_app_conn&#39;)" vertex="1">
+          <mxGeometry height="170" width="280" x="1920" y="724" as="geometry" />
         </mxCell>
         <mxCell id="40030" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT sm.current_stage, sm.next_stage&lt;br/&gt;FROM ocms_stage_map sm&lt;br/&gt;WHERE sm.current_stage = :currentStage&lt;br/&gt;  AND sm.next_stage = :nextStage" vertex="1">
           <mxGeometry height="90" width="260" x="1510" y="404" as="geometry" />
@@ -774,13 +774,13 @@
         <mxCell id="273" parent="swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
           <mxGeometry height="60" width="100" x="1940" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="5901" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br/&gt;SET last_processing_stage = :newStage,&lt;br/&gt;    last_processing_date = GETDATE()&lt;br/&gt;WHERE notice_no = :noticeNo" vertex="1">
-          <mxGeometry height="90" width="230" x="645" y="340" as="geometry" />
+        <mxCell id="5901" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br/&gt;SET prev_processing_stage = last_processing_stage,&lt;br/&gt;    prev_processing_date = last_processing_date,&lt;br/&gt;    last_processing_stage = :newStage,&lt;br/&gt;    last_processing_date = GETDATE()&lt;br/&gt;WHERE notice_no = :noticeNo" vertex="1">
+          <mxGeometry height="120" width="280" x="645" y="340" as="geometry" />
         </mxCell>
-        <mxCell id="5902" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_change_of_processing&lt;br/&gt;(notice_no, old_stage, new_stage, reason, remarks,&lt;br/&gt; source, cre_user_id, cre_dtm)&lt;br/&gt;VALUES (:values)" vertex="1">
-          <mxGeometry height="90" width="280" x="970" y="340" as="geometry" />
+        <mxCell id="5902" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_change_of_processing&lt;br/&gt;(notice_no, date_of_change, last_processing_stage,&lt;br/&gt; new_processing_stage, reason_of_change,&lt;br/&gt; authorised_officer, source, remarks,&lt;br/&gt; cre_date, cre_user_id)&lt;br/&gt;VALUES (:values)" vertex="1">
+          <mxGeometry height="120" width="300" x="970" y="340" as="geometry" />
         </mxCell>
-        <mxCell id="50050" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br/&gt;SET dh_mha_check_flag = :flag,&lt;br/&gt;    upd_user_id = &#39;ocmsiz_app_conn&#39;,&lt;br/&gt;    upd_dtm = GETDATE()&lt;br/&gt;WHERE notice_no = :noticeNo" vertex="1">
+        <mxCell id="50050" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_offence_notice_owner_driver&lt;br/&gt;SET mha_dh_check_allow = &#39;Y&#39;,&lt;br/&gt;    upd_user_id = &#39;ocmsiz_app_conn&#39;,&lt;br/&gt;    upd_dtm = GETDATE()&lt;br/&gt;WHERE notice_no = :noticeNo" vertex="1">
           <mxGeometry height="100" width="220" x="1540" y="340" as="geometry" />
         </mxCell>
         <mxCell id="274" edge="1" parent="1" source="260" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="261" value="">
@@ -889,8 +889,8 @@
         <mxCell id="300" parent="swim_be" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
           <mxGeometry height="60" width="100" x="1580" y="90" as="geometry" />
         </mxCell>
-        <mxCell id="60060" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT cp.notice_no, cp.old_stage, cp.new_stage,&lt;br/&gt;       cp.reason, cp.remarks, cp.cre_user_id,&lt;br/&gt;       cp.cre_dtm, von.vehicle_no, von.offender_name&lt;br/&gt;FROM ocms_change_of_processing cp&lt;br/&gt;LEFT JOIN ocms_valid_offence_notice von&lt;br/&gt;  ON cp.notice_no = von.notice_no&lt;br/&gt;WHERE cp.notice_no IN (:noticeNumbers)" vertex="1">
-          <mxGeometry height="140" width="320" x="80" y="250" as="geometry" />
+        <mxCell id="60060" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT cp.notice_no, cp.last_processing_stage,&lt;br/&gt;       cp.new_processing_stage, cp.reason_of_change,&lt;br/&gt;       cp.authorised_officer, cp.remarks,&lt;br/&gt;       cp.cre_user_id, cp.cre_date,&lt;br/&gt;       von.vehicle_no, von.offender_name&lt;br/&gt;FROM ocms_change_of_processing cp&lt;br/&gt;LEFT JOIN ocms_valid_offence_notice von&lt;br/&gt;  ON cp.notice_no = von.notice_no&lt;br/&gt;WHERE cp.notice_no IN (:noticeNumbers)" vertex="1">
+          <mxGeometry height="170" width="320" x="80" y="250" as="geometry" />
         </mxCell>
         <mxCell id="60061" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="Report Format:&lt;br/&gt;Excel (.xlsx)&lt;br/&gt;Storage: Azure Blob Storage&lt;br/&gt;Path: reports/change-stage/&lt;br/&gt;Filename: ChangeStageReport_yyyyMMdd_HHmmss_UserId.xlsx" vertex="1">
           <mxGeometry height="110" width="350" x="670" y="200" as="geometry" />
@@ -1122,17 +1122,17 @@
         <mxCell id="8901" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT current_stage, next_stage&lt;br/&gt;FROM ocms_stage_map&lt;br/&gt;WHERE current_stage = :currentStage&lt;br/&gt;  AND next_stage = :nextStage" vertex="1">
           <mxGeometry height="90" width="250" x="625" y="445" as="geometry" />
         </mxCell>
-        <mxCell id="8902" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br/&gt;SET last_processing_stage = :newStage,&lt;br/&gt;    last_processing_date = GETDATE()&lt;br/&gt;WHERE notice_no IN (:noticeNumbers)" vertex="1">
-          <mxGeometry height="90" width="250" x="1675" y="310" as="geometry" />
+        <mxCell id="8902" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br/&gt;SET prev_processing_stage = last_processing_stage,&lt;br/&gt;    prev_processing_date = last_processing_date,&lt;br/&gt;    last_processing_stage = :newStage,&lt;br/&gt;    last_processing_date = GETDATE()&lt;br/&gt;WHERE notice_no IN (:noticeNumbers)" vertex="1">
+          <mxGeometry height="120" width="280" x="1675" y="310" as="geometry" />
         </mxCell>
-        <mxCell id="8903" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_change_of_processing&lt;br/&gt;(notice_no, old_stage, new_stage, source, cre_dtm)&lt;br/&gt;VALUES (:noticeNo, :oldStage, :newStage, &#39;005&#39;, GETDATE())" vertex="1">
-          <mxGeometry height="90" width="250" x="1675" y="420" as="geometry" />
+        <mxCell id="8903" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO ocms_change_of_processing&lt;br/&gt;(notice_no, date_of_change, last_processing_stage,&lt;br/&gt; new_processing_stage, source, cre_date, cre_user_id)&lt;br/&gt;VALUES (:noticeNo, GETDATE(), :lastStage,&lt;br/&gt; :newStage, &#39;005&#39;, GETDATE(), &#39;ocmsiz_app_conn&#39;)" vertex="1">
+          <mxGeometry height="110" width="280" x="1675" y="420" as="geometry" />
         </mxCell>
         <mxCell id="80080" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;" value="PLUS Source Code: 005&lt;br/&gt;Identifies origin from PLUS Staff Portal" vertex="1">
           <mxGeometry height="50" width="250" x="450" y="310" as="geometry" />
         </mxCell>
-        <mxCell id="80081" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="PLUS Validation:&lt;br/&gt;- Stage transition must be in stage_map&lt;br/&gt;- All notices must not be in court stage&lt;br/&gt;- Offence type must match" vertex="1">
-          <mxGeometry height="80" width="300" x="1320" y="450" as="geometry" />
+        <mxCell id="80081" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="PLUS Validation:&lt;br/&gt;- Stage transition must be in stage_map&lt;br/&gt;- All notices must not be in court stage&lt;br/&gt;- Offence type must match&lt;br/&gt;- PLUS cannot change to CFC (OCMS-4004)&lt;br/&gt;- PLUS cannot change to ENA (OCMS-4000)" vertex="1">
+          <mxGeometry height="110" width="300" x="1320" y="450" as="geometry" />
         </mxCell>
         <mxCell id="vo6XSG8Gg12eAShGaGXI-80082" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, last_processing_stage,&lt;br/&gt;       last_processing_date&lt;br/&gt;FROM ocms_valid_offence_notice&lt;br/&gt;WHERE notice_no = :noticeNo" vertex="1">
           <mxGeometry height="90" width="250" x="1155" y="310" as="geometry" />
@@ -1335,11 +1335,11 @@
         <mxCell id="9901" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, last_processing_stage&lt;br/&gt;FROM ocms_valid_offence_notice&lt;br/&gt;WHERE notice_no = :noticeNo" vertex="1">
           <mxGeometry height="70" width="250" x="625" y="300" as="geometry" />
         </mxCell>
-        <mxCell id="9902" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, source&lt;br/&gt;FROM ocms_change_of_processing&lt;br/&gt;WHERE notice_no = :noticeNo&lt;br/&gt;  AND CAST(cre_dtm AS DATE) = CAST(GETDATE() AS DATE)&lt;br/&gt;  AND source != &#39;CRON&#39;" vertex="1">
-          <mxGeometry height="110" width="320" x="940" y="340" as="geometry" />
+        <mxCell id="9902" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="SELECT notice_no, source&lt;br/&gt;FROM ocms_change_of_processing&lt;br/&gt;WHERE notice_no = :noticeNo&lt;br/&gt;  AND CAST(date_of_change AS DATE) = CAST(GETDATE() AS DATE)&lt;br/&gt;  AND source != &#39;CRON&#39;" vertex="1">
+          <mxGeometry height="110" width="340" x="940" y="340" as="geometry" />
         </mxCell>
-        <mxCell id="9903" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br/&gt;SET last_processing_stage = :newStage,&lt;br/&gt;    last_processing_date = GETDATE()&lt;br/&gt;WHERE notice_no = :noticeNo" vertex="1">
-          <mxGeometry height="90" width="240" x="1700" y="240" as="geometry" />
+        <mxCell id="9903" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="UPDATE ocms_valid_offence_notice&lt;br/&gt;SET prev_processing_stage = last_processing_stage,&lt;br/&gt;    prev_processing_date = last_processing_date,&lt;br/&gt;    last_processing_stage = :newStage,&lt;br/&gt;    last_processing_date = GETDATE()&lt;br/&gt;WHERE notice_no = :noticeNo" vertex="1">
+          <mxGeometry height="120" width="280" x="1700" y="240" as="geometry" />
         </mxCell>
         <mxCell id="90091" parent="swim_be" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="Manual vs Automatic Update:&lt;br/&gt;Manual: OIC changed stage via portal today&lt;br/&gt;Automatic: No manual change, cron updates" vertex="1">
           <mxGeometry height="80" width="260" x="1970" y="245" as="geometry" />

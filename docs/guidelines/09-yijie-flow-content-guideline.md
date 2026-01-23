@@ -81,6 +81,11 @@ Follow these standards when writing your tech doc to pass review.
 - **Do not use `SELECT *`** in SQL queries
 - Always specify **only the fields that are needed** for the operation or response
 
+### 2.8 Date Range Filtering
+- Use **SQL query** to filter records by date range directly in database
+- Do **NOT** retrieve all records and compare dates manually in application code
+- Example: Use `WHERE date_column BETWEEN @startDate AND @endDate` instead of fetching all and filtering in code
+
 ---
 
 ## 3. File Handling
@@ -92,6 +97,10 @@ Upload → Temporary Folder → (After success) → Permanent Folder
 
 ### 3.2 Excel Templates
 - Store in **blob storage**
+
+### 3.3 Report Output Format
+- All reports must be in **Excel (.xlsx)** format
+- Do not use CSV, PDF, or other formats for downloadable reports
 
 ---
 
@@ -371,3 +380,5 @@ If any answer is **NO**, the documentation is **NOT ready**.
 | Programmer Self-Sufficiency | Programmer can implement without asking tech writer |
 | 5W1H Test | What/Why/Where/When/Who/How all answered |
 | Self-Check | Read as programmer before submit |
+| Report Format | Excel (.xlsx) only |
+| Date Range Filter | Use SQL query, not manual comparison |
