@@ -1,0 +1,771 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0" version="29.3.4" pages="6">
+  <diagram id="tab_1_2" name="1.2 High-Level Login and Furnish">
+    <mxGraphModel dx="5507" dy="3227" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="6000" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_1_2" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" value="High Level Process Flow: Login and Furnish Hirer and Driver" vertex="1">
+          <mxGeometry height="40" width="800" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="swim_portal" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;startSize=30;" value="eService Portal (Internet)" vertex="1">
+          <mxGeometry height="500" width="5900" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p1" parent="swim_portal" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="30" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" value="Motorist click Singpass/Corppass login" vertex="1">
+          <mxGeometry height="80" width="120" x="180" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p7" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Receive auth success" vertex="1">
+          <mxGeometry height="80" width="120" x="720" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p8" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Backend to retrieve Furnishable Notices" vertex="1">
+          <mxGeometry height="80" width="140" x="890" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p11" parent="swim_portal" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Offender = Driver?" vertex="1">
+          <mxGeometry height="100" width="120" x="1250" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p12" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display: There are other outstanding notice(s) for [Name] that cannot be furnished. Please proceed to pay." vertex="1">
+          <mxGeometry height="100" width="180" x="1126" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="p13" parent="swim_portal" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any Furnishable Notices?" vertex="1">
+          <mxGeometry height="100" width="120" x="1430" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p14" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display: There are no furnishable notices" vertex="1">
+          <mxGeometry height="80" width="160" x="1410" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="p15" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display: List of Furnishable Notices" vertex="1">
+          <mxGeometry height="80" width="160" x="1610" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p16" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" value="Motorist proceeds to furnish and submit" vertex="1">
+          <mxGeometry height="80" width="140" x="1820" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p17" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Portal UI validate submission" vertex="1">
+          <mxGeometry height="80" width="120" x="2010" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p18" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" value="Motorist edits submission" vertex="1">
+          <mxGeometry height="60" width="120" x="2010" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="p19" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Send submission to backend" vertex="1">
+          <mxGeometry height="80" width="120" x="2350" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p22" parent="swim_portal" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Submission successful?" vertex="1">
+          <mxGeometry height="100" width="120" x="2540" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p23" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" value="Display: Furnish was unsuccessful. Please try again." vertex="1">
+          <mxGeometry height="80" width="180" x="2415" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="p24" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Redirect to Pending Notices screen" vertex="1">
+          <mxGeometry height="80" width="140" x="2720" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p25" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Backend to retrieve Pending Notices" vertex="1">
+          <mxGeometry height="80" width="140" x="2910" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p28" parent="swim_portal" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" value="Display: List of Pending Notices" vertex="1">
+          <mxGeometry height="80" width="160" x="3250" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="end1" parent="swim_portal" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="1166" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="end2" parent="swim_portal" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="1440" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="end3" parent="swim_portal" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="2455" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="end4" parent="swim_portal" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="3480" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="81ZLThRPuRs55Ywu_52k-4" edge="1" parent="swim_portal" source="81ZLThRPuRs55Ywu_52k-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="p19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="81ZLThRPuRs55Ywu_52k-5" connectable="0" parent="81ZLThRPuRs55Ywu_52k-4" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="pass" vertex="1">
+          <mxGeometry relative="1" x="-0.0126" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="81ZLThRPuRs55Ywu_52k-1" parent="swim_portal" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Validation pass?" vertex="1">
+          <mxGeometry height="100" width="120" x="2180" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c17f" edge="1" parent="swim_portal" source="81ZLThRPuRs55Ywu_52k-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="p18" value="fail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c18" edge="1" parent="swim_portal" source="p18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="p17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2070" y="300" />
+            </Array>
+            <mxPoint x="2210" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="81ZLThRPuRs55Ywu_52k-3" edge="1" parent="swim_portal" source="p17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="81ZLThRPuRs55Ywu_52k-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="swim_backend" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=30;" value="eService Backend (Internet)" vertex="1">
+          <mxGeometry height="300" width="5900" x="40" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" parent="swim_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Start authentication session" vertex="1">
+          <mxGeometry height="80" width="120" x="350" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="b6" parent="swim_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Respond success to portal" vertex="1">
+          <mxGeometry height="80" width="120" x="720" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="b9" parent="swim_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Furnishable Notices from DB" vertex="1">
+          <mxGeometry height="80" width="140" x="1050" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="q9" parent="swim_backend" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;fontStyle=2" value="Refer to Tab 2.2: Backend Get Furnishable Notices" vertex="1">
+          <mxGeometry height="40" width="200" x="1020" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="b10" parent="swim_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Respond to Portal" vertex="1">
+          <mxGeometry height="80" width="120" x="1250" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="b20" parent="swim_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Process submission and store to DB" vertex="1">
+          <mxGeometry height="80" width="140" x="2340" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="q20" parent="swim_backend" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="INSERT INTO eocms_furnish_application&lt;br&gt;status = &#39;P&#39;,&amp;nbsp;&lt;div&gt;is_sync = &#39;N&#39;&lt;br&gt;cre_user_id = &#39;ocmsez_app_conn&#39;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="210" x="2305" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="b21" parent="swim_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Respond to Portal" vertex="1">
+          <mxGeometry height="80" width="120" x="2540" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="b26" parent="swim_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Pending Notices from DB" vertex="1">
+          <mxGeometry height="80" width="140" x="3080" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="q26" parent="swim_backend" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;fontStyle=2" value="Refer to Tab 2.3: Backend Get Pending Submissions" vertex="1">
+          <mxGeometry height="40" width="200" x="3050" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="b27" parent="swim_backend" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Respond to Portal" vertex="1">
+          <mxGeometry height="80" width="120" x="3270" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="swim_spcp" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;startSize=30;" value="Singpass/Corppass (External)" vertex="1">
+          <mxGeometry height="200" width="5900" x="40" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" parent="swim_spcp" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Perform authentication" vertex="1">
+          <mxGeometry height="80" width="120" x="440" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" parent="swim_spcp" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Auth success" vertex="1">
+          <mxGeometry height="80" width="120" x="610" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" edge="1" parent="1" source="p1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" edge="1" parent="1" source="p2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="b3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" edge="1" parent="1" source="b3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" edge="1" parent="1" source="s4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="s5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" edge="1" parent="1" source="s5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="b6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" edge="1" parent="1" source="b6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" edge="1" parent="1" source="p7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" edge="1" parent="1" source="p8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="b9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c8a" edge="1" parent="1" source="b9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="q9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c9" edge="1" parent="1" source="b9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="b10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c10" edge="1" parent="1" source="b10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c11y" edge="1" parent="1" source="p11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="p12" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c11n" edge="1" parent="1" source="p11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p13" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c12" edge="1" parent="1" source="p12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c13n" edge="1" parent="1" source="p13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p14" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c13y" edge="1" parent="1" source="p13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p15" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c14" edge="1" parent="1" source="p14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c15" edge="1" parent="1" source="p15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c16" edge="1" parent="1" source="p16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c19" edge="1" parent="1" source="p19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="b20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c20" edge="1" parent="1" source="b20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="q20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c20a" edge="1" parent="1" source="b20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="b21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c21" edge="1" parent="1" source="b21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c22n" edge="1" parent="1" source="p22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="p23" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c22y" edge="1" parent="1" source="p22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p24" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c23" edge="1" parent="1" source="p23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c24" edge="1" parent="1" source="p24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c25" edge="1" parent="1" source="p25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="b26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c26" edge="1" parent="1" source="b26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="q26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c26a" edge="1" parent="1" source="b26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="b27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c27" edge="1" parent="1" source="b27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="p28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c28" edge="1" parent="1" source="p28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="end4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab_1_3" name="1.3 High-Level View Pending">
+    <mxGraphModel dx="1836" dy="1076" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_1_3" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" value="High Level Process Flow: View Pending Submissions" vertex="1">
+          <mxGeometry height="40" width="600" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="note_1_3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;fontStyle=2" value="Note: Steps 1-15 same as Tab 1.2 (Login + Get Furnishable)" vertex="1">
+          <mxGeometry height="30" width="350" x="40" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="swim_p13" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;startSize=30;" value="eService Portal (Internet)" vertex="1">
+          <mxGeometry height="350" width="1360" x="40" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="vp16" parent="swim_p13" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" value="Motorist clicks on Pending Submissions tab" vertex="1">
+          <mxGeometry height="80" width="140" x="50" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vp17" parent="swim_p13" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Backend to retrieve Pending Submissions" vertex="1">
+          <mxGeometry height="80" width="150" x="250" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vp20" parent="swim_p13" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any Pending Submissions?" vertex="1">
+          <mxGeometry height="100" width="130" x="645" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="vp21" parent="swim_p13" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display: There are no Pending Submissions" vertex="1">
+          <mxGeometry height="80" width="170" x="530" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="vp22" parent="swim_p13" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display: List of Pending Submissions" vertex="1">
+          <mxGeometry height="80" width="170" x="850" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vp_end1" parent="swim_p13" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="1100" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="vp_end2" parent="swim_p13" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="565" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="swim_b13" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=30;" value="eService Backend (Internet)" vertex="1">
+          <mxGeometry height="250" width="1370" x="40" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="vb18" parent="swim_b13" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Pending Submissions from DB" vertex="1">
+          <mxGeometry height="80" width="150" x="450" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vq18" parent="swim_b13" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;fontStyle=2" value="Refer to Tab 2.3: Backend Get Pending Submissions" vertex="1">
+          <mxGeometry height="40" width="210" x="420" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="vb19" parent="swim_b13" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Respond to Portal" vertex="1">
+          <mxGeometry height="80" width="120" x="650" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vc16" edge="1" parent="1" source="vp16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vp17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vc17" edge="1" parent="1" source="vp17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vb18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vc18" edge="1" parent="1" source="vb18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="vq18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vc18a" edge="1" parent="1" source="vb18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vb19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vc19" edge="1" parent="1" source="vb19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vp20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vc20n" edge="1" parent="1" source="vp20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="vp21" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vc20y" edge="1" parent="1" source="vp20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vp22" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vc21" edge="1" parent="1" source="vp21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vp_end2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vc22" edge="1" parent="1" source="vp22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vp_end1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab_1_4" name="1.4 High-Level View Approved">
+    <mxGraphModel dx="4130" dy="2420" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4000" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_1_4" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" value="High Level Process Flow: View Approved Notices" vertex="1">
+          <mxGeometry height="40" width="600" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="note_1_4" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;fontStyle=2" value="Note: Steps 1-15 same as Tab 1.2 (Login + Get Furnishable)" vertex="1">
+          <mxGeometry height="30" width="350" x="40" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="swim_pa14" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;startSize=30;" value="eService Portal (Internet)" vertex="1">
+          <mxGeometry height="350" width="1240" x="40" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="va16" parent="swim_pa14" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" value="Motorist clicks on Approved Notices" vertex="1">
+          <mxGeometry height="80" width="140" x="50" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="va17" parent="swim_pa14" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Backend to retrieve Approved Notices" vertex="1">
+          <mxGeometry height="80" width="150" x="250" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="va20" parent="swim_pa14" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any Approved Submissions?" vertex="1">
+          <mxGeometry height="100" width="130" x="645" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="va21" parent="swim_pa14" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display: There are no Approved Notices" vertex="1">
+          <mxGeometry height="80" width="170" x="530" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="va22" parent="swim_pa14" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Display: List of Approved Notices" vertex="1">
+          <mxGeometry height="80" width="170" x="850" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="va_end1" parent="swim_pa14" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="1100" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="va_end2" parent="swim_pa14" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="565" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="swim_ba14" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=30;" value="eService Backend (Internet)" vertex="1">
+          <mxGeometry height="250" width="1250" x="40" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="vab18" parent="swim_ba14" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Retrieve Approved Notices from DB" vertex="1">
+          <mxGeometry height="80" width="150" x="450" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vaq18" parent="swim_ba14" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=center;verticalAlign=middle;rounded=0;fontStyle=2" value="Refer to Tab 2.4: Backend Get Approved Submissions" vertex="1">
+          <mxGeometry height="40" width="210" x="420" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="vab19" parent="swim_ba14" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Respond to Portal" vertex="1">
+          <mxGeometry height="80" width="120" x="650" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vac16" edge="1" parent="1" source="va16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="va17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vac17" edge="1" parent="1" source="va17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vab18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vac18" edge="1" parent="1" source="vab18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="vaq18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vac18a" edge="1" parent="1" source="vab18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="vab19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vac19" edge="1" parent="1" source="vab19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="va20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vac20n" edge="1" parent="1" source="va20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="va21" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vac20y" edge="1" parent="1" source="va20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="va22" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vac21" edge="1" parent="1" source="va21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="va_end2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="vac22" edge="1" parent="1" source="va22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="va_end1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab_2_2" name="2.2 Backend Get Furnishable Notices">
+    <mxGraphModel dx="612" dy="359" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="5000" pageHeight="2000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_2_2" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" value="eService Backend: Query for Furnishable Notices" vertex="1">
+          <mxGeometry height="40" width="600" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="swim_be22" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=30;" value="eService Backend (Internet)" vertex="1">
+          <mxGeometry height="800" width="4800" x="40" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="be_pre1" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" value="SPCP auth success" vertex="1">
+          <mxGeometry height="60" width="120" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="be_pre2" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" value="eService Portal sends API request" vertex="1">
+          <mxGeometry height="60" width="140" x="30" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="be_api_in" parent="swim_be22" style="text;html=1;whiteSpace=wrap;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;verticalAlign=middle;rounded=0;" value="API Input:&#xa;ID number from Singpass/Corppass" vertex="1">
+          <mxGeometry height="50" width="180" x="10" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="be3" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="eService Backend receives API request" vertex="1">
+          <mxGeometry height="80" width="140" x="250" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="be4" parent="swim_be22" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="Start" vertex="1">
+          <mxGeometry height="60" width="100" x="440" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="be5" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query PII Owner Driver table to get list of Notices under SPCP ID" vertex="1">
+          <mxGeometry height="80" width="160" x="590" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="q5" parent="swim_be22" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="QUERY DB: eocms_offence_notice_owner_driver&#xa;WHERE id_no = :spcpId&#xa;AND offender_indicator = &#39;Y&#39;" vertex="1">
+          <mxGeometry height="70" width="240" x="550" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="be6" parent="swim_be22" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="Any record returned?" vertex="1">
+          <mxGeometry height="100" width="120" x="830" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="be7" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Respond to eService Portal - No records found" vertex="1">
+          <mxGeometry height="60" width="160" x="810" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="be7_end" parent="swim_be22" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="840" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="be8" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Detect owner_driver_indicator" vertex="1">
+          <mxGeometry height="80" width="140" x="1010" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="be9" parent="swim_be22" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" value="indicator value = D?" vertex="1">
+          <mxGeometry height="100" width="120" x="1200" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="be10" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Respond to eService Portal - Offender = Driver" vertex="1">
+          <mxGeometry height="60" width="160" x="1180" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" parent="swim_be22" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="Portal displays: There are other outstanding notice(s) for [Name] that cannot be furnished. Please proceed to pay." vertex="1">
+          <mxGeometry height="70" width="220" x="1150" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="be10_end" parent="swim_be22" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="1210" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="be11" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" value="List of Notice Number(s)" vertex="1">
+          <mxGeometry height="80" width="140" x="1390" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="be12" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Use Notice Number(s) to batch query eVON for Outstanding Notices" vertex="1">
+          <mxGeometry height="80" width="180" x="1580" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="q12" parent="swim_be22" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="QUERY DB: eocms_valid_offence_notice&#xa;WHERE notice_no IN (:noticeNumbers)&#xa;AND offence_notice_type IN (&#39;O&#39;, &#39;E&#39;)&#xa;AND last_processing_stage IN (&#39;ROV&#39;, &#39;ENA&#39;, &#39;RD1&#39;, &#39;RD2&#39;)&#xa;AND crs_reason_of_suspension IS NULL&#xa;EXCLUDE: suspension_type = &#39;PS&#39; AND epr_reason_of_suspension IN (&#39;ANS&#39;, &#39;APP&#39;, &#39;CAN&#39;, &#39;CFA&#39;, &#39;DBB&#39;, &#39;FCT&#39;, &#39;FTC&#39;, &#39;OTH&#39;, &#39;SCT&#39;, &#39;SLC&#39;, &#39;SSV&#39;, &#39;VCT&#39;, &#39;VST&#39;)" vertex="1">
+          <mxGeometry height="140" width="300" x="1520" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="be13" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" value="List of outstanding Notice(s) that are not permanently suspended" vertex="1">
+          <mxGeometry height="80" width="200" x="1830" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="n13" parent="swim_be22" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" value="Note: Query filters out the PS EPRs that cannot be overwritten as Internet DB does not have suspended_notices DB table" vertex="1">
+          <mxGeometry height="80" width="200" x="1830" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="be14" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Query Furnish Application table to check if Notice(s) can be furnished" vertex="1">
+          <mxGeometry height="80" width="180" x="2100" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="q14" parent="swim_be22" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" value="QUERY DB: eocms_furnish_application&#xa;WHERE notice_no IN (:noticeNumbers)&#xa;AND owner_id_no = :spcpId&#xa;AND status NOT IN (&#39;P&#39;, &#39;S&#39;, &#39;A&#39;)" vertex="1">
+          <mxGeometry height="80" width="240" x="2070" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="be15" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" value="List of outstanding Notice(s) that are furnishable" vertex="1">
+          <mxGeometry height="80" width="180" x="2350" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="be16" parent="swim_be22" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Respond to eService Portal - List of furnishable Notices" vertex="1">
+          <mxGeometry height="80" width="180" x="2600" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="be16_end" parent="swim_be22" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
+          <mxGeometry height="60" width="100" x="2850" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bec1" edge="1" parent="swim_be22" source="be_pre1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be_pre2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec1a" edge="1" parent="swim_be22" source="be_pre2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="be_api_in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec2" edge="1" parent="swim_be22" source="be_pre2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec3" edge="1" parent="swim_be22" source="be3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec4" edge="1" parent="swim_be22" source="be4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec5" edge="1" parent="swim_be22" source="be5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="q5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec5a" edge="1" parent="swim_be22" source="be5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec6n" edge="1" parent="swim_be22" source="be6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be7" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec6y" edge="1" parent="swim_be22" source="be6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be8" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec7" edge="1" parent="swim_be22" source="be7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be7_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec8" edge="1" parent="swim_be22" source="be8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec9y" edge="1" parent="swim_be22" source="be9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be10" value="yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec9n" edge="1" parent="swim_be22" source="be9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be11" value="no">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec10" edge="1" parent="swim_be22" source="be10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="n10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec10a" edge="1" parent="swim_be22" source="be10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be10_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec11" edge="1" parent="swim_be22" source="be11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec12" edge="1" parent="swim_be22" source="be12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="q12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec12a" edge="1" parent="swim_be22" source="be12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec13" edge="1" parent="swim_be22" source="be13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="n13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec13a" edge="1" parent="swim_be22" source="be13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec14" edge="1" parent="swim_be22" source="be14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="q14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec14a" edge="1" parent="swim_be22" source="be14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec15" edge="1" parent="swim_be22" source="be15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bec16" edge="1" parent="swim_be22" source="be16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="be16_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab_2_3" name="2.3 Backend Get Pending Submissions">
+    <mxGraphModel dx="2000" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- Title -->
+        <mxCell id="title_2_3" value="eService Backend: Query for Pending Submissions" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+        <!-- Swimlane: Backend -->
+        <mxCell id="swim_bp23" value="eService Backend (Internet)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="2500" height="500" as="geometry" />
+        </mxCell>
+        <!-- Pre-conditions -->
+        <mxCell id="bp_pre1" value="SPCP auth success" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="30" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bp_pre2" value="eService Portal sends API request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="30" y="140" width="140" height="60" as="geometry" />
+        </mxCell>
+        <!-- API Input box -->
+        <mxCell id="bp_api_in" value="API Input:&#xa;ID number from Singpass/Corppass" style="text;html=1;whiteSpace=wrap;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="30" y="230" width="180" height="50" as="geometry" />
+        </mxCell>
+        <!-- Step 3: Receive request -->
+        <mxCell id="bp3" value="eService Backend receives API request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="250" y="50" width="140" height="80" as="geometry" />
+        </mxCell>
+        <!-- Step 4: Start -->
+        <mxCell id="bp4" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="440" y="60" width="100" height="60" as="geometry" />
+        </mxCell>
+        <!-- Step 5: Query Furnish App -->
+        <mxCell id="bp5" value="Query Furnish Application table for Pending Submissions (past 6 months)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="590" y="50" width="180" height="80" as="geometry" />
+        </mxCell>
+        <!-- Query box 5 -->
+        <mxCell id="qp5" value="QUERY DB: eocms_furnish_application&#xa;WHERE owner_id_no = :spcpId&#xa;AND cre_date &gt;= DATEADD(month, -6, GETDATE())&#xa;AND status IN (&#39;P&#39;, &#39;S&#39;)" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="550" y="170" width="260" height="80" as="geometry" />
+        </mxCell>
+        <!-- Step 6: Decision -->
+        <mxCell id="bp6" value="Any record returned?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="850" y="40" width="120" height="100" as="geometry" />
+        </mxCell>
+        <!-- Step 7: No records -->
+        <mxCell id="bp7" value="Respond to eService Portal - No records found" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="830" y="200" width="160" height="60" as="geometry" />
+        </mxCell>
+        <!-- End 7 -->
+        <mxCell id="bp7_end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="860" y="300" width="100" height="60" as="geometry" />
+        </mxCell>
+        <!-- Step 8: List -->
+        <mxCell id="bp8" value="List of Pending Submissions" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="1040" y="50" width="160" height="80" as="geometry" />
+        </mxCell>
+        <!-- Step 9: Respond -->
+        <mxCell id="bp9" value="Respond to eService Portal - List of Pending Submissions" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="1270" y="50" width="180" height="80" as="geometry" />
+        </mxCell>
+        <!-- End 9 -->
+        <mxCell id="bp9_end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim_bp23">
+          <mxGeometry x="1520" y="60" width="100" height="60" as="geometry" />
+        </mxCell>
+        <!-- Connectors -->
+        <mxCell id="bpc1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp_pre1" target="bp_pre2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc1a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim_bp23" source="bp_pre2" target="bp_api_in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp_pre2" target="bp3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp3" target="bp4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp4" target="bp5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim_bp23" source="bp5" target="qp5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc5a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp5" target="bp6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc6n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp6" target="bp7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc6y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp6" target="bp8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp7" target="bp7_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp8" target="bp9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bpc9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_bp23" source="bp9" target="bp9_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="tab_2_4" name="2.4 Backend Get Approved Submissions">
+    <mxGraphModel dx="2000" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3000" pageHeight="1500" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- Title -->
+        <mxCell id="title_2_4" value="eService Backend: Query for Approved Submissions" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="600" height="40" as="geometry" />
+        </mxCell>
+        <!-- Swimlane: Backend -->
+        <mxCell id="swim_ba24" value="eService Backend (Internet)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=30;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="2500" height="500" as="geometry" />
+        </mxCell>
+        <!-- Pre-conditions -->
+        <mxCell id="ba_pre1" value="SPCP auth success" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="30" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ba_pre2" value="eService Portal sends API request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;dashed=1;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="30" y="140" width="140" height="60" as="geometry" />
+        </mxCell>
+        <!-- API Input box -->
+        <mxCell id="ba_api_in" value="API Input:&#xa;ID number from Singpass/Corppass" style="text;html=1;whiteSpace=wrap;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="30" y="230" width="180" height="50" as="geometry" />
+        </mxCell>
+        <!-- Step 3: Receive request -->
+        <mxCell id="ba3" value="eService Backend receives API request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="250" y="50" width="140" height="80" as="geometry" />
+        </mxCell>
+        <!-- Step 4: Start -->
+        <mxCell id="ba4" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="440" y="60" width="100" height="60" as="geometry" />
+        </mxCell>
+        <!-- Step 5: Query Furnish App -->
+        <mxCell id="ba5" value="Query Furnish Application table for Approved Notices (past 6 months)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="590" y="50" width="180" height="80" as="geometry" />
+        </mxCell>
+        <!-- Query box 5 -->
+        <mxCell id="qa5" value="QUERY DB: eocms_furnish_application&#xa;WHERE owner_id_no = :spcpId&#xa;AND cre_date &gt;= DATEADD(month, -6, GETDATE())&#xa;AND status = &#39;A&#39;" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="550" y="170" width="260" height="80" as="geometry" />
+        </mxCell>
+        <!-- Step 6: Decision -->
+        <mxCell id="ba6" value="Any record returned?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="850" y="40" width="120" height="100" as="geometry" />
+        </mxCell>
+        <!-- Step 7: No records -->
+        <mxCell id="ba7" value="Respond to eService Portal - No records found" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="830" y="200" width="160" height="60" as="geometry" />
+        </mxCell>
+        <!-- End 7 -->
+        <mxCell id="ba7_end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="860" y="300" width="100" height="60" as="geometry" />
+        </mxCell>
+        <!-- Step 8: List -->
+        <mxCell id="ba8" value="List of Approved Submissions" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="1040" y="50" width="160" height="80" as="geometry" />
+        </mxCell>
+        <!-- Step 9: Respond -->
+        <mxCell id="ba9" value="Respond to eService Portal - List of Approved Submissions" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="1270" y="50" width="180" height="80" as="geometry" />
+        </mxCell>
+        <!-- End 9 -->
+        <mxCell id="ba9_end" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="swim_ba24">
+          <mxGeometry x="1520" y="60" width="100" height="60" as="geometry" />
+        </mxCell>
+        <!-- Connectors -->
+        <mxCell id="bac1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba_pre1" target="ba_pre2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac1a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim_ba24" source="ba_pre2" target="ba_api_in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba_pre2" target="ba3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba3" target="ba4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba4" target="ba5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" edge="1" parent="swim_ba24" source="ba5" target="qa5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac5a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba5" target="ba6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac6n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba6" target="ba7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac6y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba6" target="ba8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba7" target="ba7_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba8" target="ba9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bac9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="swim_ba24" source="ba9" target="ba9_end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
