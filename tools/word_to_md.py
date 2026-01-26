@@ -64,8 +64,8 @@ def html_to_markdown(html_content: str) -> str:
     result = re.sub(r'<i>(.*?)</i>', r'*\1*', result, flags=re.DOTALL)
     result = re.sub(r'<code>(.*?)</code>', r'`\1`', result, flags=re.DOTALL)
     result = re.sub(r'<a[^>]*href="([^"]*)"[^>]*>(.*?)</a>', r'[\2](\1)', result, flags=re.DOTALL)
-    result = re.sub(r'<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*/>', r'![\2](\1)', result, flags=re.DOTALL)
-    result = re.sub(r'<img[^>]*src="([^"]*)"[^>]*/>', r'![](\1)', result, flags=re.DOTALL)
+    # Remove images - ignore them during conversion
+    result = re.sub(r'<img[^>]*/?>', '', result, flags=re.DOTALL)
     result = re.sub(r'<li[^>]*>(.*?)</li>', r'\n- \1', result, flags=re.DOTALL)
     result = re.sub(r'<br\s*/?>', '\n', result)
     result = re.sub(r'<p[^>]*>(.*?)</p>', r'\n\1\n', result, flags=re.DOTALL)

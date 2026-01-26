@@ -1,0 +1,1306 @@
+<mxfile host="65bd71144e" pages="11">
+    <diagram id="page1" name="3.1 High-Level">
+        <mxGraphModel dx="928" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="600" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t1" value="3.1 High-Level Flow" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw1" value="Staff Portal" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="60" width="1700" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="h1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw1" vertex="1">
+                    <mxGeometry x="40" y="100" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="h2" value="Launch CPS module" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw1" vertex="1">
+                    <mxGeometry x="160" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="h3" value="Enter search criteria" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw1" vertex="1">
+                    <mxGeometry x="300" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="h4" value="Display results" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw1" vertex="1">
+                    <mxGeometry x="440" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="h5" value="Select notices, fill form" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw1" vertex="1">
+                    <mxGeometry x="580" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="h6" value="Submit request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw1" vertex="1">
+                    <mxGeometry x="720" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="h7" value="Backend processes" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw1" vertex="1">
+                    <mxGeometry x="860" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="h8" value="Display result" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw1" vertex="1">
+                    <mxGeometry x="1000" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="h9" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw1" vertex="1">
+                    <mxGeometry x="1140" y="100" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw1" source="h1" target="h2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw1" source="h2" target="h3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw1" source="h3" target="h4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw1" source="h4" target="h5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw1" source="h5" target="h6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw1" source="h6" target="h7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw1" source="h7" target="h8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw1" source="h8" target="h9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1" value="Refer to 3.2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="sw1" vertex="1">
+                    <mxGeometry x="300" y="170" width="100" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="r2" value="Refer to 3.3, 3.4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="sw1" vertex="1">
+                    <mxGeometry x="580" y="170" width="100" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="r3" value="Refer to 3.5, 3.6, 3.7, 3.8" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="sw1" vertex="1">
+                    <mxGeometry x="860" y="170" width="140" height="20" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="page2" name="3.2 Search Notice">
+        <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="2200" pageHeight="1000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t2" value="3.2 Search Notice Flow" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw2a" value="Staff Portal" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="60" width="2100" height="280" as="geometry"/>
+                </mxCell>
+                <mxCell id="s1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw2a" vertex="1">
+                    <mxGeometry x="40" y="120" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="s2" value="Launch module" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2a" vertex="1">
+                    <mxGeometry x="160" y="100" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="s3" value="Enter search criteria" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2a" vertex="1">
+                    <mxGeometry x="300" y="100" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="s4" value="Valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw2a" vertex="1">
+                    <mxGeometry x="440" y="100" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="s5" value="Call Search API" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2a" vertex="1">
+                    <mxGeometry x="560" y="100" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="s6" value="Show error" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2a" vertex="1">
+                    <mxGeometry x="440" y="200" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="sres" value="Display results" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2a" vertex="1">
+                    <mxGeometry x="1880" y="100" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="se1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2a" source="s1" target="s2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="se2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2a" source="s2" target="s3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="se3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2a" source="s3" target="s4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="se4" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2a" source="s4" target="s5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="se5" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2a" source="s4" target="s6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="sapi" value="POST /change-processing-stage/search&#xa;{&#xa;  &quot;noticeNo&quot;: &quot;441000001X&quot;,&#xa;  &quot;idNo&quot;: &quot;S1234567A&quot;,&#xa;  &quot;vehicleNo&quot;: &quot;SBA1234A&quot;,&#xa;  &quot;lastProcessingStage&quot;: &quot;DN1&quot;,&#xa;  &quot;dateOfCurrentProcessingStage&quot;: &quot;2025-12-20&quot;&#xa;}&#xa;(all fields optional, at least one required)" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw2a" vertex="1">
+                    <mxGeometry x="760" y="40" width="280" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw2b" value="OCMS Backend API" style="swimlane;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="350" width="2100" height="380" as="geometry"/>
+                </mxCell>
+                <mxCell id="b1" value="Receive request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2b" vertex="1">
+                    <mxGeometry x="700" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="b2" value="Validate" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2b" vertex="1">
+                    <mxGeometry x="840" y="60" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="b3" value="ID search?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw2b" vertex="1">
+                    <mxGeometry x="960" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="b4a" value="Query ONOD" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2b" vertex="1">
+                    <mxGeometry x="1080" y="40" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="b4b" value="Query VON" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2b" vertex="1">
+                    <mxGeometry x="1080" y="120" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="b5" value="Found?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw2b" vertex="1">
+                    <mxGeometry x="1220" y="50" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="b6" value="Check Court/PS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2b" vertex="1">
+                    <mxGeometry x="1340" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="b7" value="Segregate lists" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2b" vertex="1">
+                    <mxGeometry x="1480" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="b8" value="Return response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2b" vertex="1">
+                    <mxGeometry x="1620" y="60" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="bnf" value="Return: no record" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw2b" vertex="1">
+                    <mxGeometry x="1210" y="170" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="be1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b1" target="b2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b2" target="b3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be3a" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b3" target="b4a" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be3b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b3" target="b4b" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be4a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b4a" target="b5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be4b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b4b" target="b5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be5a" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b5" target="b6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be5b" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b5" target="bnf" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b6" target="b7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="be7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw2b" source="b7" target="b8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bsql" value="SELECT v.notice_no, v.offence_type, v.offence_date_time,&#xa;  v.vehicle_no, v.last_processing_stage, v.last_processing_date,&#xa;  v.suspension_type, o.offender_name, o.offender_id,&#xa;  o.owner_driver_indicator&#xa;FROM ocms_valid_offence_notice v&#xa;JOIN ocms_offence_notice_owner_driver o ON v.notice_no = o.notice_no&#xa;WHERE 1=1&#xa;  AND (v.notice_no = ? OR ? IS NULL)&#xa;  AND (v.vehicle_no = ? OR ? IS NULL)&#xa;  AND (o.offender_id = ? OR ? IS NULL)&#xa;  AND (v.last_processing_stage = ? OR ? IS NULL)&#xa;  AND (v.last_processing_date = ? OR ? IS NULL)" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw2b" vertex="1">
+                    <mxGeometry x="660" y="160" width="380" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="s5" target="b1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="b8" target="sres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="page3" name="3.3 User Journey">
+        <mxGraphModel dx="1168" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="800" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t3" value="3.3 User Journey - Change Processing Stage Form" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw3" value="Staff Portal" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="60" width="1900" height="350" as="geometry"/>
+                </mxCell>
+                <mxCell id="u1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw3" vertex="1">
+                    <mxGeometry x="40" y="140" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="u2" value="Select notices" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="160" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u3" value="Fill form:&#xa;- New Stage&#xa;- Reason&#xa;- Remarks&#xa;- MHA/DH" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="300" y="100" width="100" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="u4" value="Click Submit" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="440" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u5" value="Validate form" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="580" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u6" value="Valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw3" vertex="1">
+                    <mxGeometry x="720" y="120" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u7" value="Check role eligibility" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="840" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u8" value="Eligible?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw3" vertex="1">
+                    <mxGeometry x="980" y="120" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u9" value="Show summary" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="1100" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u10" value="Confirm?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw3" vertex="1">
+                    <mxGeometry x="1240" y="120" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u11" value="Call Submit API" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="1360" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u12" value="Display result" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="1500" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="u13" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw3" vertex="1">
+                    <mxGeometry x="1640" y="140" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="uerr1" value="Show error" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="720" y="240" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="uerr2" value="Show error" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="980" y="240" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="ucancel" value="Cancel" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw3" vertex="1">
+                    <mxGeometry x="1240" y="240" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u1" target="u2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u2" target="u3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u3" target="u4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u4" target="u5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u5" target="u6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue6y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u6" target="u7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue6n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u6" target="uerr1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u7" target="u8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue8y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u8" target="u9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue8n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u8" target="uerr2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u9" target="u10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue10y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u10" target="u11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue10n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u10" target="ucancel" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u11" target="u12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ue12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw3" source="u12" target="u13" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="urole" value="DRIVER: DN1, DN2, DR3&#xa;OWNER/HIRER: ROV, RD1, RD2, RR3" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" parent="sw3" vertex="1">
+                    <mxGeometry x="800" y="290" width="200" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="uapi" value="POST /change-processing-stage&#xa;{&#xa;  &quot;notices&quot;: [{&#xa;    &quot;noticeNo&quot;: &quot;441000001X&quot;,&#xa;    &quot;currentStage&quot;: &quot;DN1&quot;&#xa;  }],&#xa;  &quot;newStage&quot;: &quot;DN2&quot;,&#xa;  &quot;reason&quot;: &quot;SUP&quot;,&#xa;  &quot;remark&quot;: &quot;Speed up&quot;,&#xa;  &quot;mhaDhCheckAllow&quot;: &quot;Y&quot;,&#xa;  &quot;isConfirmation&quot;: false&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw3" vertex="1">
+                    <mxGeometry x="1320" y="220" width="250" height="130" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="page4" name="3.4 Portal Validation">
+        <mxGraphModel dx="1168" dy="834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="700" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t4" value="3.4 Portal Validation Flow" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw4" value="Staff Portal" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="60" width="1700" height="510" as="geometry"/>
+                </mxCell>
+                <mxCell id="v1" value="Start loop" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw4" vertex="1">
+                    <mxGeometry x="40" y="140" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="v2" value="Get next notice" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw4" vertex="1">
+                    <mxGeometry x="160" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="v3" value="Determine role" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw4" vertex="1">
+                    <mxGeometry x="300" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="v4" value="Get eligible stages" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw4" vertex="1">
+                    <mxGeometry x="440" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="v5" value="Stage eligible?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw4" vertex="1">
+                    <mxGeometry x="580" y="120" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="v6" value="Add to changeable" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw4" vertex="1">
+                    <mxGeometry x="700" y="100" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v7" value="Add to non-changeable" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw4" vertex="1">
+                    <mxGeometry x="700" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v8" value="Last record?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw4" vertex="1">
+                    <mxGeometry x="860" y="120" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="v9" value="Has changeable?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw4" vertex="1">
+                    <mxGeometry x="980" y="120" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="v10" value="Show summary" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw4" vertex="1">
+                    <mxGeometry x="1100" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="v11" value="Show error" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw4" vertex="1">
+                    <mxGeometry x="980" y="240" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="v12" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw4" vertex="1">
+                    <mxGeometry x="1240" y="140" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v1" target="v2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v2" target="v3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v3" target="v4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v4" target="v5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve5y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v5" target="v6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve5n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v5" target="v7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v6" target="v8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v7" target="v8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve8y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v8" target="v9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve8n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v8" target="v2" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="900" y="60"/>
+                            <mxPoint x="210" y="60"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ve9y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v9" target="v10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve9n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v9" target="v11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ve10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw4" source="v10" target="v12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="vrole" value="Eligible stages by role:&#xa;DRIVER (D): DN1, DN2, DR3&#xa;OWNER (O): ROV, RD1, RD2, RR3&#xa;HIRER (H): ROV, RD1, RD2, RR3" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" parent="sw4" vertex="1">
+                    <mxGeometry x="400" y="240" width="200" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="vapi" value="POST /change-processing-stage/validate&#xa;{&#xa;  &quot;notices&quot;: [{&#xa;    &quot;noticeNo&quot;: &quot;441000001X&quot;,&#xa;    &quot;currentStage&quot;: &quot;DN1&quot;,&#xa;    &quot;offenderType&quot;: &quot;D&quot;&#xa;  }],&#xa;  &quot;newProcessingStage&quot;: &quot;DN2&quot;,&#xa;  &quot;reasonOfChange&quot;: &quot;SUP&quot;,&#xa;  &quot;remarks&quot;: &quot;Speed up processing&quot;&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="380" width="250" height="170" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="page5" name="3.5 Backend Processing">
+        <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="2600" pageHeight="1000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t5" value="3.5 Backend Processing - Change Processing Stage" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw5a" value="Staff Portal" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="60" width="2500" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="p1" value="Submit" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5a" vertex="1">
+                    <mxGeometry x="40" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pres" value="Display result" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5a" vertex="1">
+                    <mxGeometry x="2360" y="60" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bapi1" value="POST /change-processing-stage&#xa;Payload:&#xa;{&#xa;  &quot;notices&quot;: [{&#xa;    &quot;noticeNo&quot;: &quot;441000001X&quot;,&#xa;    &quot;currentStage&quot;: &quot;DN1&quot;&#xa;  }],&#xa;  &quot;newStage&quot;: &quot;DN2&quot;,&#xa;  &quot;reason&quot;: &quot;SUP&quot;,&#xa;  &quot;remark&quot;: &quot;Speed up&quot;,&#xa;  &quot;mhaDhCheckAllow&quot;: &quot;Y&quot;,&#xa;  &quot;isConfirmation&quot;: false&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw5a" vertex="1">
+                    <mxGeometry x="140" y="40" width="180" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw5b" value="OCMS Backend API" style="swimlane;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="290" width="2500" height="440" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp1" value="Receive" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="40" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp2" value="JWT valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw5b" vertex="1">
+                    <mxGeometry x="160" y="45" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp3" value="Validate format" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="280" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp4" value="Initial?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw5b" vertex="1">
+                    <mxGeometry x="400" y="45" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp5" value="Check existing" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="520" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp6" value="Exists?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw5b" vertex="1">
+                    <mxGeometry x="640" y="45" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp7" value="Loop notices" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="760" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp8" value="Eligible?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw5b" vertex="1">
+                    <mxGeometry x="880" y="45" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp9" value="Query VON" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1000" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp10" value="Calc amount" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1120" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp11" value="Update stage" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1240" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp12" value="Update VON" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1360" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp13" value="Update ONOD" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1480" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp14" value="Insert CPS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1600" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp15" value="Last?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1720" y="45" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp16" value="Any success?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1840" y="45" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp17" value="Gen report" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1960" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp18" value="Build response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="2080" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bp19" value="Return" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="2200" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp1" target="bp2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe2" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp2" target="bp3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpjwterr" value="Return 401" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;fillColor=#f8cecc;strokeColor=#b85450;" parent="sw5b" vertex="1">
+                    <mxGeometry x="200" y="260" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe2no" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp2" target="bpjwterr" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp3" target="bp4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe4" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp4" target="bp5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe4no" value="no (confirmed)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp4" target="bp7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="440" y="30"/>
+                            <mxPoint x="800" y="30"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="bpe5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp5" target="bp6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe6" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp6" target="bp7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp7" target="bp8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe8" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp8" target="bp9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp9" target="bp10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp10" target="bp11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp11" target="bp12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp12" target="bp13" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp13" target="bp14" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp14" target="bp15" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe15" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp15" target="bp16" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe16" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp16" target="bp17" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe16no" value="no (all failed)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp16" target="bp18" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1880" y="20"/>
+                            <mxPoint x="2120" y="20"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="bpe17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp17" target="bp18" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp18" target="bp19" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpwarn" value="Return WARNING" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="640" y="160" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe6w" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp6" target="bpwarn" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpfail" value="Mark FAILED" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw5b" vertex="1">
+                    <mxGeometry x="880" y="160" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="bpe8f" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp8" target="bpfail" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="bploop" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw5b" source="bp15" target="bp7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1760" y="210"/>
+                            <mxPoint x="800" y="210"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="bref1" value="Refer to 3.6" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="sw5b" vertex="1">
+                    <mxGeometry x="1240" y="120" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="bref2" value="Refer to 3.7" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="sw5b" vertex="1">
+                    <mxGeometry x="1120" y="120" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="bref3" value="Refer to 3.8" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=2" parent="sw5b" vertex="1">
+                    <mxGeometry x="1960" y="120" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="bjwt1" value="JWT Invalid Response:&#xa;{&#xa;  &quot;data&quot;: {&#xa;    &quot;appCode&quot;: &quot;OCMS-4010&quot;,&#xa;    &quot;message&quot;: &quot;Unauthorized&quot;&#xa;  }&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#b85450;fillColor=#f8cecc;align=left;verticalAlign=middle;rounded=0;" parent="sw5b" vertex="1">
+                    <mxGeometry x="10" y="230" width="160" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="binit1" value="Initial? = isConfirmation&#xa;&#xa;isConfirmation=false&#xa;→ First request, check duplicate&#xa;&#xa;isConfirmation=true&#xa;→ User confirmed, skip check" style="text;html=1;whiteSpace=wrap;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;verticalAlign=middle;rounded=0;" parent="sw5b" vertex="1">
+                    <mxGeometry x="360" y="145" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="bchkexist" value="Check existing:&#xa;&#xa;SELECT COUNT(*) AS cnt&#xa;FROM ocms_change_of_processing&#xa;WHERE notice_no = @noticeNo&#xa;AND CAST(date_of_change AS DATE)&#xa;    = CAST(GETDATE() AS DATE)&#xa;&#xa;If cnt &gt; 0 → Exists? = yes" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="sw5b" vertex="1">
+                    <mxGeometry x="460" y="280" width="200" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="bwarnresp" value="Return WARNING:&#xa;{&#xa;  &quot;data&quot;: {&#xa;    &quot;appCode&quot;: &quot;OCMS-4001&quot;,&#xa;    &quot;message&quot;: &quot;Notice No. XXX&#xa;      has existing stage change.&#xa;      Please confirm to proceed.&quot;&#xa;  }&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw5b" vertex="1">
+                    <mxGeometry x="680" y="280" width="200" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="bqvon1" value="Query VON:&#xa;&#xa;SELECT notice_no,&#xa;  last_processing_stage,&#xa;  last_processing_date,&#xa;  composition,&#xa;  amount_payable&#xa;FROM ocms_valid_offence_notice&#xa;WHERE notice_no = @noticeNo" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="sw5b" vertex="1">
+                    <mxGeometry x="940" y="220" width="200" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="buvon1" value="Update VON:&#xa;&#xa;UPDATE ocms_valid_offence_notice&#xa;SET&#xa;  prev_processing_stage = @oldLast,&#xa;  prev_processing_date = @oldDate,&#xa;  last_processing_stage = @newStage,&#xa;  last_processing_date = GETDATE(),&#xa;  next_processing_stage = @nextStage,&#xa;  next_processing_date = @nextDate,&#xa;  amount_payable = @newAmount,&#xa;  upd_user_id = @userId,&#xa;  upd_date_time = GETDATE()&#xa;WHERE notice_no = @noticeNo" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1290" y="220" width="220" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="buonod1" value="Update ONOD:&#xa;&#xa;UPDATE ocms_offence_notice_owner_driver&#xa;SET&#xa;  mha_dh_check_allow = @mhaDhCheckAllow,&#xa;  upd_user_id = @userId,&#xa;  upd_date_time = GETDATE()&#xa;WHERE notice_no = @noticeNo&#xa;  AND owner_driver_indicator = @type" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1525" y="220" width="230" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="bicps1" value="Insert CPS:&lt;br&gt;&lt;br&gt;INSERT INTO ocms_change_of_processing&lt;br&gt;(notice_no, date_of_change,&lt;br&gt; last_processing_stage,&lt;br&gt; new_processing_stage,&lt;br&gt; reason_of_change, authorised_officer,&lt;br&gt; source, remarks,&lt;br&gt; cre_date, cre_user_id)&lt;br&gt;VALUES (@noticeNo, GETDATE(),&lt;br&gt; @oldStage, @newStage,&lt;br&gt; @reason, @userId,&lt;br&gt; &#39;OCMS&#39;, @remarks,&lt;br&gt; GETDATE(), @userId)" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="sw5b" vertex="1">
+                    <mxGeometry x="1770" y="220" width="220" height="210" as="geometry"/>
+                </mxCell>
+                <mxCell id="bresp1" value="Build Response:&#xa;{&#xa;  &quot;data&quot;: {&#xa;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&#xa;    &quot;message&quot;: &quot;Success&quot;,&#xa;    &quot;summary&quot;: {&#xa;      &quot;requested&quot;: 1,&#xa;      &quot;succeeded&quot;: 1,&#xa;      &quot;failed&quot;: 0&#xa;    },&#xa;    &quot;results&quot;: [{&#xa;      &quot;noticeNo&quot;: &quot;441000001X&quot;,&#xa;      &quot;outcome&quot;: &quot;UPDATED&quot;,&#xa;      &quot;previousStage&quot;: &quot;DN1&quot;,&#xa;      &quot;newStage&quot;: &quot;DN2&quot;&#xa;    }],&#xa;    &quot;reportUrl&quot;: &quot;https://...&quot;&#xa;  }&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" parent="sw5b" vertex="1">
+                    <mxGeometry x="2060" y="140" width="220" height="290" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="p1" target="bp1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="bp19" target="pres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="page6" name="3.6 Stage Update Subflow">
+        <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1600" pageHeight="600" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t6" value="3.6 Stage Update Subflow" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw6" value="Backend" style="swimlane;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="60" width="1350" height="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="st1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw6" vertex="1">
+                    <mxGeometry x="40" y="100" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="st2" value="Save old values" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw6" vertex="1">
+                    <mxGeometry x="160" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="st3" value="Set prev = old last" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw6" vertex="1">
+                    <mxGeometry x="300" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="st4" value="Set last = new stage" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw6" vertex="1">
+                    <mxGeometry x="440" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="st5" value="Get NEXT_STAGE param" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw6" vertex="1">
+                    <mxGeometry x="580" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="st6" value="Set next stage" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw6" vertex="1">
+                    <mxGeometry x="720" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="st7" value="Get STAGEDAYS param" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw6" vertex="1">
+                    <mxGeometry x="860" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="st8" value="Set next date" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw6" vertex="1">
+                    <mxGeometry x="1000" y="80" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="st9" value="Return" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw6" vertex="1">
+                    <mxGeometry x="1140" y="100" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="ste1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw6" source="st1" target="st2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ste2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw6" source="st2" target="st3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ste3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw6" source="st3" target="st4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ste4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw6" source="st4" target="st5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ste5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw6" source="st5" target="st6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ste6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw6" source="st6" target="st7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ste7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw6" source="st7" target="st8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ste8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw6" source="st8" target="st9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="stsaveold" value="Save old values:&#xa;&#xa;oldLastStage = VON.last_processing_stage&#xa;oldLastDate = VON.last_processing_date" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="sw6" vertex="1">
+                    <mxGeometry x="90" y="200" width="240" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="stsetprev" value="Set prev = old last:&#xa;&#xa;prev_processing_stage = oldLastStage&#xa;prev_processing_date = oldLastDate" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="sw6" vertex="1">
+                    <mxGeometry x="230" y="300" width="240" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="stsetlast" value="Set last = new stage:&#xa;&#xa;last_processing_stage = @newStage&#xa;last_processing_date = GETDATE()" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="sw6" vertex="1">
+                    <mxGeometry x="370" y="190" width="240" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="stsql" value="Get NEXT_STAGE:&#xa;&#xa;SELECT param_value&#xa;FROM ocms_parameter&#xa;WHERE param_id = &#39;NEXT_STAGE&#39;&#xa;AND param_code = @newStage" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw6" vertex="1">
+                    <mxGeometry x="530" y="280" width="200" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="stsqldays" value="Get STAGEDAYS:&#xa;&#xa;SELECT param_value&#xa;FROM ocms_parameter&#xa;WHERE param_id = &#39;STAGEDAYS&#39;&#xa;AND param_code = @newStage" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw6" vertex="1">
+                    <mxGeometry x="810" y="190" width="200" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="stcalcdate" value="Calculate next date:&#xa;&#xa;next_processing_date =&#xa;  DATEADD(DAY, @stageDays, GETDATE())" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" parent="sw6" vertex="1">
+                    <mxGeometry x="1060" y="190" width="240" height="80" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="page7" name="3.7 Amount Payable">
+        <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1800" pageHeight="700" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t7" value="3.7 Amount Payable Calculation" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw7" value="Backend" style="swimlane;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="60" width="1340" height="600" as="geometry"/>
+                </mxCell>
+                <mxCell id="a1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw7" vertex="1">
+                    <mxGeometry x="40" y="140" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="a2" value="Get prev + new stage" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw7" vertex="1">
+                    <mxGeometry x="160" y="120" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="a3" value="prev in (ROV,RD1,RD2) AND new=RR3?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw7" vertex="1">
+                    <mxGeometry x="300" y="110" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="a4" value="prev in (DN1,DN2) AND new=DR3?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw7" vertex="1">
+                    <mxGeometry x="460" y="110" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="a5" value="new in (CFC,CPC)?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw7" vertex="1">
+                    <mxGeometry x="620" y="110" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="a6" value="prev in (CFC,CPC) AND new in (RR3,DR3)?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw7" vertex="1">
+                    <mxGeometry x="780" y="110" width="120" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="asurch" value="amount = composition + surcharge" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw7" vertex="1">
+                    <mxGeometry x="590" y="265" width="180" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="anochange" value="amount = composition (no change)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw7" vertex="1">
+                    <mxGeometry x="940" y="120" width="180" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="aend" value="Return" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw7" vertex="1">
+                    <mxGeometry x="1160" y="140" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw7" source="a1" target="a2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw7" source="a2" target="a3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae3n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw7" source="a3" target="a4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae4n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw7" source="a4" target="a5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae5y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw7" source="a5" target="asurch" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae5n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw7" source="a5" target="a6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae6n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw7" source="a6" target="anochange" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw7" source="asurch" target="aend" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw7" source="anochange" target="aend" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="aadmin" value="amount = composition + adminFee" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="1" vertex="1">
+                    <mxGeometry x="450" y="580" width="180" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae3y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="a3" target="aadmin" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="380" y="605"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ae4y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="a4" target="aadmin" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ae6y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="a6" target="aadmin" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="860" y="605"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ae7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="aadmin" target="aend" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="page8" name="3.8 Generate Report">
+        <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1600" pageHeight="700" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t8" value="3.8 Generate Report Subflow" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="300" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw8a" value="Backend" style="swimlane;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="60" width="1200" height="360" as="geometry"/>
+                </mxCell>
+                <mxCell id="g1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw8a" vertex="1">
+                    <mxGeometry x="40" y="80" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="g2" value="Query CPS records" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw8a" vertex="1">
+                    <mxGeometry x="160" y="60" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="g3" value="Has data?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw8a" vertex="1">
+                    <mxGeometry x="300" y="60" width="80" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="g4" value="Build Excel" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw8a" vertex="1">
+                    <mxGeometry x="420" y="60" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="g5" value="Generate filename" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw8a" vertex="1">
+                    <mxGeometry x="560" y="60" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="g6" value="Upload to Azure" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw8a" vertex="1">
+                    <mxGeometry x="700" y="60" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="g7" value="Get URL" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw8a" vertex="1">
+                    <mxGeometry x="840" y="60" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="g8" value="Return URL" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw8a" vertex="1">
+                    <mxGeometry x="980" y="80" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="gskip" value="Return (no report)" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw8a" vertex="1">
+                    <mxGeometry x="290" y="190" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="ge1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw8a" source="g1" target="g2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ge2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw8a" source="g2" target="g3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ge3y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw8a" source="g3" target="g4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ge3n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw8a" source="g3" target="gskip" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ge4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw8a" source="g4" target="g5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ge5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw8a" source="g5" target="g6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw8a" source="g6" target="g7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ge7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw8a" source="g7" target="g8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="gqcps" value="Query CPS records:&#xa;&#xa;SELECT notice_no, date_of_change,&#xa;  last_processing_stage,&#xa;  new_processing_stage,&#xa;  reason_of_change, remarks,&#xa;  cre_user_id, cre_date&#xa;FROM ocms_change_of_processing&#xa;WHERE CAST(cre_date AS DATE)&#xa;  = CAST(GETDATE() AS DATE)&#xa;AND cre_user_id = @userId" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw8a">
+                    <mxGeometry x="50" y="170" width="220" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="gfilename" value="Generate filename:&#xa;&#xa;ChangeStageReport_{yyyyMMdd}&#xa;  _{HHmmss}_{userId}.xlsx&#xa;&#xa;Example:&#xa;ChangeStageReport_20251220&#xa;  _143052_OIC001.xlsx" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw8a">
+                    <mxGeometry x="510" y="210" width="200" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="gurl" value="Return URL:&lt;br&gt;&lt;br&gt;ocms-reports/&lt;br&gt;change-stage/2025/12/&lt;br&gt;ChangeStageReport_20251220&lt;br&gt;_143052_OIC001.xlsx" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw8a">
+                    <mxGeometry x="950" y="160" width="200" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw8b" value="Azure Blob" style="swimlane;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="430" width="1200" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="az1" value="Store file" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw8b" vertex="1">
+                    <mxGeometry x="700" y="40" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="az2" value="Return URL" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw8b" vertex="1">
+                    <mxGeometry x="840" y="40" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="aze1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw8b" source="az1" target="az2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="gupload" value="Upload to Azure:&#xa;&#xa;Container: ocms-reports&#xa;Path: change-stage/{yyyy}/{MM}/&#xa;&#xa;Retry: MAX_RETRIES = 1&#xa;On fail: Send email alert" style="text;html=1;whiteSpace=wrap;strokeColor=#9673a6;fillColor=#e1d5e7;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw8b">
+                    <mxGeometry x="670" y="110" width="180" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="g6" target="az1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="az2" target="g7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="page9" name="3.9 PLUS Integration">
+        <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="2200" pageHeight="800" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t9" value="3.9 PLUS Integration - Manual Stage Change" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="400" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw9a" value="PLUS System" style="swimlane;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="60" width="600" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl1" value="Initiate" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9a" vertex="1">
+                    <mxGeometry x="40" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl2" value="Check eligibility" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9a" vertex="1">
+                    <mxGeometry x="160" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pl3" value="Send to OCMS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9a" vertex="1">
+                    <mxGeometry x="280" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="plres" value="Receive response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9a" vertex="1">
+                    <mxGeometry x="400" y="60" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="ple1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9a" source="pl1" target="pl2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ple2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9a" source="pl2" target="pl3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw9b" value="OCMS Backend API" style="swimlane;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="260" width="1880" height="470" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb1" value="Receive" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="40" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb2" value="CFC from PLUS?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw9b" vertex="1">
+                    <mxGeometry x="160" y="50" width="80" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb3" value="U type skip?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw9b" vertex="1">
+                    <mxGeometry x="280" y="50" width="80" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb4" value="Query stage_map" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="400" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb5" value="Allowed?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw9b" vertex="1">
+                    <mxGeometry x="520" y="50" width="80" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb6" value="Loop notices" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="640" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb7" value="Query VON" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="760" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb8" value="Found?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw9b" vertex="1">
+                    <mxGeometry x="880" y="50" width="80" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb9" value="Update stage" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="1000" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb10" value="Update VON" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="1120" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb11" value="Insert CPS" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="1240" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb12" value="Last?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw9b" vertex="1">
+                    <mxGeometry x="1360" y="50" width="80" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb13" value="Errors?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw9b" vertex="1">
+                    <mxGeometry x="1480" y="50" width="80" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb14" value="Gen report" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="1600" y="60" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pb15" value="Return success" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="1720" y="60" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pberr1" value="Return error: CFC blocked" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="140" y="160" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbskip" value="Return success (skip)" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="260" y="160" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pberr2" value="Return error: Not allowed" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="500" y="160" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pberr3" value="Return errors" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw9b" vertex="1">
+                    <mxGeometry x="1460" y="160" width="120" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb1" target="pb2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe2y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb2" target="pberr1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe2n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb2" target="pb3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe3y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb3" target="pbskip" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe3n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb3" target="pb4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb4" target="pb5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe5y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb5" target="pb6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe5n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb5" target="pberr2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb6" target="pb7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb7" target="pb8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe8y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb8" target="pb9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb9" target="pb10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb10" target="pb11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb11" target="pb12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe12y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb12" target="pb13" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe12n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb12" target="pb6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1400" y="150"/>
+                            <mxPoint x="680" y="150"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="pbe13y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb13" target="pberr3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe13n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb13" target="pb14" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbe14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw9b" source="pb14" target="pb15" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbapi" value="POST /plus-change-processing-stage&#xa;Header: Ocp-Apim-Subscription-Key&#xa;{&#xa;  &quot;noticeNo&quot;: [&quot;441000001X&quot;, &quot;441000002X&quot;],&#xa;  &quot;lastStageName&quot;: &quot;DN1&quot;,&#xa;  &quot;nextStageName&quot;: &quot;DN2&quot;,&#xa;  &quot;lastStageDate&quot;: &quot;2025-09-25T06:58:42&quot;,&#xa;  &quot;newStageDate&quot;: &quot;2025-09-30T06:58:42&quot;,&#xa;  &quot;offenceType&quot;: &quot;O&quot;,&#xa;  &quot;source&quot;: &quot;005&quot;&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw9b" vertex="1">
+                    <mxGeometry x="10" y="230" width="250" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbcfc" value="CFC from PLUS?&#xa;&#xa;If nextStageName = &#39;CFC&#39;&#xa;AND source = &#39;005&#39; (PLUS)&#xa;→ Block: CFC not allowed from PLUS" style="text;html=1;whiteSpace=wrap;strokeColor=#f8cecc;fillColor=#f8cecc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw9b">
+                    <mxGeometry x="270" y="230" width="200" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbutype" value="U type skip?&#xa;&#xa;If offenceType = &#39;U&#39;&#xa;AND nextStageName IN&#xa;  (&#39;DN1&#39;,&#39;DN2&#39;,&#39;DR3&#39;,&#39;CPC&#39;)&#xa;→ Skip: Return success without update" style="text;html=1;whiteSpace=wrap;strokeColor=#e1d5e7;fillColor=#e1d5e7;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw9b">
+                    <mxGeometry x="270" y="325" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbstagemap" value="Query stage_map:&#xa;&#xa;SELECT * FROM ocms_stage_map&#xa;WHERE last_stage = @lastStageName&#xa;AND next_stage = @nextStageName&#xa;&#xa;If not found → Transition not allowed" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw9b">
+                    <mxGeometry x="480" y="230" width="220" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbqvon" value="Query VON:&#xa;&#xa;SELECT notice_no,&#xa;  last_processing_stage,&#xa;  composition, amount_payable&#xa;FROM ocms_valid_offence_notice&#xa;WHERE notice_no = @noticeNo" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw9b">
+                    <mxGeometry x="710" y="230" width="200" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbuvon" value="Update VON:&#xa;&#xa;UPDATE ocms_valid_offence_notice&#xa;SET last_processing_stage = @nextStage,&#xa;  last_processing_date = @newStageDate,&#xa;  prev_processing_stage = @lastStage,&#xa;  prev_processing_date = @lastStageDate,&#xa;  upd_user_id = @userId&#xa;WHERE notice_no = @noticeNo" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw9b">
+                    <mxGeometry x="920" y="230" width="230" height="150" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbicps" value="Insert CPS:&#xa;&#xa;INSERT INTO ocms_change_of_processing&#xa;(notice_no, date_of_change,&#xa; last_processing_stage,&#xa; new_processing_stage,&#xa; reason_of_change, source,&#xa; cre_user_id, cre_date)&#xa;VALUES (@noticeNo, GETDATE(),&#xa; @lastStage, @nextStage,&#xa; &#39;PLS&#39;, &#39;PLUS&#39;,&#xa; @userId, GETDATE())" style="text;html=1;whiteSpace=wrap;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw9b">
+                    <mxGeometry x="1160" y="230" width="230" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="pbresp" value="Return response:&#xa;{&#xa;  &quot;data&quot;: {&#xa;    &quot;appCode&quot;: &quot;OCMS-2000&quot;,&#xa;    &quot;message&quot;: &quot;Success&quot;,&#xa;    &quot;summary&quot;: {&#xa;      &quot;total&quot;: 2, &quot;success&quot;: 1, &quot;failed&quot;: 1&#xa;    },&#xa;    &quot;results&quot;: [&#xa;      { &quot;noticeNo&quot;: &quot;441000001X&quot;,&#xa;        &quot;status&quot;: &quot;SUCCESS&quot; },&#xa;      { &quot;noticeNo&quot;: &quot;441000002X&quot;,&#xa;        &quot;status&quot;: &quot;FAILED&quot;,&#xa;        &quot;error&quot;: &quot;Notice not found&quot; }&#xa;    ]&#xa;  }&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#82b366;fillColor=#d5e8d4;align=left;verticalAlign=middle;rounded=0;" vertex="1" parent="sw9b">
+                    <mxGeometry x="1400" y="230" width="230" height="270" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="pl3" target="pb1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="340" y="230"/>
+                            <mxPoint x="100" y="230"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="conn8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="pb15" target="plres" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1790" y="145"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="page10" name="3.10 Report Management">
+        <mxGraphModel dx="3337" dy="2383" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="900" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="t10" value="3.10 Report Management - Retrieve &amp; Download Reports" style="text;html=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1" parent="1" vertex="1">
+                    <mxGeometry x="40" y="20" width="500" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="t10a" value="[A] Retrieve Reports List" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=3" parent="1" vertex="1">
+                    <mxGeometry x="40" y="55" width="200" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw10a" value="Staff Portal" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="80" width="1900" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="r1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw10a" vertex="1">
+                    <mxGeometry x="40" y="70" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="r2" value="User clicks&#xa;View Reports" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10a" vertex="1">
+                    <mxGeometry x="160" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="r3" value="Enter date range" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10a" vertex="1">
+                    <mxGeometry x="300" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="r4" value="Call Reports API" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10a" vertex="1">
+                    <mxGeometry x="440" y="50" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rres" value="Display reports list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10a" vertex="1">
+                    <mxGeometry x="1680" y="50" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="re1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10a" source="r1" target="r2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="re2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10a" source="r2" target="r3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="re3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10a" source="r3" target="r4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rapi1" value="POST /change-processing-stage/reports&#xa;{&#xa;  &quot;startDate&quot;: &quot;2025-12-01&quot;,&#xa;  &quot;endDate&quot;: &quot;2025-12-31&quot;&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw10a" vertex="1">
+                    <mxGeometry x="640" y="60" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw10b" value="OCMS Backend API" style="swimlane;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="270" width="1900" height="260" as="geometry"/>
+                </mxCell>
+                <mxCell id="rb1" value="Receive request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10b" vertex="1">
+                    <mxGeometry x="580" y="50" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rb2" value="Validate&#xa;date range" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10b" vertex="1">
+                    <mxGeometry x="720" y="50" width="80" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rb3" value="Range &lt;= 90 days?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw10b" vertex="1">
+                    <mxGeometry x="840" y="40" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="rb4" value="Query CPS&#xa;by date range" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10b" vertex="1">
+                    <mxGeometry x="980" y="50" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rb5" value="Group by date" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10b" vertex="1">
+                    <mxGeometry x="1120" y="50" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rb6" value="Build report&#xa;metadata list" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10b" vertex="1">
+                    <mxGeometry x="1260" y="50" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rb7" value="Return response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10b" vertex="1">
+                    <mxGeometry x="1400" y="50" width="100" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="rberr" value="Return error:&#xa;Range exceeds 90 days" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10b" vertex="1">
+                    <mxGeometry x="840" y="170" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10b" source="rb1" target="rb2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10b" source="rb2" target="rb3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe3y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10b" source="rb3" target="rb4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe3n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10b" source="rb3" target="rberr" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10b" source="rb4" target="rb5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10b" source="rb5" target="rb6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbe6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10b" source="rb6" target="rb7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="rbsql" value="SELECT notice_no, date_of_change, last_processing_stage,&#xa;  new_processing_stage, reason_of_change, remarks,&#xa;  cre_user_id, cre_date&#xa;FROM ocms_change_of_processing&#xa;WHERE cre_date BETWEEN ? AND ?" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw10b" vertex="1">
+                    <mxGeometry x="980" y="130" width="290" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn10a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="r4" target="rb1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn10b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="rb7" target="rres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="t10b" value="[B] Download Individual Report" style="text;html=1;strokeColor=none;fillColor=none;fontSize=14;fontStyle=3" parent="1" vertex="1">
+                    <mxGeometry x="40" y="608" width="250" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw10c" value="Staff Portal" style="swimlane;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="633" width="1900" height="130" as="geometry"/>
+                </mxCell>
+                <mxCell id="d1" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" parent="sw10c" vertex="1">
+                    <mxGeometry x="40" y="50" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="d2" value="User clicks&#xa;Download" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10c" vertex="1">
+                    <mxGeometry x="160" y="30" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="d3" value="Call Download API" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10c" vertex="1">
+                    <mxGeometry x="300" y="30" width="100" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="dres" value="Save/Open&#xa;Excel file" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10c" vertex="1">
+                    <mxGeometry x="1680" y="30" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="de1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10c" source="d1" target="d2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="de2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10c" source="d2" target="d3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="dapi" value="POST /change-processing-stage/report/download&#xa;{&#xa;  &quot;reportId&quot;: &quot;ChangeStageReport_20251220_OIC001.xlsx&quot;&#xa;}" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;rounded=0;" parent="sw10c" vertex="1">
+                    <mxGeometry x="510" y="50" width="310" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw10d" value="OCMS Backend API" style="swimlane;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="773" width="1900" height="250" as="geometry"/>
+                </mxCell>
+                <mxCell id="db1" value="Receive request" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10d" vertex="1">
+                    <mxGeometry x="440" y="40" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="db2" value="Validate&#xa;reportId" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10d" vertex="1">
+                    <mxGeometry x="580" y="40" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="db3" value="Valid?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw10d" vertex="1">
+                    <mxGeometry x="700" y="30" width="70" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="db4" value="Build blob path" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10d" vertex="1">
+                    <mxGeometry x="810" y="40" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="db5" value="Download from&#xa;Azure Blob" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10d" vertex="1">
+                    <mxGeometry x="950" y="40" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="db6" value="Found?" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" parent="sw10d" vertex="1">
+                    <mxGeometry x="1285" y="30" width="70" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="db7" value="Stream file&#xa;to response" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10d" vertex="1">
+                    <mxGeometry x="1480" y="40" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="dberr1" value="Return error:&#xa;Invalid ID" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10d" vertex="1">
+                    <mxGeometry x="685" y="177" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="dberr2" value="Return 404:&#xa;Not found" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10d" vertex="1">
+                    <mxGeometry x="1270" y="190" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="dbe1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10d" source="db1" target="db2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="dbe2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10d" source="db2" target="db3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="dbe3y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10d" source="db3" target="db4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="dbe3n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10d" source="db3" target="dberr1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="dbe4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10d" source="db4" target="db5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="dbe6y" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10d" source="db6" target="db7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="dbe6n" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10d" source="db6" target="dberr2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="sw10e" value="Azure Blob Storage" style="swimlane;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="1043" width="1900" height="117" as="geometry"/>
+                </mxCell>
+                <mxCell id="az10" value="Retrieve file&#xa;from blob" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10e" vertex="1">
+                    <mxGeometry x="950" y="50" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="az11" value="Return bytes" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" parent="sw10e" vertex="1">
+                    <mxGeometry x="1090" y="50" width="100" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="aze1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="sw10e" source="az10" target="az11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn10c" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="d3" target="db1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn10d" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="db5" target="az10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn10e" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="az11" target="db6" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="1160" y="923"/>
+                            <mxPoint x="1240" y="923"/>
+                            <mxPoint x="1240" y="838"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="conn10f" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="db7" target="dres" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
