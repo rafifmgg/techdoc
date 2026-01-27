@@ -320,6 +320,7 @@ VALUES (?, nextval, 'OCMS',
  CURRENT_TIMESTAMP + INTERVAL ? DAY, ?,
  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?,
  'manual')
+-- Note: cre_date = CURRENT_TIMESTAMP, cre_user_id = officer_authorising_suspension
 ```
 
 ---
@@ -670,7 +671,7 @@ END WHILE
 - Batch TS application (up to 10 notices)
 - Comprehensive validation
 - Source authorization via suspension_source field
-- 20 TS codes with different rules (updated from 18)
+- 18 TS codes with different rules
 - Auto-calculation of due_date_of_revival using no_of_days_for_revival
 
 **Yi Jie Standard Compliance:**
@@ -686,7 +687,7 @@ END WHILE
 - ✅ TS applies to ALL offence notice types (O, E, U) - No restriction in code
 
 **Next Steps:**
-1. ✅ plan_condition.md created with 20 TS code rules
+1. ✅ plan_condition.md created with 18 TS code rules
 2. ✅ plan_flowchart.md created with flow structure
 3. ✅ OCMS17_Flowchart.drawio created
 4. ✅ QA Steps 1-3 completed and APPROVED

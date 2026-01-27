@@ -372,7 +372,7 @@ Backend automatically applies TS when exception scenarios detected.
 ### 8.2 Swimlanes
 - swim_cron: Backend Cron Service
 
-### 8.3 Auto TS Scenarios (9 codes)
+### 8.3 Auto TS Scenarios (8 codes)
 
 | Scenario | TS Code | Trigger | Process Boxes |
 |----------|---------|---------|---------------|
@@ -380,13 +380,12 @@ Backend automatically applies TS when exception scenarios detected.
 | MHA/DataHive exception | NRO | MHA sync detects exception | 5-6 boxes |
 | ROV exception | ROV | ROV sync detects exception | 5-6 boxes |
 | House Tenants exception | HST | HST sync detects exception | 5-6 boxes |
-| Partial payment | PP | Payment cron detects partial payment | 5-6 boxes |
 | Pending driver furnish | PDP | Driver furnish check detects pending | 5-6 boxes |
 | Partially matched | PAM | Offender match detects partial match | 5-6 boxes |
 | System error | SYS | System detects processing error | 5-6 boxes |
 | Classified Vehicles | CLV | CVL check detects classified vehicle | 5-6 boxes |
 
-**Total:** 35-40 process boxes
+**Total:** 30-35 process boxes
 
 ---
 

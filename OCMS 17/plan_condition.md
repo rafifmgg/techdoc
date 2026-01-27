@@ -160,7 +160,7 @@ END IF
 |------|-------|
 | Description | Appeal Extension |
 | Looping TS | No |
-| Suspension Days | 21 days |
+| Suspension Days | 14 days |
 | Allowed Stages | NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
 | OCMS Backend Auto TS | No |
 | OCMS Staff Manual TS | No |
@@ -231,7 +231,7 @@ END IF
 |------|-------|
 | Description | Classified Vehicles |
 | **Looping TS** | **Yes - Auto re-apply immediately after revival** |
-| Suspension Days | 90 days |
+| Suspension Days | 21 days |
 | Allowed Stages | **RR3, DR3 ONLY** |
 | OCMS Backend Auto TS | Yes |
 | OCMS Staff Manual TS | Yes |
@@ -320,7 +320,7 @@ WHEN due_date_of_revival is reached:
 |------|-------|
 | Description | Miscellaneous |
 | Looping TS | No |
-| Suspension Days | 14 days |
+| Suspension Days | 21 days |
 | Allowed Stages | NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
 | OCMS Backend Auto TS | No |
 | OCMS Staff Manual TS | Yes |
@@ -334,7 +334,7 @@ WHEN due_date_of_revival is reached:
 |------|-------|
 | Description | Offender Data Exception from MHA or DataHive |
 | Looping TS | Note: If OCMS auto send this Notice to MHA/DH queue after revival, then it is not auto looping. It is the natural exception handling process for MHA/DH that applies the TS-NRO again. |
-| Suspension Days | 7 days |
+| Suspension Days | 21 days |
 | Allowed Stages | ROV, ENA, RD1, RD2, DN1, DN2, CPC, CFC |
 | OCMS Backend Auto TS | Yes |
 | OCMS Staff Manual TS | Yes |
@@ -349,7 +349,7 @@ WHEN due_date_of_revival is reached:
 |------|-------|
 | Description | Pending Investigations |
 | Looping TS | No |
-| Suspension Days | 30 days |
+| Suspension Days | 21 days |
 | Allowed Stages | NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
 | OCMS Backend Auto TS | No |
 | OCMS Staff Manual TS | Yes |
@@ -363,7 +363,7 @@ WHEN due_date_of_revival is reached:
 |------|-------|
 | Description | Enquiry Outstanding Notice (EP) |
 | Looping TS | No |
-| Suspension Days | 14 days |
+| Suspension Days | 21 days |
 | Allowed Stages | NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
 | OCMS Backend Auto TS | No |
 | OCMS Staff Manual TS | Yes |
@@ -377,7 +377,7 @@ WHEN due_date_of_revival is reached:
 |------|-------|
 | Description | Partially Matched |
 | Looping TS | No |
-| Suspension Days | 14 days |
+| Suspension Days | 21 days |
 | Allowed Stages | **All stages (including unexecuted Warrant of Arrest)** |
 | OCMS Backend Auto TS | Yes |
 | OCMS Staff Manual TS | Yes |
@@ -394,7 +394,7 @@ WHEN due_date_of_revival is reached:
 |------|-------|
 | Description | Pending Driver Furnish |
 | Looping TS | No |
-| Suspension Days | 14 days |
+| Suspension Days | 21 days |
 | Allowed Stages | ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
 | OCMS Backend Auto TS | Yes |
 | OCMS Staff Manual TS | Yes |
@@ -403,28 +403,13 @@ WHEN due_date_of_revival is reached:
 
 ---
 
-### 3.15 TS Code: PP (Partial Payment)
-
-| Rule | Value |
-|------|-------|
-| Description | Partial Payment |
-| Looping TS | No |
-| Suspension Days | 7 days |
-| Allowed Stages | NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
-| OCMS Backend Auto TS | Yes |
-| OCMS Staff Manual TS | No |
-| PLUS Staff Manual TS | No |
-| Auto Trigger Scenario | Partial payment detected during payment processing |
-
----
-
-### 3.16 TS Code: PRI (Pending Release from Prison)
+### 3.15 TS Code: PRI (Pending Release from Prison)
 
 | Rule | Value |
 |------|-------|
 | Description | Pending Release from Prison |
 | Looping TS | No |
-| Suspension Days | 90 days |
+| Suspension Days | 180 days |
 | Allowed Stages | NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
 | OCMS Backend Auto TS | No |
 | OCMS Staff Manual TS | Yes |
@@ -432,13 +417,13 @@ WHEN due_date_of_revival is reached:
 
 ---
 
-### 3.17 TS Code: RED (Pay Reduced Amount)
+### 3.16 TS Code: RED (Pay Reduced Amount)
 
 | Rule | Value |
 |------|-------|
 | Description | Pay Reduced Amount (refer to OCMS 16) |
 | Looping TS | No |
-| Suspension Days | 21 days |
+| Suspension Days | 14 days |
 | Allowed Stages | NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
 | OCMS Backend Auto TS | No |
 | OCMS Staff Manual TS | No |
@@ -446,13 +431,13 @@ WHEN due_date_of_revival is reached:
 
 ---
 
-### 3.18 TS Code: ROV (Vehicle Ownership Data Exception from ROV)
+### 3.17 TS Code: ROV (Vehicle Ownership Data Exception from ROV)
 
 | Rule | Value |
 |------|-------|
 | Description | Vehicle Ownership Data Exception from ROV |
 | Looping TS | Note: If OCMS auto send this Notice to ROV queue after revival, then it is not auto looping. It is the natural exception handling process for ROV that applies the TS-ROV again. |
-| Suspension Days | 7 days |
+| Suspension Days | 21 days |
 | Allowed Stages | **ROV ONLY** |
 | OCMS Backend Auto TS | Yes |
 | OCMS Staff Manual TS | Yes |
@@ -463,13 +448,13 @@ WHEN due_date_of_revival is reached:
 
 ---
 
-### 3.19 TS Code: SYS (System issue)
+### 3.18 TS Code: SYS (System issue)
 
 | Rule | Value |
 |------|-------|
 | Description | System issue |
 | Looping TS | No |
-| Suspension Days | 7 days |
+| Suspension Days | 21 days |
 | Allowed Stages | NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
 | OCMS Backend Auto TS | Yes |
 | OCMS Staff Manual TS | Yes |
@@ -478,13 +463,13 @@ WHEN due_date_of_revival is reached:
 
 ---
 
-### 3.20 TS Code: UNC (Returned as unclaimed)
+### 3.19 TS Code: UNC (Returned as unclaimed)
 
 | Rule | Value |
 |------|-------|
 | Description | Returned as unclaimed |
 | Looping TS | No |
-| Suspension Days | 14 days |
+| Suspension Days | 21 days |
 | Allowed Stages | NPA, ROV, ENA, RD1, RD2, RR3, DN1, DN2, DR3, CPC, CFC |
 | OCMS Backend Auto TS | No |
 | OCMS Staff Manual TS | Yes |
@@ -599,7 +584,7 @@ Logic:
 
 **Total TS Codes:** 18
 - Looping Codes: 2 (CLV, HST)
-- Auto Backend Codes: 9 (ACR, CLV, HST, NRO, PAM, PDP, PP, ROV, SYS)
+- Auto Backend Codes: 8 (ACR, CLV, HST, NRO, PAM, PDP, ROV, SYS)
 - OCMS Staff Manual: 13 codes
 - PLUS Staff Manual: 6 codes (APE, APP, CCE, MS, PRI, RED)
 
