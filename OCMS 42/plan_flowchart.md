@@ -3,8 +3,8 @@
 ## Document Information
 | Item | Detail |
 |------|--------|
-| Version | 1.3 |
-| Date | 2026-01-25 |
+| Version | 2.0 |
+| Date | 2026-01-27 |
 | Source | Functional Flow (ocms 42 functional flow.drawio) |
 | Data Reference | Functional Document (v1.3_OCMS 42_Functional_Doc.md) |
 | Feature | Furnish Driver's or Hirer's Particulars via eService |
@@ -16,7 +16,6 @@
 ## 1. Technical Flowchart Structure
 
 ### Tab Naming Convention
-Based on Functional Flow, the Technical Flowchart will have the following tabs:
 
 | Tab | Name | Type | Description | FD Section |
 |-----|------|------|-------------|------------|
@@ -26,6 +25,12 @@ Based on Functional Flow, the Technical Flowchart will have the following tabs:
 | 2.2 | Backend Get Furnishable Notices | Detailed | Backend API logic: Query owner_driver table → Check eligibility → Query VON → Filter by existing apps → Return list | Sec 2.2 |
 | 2.3 | Backend Get Pending Submissions | Detailed | Backend API logic: Query furnish_application (status P/S, 6 months) → Return list | Sec 2 |
 | 2.4 | Backend Get Approved Submissions | Detailed | Backend API logic: Query furnish_application (status A, 6 months) → Return list | Sec 2 |
+| 3.2 | High-Level Furnish Submission | High-Level | Main flow: Select notice → Fill form → Validate → Submit | Sec 3 |
+| 3.3 | Furnish Particular Form | Sub-flow | Form structure, OneMap API, field validations | Sec 3.2.2 |
+| 3.4 | Check Eligibility | Sub-flow | Individual and Company eligibility rules | Sec 3.2.3 |
+| 4.2 | Submission Acknowledge | High-Level | Portal display based on API response (success/fail) | Sec 4 |
+| 5.2 | Internet Backend Processing | Detailed | Save to eocms_furnish_application | Sec 5.2 |
+| 5.3 | Intranet Backend Processing | Detailed | CRON sync, approval, update offender | Sec 5.4 |
 
 ### Flow Description Summary
 
@@ -37,6 +42,12 @@ Based on Functional Flow, the Technical Flowchart will have the following tabs:
 | 2.2 | Eligibility check logic | Has records? Is Driver? Stage valid? PS excluded? Existing app? | Furnishable list |
 | 2.3 | Retrieve pending list | Any records? | Pending list |
 | 2.4 | Retrieve approved list | Any records? | Approved list |
+| 3.2 | Furnish submission flow | Is eligible? Validation pass? | Submit or error |
+| 3.3 | Form input with validations | OneMap found? Fields valid? | Form data |
+| 3.4 | Self-furnish check | Same ID? Furnish as hirer? | F01/F02 error or allow |
+| 4.2 | Acknowledge submission | appCode = SUCCESS? | Success screen or error |
+| 5.2 | Internet backend save | Valid? Save success? | txnNo or error |
+| 5.3 | Intranet approval process | Auto-approve? Decision? | Status update, sync |
 
 ---
 
@@ -57,9 +68,16 @@ Based on Functional Flow, the Technical Flowchart will have the following tabs:
 | eService Backend | Internet | API processing logic |
 | Database | Internet/PII | Database queries and operations |
 
+### 2.3 Intranet Flows (2 Swimlanes)
+
+| Swimlane | Zone | Description |
+|----------|------|-------------|
+| CRON Job | Intranet | Scheduled sync job |
+| OCMS Intranet Backend | Intranet | Approval processing |
+
 ---
 
-## 3. Flow Details by Tab
+## 3. Flow Details - Section 1-2
 
 ### Tab 1.2: High-Level Login and Furnish
 
@@ -218,7 +236,408 @@ Based on Functional Flow, the Technical Flowchart will have the following tabs:
 
 ---
 
-## 4. Shape Legend
+## 4. Flow Details - Section 3
+
+### Tab 3.2: High-Level Furnish Submission Flow
+
+**Title:** High Level Process Flow: Furnish Submission via eService
+
+**Swimlanes:** eService Portal, eService Backend
+
+#### Flow Steps
+
+| Step | Actor | Description | Notes |
+|------|-------|-------------|-------|
+| 1 | Portal | Start | User sudah login, lihat list furnishable notices |
+| 2 | Portal | Select notice(s) to furnish | User pilih satu atau lebih notice |
+| 3 | Portal | Click "Proceed to Furnish" | Navigate ke form |
+| 4 | Portal | Display Driver/Hirer Particular Online Form | Form kosong ditampilkan |
+| 5 | Portal | User input Furnish Particular Form | Refer to Tab 3.3 |
+| 6 | Portal | Process: Check eligible to furnish | Refer to Tab 3.4 |
+| 7 | Portal | Decision: Is eligible to furnish? | |
+| 7a | Portal | No → Display "Disallow submission to furnish" | End atau loop |
+| 7b | Portal | Yes → Proceed to validation | |
+| 8 | Portal | Data validation | Check ID format, required fields |
+| 9 | Portal | Decision: Validation success? | |
+| 9a | Portal | No → Display validation error | Loop back to form |
+| 9b | Portal | Yes → Display Summary to review | |
+| 10 | Portal | User review and declare info is true | Checkbox declaration |
+| 11 | Portal | User click "Confirm to Furnish" | Submit |
+| 12 | Portal | Call OCMS Internet Backend API | POST /v1/furnishapplication |
+| 13 | Backend | Receive and process request | Refer to Tab 5.2 |
+| 14 | Portal | Display result (success/fail) | Refer to Tab 4.2 |
+| 15 | Portal | End | |
+
+---
+
+### Tab 3.3: Furnish Particular Form Sub-flow
+
+**Title:** Furnish Particular Form with Validations
+
+**Swimlanes:** eService Portal, External System (OneMap API)
+
+#### Flow Steps with Field-Level Validations
+
+| Step | Action | Validation | Error Message (if fail) |
+|------|--------|------------|-------------------------|
+| 1 | Display Furnish Particular Form | - | Show all sections |
+| 2 | User edits Owner Contact No. | If Country = Singapore: Must be 8 digits | "Invalid contact number" |
+| 3 | User enters Owner Email | Format validation (contains @, valid domain) | "Invalid email address. Please enter again." |
+| 4 | User enters Confirm Owner Email | Must match Email field | "Email addresses do not match. Please verify and re-enter." |
+| 5 | User enters Driver/Hirer Name | Mandatory, character limit | "Please enter name" |
+| 6 | User selects ID Type | Dropdown: NRIC, FIN, UEN, Passport | - |
+| 7 | User enters ID No. | Validate based on ID Type (NRIC/FIN/UEN format) | "Invalid ID format" |
+| 8 | User enters Postal Code | Must be 6 digits | "Invalid postal code" |
+| 9 | User clicks Get Address | Call OneMap API | - |
+| 9a | Frontend calls GET /onemapService/getOnemapToken | Get auth token | "Server Error" (if fail) |
+| 9b | Frontend calls OneMap API with postal code | searchVal = postal code | - |
+| 9c | Decision: Address found? | Check response.results | "Postal code does not exist." |
+| 9d | Auto-populate: Block, Street, Building | From OneMap response | - |
+| 10 | User enters Floor/Unit No. OR checks "No floor/unit no." | Conditional mandatory | - |
+| 11 | User enters Driver/Hirer Contact No. | If Country = Singapore: Must be 8 digits | "Invalid contact number" |
+| 12 | User enters Driver/Hirer Email | Format validation | "Invalid email address. Please enter again." |
+| 13 | User enters Confirm Driver/Hirer Email | Must match Email field | "Email addresses do not match. Please verify and re-enter." |
+| 14 | User selects Relationship to Owner | Dropdown: Employee, Vehicle is leased, Family, Others | - |
+| 14a | If "Vehicle is leased" selected | Show Rental Period fields (mandatory) | - |
+| 14b | If "Others" selected | Show specify relationship text field (mandatory) | - |
+| 15 | User answers Verification Questions (Q1, Q2, Q3) | Mandatory based on selection | - |
+| 16 | User uploads Supporting Documents | File format check, Max total 20MB | "Invalid file type or size exceeds 20MB" |
+| 17 | User clicks Next | Check ALL mandatory fields filled & valid | Display all errors, scroll to first error |
+| 18 | All valid? → Yes | Proceed to Summary/Review Page | - |
+| 18a | All valid? → No | Display errors, user corrects, loop back | - |
+
+#### Form Sections with Data Source
+
+| Section | Field | Data Source | Target Field |
+|---------|-------|-------------|--------------|
+| Notice Details (Read-only) | Notice No | eocms_valid_offence_notice.notice_no | Display only |
+| | Vehicle No | eocms_valid_offence_notice.vehicle_no | Display only |
+| | Offence Date/Time | eocms_valid_offence_notice.notice_date_and_time | Display only |
+| | Location | eocms_valid_offence_notice.offence_location | Display only |
+| Owner Particulars (Read-only) | Owner Name | eocms_offence_notice_owner_driver.name | Display only |
+| | Owner ID | eocms_offence_notice_owner_driver.id_no | Display only |
+| Driver's/Hirer's Particulars | ID Type | User Input | furnish_id_type |
+| | ID No. | User Input | furnish_id_no |
+| | Name | User Input | furnish_name |
+| | Block No | User Input | furnish_mail_blk_no |
+| | Floor | User Input | furnish_mail_floor |
+| | Street Name | User Input | furnish_mail_street_name |
+| | Unit No | User Input | furnish_mail_unit_no |
+| | Building Name | User Input | furnish_mail_bldg_name |
+| | Postal Code | User Input | furnish_mail_postal_code |
+| | Tel No | User Input | furnish_tel_no |
+| | Email | User Input | furnish_email_addr |
+| Q&A Selection | Furnish As (D/H) | User Input | owner_driver_indicator |
+| | Relationship to Owner | User Input | hirer_owner_relationship |
+| | Q1 Answer | User Input | ques_one_ans |
+| | Q2 Answer | User Input | ques_two_ans |
+| | Q3 Answer | User Input | ques_three_ans |
+| Supporting Documents | File(s) | User Upload | eocms_offence_attachment |
+
+---
+
+### Tab 3.4: Check Eligibility Sub-flow
+
+**Title:** Check Eligibility to Furnish (Self-Furnish Validation)
+
+**Source:** FD Section 3.2.3, Code: `FurnishValidationServiceImpl.validateSelfFurnish()`
+
+**Swimlanes:** eService Portal
+
+#### Input Variables
+
+| Variable | Source | Description |
+|----------|--------|-------------|
+| `ownerIdNo` | eocms_offence_notice_owner_driver.id_no | Owner's ID number |
+| `ownerIdType` | eocms_offence_notice_owner_driver.id_type | Owner's ID type (N/F/B) |
+| `furnishIdNo` | User input | Furnished person's ID number |
+| `furnishIdType` | User input | Furnished person's ID type |
+| `ownerDriverIndicator` | User input from Q&A | D=Driver, H=Hirer |
+
+#### Flow A: Individual Owner (NRIC/FIN) - FD Section 3.2.3.1
+
+| Step | Description |
+|------|-------------|
+| 1 | Check owner ID type: Is individual (NRIC or FIN)? |
+| 2 | Compare owner ID with furnished ID |
+| 3 | Decision: Same ID? |
+| 3a | No → Allow submission (different person) |
+| 3b | Yes → Check ownerDriverIndicator |
+| 4 | Decision: Furnishing as Hirer (H)? |
+| 4a | No (D) → Allow submission (furnishing self as driver is allowed) |
+| 4b | Yes (H) → Error F01: "You cannot furnish yourself as the hirer." |
+
+#### Flow B: Company Owner (UEN) - FD Section 3.2.3.2
+
+| Step | Description |
+|------|-------------|
+| 1 | Check owner ID type: Is company (UEN)? |
+| 2 | Check furnished ID type |
+| 3 | Decision: Furnished ID is also UEN? |
+| 3a | No → Allow submission (furnishing individual, no restriction) |
+| 3b | Yes → Compare owner UEN with furnished UEN |
+| 4 | Decision: Same UEN? |
+| 4a | No → Allow submission (different company) |
+| 4b | Yes → Error F02: "A company cannot furnish itself as the hirer." |
+
+#### Error Messages
+
+| Code | Message |
+|------|---------|
+| F01 | "You cannot furnish yourself as the hirer. Please provide another person's details." |
+| F02 | "A company cannot furnish itself as the hirer. Please provide another entity's details." |
+
+---
+
+## 5. Flow Details - Section 4
+
+### Tab 4.2: Furnish Submission Acknowledge Flow
+
+**Title:** Handling of Furnish Submission Outcomes
+
+**Swimlanes:** eService Portal
+
+#### API Details (Verified from Code)
+
+| Item | Value |
+|------|-------|
+| Endpoint | POST /v1/furnishapplication |
+| Success Response | `{ data: { appCode: "SUCCESS", message, txnNo } }` |
+| Error Response | `{ data: { appCode: "BAD_REQUEST" or "INTERNAL_SERVER_ERROR", message } }` |
+
+#### Flow Steps
+
+| Step | Actor | Description | Notes |
+|------|-------|-------------|-------|
+| 1 | Portal | Start - User submits furnishing particulars | From Section 3 |
+| 2 | Portal | Call Backend API | POST /v1/furnishapplication |
+| 3 | Portal | Decision: appCode = SUCCESS? | Check response |
+| 3a | Portal | No → Display: Submission Failed | Show error message from response |
+| 3b | Portal | Yes → Display: Submission Acknowledgement | Show success screen |
+| 4 | Portal | User clicks Print or Furnish Another | |
+| 5 | Portal | Decision: Action? | |
+| 5a | Portal | Print → Print Acknowledgement | Browser print |
+| 5b | Portal | Furnish Another → Redirect to Furnish Tab | |
+| 6 | Portal | End | |
+
+#### Success UI Display
+
+| UI Field | Data Source |
+|----------|-------------|
+| Message | Static: "Your submission has been received." |
+| Submission Reference No. | Source: eocms_furnish_application.txn_no |
+| Number of Notice(s) Furnished | Source: Calculated (COUNT of notices) |
+| Submission Date and Time | Source: eocms_furnish_application.cre_date |
+| Notice No | Source: eocms_valid_offence_notice.notice_no |
+| Vehicle No | Source: eocms_valid_offence_notice.vehicle_no |
+| Offence Date | Source: eocms_valid_offence_notice.notice_date_and_time |
+| Driver's/Hirer ID | Source: eocms_furnish_application.furnish_id_no |
+| Driver's/Hirer Name | Source: eocms_furnish_application.furnish_name |
+| Driver's/Hirer Address | Source: eocms_furnish_application.furnish_mail_* fields |
+| Supporting Documents | Source: eocms_offence_attachment.file_name |
+
+**Refer to FD Section 4.3** for complete success screen layout.
+
+#### Error Display
+
+| appCode | Message |
+|---------|---------|
+| BAD_REQUEST | Your submission could not be processed due to [validation error] |
+| INTERNAL_SERVER_ERROR | Your submission could not be processed due to [system error] |
+
+**Refer to FD Section 4.4** for complete error scenarios and messages.
+
+---
+
+## 6. Flow Details - Section 5
+
+### Tab 5.2: Furnish Submission in OCMS Internet Backend
+
+**Title:** Internet Backend Processing
+
+**Refer to FD Section 5.2** for Internet backend process flow details.
+
+**Swimlanes:** eService Backend
+
+#### API Details
+
+| Item | Value |
+|------|-------|
+| Endpoint | POST /v1/furnishapplication |
+| Controller | FurnishSubmissionController.java |
+| Service | FurnishSubmissionServiceImpl.java |
+
+#### Complete Request Payload (from FurnishSubmissionRequestDTO.java)
+
+| Group | Fields |
+|-------|--------|
+| **Notice Info** | noticeNo, vehicleNo, offenceDate, ppCode, ppName, lastProcessingStage |
+| **Driver/Hirer Info** | furnishName, furnishIdType (N/F/B), furnishIdNo |
+| **Address** | furnishMailBlkNo, furnishMailFloor, furnishMailStreetName, furnishMailUnitNo, furnishMailBldgName, furnishMailPostalCode |
+| **Contact** | furnishTelCode, furnishTelNo, furnishEmailAddr |
+| **Relationship** | ownerDriverIndicator (O/D/H), hirerOwnerRelationship (H/E/F/O/S), othersRelationshipDesc |
+| **Questions** | quesOneAns, quesTwoAns, quesThreeAns |
+| **Rental Period** | rentalPeriodFrom, rentalPeriodTo (if Vehicle Leased) |
+| **Owner Info** | ownerName, ownerIdNo, ownerIdType, ownerTelCode, ownerTelNo, ownerEmailAddr, corppassStaffName |
+| **Optional** | reasonForReview, remarks, supportingDocument[] (max 10 files) |
+
+#### Flow Steps
+
+| Step | Actor | Description | Notes |
+|------|-------|-------------|-------|
+| 1 | Portal | Portal sends POST /v1/furnishapplication | Trigger |
+| 2 | Backend | Start - Receive API request | |
+| 3 | Backend | Decision: Request valid? | Format check |
+| 3a | Backend | No → Response: Invalid format | appCode: BAD_REQUEST |
+| 3b | Backend | Yes → Check mandatory | |
+| 4 | Backend | Decision: Mandatory data present? | |
+| 4a | Backend | No → Response: Missing data | appCode: BAD_REQUEST |
+| 4b | Backend | Yes → Generate txn_no | SQL Server Sequence |
+| 5 | Backend | INSERT eocms_furnish_application | status='P', is_sync='N' |
+| 6 | Backend | INSERT eocms_offence_attachment | For each file |
+| 7 | Backend | Decision: Save successful? | |
+| 7a | Backend | No → Response: Save failed | appCode: INTERNAL_SERVER_ERROR |
+| 7b | Backend | Yes → Response: Success | appCode: SUCCESS, txnNo |
+| 8 | Backend | End | |
+
+#### Database Operations (DD Verified)
+
+**Table: eocms_furnish_application (PII Zone)**
+
+| Field | Data Type | Source |
+|-------|-----------|--------|
+| txn_no | varchar(20) | SQL Server Sequence |
+| notice_no | varchar(10) | Request payload |
+| vehicle_no | varchar(14) | eocms_valid_offence_notice.vehicle_no |
+| offence_date | datetime2(7) | eocms_valid_offence_notice.notice_date_and_time |
+| pp_code | varchar(5) | eocms_valid_offence_notice.pp_code |
+| pp_name | varchar(100) | eocms_valid_offence_notice.pp_name |
+| last_processing_stage | varchar(3) | eocms_valid_offence_notice.last_processing_stage |
+| furnish_name | varchar(66) | User Input |
+| furnish_id_type | varchar(1) | User Input (N=NRIC, F=FIN, U=UEN) |
+| furnish_id_no | varchar(12) | User Input |
+| furnish_mail_* | various | User Input (address fields) |
+| owner_driver_indicator | varchar(1) | User Input (D=Driver, H=Hirer) |
+| hirer_owner_relationship | varchar(20) | User Input |
+| ques_one_ans | varchar(1) | User Input |
+| ques_two_ans | varchar(1) | User Input |
+| ques_three_ans | varchar(1) | User Input |
+| status | varchar(1) | System Generated ('P' = Pending) |
+| owner_name | varchar(66) | eocms_offence_notice_owner_driver.name |
+| owner_id_no | varchar(12) | SPCP authenticated user ID |
+| is_sync | varchar(1) | System Generated ('N' = Not synced) |
+| cre_date | datetime2(7) | System Generated (GETDATE()) |
+| cre_user_id | varchar(50) | Audit User (ocmsez_app_conn) |
+
+---
+
+### Tab 5.3: Furnish Process in OCMS Intranet Backend
+
+**Title:** Intranet Backend Processing
+
+**Refer to FD Section 5.4** for approval and storing furnished particulars.
+**Refer to OCMS 41** for Auto-Approval Eligibility Check rules.
+
+**Swimlanes:** CRON Job, OCMS Intranet Backend
+
+#### Flow Steps
+
+| Step | Actor | Description | Notes |
+|------|-------|-------------|-------|
+| 1 | CRON | Sync Furnish Driver/Hirer particulars from Internet to Intranet | WHERE is_sync = 'N' |
+| 2 | CRON | Trigger Backend Processing | |
+| 3 | Backend | Auto-Approval Eligibility Check | Refer to OCMS 41 |
+| 4 | Backend | Decision: Auto approve? | Based on OCMS 41 rules |
+| 4a | Backend | No → Send to OIC review queue | Manual review needed |
+| 4b | Backend | Yes → Auto-approve and process | Skip OIC review |
+| 5 | Backend | Decision: Decision? (from OIC or Auto) | |
+| 5a | Backend | Reject → UPDATE status = 'R' | End |
+| 5b | Backend | Approve → UPDATE status = 'A' | Continue |
+| 6 | Backend | INSERT ocms_offence_notice_owner_driver | New Driver/Hirer record |
+| 7 | Backend | UPDATE ocms_offence_notice_owner_driver (Owner) | offender_indicator = 'N' |
+| 8 | Backend | Decision: owner_driver_indicator = D? | |
+| 8a | Backend | Yes (Driver) → Set stage = 'DN1' | |
+| 8b | Backend | No (Hirer) → Set stage = 'RD1' | |
+| 9 | Backend | UPDATE ocms_valid_offence_notice | Merge point for DN1/RD1 |
+| 10 | Backend | Sync all changes to Internet DB | See sync details below |
+| 11 | Backend | End | |
+
+#### Sync to Internet DB (Step 10 Details)
+
+Based on FD Section 5.4, after Intranet processing, sync ALL changes to Internet:
+
+| # | Table | Operation | Key Fields |
+|---|-------|-----------|------------|
+| 1 | eocms_furnish_application | UPDATE | status = 'A' |
+| 2 | eocms_offence_notice_owner_driver | INSERT | New offender record |
+| 3 | eocms_offence_notice_owner_driver_addr | INSERT | Address record |
+| 4 | eocms_valid_offence_notice | UPDATE | next_processing_stage |
+
+**Audit User:** `ocmsez_app_conn` (for Internet DB sync), `ocmsiz_app_conn` (for Intranet DB)
+
+---
+
+## 7. Error Codes Reference
+
+### Furnish-Specific Error Codes
+
+| Code | Constant | Message |
+|------|----------|---------|
+| F01 | ERROR_CODE_SELF_HIRER_INDIVIDUAL | You cannot furnish yourself as the hirer. Please provide another person's details. |
+| F02 | ERROR_CODE_SELF_HIRER_COMPANY | A company cannot furnish itself as the hirer. Please provide another entity's details. |
+| F03 | ERROR_CODE_DRIVER_NO_HIRER | As the driver, you must provide the hirer's details to proceed. |
+| F04 | ERROR_CODE_HIRER_NO_DRIVER | As the hirer, you must provide the driver's details to proceed. |
+
+### Standard OCMS Error Codes
+
+**Success (2000-2999):**
+| Code | Name | Message |
+|------|------|---------|
+| OCMS-2000 | SUCCESS | Furnish application submitted successfully. |
+| OCMS-2001 | CREATED | Record created |
+| OCMS-2002 | UPDATED | Record updated |
+
+**Client Errors (4000-4999):**
+| Code | Name | Usage |
+|------|------|-------|
+| OCMS-4000 | BAD_REQUEST | Invalid request format |
+| OCMS-4005 | INVALID_INPUT | Field validation failed |
+| OCMS-4004 | NOT_FOUND | Notice not found |
+| OCMS-4006 | DUPLICATE_RECORD | Duplicate submission |
+
+**Server Errors (5000-5999):**
+| Code | Name | Usage |
+|------|------|-------|
+| OCMS-5000 | INTERNAL_SERVER_ERROR | General server error |
+| OCMS-5001 | DATABASE_CONNECTION_FAILED | DB connection issue |
+| OCMS-5003 | DATABASE_QUERY_ERROR | DB query/save failed |
+
+### API Response Format
+
+**Success Response:**
+```json
+{
+  "data": {
+    "appCode": "SUCCESS",
+    "message": "Furnish application submitted successfully.",
+    "txnNo": "FU1234567890"
+  }
+}
+```
+
+**Error Response:**
+```json
+{
+  "data": {
+    "appCode": "BAD_REQUEST",
+    "message": "Furnish name is required."
+  }
+}
+```
+
+---
+
+## 8. Shape Legend
 
 | Shape | Usage | Style |
 |-------|-------|-------|
@@ -232,7 +651,7 @@ Based on Functional Flow, the Technical Flowchart will have the following tabs:
 
 ---
 
-## 5. Connection Rules
+## 9. Connection Rules
 
 | From | To | Line Style |
 |------|-----|------------|
@@ -244,104 +663,19 @@ Based on Functional Flow, the Technical Flowchart will have the following tabs:
 
 ---
 
-## 6. Database Tables Referenced
+## 10. Database Tables Referenced
 
 | Table | Zone | Used In | Operation | Key Fields (per DD) |
 |-------|------|---------|-----------|---------------------|
-| `eocms_offence_notice_owner_driver` | PII | Tab 2.2 | READ | notice_no, id_no, id_type, name, owner_driver_indicator, offender_indicator |
-| `eocms_valid_offence_notice` | Internet | Tab 2.2 | READ | notice_no, vehicle_no, notice_date_and_time, offence_notice_type, last_processing_stage, suspension_type, crs_reason_of_suspension, epr_reason_of_suspension |
-| `eocms_furnish_application` | PII | Tab 2.2, 2.3, 2.4 | READ/WRITE | See full field list below |
-| `eocms_furnish_application_doc` | PII | Submit flow | WRITE | txn_no, doc_name, cre_date, cre_user_id |
-
-### eocms_furnish_application Full Field List (per FD & DD)
-
-**Notice Info:**
-| Field | Type | Nullable | Description |
-|-------|------|----------|-------------|
-| txn_no | varchar(20) | No | PK - Submission reference number |
-| notice_no | varchar(10) | No | Notice number |
-| vehicle_no | varchar(14) | No | Vehicle number |
-| offence_date | datetime2(7) | No | Date of offence |
-| pp_code | varchar(5) | No | Car park code |
-| pp_name | varchar(100) | No | Car park name |
-| last_processing_stage | varchar(3) | No | Notice's current processing stage |
-
-**Furnished Person Particulars:**
-| Field | Type | Nullable | Description |
-|-------|------|----------|-------------|
-| furnish_name | varchar(66) | No | Name of furnished driver/hirer |
-| furnish_id_type | varchar(1) | No | ID type (N=NRIC, F=FIN, P=Passport) |
-| furnish_id_no | varchar(12) | No | ID number |
-| furnish_mail_blk_no | varchar(10) | No | Block/house number |
-| furnish_mail_floor | varchar(3) | Yes | Floor number |
-| furnish_mail_street_name | varchar(32) | No | Street name |
-| furnish_mail_unit_no | varchar(5) | Yes | Unit number |
-| furnish_mail_bldg_name | varchar(65) | Yes | Building name |
-| furnish_mail_postal_code | varchar(6) | No | Postal code |
-| furnish_tel_code | varchar(4) | Yes | Country code |
-| furnish_tel_no | varchar(12) | Yes | Contact number |
-| furnish_email_addr | varchar(320) | Yes | Email address |
-
-**Relationship & Questionnaire:**
-| Field | Type | Nullable | Description |
-|-------|------|----------|-------------|
-| owner_driver_indicator | varchar(1) | No | D=Driver, H=Hirer |
-| hirer_owner_relationship | varchar(1) | No | F=Family, E=Employee, L=Leased, O=Others |
-| others_relationship_desc | varchar(15) | No | If relationship = O |
-| ques_one_ans | varchar(32) | No | Answer to Q1 |
-| ques_two_ans | varchar(32) | No | Answer to Q2 |
-| ques_three_ans | varchar(32) | Yes | Answer to Q3 |
-| rental_period_from | datetime2(7) | Yes | If relationship = L |
-| rental_period_to | datetime2(7) | Yes | If relationship = L |
-
-**Submitter (Owner) Info:**
-| Field | Type | Nullable | Description |
-|-------|------|----------|-------------|
-| owner_name | varchar(66) | No | Submitter name |
-| owner_id_no | varchar(12) | No | Submitter ID |
-| owner_tel_code | varchar(4) | Yes | Country code |
-| owner_tel_no | varchar(20) | Yes | Contact number |
-| owner_email_addr | varchar(320) | Yes | Email address |
-| corppass_staff_name | varchar(66) | Yes | Corppass representative name |
-
-**Status & System Fields:**
-| Field | Type | Nullable | Description |
-|-------|------|----------|-------------|
-| status | varchar(1) | No | P=Pending, A=Approved, R=Rejected, S=Resubmission |
-| is_sync | varchar(1) | No | N=Not synced, Y=Synced (default N) |
-| reason_for_review | varchar(255) | Yes | Auto-approval failure reason |
-| remarks | varchar(200) | Yes | Officer remarks |
-| cre_date | datetime2(7) | No | Record creation date |
-| cre_user_id | varchar(50) | No | Created by (ocmsez_app_conn) |
-| upd_date | datetime2(7) | Yes | Last update date |
-| upd_user_id | varchar(50) | Yes | Updated by |
-
-**Note:**
-- All queries must use explicit column selection (NO SELECT *)
-- Audit fields: `cre_user_id` / `upd_user_id` (not cre_user/upd_user)
-- PK for furnish_application is `txn_no` (not application_id)
-- Internet zone uses `ocmsez_app_conn` for cre_user_id
-- Intranet zone uses `ocmsiz_app_conn` for upd_user_id
+| `eocms_offence_notice_owner_driver` | PII | Tab 2.2, 3.3, 5.3 | READ/WRITE | notice_no, id_no, id_type, name, owner_driver_indicator, offender_indicator |
+| `eocms_offence_notice_owner_driver_addr` | PII | Tab 5.3 | WRITE | Address fields |
+| `eocms_valid_offence_notice` | Internet | Tab 2.2, 3.3, 5.2, 5.3 | READ/WRITE | notice_no, vehicle_no, notice_date_and_time, offence_notice_type, last_processing_stage, suspension_type, crs_reason_of_suspension, epr_reason_of_suspension |
+| `eocms_furnish_application` | PII | Tab 2.2-2.4, 5.2, 5.3 | READ/WRITE | See full field list in Section 6 |
+| `eocms_offence_attachment` | PII | Tab 5.2 | WRITE | txn_no, notice_no, file_name, mime, size |
 
 ---
 
-## 7. Key Decision Points
-
-| Tab | Decision | Yes Branch | No Branch |
-|-----|----------|------------|-----------|
-| 1.2 | Offender = Driver? | Display warning, cannot furnish | Continue to check notices |
-| 1.2 | Any Furnishable Notices? | Display list | Display "no notices" |
-| 1.2 | Submission successful? | Redirect to Pending | Display error |
-| 1.3 | Any Pending Submissions? | Display list | Display "no pending" |
-| 1.4 | Any Approved Submissions? | Display list | Display "no approved" |
-| 2.2 | Any record returned? | Continue processing | Return no records |
-| 2.2 | indicator value = D? | Return offender is driver | Continue to query notices |
-| 2.3 | Any record returned? | Return list | Return no records |
-| 2.4 | Any record returned? | Return list | Return no records |
-
----
-
-## 8. UI Messages Summary
+## 11. UI Messages Summary
 
 | Scenario | Message |
 |----------|---------|
@@ -351,52 +685,30 @@ Based on Functional Flow, the Technical Flowchart will have the following tabs:
 | No approved submissions | "There are no Approved Notices" |
 | Submission failed | "Furnish was unsuccessful. Please try again." |
 | Submission success | "Your submission has been received." |
+| Self-furnish individual | "You cannot furnish yourself as the hirer. Please provide another person's details." |
+| Self-furnish company | "A company cannot furnish itself as the hirer. Please provide another entity's details." |
 
 ---
 
-## 9. Notes for Technical Flowchart
+## 12. Yi Jie Compliance Checklist
 
-### 9.1 Visual Standards
-1. **Yellow boxes** (`fillColor=#fff2cc`) for all Query and Response boxes
-2. **Purple boxes** (`fillColor=#e1d5e7`) for API/Query details
-3. **Blue boxes** (`fillColor=#dae8fc`) for Note boxes
-4. **Dashed lines** for API calls and Query connections
-5. **Solid lines** for normal flow connections
-
-### 9.2 Naming Standards
-1. **Expand abbreviations** in flow boxes:
-   - VON → Valid Offence Notice
-   - NPD → Notice Processing Date
-   - SPCP → Singpass/Corppass
-2. **Keep domain codes** as-is (PS, ROV, ENA, RD1, RD2, etc.)
-3. **Match table/field names** with Data Dictionary exactly
-
-### 9.3 Content Standards (Yi Jie Compliance)
-1. **NO SELECT *** - All queries must specify explicit columns
-2. **Include all decision branches** with Yes/No labels
-3. **Show pagination** where applicable (total, limit, skip)
-4. **Show audit fields** in insert operations (`cre_user_id`, `upd_user_id`)
-5. **Show sync flag** (`is_sync = 'N'`) for Internet→Intranet data
-
-### 9.4 Flow Box Content Guidelines
-1. **Process boxes** - Active verb (Query, Insert, Validate, etc.)
-2. **Decision boxes** - Question format (Any record? Is Driver?)
-3. **User action boxes** - Dashed border, passive verb (User clicks...)
-4. **API Input boxes** - Show required parameters
-5. **Query boxes** - Show table name, key conditions
-
-### 9.5 Error Handling
-1. **Show error branches** for all decision points
-2. **Include error response content** in note boxes
-3. **Show rollback** for failed transactions
+| Item | Status | Notes |
+|------|--------|-------|
+| API Method = POST | ✅ | All APIs use POST |
+| Response Format | ✅ | `{ data: { appCode, message } }` |
+| Audit User | ✅ | `ocmsiz_app_conn` / `ocmsez_app_conn` |
+| Insert Order | ✅ | Parent (furnish_application) → Child (attachment) |
+| No SELECT * | ✅ | Specific fields only |
+| Data Source Attribution | ✅ | All fields have source |
+| Error Codes | ✅ | From code: ErrorCodes.java, ValidationMessages.java |
 
 ---
 
-## 10. Data Dictionary Compliance Checklist
+## 13. Data Dictionary Compliance Checklist
 
 | # | Item | Status | Notes |
 |---|------|--------|-------|
-| 1 | Table names match DD | ✅ | eocms_offence_notice_owner_driver, eocms_valid_offence_notice, eocms_furnish_application |
+| 1 | Table names match DD | ✅ | All table names verified |
 | 2 | PK field correct | ✅ | txn_no (not application_id) |
 | 3 | Audit fields correct | ✅ | cre_user_id, upd_user_id |
 | 4 | Offence date field | ✅ | notice_date_and_time (VON), offence_date (furnish_app) |
@@ -406,7 +718,7 @@ Based on Functional Flow, the Technical Flowchart will have the following tabs:
 
 ---
 
-## 11. Assumptions Log
+## 14. Assumptions Log
 
 | # | Assumption | Rationale | Status |
 |---|------------|-----------|--------|
@@ -416,3 +728,62 @@ Based on Functional Flow, the Technical Flowchart will have the following tabs:
 | 4 | Yellow = Query/Response, Purple = Detail, Blue = Note | Standard color scheme | Confirmed |
 | 5 | Dashed = API/Query connection | Visual distinction | Confirmed |
 | 6 | Field names verified against DD | Synced from Excel 2026-01-19 | Confirmed |
+
+---
+
+## 15. Recent Updates
+
+### 2026-01-27 - Version 2.0
+- Merged plan_flowchart.md and plan_flowchart_section3-5.md into single file
+- All tabs (1.2-5.3) now in one document
+
+### Tab 3.4 Changes
+- Simplified language (removed code syntax)
+- Verified all notes against FD and actual code
+
+### Tab 4.2 Changes
+- Fixed API endpoint: `/furnish/submit` → `/v1/furnishapplication`
+- Added response structure: `{ data: { appCode, message, txnNo } }`
+- Added actual appCode values: `SUCCESS`, `BAD_REQUEST`, `INTERNAL_SERVER_ERROR`
+- Changed decision box: "API Response success?" → "appCode = SUCCESS?"
+
+### Tab 5.2 Changes
+- Fixed API endpoint: `/furnish/submit` → `/v1/furnishapplication`
+- Added complete request payload list (30+ fields from FurnishSubmissionRequestDTO.java)
+- Organized fields by group
+
+### Tab 5.3 Changes
+- Added merge process box (UPDATE ocms_valid_offence_notice)
+- Fixed flow: decision boxes → merge point → sync step
+- Updated sync step to include all 4 tables being synced
+
+---
+
+## References
+
+### Functional Flow
+- `ocms42.drawio`
+
+### Functional Document
+- `v1.3_OCMS 42_Functional_Doc.md`
+
+| TD Section | FD Reference | Content to Refer |
+|------------|--------------|------------------|
+| 3.2 | FD Section 3.1 | Use Case |
+| 3.3 | FD Section 3.2.2 | Furnish Particular Form fields |
+| 3.3 | FD Section 3.2.2.3 | Data Validation rules |
+| 3.3 | FD Section 3.2.2.4 | User Action and System Response |
+| 3.4 | FD Section 3.2.3 | Eligibility rules (Individual) |
+| 3.4 | FD Section 3.2.3.2 | Eligibility rules (Company) |
+| 4.2 | FD Section 4.3 | Success screen layout |
+| 4.2 | FD Section 4.4 | Failure screen and error codes |
+| 5.2 | FD Section 5.2 | Internet Backend Process Flow |
+| 5.3 | FD Section 5.4 | Saving and Updating Furnished Particulars |
+
+### Data Dictionary
+- `Docs/data-dictionary/pii.json` - eocms_furnish_application, eocms_offence_attachment
+- `Docs/data-dictionary/internet.json` - eocms_valid_offence_notice
+- `Docs/data-dictionary/intranet.json` - ocms_furnish_application, ocms_valid_offence_notice
+
+### External Reference
+- **OCMS 41** - Auto-Approval Eligibility Check rules

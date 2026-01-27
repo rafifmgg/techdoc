@@ -3,8 +3,8 @@
 ## Document Information
 | Item | Detail |
 |------|--------|
-| Version | 1.2 |
-| Date | 2026-01-25 |
+| Version | 1.3 |
+| Date | 2026-01-27 |
 | Source | Functional Flow (ocms 42 functional flow.drawio) |
 | Feature | Furnish Driver's or Hirer's Particulars via eService |
 | FD Reference | v1.3_OCMS 42_Functional_Doc.md |
@@ -432,42 +432,47 @@ ORDER BY upd_date DESC
 
 ### 2.4 Submit Furnish Particulars
 
-**Endpoint:** `/api/v1/furnish/submit`
+**Endpoint:** `/v1/furnishapplication`
 **Method:** POST
 **Zone:** Internet (eService Backend)
 **Auth Source:** Singpass (Individual) / Corppass (Company)
+**Controller:** FurnishSubmissionController.java
+**Service:** FurnishSubmissionServiceImpl.java
 
-#### Request Payload
+#### Request Payload (Complete List from FurnishSubmissionRequestDTO.java)
+
+| Group | Fields | Description |
+|-------|--------|-------------|
+| **Notice Info** | noticeNo, vehicleNo, offenceDate, ppCode, ppName, lastProcessingStage | Notice details from eocms_valid_offence_notice |
+| **Driver/Hirer Info** | furnishName, furnishIdType (N/F/B), furnishIdNo | Furnished person details |
+| **Address** | furnishMailBlkNo, furnishMailFloor, furnishMailStreetName, furnishMailUnitNo, furnishMailBldgName, furnishMailPostalCode | Address fields |
+| **Contact** | furnishTelCode, furnishTelNo, furnishEmailAddr | Contact information |
+| **Relationship** | ownerDriverIndicator (O/D/H), hirerOwnerRelationship (H/E/F/O/S), othersRelationshipDesc | Relationship to owner |
+| **Questions** | quesOneAns, quesTwoAns, quesThreeAns | Q&A responses |
+| **Rental Period** | rentalPeriodFrom, rentalPeriodTo | Required if Vehicle Leased (relationship=L) |
+| **Owner Info** | ownerName, ownerIdNo, ownerIdType, ownerTelCode, ownerTelNo, ownerEmailAddr, corppassStaffName | Submitter details |
+| **Optional** | reasonForReview, remarks, supportingDocument[] (max 10 files) | Additional info |
+
 ```json
 {
-  "authToken": "Bearer xxx",
-  "notices": [
-    {
-      "noticeNo": "N1234567890",
-      "offenceDate": "2025-01-15"
-    }
-  ],
-  "ownerParticulars": {
-    "name": "TAN AH KOW",
-    "idNo": "S1234567A",
-    "telCode": "+65",
-    "telNo": "91234567",
-    "emailAddr": "tan@email.com"
-  },
-  "furnishParticulars": {
-    "name": "LEE AH BENG",
-    "idType": "N",
-    "idNo": "S7654321B",
-    "mailBlkNo": "456",
-    "mailFloor": "02",
-    "mailUnitNo": "02",
-    "mailStreetName": "BUKIT TIMAH ROAD",
-    "mailBldgName": "",
-    "mailPostalCode": "259888",
-    "telCode": "+65",
-    "telNo": "81234567",
-    "emailAddr": "lee@email.com"
-  },
+  "noticeNo": "N1234567890",
+  "vehicleNo": "SBA1234A",
+  "offenceDate": "2025-01-15",
+  "ppCode": "PP001",
+  "ppName": "CAR PARK A",
+  "lastProcessingStage": "ROV",
+  "furnishName": "LEE AH BENG",
+  "furnishIdType": "N",
+  "furnishIdNo": "S7654321B",
+  "furnishMailBlkNo": "456",
+  "furnishMailFloor": "02",
+  "furnishMailStreetName": "BUKIT TIMAH ROAD",
+  "furnishMailUnitNo": "02",
+  "furnishMailBldgName": "",
+  "furnishMailPostalCode": "259888",
+  "furnishTelCode": "+65",
+  "furnishTelNo": "81234567",
+  "furnishEmailAddr": "lee@email.com",
   "ownerDriverIndicator": "D",
   "hirerOwnerRelationship": "F",
   "othersRelationshipDesc": "",
@@ -476,7 +481,16 @@ ORDER BY upd_date DESC
   "quesThreeAns": "",
   "rentalPeriodFrom": null,
   "rentalPeriodTo": null,
-  "declaration": true
+  "ownerName": "TAN AH KOW",
+  "ownerIdNo": "S1234567A",
+  "ownerIdType": "N",
+  "ownerTelCode": "+65",
+  "ownerTelNo": "91234567",
+  "ownerEmailAddr": "tan@email.com",
+  "corppassStaffName": null,
+  "reasonForReview": null,
+  "remarks": null,
+  "supportingDocument": []
 }
 ```
 
