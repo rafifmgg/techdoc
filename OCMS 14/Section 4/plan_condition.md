@@ -5,10 +5,10 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Notice Processing Flow for Military Vehicles |
-| Version | v1.0 |
+| Version | v1.1 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 15/01/2026 |
+| Last Updated | 27/01/2026 |
 | Status | Draft |
 | FD Reference | OCMS 14 - Section 5 |
 | TD Reference | OCMS 14 - Section 4 |
@@ -45,9 +45,38 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 3. Notice Creation Conditions
+## 3. Type U Specific Rules
 
-### 3.1 Pre-conditions for Notice Creation
+### 3.1 Type U Notice Processing Rules
+
+| Rule ID | Rule Name | Condition | Action |
+| --- | --- | --- | --- |
+| MID-TYPEU-001 | NPA Pending Compoundability | Type U notice created | Stay at NPA until OIC determines compoundability |
+| MID-TYPEU-002 | Compoundable Decision | OIC marks as compoundable | Next stage = DN1, proceed to DN flow |
+| MID-TYPEU-003 | Non-Compoundable Decision | OIC marks as non-compoundable | Apply PS-MID, notice processing stops |
+| MID-TYPEU-004 | DBB for Type U | Duplicate found for Type U | Apply PS-DBB, same as Type O/E |
+
+### 3.2 Type U Stage Processing
+
+| Current Stage | Allowed Actions | Next Stage | Trigger |
+| --- | --- | --- | --- |
+| NPA (pending) | Wait for OIC decision | DN1 or PS-MID | OIC compoundability decision |
+| DN1 | Payment | DN2 | End of DN1 period |
+| DN2 | Payment | PS-MID | End of DN2 period |
+
+### 3.3 OIC Compoundability Decision Rules
+
+| Rule ID | Condition | Result |
+| --- | --- | --- |
+| MID-TYPEU-010 | OIC selects "Compoundable" | Set next_processing_stage = 'DN1' |
+| MID-TYPEU-011 | OIC selects "Non-Compoundable" | Apply PS-MID suspension immediately |
+| MID-TYPEU-012 | No decision within X days | Remain at NPA (no auto-progression) |
+
+---
+
+## 4. Notice Creation Conditions
+
+### 4.1 Pre-conditions for Notice Creation
 
 | Rule ID | Condition | Validation | Action if Fail |
 | --- | --- | --- | --- |
@@ -56,7 +85,7 @@ This document outlines the business rules, validations, and conditions for Milit
 | MID-CRE-003 | Offence Type Valid | Type in (O, E, U) | Reject notice |
 | MID-CRE-004 | Vehicle Type Detected | Type = 'I' | Route to standard flow |
 
-### 3.2 Notice Creation Rules
+### 4.2 Notice Creation Rules
 
 | Rule ID | Rule | Description |
 | --- | --- | --- |
@@ -69,9 +98,9 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 4. Double Booking (DBB) Rules
+## 5. Double Booking (DBB) Rules
 
-### 4.1 Duplicate Detection Criteria
+### 5.1 Duplicate Detection Criteria
 
 | Rule ID | Field | Comparison Logic |
 | --- | --- | --- |
@@ -81,7 +110,7 @@ This document outlines the business rules, validations, and conditions for Milit
 | MID-DBB-004 | parking_lot_no | Exact match (NULL = NULL) |
 | MID-DBB-005 | pp_code | Exact match |
 
-### 4.2 DBB Action
+### 5.2 DBB Action
 
 | Condition | Action |
 | --- | --- |
@@ -90,9 +119,9 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 5. Advisory Notice (AN) Rules
+## 6. Advisory Notice (AN) Rules
 
-### 5.1 AN Qualification Criteria
+### 6.1 AN Qualification Criteria
 
 | Rule ID | Condition | Required Value |
 | --- | --- | --- |
@@ -102,7 +131,7 @@ This document outlines the business rules, validations, and conditions for Milit
 | MID-AN-004 | Suspension Status | No active suspension |
 | MID-AN-005 | AN Eligibility | Based on OCMS 10 rules |
 
-### 5.2 AN Processing Rules
+### 6.2 AN Processing Rules
 
 | Rule ID | Rule | Description |
 | --- | --- | --- |
@@ -114,9 +143,9 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 6. Stage Processing Rules
+## 7. Stage Processing Rules
 
-### 6.1 Processing Stage Transitions
+### 7.1 Processing Stage Transitions
 
 | Current Stage | Next Stage | Trigger | Letter Generated |
 | --- | --- | --- | --- |
@@ -126,7 +155,7 @@ This document outlines the business rules, validations, and conditions for Milit
 | DN1 | DN2 | End of DN1 period | DN2 Letter |
 | DN2 | PS-MID | End of DN2 period | None (Suspended) |
 
-### 6.2 Bypass Rules for Military Vehicles
+### 7.2 Bypass Rules for Military Vehicles
 
 | Rule ID | Standard Step | Military Vehicle Action |
 | --- | --- | --- |
@@ -140,9 +169,9 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 7. Furnish Driver/Hirer Rules
+## 8. Furnish Driver/Hirer Rules
 
-### 7.1 Furnish Eligibility
+### 8.1 Furnish Eligibility
 
 | Rule ID | Condition | Furnish Allowed |
 | --- | --- | --- |
@@ -153,7 +182,7 @@ This document outlines the business rules, validations, and conditions for Milit
 | MID-FUR-005 | Suspended with PS-MID | No |
 | MID-FUR-006 | Suspended with PS-ANS | No |
 
-### 7.2 Furnish Validation Rules
+### 8.2 Furnish Validation Rules
 
 | Rule ID | Validation | Action if Fail |
 | --- | --- | --- |
@@ -162,14 +191,14 @@ This document outlines the business rules, validations, and conditions for Milit
 | MID-FUR-012 | Driver/Hirer address valid | Manual OIC review |
 | MID-FUR-013 | Same person as owner | Reject (cannot furnish self) |
 
-### 7.3 Post-Furnish Processing
+### 8.3 Post-Furnish Processing
 
 | Furnished Party | Next Stage | Processing Path |
 | --- | --- | --- |
-| Driver | DN1 | DN1 → DN2 → PS-MID |
-| Hirer | RD1 | RD1 → RD2 → PS-MID |
+| Driver | DN1 | DN1 - DN2 - PS-MID |
+| Hirer | RD1 | RD1 - RD2 - PS-MID |
 
-### 7.4 MHA/DataHive Check After Furnish
+### 8.4 MHA/DataHive Check After Furnish
 
 | Rule ID | Rule | Description |
 | --- | --- | --- |
@@ -179,18 +208,21 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 8. Suspension Rules
+## 9. Suspension Rules
 
-### 8.1 PS-MID Suspension Conditions
+### 9.1 PS-MID Suspension Conditions (CRON Job Query)
 
-| Rule ID | Condition | Required Value |
-| --- | --- | --- |
-| MID-SUS-001 | Vehicle Type | Must be 'I' (Military) |
-| MID-SUS-002 | Current Stage | RD2 or DN2 |
-| MID-SUS-003 | Notice Status | Outstanding (unpaid) |
-| MID-SUS-004 | Existing PS | No CRS reason of suspension |
+| Rule ID | Condition | Required Value | Table.Field |
+| --- | --- | --- | --- |
+| MID-SUS-001 | Vehicle Type | Must be 'I' (Military) | ocms_valid_offence_notice.vehicle_registration_type |
+| MID-SUS-002 | Current Stage | RD2 or DN2 | ocms_valid_offence_notice.last_processing_stage |
+| MID-SUS-003 | Next Stage | RR3 or DR3 | ocms_valid_offence_notice.next_processing_stage |
+| MID-SUS-004 | No Active Suspension | suspension_type IS NULL | ocms_valid_offence_notice.suspension_type |
+| MID-SUS-005 | Processing Date Due | next_processing_date <= tomorrow | ocms_valid_offence_notice.next_processing_date |
 
-### 8.2 PS-MID Application Stages
+**Note:** MID-SUS-004 uses `suspension_type IS NULL` (not `crs_reason_of_suspension`) per Data Dictionary alignment.
+
+### 9.2 PS-MID Application Stages
 
 | Rule ID | Stage | PS-MID Allowed |
 | --- | --- | --- |
@@ -200,7 +232,7 @@ This document outlines the business rules, validations, and conditions for Milit
 | MID-SUS-013 | DN1 | Yes (Manual by OIC) |
 | MID-SUS-014 | DN2 | Yes (Auto at end of stage) |
 
-### 8.3 PS-MID Source Permissions
+### 9.3 PS-MID Source Permissions
 
 | Source | Can Apply PS-MID |
 | --- | --- |
@@ -208,7 +240,7 @@ This document outlines the business rules, validations, and conditions for Milit
 | OCMS Backend (CRON) | Yes |
 | PLUS Staff Portal | No |
 
-### 8.4 PS-MID Stacking Rules
+### 9.4 PS-MID Stacking Rules
 
 | Rule ID | Rule | Description |
 | --- | --- | --- |
@@ -216,7 +248,7 @@ This document outlines the business rules, validations, and conditions for Milit
 | MID-SUS-021 | PS on PS-MID | Not Allowed - Must revive PS-MID first |
 | MID-SUS-022 | PS-FP/PS-PRA | Allowed - Can apply without revival |
 
-### 8.5 Post-Suspension Rules
+### 9.5 Post-Suspension Rules
 
 | Rule ID | Rule | Value |
 | --- | --- | --- |
@@ -227,9 +259,9 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 9. Payment Rules
+## 10. Payment Rules
 
-### 9.1 Payment Eligibility by Stage
+### 10.1 Payment Eligibility by Stage
 
 | Stage | Payment Allowed |
 | --- | --- |
@@ -241,7 +273,7 @@ This document outlines the business rules, validations, and conditions for Milit
 | DN2 | Yes |
 | PS-MID Suspended | Yes |
 
-### 9.2 Payment Processing Rules
+### 10.2 Payment Processing Rules
 
 | Rule ID | Rule | Description |
 | --- | --- | --- |
@@ -251,9 +283,9 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 10. eNotification Rules
+## 11. eNotification Rules
 
-### 10.1 eNotification Eligibility
+### 11.1 eNotification Eligibility
 
 | Stage | eNotification Allowed |
 | --- | --- |
@@ -267,9 +299,9 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 11. Exit Conditions
+## 12. Exit Conditions
 
-### 11.1 Notice Exit Rules
+### 12.1 Notice Exit Rules
 
 | Rule ID | Exit Condition | Description |
 | --- | --- | --- |
@@ -281,131 +313,24 @@ This document outlines the business rules, validations, and conditions for Milit
 
 ---
 
-## 12. Daily Re-check Rules (CRON)
+## 13. Daily Re-check Rules (CRON)
 
-### 12.1 DipMidForRecheckJob Conditions
+### 13.1 DipMidForRecheckJob Conditions
 
-| Rule ID | Condition | Description |
-| --- | --- | --- |
-| MID-RCK-001 | Execution Time | 11:59 PM daily |
-| MID-RCK-002 | Target Stages | RD2 or DN2 |
-| MID-RCK-003 | Target Types | 'D', 'I', 'F' |
-| MID-RCK-004 | No Active PS | suspension_type IS NULL |
+| Rule ID | Condition | Description | Table.Field |
+| --- | --- | --- | --- |
+| MID-RCK-001 | Execution Time | 11:59 PM daily | - |
+| MID-RCK-002 | Target Stages | RD2 or DN2 | ocms_valid_offence_notice.last_processing_stage |
+| MID-RCK-003 | Target Types | 'D', 'I', 'F' | ocms_valid_offence_notice.vehicle_registration_type |
+| MID-RCK-004 | No Active PS | suspension_type IS NULL | ocms_valid_offence_notice.suspension_type |
 
-### 12.2 Re-check Action
+### 13.2 Re-check Action
 
 | Condition | Action |
 | --- | --- |
 | Type 'I' at RD2/DN2 without PS | Re-apply PS-MID |
 | Type 'D' at RD2/DN2 without PS | Re-apply PS-DIP |
 | Type 'F' at RD2/DN2 without PS | Re-apply PS-FOR |
-
----
-
-## 13. Decision Trees
-
-### 13.1 Military Vehicle Notice Processing Flow
-
-```
-START
-  │
-  ▼
-[Offence Data Received]
-  │
-  ▼
-[Validate Data] ──No──► [Reject Notice]
-  │ Yes
-  ▼
-[Check Duplicate Notice Number] ──Duplicate──► [Reject Notice]
-  │ No Duplicate
-  ▼
-[Detect Vehicle Registration Type]
-  │
-  ▼
-[Type = 'I' (Military)?] ──No──► [Route to Standard Flow]
-  │ Yes
-  ▼
-[Create Notice at NPA with MINDEF details]
-  │
-  ▼
-[Check Double Booking] ──DBB Found──► [Apply PS-DBB] ──► END
-  │ No DBB
-  ▼
-[Offence Type?]
-  │
-  ├── Type O ──► [AN Qualification Check]
-  │               │
-  │               ├── Qualifies ──► [AN Sub-flow] ──► [PS-ANS] ──► END
-  │               │
-  │               └── Not Qualify ──► [Prepare RD1]
-  │
-  ├── Type E ──► [Prepare RD1]
-  │
-  └── Type U ──► [UPL Workflow] (KIV)
-```
-
-### 13.2 RD1/RD2 Processing Decision Tree
-
-```
-[Notice at RD1]
-  │
-  ▼
-[Payment Made?] ──Yes──► [Apply PS-FP] ──► END
-  │ No
-  ▼
-[Furnish Submitted?] ──Yes──► [Validate Driver/Hirer]
-  │ No                          │
-  ▼                             ├── Approved ──► [Route to DN1/RD1]
-[End of RD1 Stage]              │
-  │                             └── Rejected ──► [Continue RD1]
-  ▼
-[Prepare for RD2]
-  │
-  ▼
-[Notice at RD2]
-  │
-  ▼
-[Payment Made?] ──Yes──► [Apply PS-FP] ──► END
-  │ No
-  ▼
-[Furnish Submitted?] ──Yes──► [Validate Driver/Hirer]
-  │ No                          │
-  ▼                             └── [Process similar to RD1]
-[End of RD2 Stage]
-  │
-  ▼
-[Outstanding?] ──Yes──► [Apply PS-MID] ──► END
-  │ No
-  ▼
-END (Paid)
-```
-
-### 13.3 Furnish Driver/Hirer Decision Tree
-
-```
-[Furnish Application Received]
-  │
-  ▼
-[Sync to Intranet]
-  │
-  ▼
-[Auto-Validation]
-  │
-  ├── Pass ──► [Auto Approve] ──► [Create Driver/Hirer Record]
-  │                                │
-  │                                ├── Driver ──► [Next Stage = DN1]
-  │                                │
-  │                                └── Hirer ──► [Next Stage = RD1]
-  │
-  └── Fail ──► [OIC Manual Review]
-               │
-               ├── Approve ──► [Create Driver/Hirer Record]
-               │
-               └── Reject ──► [Remove Pending Status]
-                              │
-                              ▼
-                              [Allow Re-furnish]
-```
 
 ---
 
@@ -449,5 +374,14 @@ END (Paid)
 | ASM-001 | MINDEF address is hardcoded in backend code | Backend code analysis | No LTA/MHA check needed |
 | ASM-002 | PS-MID is applied automatically at end of RD2/DN2 | FD Section 5.5 | CRON job handles this |
 | ASM-003 | MHA/DataHive check only for furnished Driver/Hirer | FD Section 5.2.5 | Not for original MINDEF owner |
-| ASM-004 | Type U flow is KIV (pending requirements) | FD Section 5.2.3 | Not implemented yet |
+| ASM-004 | Type U flow requires OIC compoundability decision | FD Section 5.2.3 | OIC manual action |
 | ASM-005 | AN qualification based on OCMS 10 rules | FD Section 5.2.4 | External dependency |
+
+---
+
+## 17. Changelog
+
+| Version | Date | Author | Changes |
+| --- | --- | --- | --- |
+| 1.0 | 15/01/2026 | Claude | Initial version based on FD Section 5 |
+| 1.1 | 27/01/2026 | Claude | Data Dictionary alignment: Added Table.Field references to suspension rules, fixed MID-SUS-004 to use suspension_type IS NULL, added MID-SUS-005 for next_processing_date check, fixed section numbering |

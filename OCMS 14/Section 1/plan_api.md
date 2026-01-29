@@ -5,10 +5,10 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Detecting Vehicle Registration Type |
-| Version | v2.1 |
+| Version | v2.2 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 19/01/2026 |
+| Last Updated | 27/01/2026 |
 | Status | Revised |
 | FD Reference | OCMS 14 - Section 2 |
 | TD Reference | OCMS 14 - Section 1 |
@@ -30,7 +30,7 @@ The Vehicle Registration Type Check is an **internal function** within the Notic
 | Service | Type | Purpose |
 | --- | --- | --- |
 | LTA Checksum Utility | Internal Library | Validate Singapore vehicle number format |
-| VIP Vehicle Service | Internal Service | Query CAS VIP_VEHICLE database |
+| VIP Vehicle Service | Internal Service | Query ocms_vip_vehicle database |
 
 ---
 
@@ -67,20 +67,20 @@ The Vehicle Registration Type Check is an **internal function** within the Notic
 
 ---
 
-### 3.2 CAS VIP Vehicle Query
+### 3.2 OCMS VIP Vehicle Query
 
 | Attribute | Value |
 | --- | --- |
 | Type | Database Query |
-| Database | CAS Database |
-| Table | VIP_VEHICLE |
+| Database | OCMS Database (Intranet) |
+| Table | ocms_vip_vehicle |
 | Service | VipVehicleService |
 
 #### Query Pattern
 
 ```sql
 SELECT vehicle_no
-FROM VIP_VEHICLE
+FROM ocms_vip_vehicle
 WHERE vehicle_no = '<vehicleNo>'
 AND status = 'A'
 ```
@@ -110,9 +110,9 @@ AND status = 'A'
 
 | Error Scenario | Action |
 | --- | --- |
-| Connection failure | Log error, return false, proceed to fallback check |
-| Query timeout | Log error, return false, proceed to fallback check |
-| No record found | Return false (not VIP) |
+| Connection failure | Log error, return 'S' (Local Default) |
+| Query timeout | Log error, return 'S' (Local Default) |
+| No record found | Return 'S' (Local Default) |
 
 ---
 
@@ -140,11 +140,11 @@ The Vehicle Registration Type Check receives data from the following sources dur
 
 | Code | Type | Data Type | Detection Method |
 | --- | --- | --- | --- |
-| F | Foreign Vehicle | varchar(1) | Source-provided = 'F' OR default for unmatched vehicles |
-| S | Local Vehicle | varchar(1) | LTA Checksum validation returns true |
+| F | Foreign Vehicle | varchar(1) | Source-provided = 'F' |
+| S | Local Vehicle | varchar(1) | LTA Checksum validation returns true OR default when no VIP match |
 | D | Diplomatic Vehicle | varchar(1) | Prefix 'S' + Suffix (CC/CD/TC/TE) |
 | I | Military Vehicle | varchar(1) | Prefix/Suffix = MID or MINDEF |
-| V | VIP Vehicle | varchar(1) | Found in CAS VIP_VEHICLE with status = 'A' |
+| V | VIP Vehicle | varchar(1) | Found in ocms_vip_vehicle with status = 'A' |
 | X | UPL Dummy Vehicle | varchar(1) | Vehicle number blank/null + Offence Type = 'U' |
 
 ---
@@ -181,12 +181,12 @@ The Vehicle Registration Type Check receives data from the following sources dur
 | eocms_valid_offence_notice | upd_user_id | varchar | 50 | Yes | Audit user for update | ocmsez_app_conn |
 | eocms_valid_offence_notice | is_sync | varchar | 1 | No | Sync flag (default: 'N') | System managed |
 
-#### External (CAS - intranet.json)
+#### VIP Vehicle Table (OCMS - intranet.json)
 
 | Table | Field Name | Data Type | Max Length | Nullable | Description |
 | --- | --- | --- | --- | --- | --- |
-| VIP_VEHICLE | vehicle_no | varchar | 14 | No | VIP vehicle number (PK) |
-| VIP_VEHICLE | status | varchar | 1 | No | A=Active, D=Defunct |
+| ocms_vip_vehicle | vehicle_no | varchar | 14 | No | VIP vehicle number (PK) |
+| ocms_vip_vehicle | status | varchar | 1 | No | A=Active, D=Defunct |
 
 ### 5.3 Audit User Configuration
 
@@ -226,7 +226,7 @@ The Vehicle Registration Type Check receives data from the following sources dur
 | Scenario | Error Code | Handling | Result |
 | --- | --- | --- | --- |
 | LTA validation exception | - | Exception caught, log error | Proceed to next check |
-| CAS database unavailable | - | Exception caught, log error | Default to non-VIP, proceed |
+| OCMS database unavailable | - | Exception caught, log error | Return 'S' (Local Default) |
 | Vehicle number blank for Type O | OCMS-1401 | Return error response | Notice creation fails |
 | Vehicle number blank for Type E | OCMS-1402 | Return error response | Notice creation fails |
 | Vehicle number blank for Type U | - | Valid scenario | Return 'X' (UPL Dummy) |
@@ -274,7 +274,7 @@ The Vehicle Registration Type Check receives data from the following sources dur
 | Service/System | Type | Purpose |
 | --- | --- | --- |
 | LTA Checksum Library | External Library | Vehicle number validation |
-| CAS Database | External Database | VIP vehicle lookup |
+| OCMS Database (Intranet) | External Database | VIP vehicle lookup |
 | Notice Creation Service | Internal Service | Parent flow that calls this function |
 
 ---
@@ -286,3 +286,4 @@ The Vehicle Registration Type Check receives data from the following sources dur
 | 1.0 | 15/01/2026 | Claude | Initial version based on FD Section 2 |
 | 2.0 | 19/01/2026 | Claude | Revised: Added complete data types, error codes (OCMS-XXXX format), audit user info, database operations, processing path |
 | 2.1 | 19/01/2026 | Claude | Aligned with Data Dictionary: varchar(14) for vehicle_no, varchar(1) for type fields, corrected nullable settings |
+| 2.2 | 27/01/2026 | Claude | Aligned with FD: Updated default behavior - after VIP check fails, return 'S' (Local) per FD Step 8. Removed 'Foreign default for unmatched' |

@@ -5,10 +5,10 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Notice Processing Flow for Deceased Offenders |
-| Version | v1.0 |
+| Version | v1.2 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 15/01/2026 |
+| Last Updated | 27/01/2026 |
 | Status | Draft |
 | FD Reference | OCMS 14 - Section 4 |
 | TD Reference | OCMS 14 - Section 3 |
@@ -232,7 +232,7 @@ JOIN ocms_offence_notice_owner_driver ond ON von.notice_no = ond.notice_no
 WHERE sn.suspension_type = 'PS'
   AND sn.reason_of_suspension = 'RP2'
   AND CAST(sn.date_of_suspension AS DATE) = CAST(GETDATE() AS DATE)
-  AND sn.due_date_of_revival IS NULL
+  AND sn.date_of_revival IS NULL  -- Not yet revived (date_of_revival = actual revival date)
   AND ond.owner_driver_indicator IN ('H', 'D')
   AND ond.offender_indicator = 'Y'
   AND ond.life_status = 'D'
@@ -343,31 +343,69 @@ WHERE sn.suspension_type = 'PS'
 
 | Table | Purpose | Key Fields |
 | --- | --- | --- |
-| ocms_offence_notice_owner_driver | Store offender life status | life_status, date_of_death |
-| ocms_valid_offence_notice | Store suspension status | suspension_type, epr_reason_of_suspension |
-| ocms_suspended_notice | Suspension history | reason_of_suspension, date_of_suspension |
-| ocms_offence_notice_owner_driver_addr | Offender address | type_of_address |
+| ocms_offence_notice_owner_driver | Store offender life status | life_status, date_of_death, offender_indicator |
+| ocms_valid_offence_notice | Store suspension status | suspension_type, epr_reason_of_suspension, epr_date_of_suspension |
+| ocms_suspended_notice | Suspension history | reason_of_suspension, date_of_suspension, process_indicator |
+| ocms_offence_notice_owner_driver_addr | Offender address | type_of_address (lta_reg/lta_mail/mha_reg/furnished_mail) |
 
 ### 6.2 Field Mapping - ocms_offence_notice_owner_driver
 
-| Database Field | Source | Description |
+| Database Field | Type | Source | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | Notice | Notice number (PK) |
+| owner_driver_indicator | varchar(1) | Notice data | 'O'=Owner, 'H'=Hirer, 'D'=Driver (PK) |
+| life_status | varchar(1) | MHA/DataHive | 'A'=Alive, 'D'=Deceased |
+| date_of_death | datetime2(7) | MHA/DataHive | Date of death if deceased |
+| offender_indicator | varchar(1) | System | 'Y'=Current offender, 'N'=Not current |
+| id_type | varchar(1) | MHA/LTA | ID type |
+| id_no | varchar(12) | MHA/LTA | NRIC/FIN number |
+| name | varchar(66) | MHA/LTA | Full name |
+
+### 6.4 Field Mapping - ocms_valid_offence_notice (Suspension Fields)
+
+| Database Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | From notice | Notice number (PK) |
+| suspension_type | varchar(2) | 'PS' or 'TS' | Type of suspension |
+| epr_reason_of_suspension | varchar(3) | 'RIP' or 'RP2' | EPR suspension reason code |
+| epr_date_of_suspension | datetime2(7) | Current timestamp | When EPR suspension applied |
+| due_date_of_revival | datetime2(7) | NULL for PS | Anticipated revival date |
+| last_processing_stage | varchar(3) | 'RD1' or 'DN1' | After redirect |
+| next_processing_stage | varchar(3) | Stage code | Next processing stage |
+| next_processing_date | datetime2(7) | Date | Next processing date |
+
+### 6.5 Field Mapping - ocms_offence_notice_owner_driver_addr
+
+| Database Field | Type | Description |
 | --- | --- | --- |
-| life_status | MHA/DataHive | 'A' or 'D' |
-| date_of_death | MHA/DataHive | Date of death if deceased |
-| owner_driver_indicator | Notice data | 'O'=Owner, 'H'=Hirer, 'D'=Driver |
-| offender_indicator | System | 'Y'=Current offender |
+| notice_no | varchar(10) | Notice number (PK) |
+| owner_driver_indicator | varchar(1) | O/H/D (PK) |
+| type_of_address | varchar(20) | Address type: lta_reg, lta_mail, mha_reg, furnished_mail (PK) |
+| blk_hse_no | varchar(10) | Block/house number |
+| floor_no | varchar(3) | Floor number |
+| unit_no | varchar(5) | Unit number |
+| postal_code | varchar(6) | Postal code |
+| street_name | varchar(32) | Street name |
+| bldg_name | varchar(65) | Building name |
 
 ### 6.3 Field Mapping - ocms_suspended_notice
 
-| Database Field | Value | Description |
-| --- | --- | --- |
-| notice_no | From notice | Notice number |
-| suspension_type | 'PS' | Permanent Suspension |
-| reason_of_suspension | 'RIP' or 'RP2' | Based on date comparison |
-| date_of_suspension | Current timestamp | When suspension applied |
-| due_date_of_revival | NULL | PS never auto-revives |
-| officer_authorising_suspension | 'SYSTEM' | Auto-applied |
-| sr_no | Auto-generated | Suspension record number |
+| Database Field | Type | Value | Description |
+| --- | --- | --- | --- |
+| notice_no | varchar(10) | From notice | Notice number (PK) |
+| date_of_suspension | datetime2(7) | Current timestamp | When suspension applied (PK) |
+| sr_no | integer | Auto-generated | Suspension record number (PK) |
+| suspension_source | varchar(4) | 'CRON' or 'OCMS' | Source of suspension |
+| suspension_type | varchar(2) | 'PS' | Permanent Suspension |
+| reason_of_suspension | varchar(3) | 'RIP' or 'RP2' | Based on date comparison |
+| officer_authorising_suspension | varchar(50) | 'SYSTEM' | Auto-applied |
+| due_date_of_revival | datetime2(7) | NULL | Anticipated revival date (PS never auto-revives) |
+| suspension_remarks | varchar(200) | Optional | Remarks for suspension |
+| date_of_revival | datetime2(7) | NULL | Actual revival date (set when revived) |
+| revival_reason | varchar(3) | 'PSR' | Permanent Suspension Revival |
+| officer_authorising_revival | varchar(50) | OIC ID | Officer who authorized revival |
+| revival_remarks | varchar(200) | Optional | Remarks for revival |
+| process_indicator | varchar(64) | 'manual' or 'fetch_datahive_uen_fin' | Indicates source process |
 
 ---
 
@@ -409,3 +447,4 @@ WHERE sn.suspension_type = 'PS'
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on FD Section 4 and backend code analysis |
 | 1.1 | 19/01/2026 | Claude | Yi Jie compliance: Fixed SELECT * usage, aligned response format, fixed field name consistency |
+| 1.2 | 27/01/2026 | Claude | Data Dictionary alignment: Added process_indicator field, added field types, added complete field mappings for all tables (Section 6.3-6.5), fixed `due_date_of_revival` → `date_of_revival` for revival check in queries, verified field names against intranet.json |

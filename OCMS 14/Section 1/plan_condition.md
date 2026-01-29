@@ -5,10 +5,10 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Detecting Vehicle Registration Type |
-| Version | v2.1 |
+| Version | v2.2 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 19/01/2026 |
+| Last Updated | 27/01/2026 |
 | Status | Revised |
 | FD Reference | OCMS 14 - Section 2 |
 | TD Reference | OCMS 14 - Section 1 |
@@ -45,9 +45,8 @@
 | C004 | Singapore Vehicle Check | vehicleNo | LTA Checksum validation = true | Return 'S' |
 | C005 | Diplomatic Vehicle Check | vehicleNo | Prefix = 'S' AND Suffix IN ('CC', 'CD', 'TC', 'TE') | Return 'D' |
 | C006 | Military Vehicle Check | vehicleNo | Prefix/Suffix = 'MID' OR 'MINDEF' | Return 'I' |
-| C007 | VIP Vehicle Check | vehicleNo | Found in CAS VIP_VEHICLE with status = 'A' | Return 'V' |
-| C008 | Local Vehicle Fallback | vehicleNo | Last character is alphabet | Return 'S' |
-| C009 | Foreign Vehicle Default | vehicleNo | No other condition matches | Return 'F' |
+| C007 | VIP Vehicle Check | vehicleNo | Found in ocms_vip_vehicle with status = 'A' | Return 'V' |
+| C008 | Local Vehicle Default | vehicleNo | No VIP match found | Return 'S' |
 
 ---
 
@@ -242,23 +241,23 @@ ELSE Proceed to VIP check
 
 | Attribute | Value |
 | --- | --- |
-| Description | Query CAS database to check if vehicle has active VIP Parking Label |
+| Description | Query OCMS database to check if vehicle has active VIP Parking Label |
 | Trigger | After C006 fails (not a Military vehicle) |
 | Input | vehicleNo |
 | Input Data Type | varchar(14) |
-| Logic | Query CAS VIP_VEHICLE table for vehicleNo with status = 'A' |
+| Logic | Query ocms_vip_vehicle table for vehicleNo with status = 'A' |
 | Output | Return 'V' (VIP) if found with active status |
-| Else | Proceed to C008 |
+| Else | Proceed to C008 (Return 'S' as Local default) |
 | Error Handling | On connection failure, log error and proceed to C008 |
 
 ```
 TRY
-    IF EXISTS (SELECT 1 FROM VIP_VEHICLE WHERE vehicle_no = vehicleNo AND status = 'A')
+    IF EXISTS (SELECT 1 FROM ocms_vip_vehicle WHERE vehicle_no = vehicleNo AND status = 'A')
     THEN Return 'V'
-    ELSE Proceed to Local fallback check
+    ELSE Return 'S' (Local Vehicle Default)
 CATCH Exception
     Log error
-    Proceed to Local fallback check
+    Return 'S' (Local Vehicle Default)
 ```
 
 **VIP Status Values:**
@@ -270,49 +269,31 @@ CATCH Exception
 
 **VIP Status Transition (Future - FOMS Implementation):**
 
-| Current System (CAS) | Future System (FOMS) |
+| Current System (OCMS VIP Table) | Future System (FOMS) |
 | --- | --- |
 | status = 'A' | status = 'A' AND offence_date BETWEEN start_date AND end_date |
 | status = 'D' | status = 'D' OR offence_date NOT BETWEEN start_date AND end_date |
 
 ---
 
-**C008: Local Vehicle Fallback**
+**C008: Local Vehicle Default**
 
 | Attribute | Value |
 | --- | --- |
-| Description | Check if last character is alphabet (edge case for Singapore vehicles) |
+| Description | Default to Local vehicle if no VIP match found (per FD Section 2.3 Step 8) |
 | Trigger | After C007 fails (not a VIP vehicle) |
 | Input | vehicleNo |
 | Input Data Type | varchar(14) |
-| Logic | Last character of vehicleNo is a letter (A-Z) |
-| Output | Return 'S' (Local) if matches |
-| Else | Proceed to C009 |
-
-```
-IF LAST_CHAR(vehicleNo) IS LETTER (A-Z)
-THEN Return 'S'
-ELSE Proceed to Foreign default
-```
-
----
-
-**C009: Foreign Vehicle Default**
-
-| Attribute | Value |
-| --- | --- |
-| Description | Default to Foreign vehicle if no other condition matches |
-| Trigger | After all other checks fail |
-| Input | vehicleNo |
-| Input Data Type | varchar(14) |
-| Logic | No specific pattern matched |
-| Output | Return 'F' (Foreign) |
+| Logic | No VIP match found - confirm as Local vehicle |
+| Output | Return 'S' (Local) |
 | Else | N/A - This is the final default |
 
 ```
-IF NO_OTHER_CONDITION_MATCHED
-THEN Return 'F'
+IF NOT_FOUND_IN_VIP_DATABASE
+THEN Return 'S' (Local Vehicle)
 ```
+
+**Note:** Per FD Section 2.3 Step 8: "If the vehicle does not meet the criteria for 'V' (VIP), OCMS confirms that the vehicle registration type is 'S' (Local Vehicle)"
 
 ---
 
@@ -351,32 +332,27 @@ START
   │                                                     │
   │                                                     ├─ YES ─► Return 'I' ─► END
   │                                                     │
-  │                                                     └─ NO ──► In VIP DB?
+  │                                                     └─ NO ──► In VIP DB (status='A')?
   │                                                                 │
   │                                                                 ├─ YES ─► Return 'V' ─► END
   │                                                                 │
-  │                                                                 └─ NO ──► Last char letter?
-  │                                                                             │
-  │                                                                             ├─ YES ─► Return 'S' ─► END
-  │                                                                             │
-  │                                                                             └─ NO ──► Return 'F' ─► END
+  │                                                                 └─ NO ──► Return 'S' (Local Default) ─► END
 END
 ```
 
 ### Decision Table
 
-| Source='F' | Blank VehNo | Type | LTA Valid | Diplomatic | Military | VIP DB | Last=Letter | Result |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TRUE | - | - | - | - | - | - | - | F |
-| FALSE | TRUE | U | - | - | - | - | - | X |
-| FALSE | TRUE | O | - | - | - | - | - | ERROR (OCMS-1401) |
-| FALSE | TRUE | E | - | - | - | - | - | ERROR (OCMS-1402) |
-| FALSE | FALSE | - | TRUE | - | - | - | - | S |
-| FALSE | FALSE | - | FALSE | TRUE | - | - | - | D |
-| FALSE | FALSE | - | FALSE | FALSE | TRUE | - | - | I |
-| FALSE | FALSE | - | FALSE | FALSE | FALSE | TRUE | - | V |
-| FALSE | FALSE | - | FALSE | FALSE | FALSE | FALSE | TRUE | S |
-| FALSE | FALSE | - | FALSE | FALSE | FALSE | FALSE | FALSE | F |
+| Source='F' | Blank VehNo | Type | LTA Valid | Diplomatic | Military | VIP DB | Result |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| TRUE | - | - | - | - | - | - | F |
+| FALSE | TRUE | U | - | - | - | - | X |
+| FALSE | TRUE | O | - | - | - | - | ERROR (OCMS-1401) |
+| FALSE | TRUE | E | - | - | - | - | ERROR (OCMS-1402) |
+| FALSE | FALSE | - | TRUE | - | - | - | S |
+| FALSE | FALSE | - | FALSE | TRUE | - | - | D |
+| FALSE | FALSE | - | FALSE | FALSE | TRUE | - | I |
+| FALSE | FALSE | - | FALSE | FALSE | FALSE | TRUE | V |
+| FALSE | FALSE | - | FALSE | FALSE | FALSE | FALSE | S (Local Default) |
 
 ---
 
@@ -410,7 +386,7 @@ END
 | Exception Code | Exception Name | Condition | Handling | Result |
 | --- | --- | --- | --- | --- |
 | SEX001 | LTA Validation Error | LTA library throws exception | Catch exception, log error | Proceed to C005 (Diplomatic check) |
-| SEX002 | CAS Database Error | VIP query fails | Catch exception, log error | Proceed to C008 (Local fallback check) |
+| SEX002 | OCMS Database Error | VIP query fails | Catch exception, log error | Proceed to C008 (Local fallback check) |
 | SEX003 | Null Input | vehicleNo is null | Check offence type | Return X (if Type U) or error |
 
 ### 5.2 Business Exceptions
@@ -499,12 +475,11 @@ END
 | TC011 | C006 - Military MID prefix | vehNo='MID1234' | I | - | - |
 | TC012 | C006 - Military MID suffix | vehNo='1234MID' | I | - | - |
 | TC013 | C006 - Military MINDEF | vehNo='MINDEF123' | I | - | - |
-| TC014 | C007 - VIP vehicle | vehNo='VIP123' (in CAS with A) | V | - | - |
-| TC015 | C007 - Defunct VIP | vehNo='VIP456' (in CAS with D) | S or F | - | - |
-| TC016 | C008 - Local fallback | vehNo='ABC123X' (ends with letter) | S | - | - |
-| TC017 | C009 - Foreign default | vehNo='12345' (no match) | F | - | - |
-| TC018 | Exception - LTA error | vehNo='ERROR123' (triggers LTA exception) | Continue to C005 | - | - |
-| TC019 | Exception - CAS error | vehNo='CASERROR' (triggers CAS exception) | Continue to C008 | - | - |
+| TC014 | C007 - VIP vehicle | vehNo='VIP123' (in OCMS with A) | V | - | - |
+| TC015 | C007 - Defunct VIP | vehNo='VIP456' (in OCMS with D) | S | - | - |
+| TC016 | C008 - Local default | vehNo='ABC123' (not in VIP DB) | S | - | - |
+| TC017 | Exception - LTA error | vehNo='ERROR123' (triggers LTA exception) | Continue to C005 | - | - |
+| TC018 | Exception - OCMS DB error | vehNo='DBFAIL123' (triggers OCMS exception) | S (Local Default) | - | - |
 
 ---
 
@@ -515,3 +490,4 @@ END
 | 1.0 | 15/01/2026 | Claude | Initial version based on FD Section 2 and backend code analysis |
 | 2.0 | 19/01/2026 | Claude | Revised: Split C003 into C003a/C003b, added OCMS-XXXX error codes, added complete data types, audit user config, database operations, processing path, enhanced test cases |
 | 2.1 | 19/01/2026 | Claude | Aligned with Data Dictionary: varchar(14) for vehicle_no, varchar(1) for type fields, corrected nullable settings |
+| 2.2 | 27/01/2026 | Claude | Aligned with FD: Removed C009 (Foreign default), updated C008 to Local Default per FD Step 8. After VIP check fails, return 'S' (Local) instead of checking last char letter |

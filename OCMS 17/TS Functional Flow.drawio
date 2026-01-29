@@ -1,0 +1,1042 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" version="28.2.6" pages="7">
+  <diagram id="eQj8Vz27D052V8Ax-m2S" name="TS-High-Level">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="220" y="320" width="1480" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-2" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="640" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-4" target="LqaeuAVjU8HRuQ09VQ8f-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-4" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="370" width="240" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-5" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-7" target="LqaeuAVjU8HRuQ09VQ8f-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1000" y="485" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-6" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-7" target="LqaeuAVjU8HRuQ09VQ8f-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-7" value="TS allowed?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="445" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-9" target="LqaeuAVjU8HRuQ09VQ8f-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-9" value="Staff Portal call backend API" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="910" y="455" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-11" target="LqaeuAVjU8HRuQ09VQ8f-14">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1490" y="485" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-11" value="&lt;b&gt;Function:&lt;/b&gt;&amp;nbsp;&lt;br&gt;OCMS Backend check if TS is allowed" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="455" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-12" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-14" target="LqaeuAVjU8HRuQ09VQ8f-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-13" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-14" target="LqaeuAVjU8HRuQ09VQ8f-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-14" value="TS allowed?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1261" y="445" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-16" target="LqaeuAVjU8HRuQ09VQ8f-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-16" value="&lt;b&gt;Function:&amp;nbsp;&lt;/b&gt;&lt;div&gt;OCMS Backend apply TS&amp;nbsp;&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="455" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-17" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="455" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-19" target="LqaeuAVjU8HRuQ09VQ8f-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-19" value="show error message" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="575" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-21" target="LqaeuAVjU8HRuQ09VQ8f-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-21" value="Respond with error message" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1241" y="580" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-22" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1271" y="685" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-23" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="910" y="575" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-24" value="Staff Portal check if allowed" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="455" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-25" value="OCMS apply TS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="425" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-26" value="PLUS apply TS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="310" y="515" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-27" value="OCMS Backend" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="315" y="686" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="710" y="484" as="sourcePoint" />
+            <mxPoint x="770" y="484" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.567;entryY=1.017;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="LqaeuAVjU8HRuQ09VQ8f-2" target="LqaeuAVjU8HRuQ09VQ8f-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-30" value="&lt;b&gt;Manual Apply TS from Staff Portal&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="301" y="380" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="LqaeuAVjU8HRuQ09VQ8f-31" value="&lt;b style=&quot;&quot;&gt;&lt;font&gt;Auto trigger by OCMS Backend&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="315" y="644" width="200" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="UumqeXGSZnMJwBn5OAlV" name="UI-side-validation">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bn76sFxV2j5NAAoMALrL-1" value="" style="group" connectable="0" vertex="1" parent="1">
+          <mxGeometry x="520" y="80" width="760" height="1330" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry width="750" height="1330" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-4" target="bn76sFxV2j5NAAoMALrL-12">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-4" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;&lt;b&gt;&amp;nbsp;Process:&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Staff Portal validate if notice(s) are eligible for TS&lt;/font&gt;&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="240" y="80" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-6" target="bn76sFxV2j5NAAoMALrL-16">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="449.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-6" value="Detect any Notice Last Processing Stage is in the Court Stage" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="240" y="338" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-7" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="110" y="197.5" width="55" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-8" value="&lt;b style=&quot;font-size: 16px;&quot;&gt;Staff Portal UI-Side Validation for TS Eligibility&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry y="10" width="750" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-9" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-12" target="bn76sFxV2j5NAAoMALrL-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-12" target="bn76sFxV2j5NAAoMALrL-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-11" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="bn76sFxV2j5NAAoMALrL-10">
+          <mxGeometry x="-0.0737" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-12" value="Any record to process" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="260" y="185" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-13" value="Read data from VON API response returned during page load" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="80" y="342" width="140" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-14" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-16" target="bn76sFxV2j5NAAoMALrL-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-15" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-16" target="bn76sFxV2j5NAAoMALrL-20">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="595" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-16" value="Any Notice with Last processing stage = any of the stages on right?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="255" y="450" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-17" value="Last Processing Stage:&lt;div&gt;NPA,&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;ROV,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;ENA,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;RD1,&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;RD2,&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;RR3,&lt;br&gt;DN1, DN2, DR3,&lt;/span&gt;&lt;/div&gt;&lt;div&gt;CFC, CPC&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="360" y="450" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-18" value="Display message:&amp;nbsp;&lt;br&gt;&quot;Unable to TS as one or more Notice is in the Court stage.&quot;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="40" y="465" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-20" target="bn76sFxV2j5NAAoMALrL-29">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-20" value="Detect any Notice has existing PS suspension" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="240" y="590" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-21" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-23" target="bn76sFxV2j5NAAoMALrL-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-22" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-23" target="bn76sFxV2j5NAAoMALrL-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-23" value="crs_reason = blank?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="260" y="965" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-24" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-26" target="bn76sFxV2j5NAAoMALrL-39">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="1150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-25" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-26" target="bn76sFxV2j5NAAoMALrL-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-26" value="epr_reason = FOR, MID, RIP, RP2 or DIP?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="260" y="1109" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-27" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-29" target="bn76sFxV2j5NAAoMALrL-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-28" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-29" target="bn76sFxV2j5NAAoMALrL-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-29" value="Any Notice&amp;nbsp;&lt;div&gt;with PS?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="255" y="699.5" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-30" value="Redirect User to Apply Suspension Detail page to input suspension details" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="420" y="714" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-31" value="Redirect User to Apply Suspension Detail page to input suspension details" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="230" y="1245" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-32" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-33" target="bn76sFxV2j5NAAoMALrL-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-33" value="Process next record" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="240" y="851" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-34" value="Display message:&amp;nbsp;&lt;br&gt;&quot;Unable to TS as one or more Notices has been paid.&quot;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="580" y="975" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-36" target="bn76sFxV2j5NAAoMALrL-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-36" value="Reject the batch, user need to unselect the notice" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="400" y="975" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-37" value="Display message:&amp;nbsp;&lt;br&gt;&quot;Unable to TS as one or more Notices has an existing PS.&quot;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="580" y="1119" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="bn76sFxV2j5NAAoMALrL-1" source="bn76sFxV2j5NAAoMALrL-39" target="bn76sFxV2j5NAAoMALrL-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bn76sFxV2j5NAAoMALrL-39" value="Reject the batch, user need to unselect the notice" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="bn76sFxV2j5NAAoMALrL-1">
+          <mxGeometry x="400" y="1119" width="140" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="qaNNOaLcBusm50KMjOgQ" name="Backend-side validation">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="eldBvaCUQV-FKACa0G89-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="700" y="330" width="2210" height="470" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="eldBvaCUQV-FKACa0G89-5" target="oDwU5MS2NEG5r23F08xZ-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="eldBvaCUQV-FKACa0G89-5" target="oDwU5MS2NEG5r23F08xZ-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eldBvaCUQV-FKACa0G89-5" value="Authenticate Request" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="430" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="eldBvaCUQV-FKACa0G89-44" value="&lt;span style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Backend checking TS if allowed sub-flow&lt;/b&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="700" y="350" width="2210" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-3" target="eldBvaCUQV-FKACa0G89-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1005" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-3" value="TS API request received" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="430" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-4" value="" style="group" connectable="0" vertex="1" parent="1">
+          <mxGeometry x="720" y="432.5" width="55" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-1" value="Start" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="oDwU5MS2NEG5r23F08xZ-4">
+          <mxGeometry width="55" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-1" target="oDwU5MS2NEG5r23F08xZ-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-18" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-13" target="oDwU5MS2NEG5r23F08xZ-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-20" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-13" target="oDwU5MS2NEG5r23F08xZ-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-13" value="Auth success?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="420" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-15" value="Validate JWT" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="990" y="530" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-17" value="Respond: Unauthorised" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-19" target="oDwU5MS2NEG5r23F08xZ-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-19" value="Validate if requestor is has permission to use the Suspension Code" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1330" y="430" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-21" target="oDwU5MS2NEG5r23F08xZ-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-25" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="oDwU5MS2NEG5r23F08xZ-24">
+          <mxGeometry x="-0.1313" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-21" target="oDwU5MS2NEG5r23F08xZ-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-21" value="Allowed?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="420" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-23" value="&lt;br&gt;Response: Notice is not allowed to suspend at this stage.&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1490" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-26" target="oDwU5MS2NEG5r23F08xZ-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-26" value="Query VON using Notice number" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1670" y="430" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-31" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-28" target="oDwU5MS2NEG5r23F08xZ-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-28" target="oDwU5MS2NEG5r23F08xZ-35">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2040" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-28" value="LPS allowed for this Susp code?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1860" y="420" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-30" value="Respond: Notice is not allowed to suspend at this stage" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1840" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-35" target="oDwU5MS2NEG5r23F08xZ-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-35" value="Query Suspended Notice DB using Notice number" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2000" y="430" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-44" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-41" target="oDwU5MS2NEG5r23F08xZ-51">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2349.9999999999995" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-46" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-41" target="oDwU5MS2NEG5r23F08xZ-45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-41" value="Any active PS?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2190" y="420" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-48" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-45" target="oDwU5MS2NEG5r23F08xZ-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-61" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-45" target="oDwU5MS2NEG5r23F08xZ-49">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-45" value="crs_reason&amp;nbsp;&lt;div&gt;= blank?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2190" y="550" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-60" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-47" target="oDwU5MS2NEG5r23F08xZ-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-47" target="oDwU5MS2NEG5r23F08xZ-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-63" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="oDwU5MS2NEG5r23F08xZ-62">
+          <mxGeometry x="-0.7929" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-47" value="epr_reason&amp;nbsp;&lt;div&gt;=&amp;nbsp;&lt;span style=&quot;font-size: 11px;&quot;&gt;FOR, DIP, RIP or MID?&lt;/span&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2190" y="690" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-49" value="Respond: Unable to TS as&amp;nbsp;Notice has been paid" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2010" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-53" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-51" target="oDwU5MS2NEG5r23F08xZ-52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-51" value="Calculate revival due date" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2333" y="429.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-55" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-52" target="oDwU5MS2NEG5r23F08xZ-54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-52" value="Update Suspend Notice DB&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2489" y="429.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-57" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="oDwU5MS2NEG5r23F08xZ-54" target="oDwU5MS2NEG5r23F08xZ-65">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2810" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-54" value="Update VON DB &amp;amp; eVON&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2643" y="429.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-59" value="Respond: Unable to TS as Notice has been permanently suspended" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2010" y="700" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-64" value="" style="group" connectable="0" vertex="1" parent="1">
+          <mxGeometry x="2830" y="432.5" width="55" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="oDwU5MS2NEG5r23F08xZ-65" value="Start" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="oDwU5MS2NEG5r23F08xZ-64">
+          <mxGeometry width="55" height="55" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="MkryER1eaQ2DQnK8ssYq" name="OCMS Staff Portal Manual TS">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="3bC37fmP-TpjSMXqG3Ai-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-161" y="280" width="1881" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-3" target="ZCHcYsN9v4dekSCtv6KC-44">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="119" y="403" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-3" value="User search for Notice(s)&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="9" y="373" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-5" target="ZCHcYsN9v4dekSCtv6KC-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-5" value="Start" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="-101" y="373" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="ZCHcYsN9v4dekSCtv6KC-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="409" y="433" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="ZCHcYsN9v4dekSCtv6KC-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="469" y="403" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-8" value="Refer to sub-flow below" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="349" y="483" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-13" target="ZCHcYsN9v4dekSCtv6KC-35">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="659" y="403" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-10" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="ZCHcYsN9v4dekSCtv6KC-9">
+          <mxGeometry x="-0.2571" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Cl1IkAGppmrcgTPQAu6Q-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-13" target="ZCHcYsN9v4dekSCtv6KC-41">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="579" y="620" />
+              <mxPoint x="1490" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-13" value="Is TS&lt;br&gt;&amp;nbsp;eligible?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="539" y="363" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-14" value="&lt;br&gt;Display UI:&lt;br&gt;1. List of Notices selected&lt;br&gt;2. Suspension Detail Form to input Temporary Suspension Detail&amp;nbsp;&lt;br&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="679" y="483" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-16" target="ZCHcYsN9v4dekSCtv6KC-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-16" value="Staff Portal send TS request to backend" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1062" y="373" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-19" target="ZCHcYsN9v4dekSCtv6KC-41">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1417" y="403" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-19" target="ZCHcYsN9v4dekSCtv6KC-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-19" value="Process: Backend checks if TS is allowed" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="1241" y="373" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-20" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;&lt;b&gt;&amp;nbsp;Process:&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Staff Portal validate if notice(s) are eligible for TS&lt;/font&gt;&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="349" y="373" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-21" value="Refer to sub-flow below" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="1241" y="483" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-25" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1457" y="443" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-28" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="368" width="70" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-44" target="ZCHcYsN9v4dekSCtv6KC-20">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="283" y="403" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Cl1IkAGppmrcgTPQAu6Q-1" target="ZCHcYsN9v4dekSCtv6KC-16">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1032" y="402.9999999999999" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-33" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-35" target="ZCHcYsN9v4dekSCtv6KC-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Cl1IkAGppmrcgTPQAu6Q-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-35" target="Cl1IkAGppmrcgTPQAu6Q-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-35" value="Staff Portal redirect User to Suspension Detail Page" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="709" y="373" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-39" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Manual Apply TS from OCMS Staff Portal&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-161" y="315" width="1881" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-40" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="ZCHcYsN9v4dekSCtv6KC-41" target="ZCHcYsN9v4dekSCtv6KC-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-41" value="Display TS success or fail message" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="373" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZCHcYsN9v4dekSCtv6KC-44" value="User select Notice(s) to apply TS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="179" y="373" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Cl1IkAGppmrcgTPQAu6Q-1" value="&lt;br&gt;&lt;div&gt;User input Temporary Suspension Details &amp;amp; submit&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="890" y="373" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="zpllO6zqSeSAIQLoU79O" name="PLUS Staff Portal Manual TS">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-40" y="200" width="2070" height="540" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-5" target="GKlX8U41AbNjyxDl7NKB-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-5" target="GKlX8U41AbNjyxDl7NKB-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-5" value="Start" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="-20" y="410" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="GKlX8U41AbNjyxDl7NKB-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="360" y="560" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="GKlX8U41AbNjyxDl7NKB-12">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="530" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-8" value="Refer to sub-flow for UI-side validation" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="300" y="610" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-12" target="GKlX8U41AbNjyxDl7NKB-26">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="610" y="530" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-10" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="GKlX8U41AbNjyxDl7NKB-9">
+          <mxGeometry x="-0.2571" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-54" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-12" target="GKlX8U41AbNjyxDl7NKB-53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-12" value="Is TS&lt;br&gt;&amp;nbsp;eligible?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="490" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-13" value="&lt;br&gt;Display UI:&lt;br&gt;1. List of Notices selected&lt;br&gt;2. Suspension Detail Form to input Temporary Suspension Detail&amp;nbsp;&lt;br&gt;&lt;div&gt;&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="630" y="610" width="180" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-15" target="GKlX8U41AbNjyxDl7NKB-46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-15" value="PLUS Staff Portal triggers PLUS Backend to apply&lt;br&gt;suspension" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="498" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-19" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;&lt;b&gt;&amp;nbsp;Process:&amp;nbsp;&lt;/b&gt;&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;PLUS Staff Portal validate if notice(s) are eligible for TS&lt;/font&gt;&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-36" target="GKlX8U41AbNjyxDl7NKB-19">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="530" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-31" target="GKlX8U41AbNjyxDl7NKB-15">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="983" y="529.9999999999999" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-26" target="GKlX8U41AbNjyxDl7NKB-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-26" target="GKlX8U41AbNjyxDl7NKB-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-26" value="PLUS Staff Portal redirect PLM to Suspension Detail Page" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="497" width="120" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-27" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Manual Apply TS from PLUS Staff Portal&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-50" y="230" width="2060" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-66" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-29" target="GKlX8U41AbNjyxDl7NKB-65">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-29" value="PLUS Staff Portal display TS success or fail message" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1771" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-31" value="&lt;br&gt;&lt;div&gt;User input Temporary Suspension Details &amp;amp; submit&lt;br&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="498.5" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-35" target="GKlX8U41AbNjyxDl7NKB-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-35" value="PLM wants to add Notice(s) to an Appeal" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="120" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-36" value="PLM wants to apply&amp;nbsp; TS to Notice(s) for an Appeal" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="120" y="500" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-40" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-37" target="GKlX8U41AbNjyxDl7NKB-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-37" value="User search for Notice(s)&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-42" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-39" target="GKlX8U41AbNjyxDl7NKB-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-39" value="PLM select Notice(s) to add to Appeal or&amp;nbsp;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-44" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-41" target="GKlX8U41AbNjyxDl7NKB-43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-41" value="PLM add Notice(s) to the Appeal" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-43" target="GKlX8U41AbNjyxDl7NKB-46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-43" value="PLUS Staff Portal triggers PLUS Backend to apply &lt;br&gt;TS-APP" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-46" target="GKlX8U41AbNjyxDl7NKB-48">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-46" value="PLUS Backend calls OCMS Backend API to request for TS-APP" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-59" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-48" target="GKlX8U41AbNjyxDl7NKB-58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-61" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-48" target="GKlX8U41AbNjyxDl7NKB-60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-48" value="Process:&amp;nbsp;&lt;div&gt;OCMS Backend checks if TS is allowed&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-53" value="Display success or fail message" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="610" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-58" value="Refer to sub-flow for OCMS Backend validation" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="400" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-60" target="GKlX8U41AbNjyxDl7NKB-62">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-60" value="OCMS Backend responds to PLUS backend" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="GKlX8U41AbNjyxDl7NKB-62" target="GKlX8U41AbNjyxDl7NKB-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-62" value="PLUS Backend responds to PLUS Staff portal" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="300" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GKlX8U41AbNjyxDl7NKB-65" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="300" width="60" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="MD7sMi1tUW8GF5AVwdlO" name="loop_TS">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-740" y="300" width="1670" height="1380" as="geometry" />
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LtSnlPI2dmn1JUFbaSBh-3" target="LtSnlPI2dmn1JUFbaSBh-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-3" value="Start" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="454" y="360" width="65" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LtSnlPI2dmn1JUFbaSBh-5" target="S88ogdMLOK1XDW6s774N-35">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="486" y="655" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-5" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; font-size: 13px; line-height: normal; font-family: &amp;quot;Helvetica Neue&amp;quot;; text-align: start;&quot; class=&quot;p1&quot;&gt;&lt;span style=&quot;font-family: Helvetica; font-size: 12px; text-align: center;&quot;&gt;Revival cron runs&lt;/span&gt;&lt;br&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="426" y="485" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="LtSnlPI2dmn1JUFbaSBh-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="486" y="715" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LtSnlPI2dmn1JUFbaSBh-11" target="LtSnlPI2dmn1JUFbaSBh-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-9" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="LtSnlPI2dmn1JUFbaSBh-8">
+          <mxGeometry x="-0.28" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-10" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="LtSnlPI2dmn1JUFbaSBh-11" target="LtSnlPI2dmn1JUFbaSBh-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-11" value="Any record to process?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="446" y="755" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="LtSnlPI2dmn1JUFbaSBh-13" target="2PynV8uKNftJQd6vBvUn-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="486" y="1040" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-13" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; text-align: start;&quot; class=&quot;p1&quot;&gt;&lt;font face=&quot;Helvetica&quot;&gt;Process next record&lt;/font&gt;&lt;br&gt;&lt;/p&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="426" y="885" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-25" value="&lt;font&gt;&lt;font&gt;&lt;b&gt;DB table:&amp;nbsp;&lt;span style=&quot;text-align: center;&quot;&gt;ocms_suspended_notice&lt;/span&gt;&lt;/b&gt;&lt;/font&gt;&lt;/font&gt;&lt;div&gt;&lt;font face=&quot;Arial, sans-serif&quot;&gt;&lt;span style=&quot;white-space-collapse: preserve;&quot;&gt;suspension_type = TS&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;span style=&quot;font-family: Arial, sans-serif; white-space-collapse: preserve;&quot;&gt;due_date_of_revival = current date&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="566" y="655" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="LtSnlPI2dmn1JUFbaSBh-28" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="270" y="762.5" width="65" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-17" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;INTRANET DB:&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;ocms_suspended_notice&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;font style=&quot;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;span style=&quot;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PATCH existing record&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;date_of_revival = current date&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;revival_reason = SPO&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;officer_authorising_revival =&amp;nbsp;Ocmsizmgr&lt;br&gt;&lt;/div&gt;&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="576" y="1018" width="220" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-30" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-28" target="S88ogdMLOK1XDW6s774N-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-32" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-28" target="S88ogdMLOK1XDW6s774N-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-28" value="Notice has other active suspensions?&amp;nbsp;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-60" y="1038" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-49" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-29" target="S88ogdMLOK1XDW6s774N-51">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-333" y="1078" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-29" value="Query VON table using Notice number" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-260" y="1048" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-31" target="S88ogdMLOK1XDW6s774N-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-31" value="Query VON table using Notice number &amp;amp; update DB" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-80" y="885" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-33" value="&lt;div style=&quot;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;INTRANET DB&lt;/b&gt;&lt;/div&gt;&lt;font style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;DB:&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;ocms_valid_offence_notice&lt;br&gt;&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PATCH existing record&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-wrap-mode: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22Query%20VON%20to%20check%20if%20update%20is%20needed%22%20style%3D%22rounded%3D0%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%2260%22%20y%3D%221000%22%20width%3D%22120%22%20height%3D%2260%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;&lt;span style=&quot;background-color: transparent; font-size: 0px; text-wrap-mode: nowrap;&quot;&gt;&lt;font face=&quot;monospace&quot; color=&quot;rgba(0, 0, 0, 0)&quot;&gt;suspension_type&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;suspension_type = blank or null&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;epr_reason_of_suspension&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;= blank or null&lt;/span&gt;&lt;/div&gt;&lt;div&gt;crs_reason_of_suspension&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;= blank or null&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;INTERNET DB&lt;/b&gt;&lt;br&gt;&lt;/span&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;DB: e&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;ocms_valid_offence_notice&lt;br&gt;&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PATCH existing record&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;Same fields as Intranet&lt;/div&gt;&lt;/div&gt;&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-330" y="808" width="230" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-36" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-35" target="LtSnlPI2dmn1JUFbaSBh-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-35" value="&lt;span style=&quot;text-align: left;&quot;&gt;Query Suspended Notices DB for Notices with revival date = current date&lt;br&gt;&lt;br&gt;&amp;amp; other suspensions for the returned notice numbers&amp;nbsp;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="426.5" y="600" width="120" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-41" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-39" target="LtSnlPI2dmn1JUFbaSBh-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-43" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-39" target="LtSnlPI2dmn1JUFbaSBh-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-39" value="Any record to process?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="262.5" y="875" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-46" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-44" target="S88ogdMLOK1XDW6s774N-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-44" value="Notice updated" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="885" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-53" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-51" target="S88ogdMLOK1XDW6s774N-52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-51" value="Compare VON suspension with the newly-revived suspension" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-260" y="1160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-55" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-52" target="S88ogdMLOK1XDW6s774N-54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-58" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-52" target="S88ogdMLOK1XDW6s774N-57">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-52" value="Are they&amp;nbsp;&lt;div&gt;the same?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-240" y="1270" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-54" value="No change&amp;nbsp;&lt;div&gt;&lt;br&gt;&lt;div&gt;&lt;i&gt;VON stores the most recent suspension&lt;/i&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-440" y="1280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-66" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-57" target="S88ogdMLOK1XDW6s774N-65">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-57" value="Patch VON with the next most recent active suspension" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-260" y="1420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-59" value="&lt;i&gt;Most recent = Latest date of suspension&amp;nbsp;&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-260" y="1490" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-61" value="&lt;div style=&quot;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;INTRANET DB&lt;/b&gt;&lt;/div&gt;&lt;font style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;div style=&quot;&quot;&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;DB:&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;ocms_valid_offence_notice&lt;br&gt;&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PATCH existing record&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-wrap-mode: nowrap;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22Query%20VON%20to%20check%20if%20update%20is%20needed%22%20style%3D%22rounded%3D0%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%2260%22%20y%3D%221000%22%20width%3D%22120%22%20height%3D%2260%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;&lt;span style=&quot;background-color: transparent; font-size: 0px; text-wrap-mode: nowrap;&quot;&gt;&lt;font face=&quot;monospace&quot; color=&quot;rgba(0, 0, 0, 0)&quot;&gt;suspension_type&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;suspension_type = most recent suspension&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;epr_reason_of_suspension&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;=&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;most recent suspension&lt;/span&gt;&lt;/div&gt;&lt;div&gt;crs_reason_of_suspension&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;=&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;most recent suspension&lt;br&gt;&lt;br&gt;Note: OCMS will check whether most recent suspension is EPR or CRS and patch the field accordingly.&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;INTERNET DB&lt;/b&gt;&lt;br&gt;&lt;/span&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;DB: e&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;ocms_valid_offence_notice&lt;br&gt;&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PATCH existing record&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;Same fields as Intranet.&lt;/div&gt;&lt;/div&gt;&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;" vertex="1" parent="1">
+          <mxGeometry x="-130" y="1250" width="310" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-64" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-54" target="S88ogdMLOK1XDW6s774N-44">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-600" y="1310" as="sourcePoint" />
+            <mxPoint x="-540" y="860" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-700" y="1310" />
+              <mxPoint x="-700" y="760" />
+              <mxPoint x="150" y="760" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-91" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-65">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-700" y="1310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-65" value="Notice updated" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-440" y="1420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-77" value="&lt;i&gt;Most recent = Latest date of suspension&amp;nbsp;&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-430" y="1250" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-81" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-78" target="S88ogdMLOK1XDW6s774N-86">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="311" y="1290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-78" value="&lt;span style=&quot;text-align: left;&quot;&gt;Initiate Looping TS&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="426.5" y="1280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-89" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-84" target="S88ogdMLOK1XDW6s774N-88">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-84" value="Create new TS record in Suspended Notices DB" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="426.5" y="1475" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-85" value="&lt;div style=&quot;text-align: left;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;INTRANET DB&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/b&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;DB: ocms_suspended_notice&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;font style=&quot;&quot;&gt;&lt;span style=&quot;&quot;&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;div&gt;date_of_suspension = Current date&lt;/div&gt;&lt;div&gt;sr_no = Next running number in sequence&lt;/div&gt;&lt;div&gt;suspension_source =&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Ocmsizmgr&lt;/span&gt;&lt;/div&gt;&lt;div&gt;case_no = blank or null&lt;/div&gt;&lt;div&gt;suspension_type = TS&lt;/div&gt;&lt;div&gt;reason_of_suspension = CLV or HST&lt;/div&gt;&lt;div&gt;officer_authorising_suspension&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;=&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Ocmsizmgr&lt;/span&gt;&lt;/div&gt;&lt;div&gt;due_date_of_revival = Date calculated by OCMS backend&amp;nbsp;&lt;/div&gt;&lt;div&gt;suspension_remarks =&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;= blank or null&lt;/span&gt;&lt;/div&gt;&lt;div&gt;date_of_revival = blank or null&lt;/div&gt;&lt;div&gt;revival_reason&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;= blank or null&lt;/span&gt;&lt;/div&gt;&lt;div&gt;officer_authorising_revival&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;= blank or null&lt;/span&gt;&lt;/div&gt;&lt;div&gt;revival_remarks&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;= blank or null&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;cre_user_id&amp;nbsp;=&amp;nbsp;Ocmsizmgr&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;cre_date = current date&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;DB:&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;ocms_valid_offence_notice&lt;br&gt;&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PATCH existing record&lt;/span&gt;&lt;span style=&quot;background-color: transparent; text-wrap-mode: nowrap; color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22Query%20VON%20to%20check%20if%20update%20is%20needed%22%20style%3D%22rounded%3D0%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3B%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%2260%22%20y%3D%221000%22%20width%3D%22120%22%20height%3D%2260%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); text-wrap-mode: nowrap; font-size: 0px;&quot;&gt;&lt;font face=&quot;monospace&quot;&gt;suspension_type&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;suspension_type = TS&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;epr_reason_of_suspension&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;=&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;CLV or HST&lt;/span&gt;&lt;/div&gt;&lt;div&gt;crs_reason_of_suspension&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;=&amp;nbsp;&lt;/span&gt;blank or null&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;INTERNET DB&lt;/b&gt;&lt;br&gt;&lt;/span&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;DB: e&lt;/b&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b&gt;ocms_valid_offence_notice&lt;br&gt;&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;PATCH existing record&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;Same fields as Intranet.&lt;/div&gt;&lt;/div&gt;&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="576" y="1180" width="316" height="470" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-87" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-86" target="S88ogdMLOK1XDW6s774N-84">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-86" value="&lt;span style=&quot;text-align: left;&quot;&gt;Calculate due date of revival&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="426" y="1380" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-90" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="S88ogdMLOK1XDW6s774N-88" target="S88ogdMLOK1XDW6s774N-65">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="426" y="1600" />
+              <mxPoint x="-380" y="1600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S88ogdMLOK1XDW6s774N-88" value="Update Notice suspension details in VON DB" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="426.5" y="1570" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="IntIgbdGrJXZRQhsP2PM-1" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Auto Apply Looping TS in OCMS Backend&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-740" y="320" width="1590" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-3" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="2PynV8uKNftJQd6vBvUn-1" target="2PynV8uKNftJQd6vBvUn-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="2PynV8uKNftJQd6vBvUn-1" target="2PynV8uKNftJQd6vBvUn-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-7" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" connectable="0" vertex="1" parent="2PynV8uKNftJQd6vBvUn-6">
+          <mxGeometry x="-0.183" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-1" value="Suspension code to be lifted = CLV or HST?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="446.5" y="1038" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="2PynV8uKNftJQd6vBvUn-2" target="S88ogdMLOK1XDW6s774N-78">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-2" value="Lift Suspension &amp;amp; update Suspended Notices DB" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="426" y="1180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="2PynV8uKNftJQd6vBvUn-5" target="2PynV8uKNftJQd6vBvUn-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-5" value="Lift Suspension &amp;amp; update Suspended Notices DB" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="262.5" y="1048" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="2PynV8uKNftJQd6vBvUn-8" target="S88ogdMLOK1XDW6s774N-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2PynV8uKNftJQd6vBvUn-8" value="Check Suspended Notices DB to other active suspensions with date_of_revival is null/empty" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="1043" width="120" height="72" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ZbYZgn4H-jWD1imuvlQc" name="Workspace">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="410" y="130" width="1480" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-3" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="450" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-5" target="Wus2N1_cRVH-QEkP5Z97-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-5" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="180" width="240" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-6" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-8" target="Wus2N1_cRVH-QEkP5Z97-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="295" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-7" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-8" target="Wus2N1_cRVH-QEkP5Z97-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-8" value="TS allowed?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="255" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-10" target="Wus2N1_cRVH-QEkP5Z97-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-10" value="Staff Portal call backend API" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="265" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-12" target="Wus2N1_cRVH-QEkP5Z97-15">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1680" y="295" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-12" value="&lt;b&gt;Function:&lt;/b&gt;&amp;nbsp;&lt;br&gt;OCMS Backend check if TS is allowed" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="265" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-13" value="yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-15" target="Wus2N1_cRVH-QEkP5Z97-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-14" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-15" target="Wus2N1_cRVH-QEkP5Z97-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-15" value="TS allowed?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1451" y="255" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-17" target="Wus2N1_cRVH-QEkP5Z97-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-17" value="&lt;b&gt;Function:&amp;nbsp;&lt;/b&gt;&lt;div&gt;OCMS Backend apply TS&amp;nbsp;&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="1620" y="265" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-18" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1780" y="265" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-20" target="Wus2N1_cRVH-QEkP5Z97-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-20" value="show error message" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="385" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-22" target="Wus2N1_cRVH-QEkP5Z97-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-22" value="Respond with error message" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1431" y="390" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-23" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1461" y="495" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-24" value="End" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="385" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-25" value="Staff Portal check if allowed" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="265" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-26" value="OCMS apply TS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="235" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-27" value="PLUS apply TS" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="325" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-28" value="OCMS Backend" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="505" y="496" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="900" y="294" as="sourcePoint" />
+            <mxPoint x="960" y="294" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.567;entryY=1.017;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Wus2N1_cRVH-QEkP5Z97-3" target="Wus2N1_cRVH-QEkP5Z97-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-31" value="&lt;b&gt;Manual Apply TS from Staff Portal&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="491" y="190" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Wus2N1_cRVH-QEkP5Z97-32" value="&lt;b style=&quot;&quot;&gt;&lt;font&gt;Auto trigger by OCMS Backend&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="505" y="454" width="200" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

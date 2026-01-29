@@ -5,10 +5,10 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Notice Processing Flow for Deceased Offenders |
-| Version | v1.0 |
+| Version | v1.2 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 15/01/2026 |
+| Last Updated | 27/01/2026 |
 | Status | Draft |
 | FD Reference | OCMS 14 - Section 4 |
 | TD Reference | OCMS 14 - Section 3 |
@@ -223,7 +223,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | 5 | Decision | date_of_death >= offence_date? | Compare death date with offence date | Yes→6, No→7 |
 | 6 | Process | Apply PS-RIP | Apply permanent suspension with reason 'RIP' | 8 |
 | 7 | Process | Apply PS-RP2 | Apply permanent suspension with reason 'RP2' | 8 |
-| 8 | Process | Update Notice | Set suspension_type='PS', epr_reason='RIP/RP2' | 9 |
+| 8 | Process | Update Notice | Set suspension_type='PS', epr_reason_of_suspension='RIP/RP2', epr_date_of_suspension=NOW() | 9 |
 | 9 | Process | Insert Suspended Notice | Create record in ocms_suspended_notice | 10 |
 | 10 | End | End | Suspension complete | - |
 
@@ -238,9 +238,9 @@ The Technical Flowchart will contain the following tabs/sections:
 
 | Step | Operation | Database | Table | Query/Action |
 | --- | --- | --- | --- | --- |
-| 4 | UPDATE | Intranet | ocms_offence_notice_owner_driver | `SET life_status='D', date_of_death=<value>` |
-| 8 | UPDATE | Intranet | ocms_valid_offence_notice | `SET suspension_type='PS', epr_reason_of_suspension='RIP/RP2'` |
-| 9 | INSERT | Intranet | ocms_suspended_notice | `INSERT reason_of_suspension='RIP/RP2', suspension_type='PS'` |
+| 4 | UPDATE | Intranet | ocms_offence_notice_owner_driver | `SET life_status='D', date_of_death=<value>, upd_date=NOW(), upd_user_id='SYSTEM'` |
+| 8 | UPDATE | Intranet | ocms_valid_offence_notice | `SET suspension_type='PS', epr_reason_of_suspension='RIP/RP2', epr_date_of_suspension=NOW()` |
+| 9 | INSERT | Intranet | ocms_suspended_notice | `INSERT notice_no, date_of_suspension=NOW(), sr_no, suspension_source='CRON', suspension_type='PS', reason_of_suspension='RIP/RP2', officer_authorising_suspension='SYSTEM', process_indicator='fetch_datahive_uen_fin'` |
 
 ### 4.6 External System Calls
 
@@ -351,7 +351,7 @@ JOIN ocms_offence_notice_owner_driver ond ON von.notice_no = ond.notice_no
 WHERE sn.suspension_type = 'PS'
   AND sn.reason_of_suspension = 'RP2'
   AND CAST(sn.date_of_suspension AS DATE) = CAST(GETDATE() AS DATE)
-  AND sn.due_date_of_revival IS NULL
+  AND sn.date_of_revival IS NULL  -- Not yet revived (date_of_revival = actual revival date)
   AND ond.owner_driver_indicator IN ('H', 'D')
   AND ond.offender_indicator = 'Y'
   AND ond.life_status = 'D'
@@ -595,3 +595,4 @@ For suspension operations, include payload boxes with:
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on plan_api.md and plan_condition.md |
 | 1.1 | 19/01/2026 | Claude | Yi Jie compliance: Fixed field name consistency (reason_suspension_date → date_of_suspension) |
+| 1.2 | 27/01/2026 | Claude | Data Dictionary alignment: Fixed `epr_reason` → `epr_reason_of_suspension`, added `epr_date_of_suspension`, fixed `due_date_of_revival` → `date_of_revival` for revival check, added `process_indicator` to INSERT query |

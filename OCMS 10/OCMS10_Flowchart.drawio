@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2" pages="12">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.0 Chrome/140.0.7339.249 Electron/38.7.2 Safari/537.36" version="29.3.0" pages="12">
   <diagram id="tab2_1" name="2.1_High_Level_AN_Processing">
     <mxGraphModel dx="661" dy="387" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
@@ -1593,7 +1593,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="tab3_6" name="3.6_Send_AN_Letter">
-    <mxGraphModel dx="459" dy="269" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
+    <mxGraphModel dx="946" dy="661" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="8000" pageHeight="2000" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1651,8 +1651,8 @@
         <mxCell id="s3_7_end" parent="sw_backend_3_7" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" value="End" vertex="1">
           <mxGeometry height="60" width="120" x="2770" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="s3_7_query_notice" parent="sw_backend_3_7" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SELECT&amp;nbsp;&lt;div&gt;von.notice_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.vehicle_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.computer_rule_code,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.composition_amount,&amp;nbsp;&lt;/div&gt;&lt;div&gt;ond.pp_name,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.notice_date_and_time&lt;br&gt;FROM ocms_valid_offence_notice AS von&lt;br&gt;JOIN ocms_offence_notice_detail AS ond ON von.notice_no = ond.notice_no&lt;br&gt;LEFT JOIN ocms_an_letter anl ON von.notice_no = anl.notice_no&lt;br&gt;WHERE von.an_flag = &#39;Y&#39;&lt;br&gt;&amp;nbsp;&amp;nbsp;AND von.last_processing_stage IN (&#39;ENA&#39;, &#39;ROV&#39;, &#39;NPA&#39;)&lt;br&gt;&amp;nbsp;&amp;nbsp;AND anl.notice_no IS NULL&lt;/div&gt;" vertex="1">
-          <mxGeometry height="200" width="420" x="90" y="180" as="geometry" />
+        <mxCell id="s3_7_query_notice" parent="sw_backend_3_7" style="text;html=1;whiteSpace=wrap;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=top;rounded=0;" value="SELECT&amp;nbsp;&lt;div&gt;von.notice_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.vehicle_no,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.computer_rule_code,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.composition_amount,&amp;nbsp;&lt;/div&gt;&lt;div&gt;ond.pp_name,&amp;nbsp;&lt;/div&gt;&lt;div&gt;von.notice_date_and_time&lt;br&gt;FROM ocms_valid_offence_notice AS von&lt;br&gt;JOIN ocms_offence_notice_detail AS ond ON von.notice_no = ond.notice_no&lt;br&gt;LEFT JOIN ocms_an_letter anl ON von.notice_no = anl.notice_no&lt;br&gt;WHERE von.an_flag = &#39;Y&#39;&lt;br&gt;&amp;nbsp;&amp;nbsp;AND von.last_processing_stage IN (&#39;ENA&#39;, &#39;ROV&#39;, &#39;NPA&#39;)&lt;br&gt;&amp;nbsp;&amp;nbsp;AND anl.notice_no IS NULL&lt;/div&gt;&lt;div&gt;AND suspension_type is NULL&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;not in sms/email notification record and status not S&lt;/div&gt;" vertex="1">
+          <mxGeometry height="270" width="420" x="90" y="180" as="geometry" />
         </mxCell>
         <mxCell id="c3_7_2" edge="1" parent="sw_backend_3_7" source="s3_7_step1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;dashPattern=8 8;" target="s3_7_query_notice">
           <mxGeometry relative="1" as="geometry" />

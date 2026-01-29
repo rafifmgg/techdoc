@@ -23,6 +23,7 @@ refer to FD instead of duplicating content.
 | v1.3 | Claude | 19/01/2026 | Data Dictionary compliance: Fixed ins_user_id→cre_user_id, offence_date→notice_date_and_time, removed non-existent current_offender_id, SQL Server syntax (GETDATE) |
 | v1.4 | Claude | 20/01/2026 | Code alignment: Updated Shedlock naming to snake_case per Yi Jie #14, corrected schedule to 02:00 AM per actual code |
 | v1.5 | Claude | 20/01/2026 | Code alignment: Updated report columns (7→13) per RipHirerDriverReportHelper.java, added missing error codes (OCMS-4002, OCMS-4005, OCMS-4008), replaced OCMS-5000 with OCMS-4007 per actual code |
+| v1.6 | Claude | 27/01/2026 | Data Dictionary alignment: Added epr_date_of_suspension, suspension_source, process_indicator fields; Fixed query revival check (due_date_of_revival → date_of_revival); Added field types to data mapping |
 
 ---
 
@@ -255,30 +256,46 @@ WHERE FIN = '<fin_number>'
 
 #### Database Tables Affected
 
-| Zone | Database Table | Field Name | Description |
+**Table: ocms_offence_notice_owner_driver**
+
+| Zone | Field Name | Type | Description |
 | --- | --- | --- | --- |
-| Intranet | ocms_offence_notice_owner_driver | life_status | Life status indicator ('A' or 'D') |
-| Intranet | ocms_offence_notice_owner_driver | date_of_death | Date of death from MHA/DataHive |
-| Intranet | ocms_offence_notice_owner_driver | upd_date | Record update timestamp |
-| Intranet | ocms_offence_notice_owner_driver | upd_user_id | Audit user: 'ocmsiz_app_conn' |
-| Intranet | ocms_valid_offence_notice | suspension_type | 'PS' for permanent suspension |
-| Intranet | ocms_valid_offence_notice | epr_reason_of_suspension | 'RIP' or 'RP2' |
-| Intranet | ocms_valid_offence_notice | upd_date | Record update timestamp |
-| Intranet | ocms_valid_offence_notice | upd_user_id | Audit user: 'ocmsiz_app_conn' |
-| Intranet | ocms_suspended_notice | notice_no | Notice number |
-| Intranet | ocms_suspended_notice | suspension_type | 'PS' |
-| Intranet | ocms_suspended_notice | reason_of_suspension | 'RIP' or 'RP2' |
-| Intranet | ocms_suspended_notice | date_of_suspension | Timestamp when suspension applied |
-| Intranet | ocms_suspended_notice | due_date_of_revival | NULL (PS never auto-revives) |
-| Intranet | ocms_suspended_notice | officer_authorising_suspension | 'SYSTEM' for auto-suspension |
-| Intranet | ocms_suspended_notice | cre_user_id | Audit user: 'ocmsiz_app_conn' |
+| Intranet | life_status | varchar(1) | Life status indicator ('A' or 'D') |
+| Intranet | date_of_death | datetime2(7) | Date of death from MHA/DataHive |
+| Intranet | upd_date | datetime2(7) | Record update timestamp |
+| Intranet | upd_user_id | varchar(50) | Audit user: 'ocmsiz_app_conn' |
+
+**Table: ocms_valid_offence_notice**
+
+| Zone | Field Name | Type | Description |
+| --- | --- | --- | --- |
+| Intranet | suspension_type | varchar(2) | 'PS' for permanent suspension |
+| Intranet | epr_reason_of_suspension | varchar(3) | 'RIP' or 'RP2' |
+| Intranet | epr_date_of_suspension | datetime2(7) | Timestamp when EPR suspension applied |
+| Intranet | upd_date | datetime2(7) | Record update timestamp |
+| Intranet | upd_user_id | varchar(50) | Audit user: 'ocmsiz_app_conn' |
+
+**Table: ocms_suspended_notice**
+
+| Zone | Field Name | Type | Description |
+| --- | --- | --- | --- |
+| Intranet | notice_no | varchar(10) | Notice number (PK) |
+| Intranet | date_of_suspension | datetime2(7) | Timestamp when suspension applied (PK) |
+| Intranet | sr_no | integer | Suspension record serial number (PK) |
+| Intranet | suspension_source | varchar(4) | Source: 'CRON' for auto-suspension |
+| Intranet | suspension_type | varchar(2) | 'PS' |
+| Intranet | reason_of_suspension | varchar(3) | 'RIP' or 'RP2' |
+| Intranet | officer_authorising_suspension | varchar(50) | 'SYSTEM' for auto-suspension |
+| Intranet | due_date_of_revival | datetime2(7) | NULL (PS never auto-revives) |
+| Intranet | process_indicator | varchar(64) | Process source: 'fetch_datahive_uen_fin' or 'manual' |
+| Intranet | cre_user_id | varchar(50) | Audit user: 'ocmsiz_app_conn' |
 
 **Audit User Note:** All database operations use `ocmsiz_app_conn` as the audit user for intranet database writes.
 
 **Insert Order:**
 1. UPDATE ocms_offence_notice_owner_driver (life_status, date_of_death)
-2. UPDATE ocms_valid_offence_notice (suspension_type, epr_reason_of_suspension)
-3. INSERT ocms_suspended_notice (new suspension record)
+2. UPDATE ocms_valid_offence_notice (suspension_type, epr_reason_of_suspension, epr_date_of_suspension)
+3. INSERT ocms_suspended_notice (new suspension record with suspension_source, process_indicator)
 
 ---
 
@@ -358,21 +375,26 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 #### Query for RIP Report
 
-| Zone | Database Table | Field Name | Description |
-| --- | --- | --- | --- |
-| Intranet | ocms_suspended_notice | notice_no | Notice number |
-| Intranet | ocms_suspended_notice | suspension_type | Must be 'PS' |
-| Intranet | ocms_suspended_notice | reason_of_suspension | Must be 'RP2' |
-| Intranet | ocms_suspended_notice | date_of_suspension | Must be today |
-| Intranet | ocms_suspended_notice | due_date_of_revival | Must be NULL |
-| Intranet | ocms_valid_offence_notice | notice_no | Notice number |
-| Intranet | ocms_valid_offence_notice | notice_date_and_time | Offence date/time for report |
-| Intranet | ocms_offence_notice_owner_driver | name | Offender name |
-| Intranet | ocms_offence_notice_owner_driver | id_no | Offender ID (NRIC/FIN) |
-| Intranet | ocms_offence_notice_owner_driver | owner_driver_indicator | Must be 'H' or 'D' |
-| Intranet | ocms_offence_notice_owner_driver | offender_indicator | Must be 'Y' |
-| Intranet | ocms_offence_notice_owner_driver | life_status | Must be 'D' |
-| Intranet | ocms_offence_notice_owner_driver | date_of_death | Date of death |
+| Zone | Database Table | Field Name | Type | Description |
+| --- | --- | --- | --- | --- |
+| Intranet | ocms_suspended_notice | notice_no | varchar(10) | Notice number |
+| Intranet | ocms_suspended_notice | suspension_type | varchar(2) | Must be 'PS' |
+| Intranet | ocms_suspended_notice | reason_of_suspension | varchar(3) | Must be 'RP2' |
+| Intranet | ocms_suspended_notice | date_of_suspension | datetime2(7) | Must be today |
+| Intranet | ocms_suspended_notice | date_of_revival | datetime2(7) | Must be NULL (not yet revived) |
+| Intranet | ocms_valid_offence_notice | notice_no | varchar(10) | Notice number |
+| Intranet | ocms_valid_offence_notice | notice_date_and_time | datetime2(7) | Offence date/time for report |
+| Intranet | ocms_offence_notice_owner_driver | name | varchar(66) | Offender name |
+| Intranet | ocms_offence_notice_owner_driver | id_no | varchar(12) | Offender ID (NRIC/FIN) |
+| Intranet | ocms_offence_notice_owner_driver | owner_driver_indicator | varchar(1) | Must be 'H' or 'D' |
+| Intranet | ocms_offence_notice_owner_driver | offender_indicator | varchar(1) | Must be 'Y' |
+| Intranet | ocms_offence_notice_owner_driver | life_status | varchar(1) | Must be 'D' |
+| Intranet | ocms_offence_notice_owner_driver | date_of_death | datetime2(7) | Date of death |
+
+**Note on Revival Check:**
+- `date_of_revival` = Actual date when suspension was lifted/resolved
+- `due_date_of_revival` = Anticipated date when suspension will be reviewed
+- To check if NOT revived, use `date_of_revival IS NULL`
 
 **Query (Specific Fields):**
 
@@ -394,7 +416,7 @@ JOIN ocms_offence_notice_owner_driver ond
 WHERE sn.suspension_type = 'PS'
   AND sn.reason_of_suspension = 'RP2'
   AND CAST(sn.date_of_suspension AS DATE) = CAST(GETDATE() AS DATE)
-  AND sn.due_date_of_revival IS NULL
+  AND sn.date_of_revival IS NULL  -- Not yet revived
   AND ond.owner_driver_indicator IN ('H', 'D')
   AND ond.offender_indicator = 'Y'
   AND ond.life_status = 'D'
@@ -536,26 +558,50 @@ NOTE: Due to page size limit, the full-sized image is appended.
 
 #### Database Tables Updated
 
-| Zone | Database Table | Field Name | Description |
+**Table: ocms_suspended_notice (Revival)**
+
+| Zone | Field Name | Type | Value | Description |
+| --- | --- | --- | --- | --- |
+| Intranet | date_of_revival | datetime2(7) | CURRENT_TIMESTAMP | Actual timestamp when PS was revived |
+| Intranet | revival_reason | varchar(3) | 'PSR' | Permanent Suspension Revival |
+| Intranet | officer_authorising_revival | varchar(50) | OIC ID | OIC who authorized revival |
+| Intranet | revival_remarks | varchar(200) | User input | Remarks for revival |
+| Intranet | upd_date | datetime2(7) | CURRENT_TIMESTAMP | Record update timestamp |
+| Intranet | upd_user_id | varchar(50) | 'ocmsiz_app_conn' | Audit user |
+
+**Table: ocms_valid_offence_notice (Clear Suspension)**
+
+| Zone | Field Name | Type | Value | Description |
+| --- | --- | --- | --- | --- |
+| Intranet | suspension_type | varchar(2) | NULL | Clear suspension after revival |
+| Intranet | epr_reason_of_suspension | varchar(3) | NULL | Clear suspension reason |
+| Intranet | epr_date_of_suspension | datetime2(7) | NULL | Clear suspension date |
+| Intranet | last_processing_stage | varchar(3) | 'RD1' or 'DN1' | Redirect stage |
+| Intranet | upd_date | datetime2(7) | CURRENT_TIMESTAMP | Record update timestamp |
+| Intranet | upd_user_id | varchar(50) | 'ocmsiz_app_conn' | Audit user |
+
+**Table: ocms_offence_notice_owner_driver (Update Offender)**
+
+| Zone | Field Name | Type | Value | Description |
+| --- | --- | --- | --- | --- |
+| Intranet | offender_indicator | varchar(1) | 'Y' | Set for new current offender |
+| Intranet | (previous offender) | varchar(1) | 'N' | Clear previous offender flag |
+| Intranet | upd_date | datetime2(7) | CURRENT_TIMESTAMP | Record update timestamp |
+| Intranet | upd_user_id | varchar(50) | 'ocmsiz_app_conn' | Audit user |
+
+**Table: ocms_offence_notice_owner_driver_addr (Update Address)**
+
+| Zone | Field Name | Type | Description |
 | --- | --- | --- | --- |
-| Intranet | ocms_suspended_notice | date_of_revival | Timestamp when PS was revived |
-| Intranet | ocms_suspended_notice | revival_reason | Reason for revival |
-| Intranet | ocms_suspended_notice | officer_authorising_revival | OIC ID who authorized revival |
-| Intranet | ocms_suspended_notice | upd_date | Record update timestamp |
-| Intranet | ocms_suspended_notice | upd_user_id | Audit user: 'ocmsiz_app_conn' |
-| Intranet | ocms_valid_offence_notice | suspension_type | Set to NULL after revival |
-| Intranet | ocms_valid_offence_notice | epr_reason_of_suspension | Set to NULL after revival |
-| Intranet | ocms_valid_offence_notice | last_processing_stage | Set to 'RD1' or 'DN1' |
-| Intranet | ocms_offence_notice_owner_driver | offender_indicator | Set to 'Y' for new current offender |
-| Intranet | ocms_valid_offence_notice | upd_date | Record update timestamp |
-| Intranet | ocms_valid_offence_notice | upd_user_id | Audit user: 'ocmsiz_app_conn' |
-| Intranet | ocms_offence_notice_owner_driver | (all fields) | New offender details |
-| Intranet | ocms_offence_notice_owner_driver | offender_indicator | Set to 'Y' for new offender |
-| Intranet | ocms_offence_notice_owner_driver | upd_date | Record update timestamp |
-| Intranet | ocms_offence_notice_owner_driver | upd_user_id | Audit user: 'ocmsiz_app_conn' |
-| Intranet | ocms_offence_notice_owner_driver_addr | (all fields) | New offender address |
-| Intranet | ocms_offence_notice_owner_driver_addr | upd_date | Record update timestamp |
-| Intranet | ocms_offence_notice_owner_driver_addr | upd_user_id | Audit user: 'ocmsiz_app_conn' |
+| Intranet | type_of_address | varchar(20) | Address type: lta_reg, lta_mail, mha_reg, furnished_mail |
+| Intranet | blk_hse_no | varchar(10) | Block/house number |
+| Intranet | floor_no | varchar(3) | Floor number |
+| Intranet | unit_no | varchar(5) | Unit number |
+| Intranet | postal_code | varchar(6) | Postal code |
+| Intranet | street_name | varchar(32) | Street name |
+| Intranet | bldg_name | varchar(65) | Building name |
+| Intranet | upd_date | datetime2(7) | Record update timestamp |
+| Intranet | upd_user_id | varchar(50) | Audit user: 'ocmsiz_app_conn' |
 
 **Audit User Note:** All database operations use `ocmsiz_app_conn` as the audit user. Officer ID is captured in `officer_authorising_revival` field.
 
@@ -600,6 +646,18 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | RIP | Motorist Deceased On or After Offence Date | date_of_death >= offence_date | Offender was alive at time of offence but deceased now |
 | RP2 | Motorist Deceased Before Offence Date | date_of_death < offence_date | Offender was already deceased at time of offence |
 
+**Database Fields for Suspension:**
+
+| Table | Field | Type | Description |
+| --- | --- | --- | --- |
+| ocms_valid_offence_notice | suspension_type | varchar(2) | 'PS' for permanent suspension |
+| ocms_valid_offence_notice | epr_reason_of_suspension | varchar(3) | 'RIP' or 'RP2' |
+| ocms_valid_offence_notice | epr_date_of_suspension | datetime2(7) | When EPR suspension applied |
+| ocms_suspended_notice | reason_of_suspension | varchar(3) | 'RIP' or 'RP2' |
+| ocms_suspended_notice | date_of_suspension | datetime2(7) | When suspension record created |
+| ocms_suspended_notice | date_of_revival | datetime2(7) | When actually revived (NULL if active) |
+| ocms_suspended_notice | due_date_of_revival | datetime2(7) | Anticipated review date (NULL for PS) |
+
 **PS-RIP/RP2 Exception Code Behavior:**
 
 PS-RIP and PS-RP2 are part of the 5 Exception Codes (DIP, FOR, MID, RIP, RP2) which have special rules:
@@ -618,8 +676,8 @@ Refer to FD Section 4.4 for detailed suspension code behaviors.
 
 | Rule | Condition | Display |
 | --- | --- | --- |
-| Show superscript "R" | Active PS-RIP or PS-RP2 | Notice No with superscript R (e.g., "A12345678^R") |
-| Hide superscript | No active RIP/RP2 or revived | Normal notice number |
+| Show superscript "R" | Active PS-RIP or PS-RP2 (not revived) | Notice No with superscript R (e.g., "A12345678^R") |
+| Hide superscript | No active RIP/RP2 OR already revived | Normal notice number |
 
 **Display Locations:**
 - Search Notice result summary list
@@ -629,10 +687,20 @@ Refer to FD Section 4.4 for detailed suspension code behaviors.
 **Detection Logic:**
 
 ```
-IF ocms_valid_offence_notice.suspension_type = 'PS'
-   AND ocms_valid_offence_notice.epr_reason_of_suspension IN ('RIP', 'RP2')
+-- Check in ocms_valid_offence_notice
+IF suspension_type = 'PS'
+   AND epr_reason_of_suspension IN ('RIP', 'RP2')
+THEN Check if revived in ocms_suspended_notice
+
+-- Check if NOT revived in ocms_suspended_notice
+IF date_of_revival IS NULL  -- Actual revival date is blank
 THEN Display superscript "R" next to Notice Number
+ELSE Display normal Notice Number (suspension was revived)
 ```
+
+**Note on Revival Fields:**
+- `date_of_revival` = Actual date when suspension was lifted (NULL = not yet revived)
+- `due_date_of_revival` = Anticipated date for review (not used for display logic)
 
 Refer to FD Section 4.6 for detailed UI display specifications.
 

@@ -13,6 +13,7 @@ NCS Pte Ltd
 | v1.0 | Claude | 16/01/2026 | Document Initiation |
 | v1.1 | Claude | 19/01/2026 | Data Dictionary alignment, Yi Jie review fixes |
 | v1.2 | Claude | 20/01/2026 | Code comparison alignment - updated parameter naming, Shedlock names, added code status notes |
+| v1.3 | Claude | 27/01/2026 | Added SLIFT integration for all SFTP flows, added Section 2.8 vHub ACK Processing, Section 2.9 vHub NTL Processing, fixed field names per Data Dictionary (record_status) |
 
 ---
 
@@ -48,6 +49,15 @@ NCS Pte Ltd
 | 2.7.1 | Data Mapping |
 | 2.7.2 | Success Outcome |
 | 2.7.3 | Error Handling |
+| 2.8 | vHub ACK Processing |
+| 2.8.1 | Data Mapping |
+| 2.8.2 | Success Outcome |
+| 2.8.3 | Error Handling |
+| 2.9 | vHub NTL Processing |
+| 2.9.1 | Data Mapping |
+| 2.9.2 | Success Outcome |
+| 2.9.3 | Error Handling |
+| 2.10 | Edge Cases & Boundary Conditions |
 
 ---
 
@@ -89,7 +99,9 @@ NCS Pte Ltd
 | 3 | vHub SFTP Create/Update | 03:00 AM | `0 0 3 * * ?` | `generate_vhub_sftp_file` | **[NEW DEV REQUIRED]** |
 | 4 | REPCCS Listed Vehicle | 04:00 AM | `0 0 4 * * ?` | `generate_rep_listed_vehicle` | EXISTS (00:10 AM in code) |
 | 5 | CES EHT Tagged Vehicle | 04:30 AM | `0 30 4 * * ?` | `generate_ces_tagged_vehicle` | EXISTS (00:01 AM in code) |
-| 6 | Batch Job Stuck Detection | Every 30 min | `0 */30 * * * ?` | `detect_batch_job_stuck` | **[NEW DEV REQUIRED]** |
+| 6 | vHub ACK Processing | 05:00 AM | `0 0 5 * * ?` | `process_vhub_ack` | **[NEW DEV REQUIRED]** |
+| 7 | vHub NTL Processing | 05:30 AM | `0 30 5 * * ?` | `process_vhub_ntl` | **[NEW DEV REQUIRED]** |
+| 8 | Batch Job Stuck Detection | Every 30 min | `0 */30 * * * ?` | `detect_batch_job_stuck` | **[NEW DEV REQUIRED]** |
 
 > **Note:**
 > - All CRON timings are suggested values and need to be confirmed with Operations team.
@@ -108,6 +120,7 @@ NCS Pte Ltd
 | **System** | REPCCS System | Receiver | Receives listed vehicles for car park enforcement |
 | **System** | CES EHT System | Receiver | Receives tagged vehicles for Certis enforcement |
 | **System** | Azure Blob | Storage | Stores backup files before SFTP transfer |
+| **System** | SLIFT Service | Encryption | Encrypts outbound files, decrypts inbound files |
 | **System** | Email Service | Notifier | Sends error alert emails to operations |
 
 #### User Roles (WHO is affected/notified)
@@ -124,21 +137,25 @@ NCS Pte Ltd
 #### Data Flow by Actor
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         ACTOR DATA FLOW                              │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  OCMS Scheduler ──► OCMS Backend ──┬──► vHub (ICA)                  │
-│       │                            │                                 │
-│       │                            ├──► REPCCS (Car Park)           │
-│       │                            │                                 │
-│       │                            ├──► CES EHT (Certis)            │
-│       │                            │                                 │
-│       │                            └──► Azure Blob (Backup)         │
-│       │                                                              │
-│       └──► On Error ──► Email Service ──► Operations Team           │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────┐
+│                         ACTOR DATA FLOW                                   │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                           │
+│  OCMS Scheduler ──► OCMS Backend ──┬──► vHub API (ICA)                   │
+│       │                            │                                      │
+│       │                            ├──► Azure Blob ──► SLIFT Encrypt     │
+│       │                            │         │                            │
+│       │                            │         └──► vHub SFTP (Outbound)   │
+│       │                            │         └──► REPCCS SFTP            │
+│       │                            │         └──► CES EHT SFTP           │
+│       │                            │                                      │
+│       │                            └──► vHub SFTP (Inbound: ACK/NTL)     │
+│       │                                     │                             │
+│       │                                     └──► Azure ──► SLIFT Decrypt │
+│       │                                                                   │
+│       └──► On Error ──► Email Service ──► Operations Team                │
+│                                                                           │
+└──────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -537,7 +554,7 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | CompositionAmount | composition_amount | ocms_offence_avss | Fine amount |
 | AdminFee | admin_fee | ocms_offence_avss | Admin fee amount |
 | TotalAmount | total_amount | ocms_offence_avss | Total payable |
-| ViolationStatus | violation_status | ocms_offence_avss | O/S/C |
+| ViolationStatus | record_status | ocms_offence_avss | O/S/C |
 
 #### Violation Status Codes
 
@@ -939,11 +956,26 @@ WHERE parameter_id = 'PERIOD' AND code = 'FOR'
 | Upload to Azure | Store file in Azure Blob Storage | Backup storage |
 | Azure success? | Decision: Check upload result | Verify Azure upload |
 | Retry 3x | Retry Azure upload | Handle transient failures |
-| Upload to SFTP | Transfer file to vHub SFTP server | File transfer |
+| **Call SLIFT Encrypt** | Send file to SLIFT service for encryption | **Mandatory encryption step** |
+| **Encrypt success?** | Decision: Check encryption result | **Verify SLIFT response** |
+| **Retry 3x, send error email** | Retry encryption then notify operations | **Handle SLIFT failures** |
+| Upload to SFTP | Transfer **encrypted** file to vHub SFTP server | File transfer |
 | SFTP success? | Decision: Check upload result | Verify SFTP upload |
 | Retry 3x, send error email | Retry then notify operations | Handle failures |
 | Save to DB | Store results in ocms_offence_avss_sftp | Record processing |
 | End | Process completes | Exit point of workflow |
+
+#### SLIFT Encryption Specification
+
+| Attribute | Value |
+| --- | --- |
+| Service | SLIFT (Secure Large File Transfer) |
+| Direction | OCMS → SLIFT → vHub SFTP |
+| Operation | Encrypt |
+| Input | Plain XML file from Azure Blob |
+| Output | Encrypted file for SFTP transfer |
+| Retry | 3 times with exponential backoff |
+| Error Handling | Send alert email, abort SFTP upload |
 
 #### File Specification
 
@@ -983,6 +1015,8 @@ WHERE parameter_id = 'PERIOD' AND code = 'FOR'
 | --- | --- | --- |
 | File generation failed | Log error | Send interfacing error email |
 | Azure upload failed | Retry up to 3 times | Send interfacing error email |
+| **SLIFT encrypt failed** | Retry up to 3 times | Send interfacing error email, abort SFTP |
+| **SLIFT timeout** | Retry up to 3 times | Send interfacing error email, abort SFTP |
 | SFTP connection failed | Retry up to 3 times | Send interfacing error email |
 | SFTP upload failed | Retry up to 3 times | Send interfacing error email |
 
@@ -1022,7 +1056,9 @@ WHERE parameter_id = 'PERIOD' AND code = 'FOR'
 | Query listed vehicles | Get qualifying notices from VON | Apply query conditions |
 | Generate file | Create Listed Vehicle file | Format: CSV/TXT |
 | Upload to Azure | Store file in Azure Blob Storage | Backup storage |
-| Upload to SFTP | Transfer file to REPCCS SFTP server | File transfer |
+| **Call SLIFT Encrypt** | Send file to SLIFT service for encryption | **Mandatory encryption step** |
+| **Encrypt success?** | Decision: Check encryption result | **Verify SLIFT response** |
+| Upload to SFTP | Transfer **encrypted** file to REPCCS SFTP server | File transfer |
 | SFTP success? | Decision: Check upload result | Verify upload |
 | Send error email | Notify operations of failure | Handle failures |
 | End | Process completes | Exit point of workflow |
@@ -1076,6 +1112,7 @@ WHERE parameter_id = 'PERIOD' AND code = 'FOR'
 | --- | --- | --- |
 | Query failure | Log error | Send interfacing error email |
 | File generation failed | Log error | Send interfacing error email |
+| **SLIFT encrypt failed** | Retry up to 3 times | Send interfacing error email, abort SFTP |
 | SFTP upload failed | Retry | Send interfacing error email |
 
 ---
@@ -1114,7 +1151,9 @@ WHERE parameter_id = 'PERIOD' AND code = 'FOR'
 | Query tagged vehicles | Get qualifying notices from VON | Apply query conditions |
 | Generate file | Create Tagged Vehicle file | Format: CSV/TXT |
 | Upload to Azure | Store file in Azure Blob Storage | Backup storage |
-| Upload to SFTP | Transfer file to CES EHT SFTP server | File transfer |
+| **Call SLIFT Encrypt** | Send file to SLIFT service for encryption | **Mandatory encryption step** |
+| **Encrypt success?** | Decision: Check encryption result | **Verify SLIFT response** |
+| Upload to SFTP | Transfer **encrypted** file to CES EHT SFTP server | File transfer |
 | SFTP success? | Decision: Check upload result | Verify upload |
 | Send error email | Notify operations of failure | Handle failures |
 | End | Process completes | Exit point of workflow |
@@ -1157,6 +1196,7 @@ WHERE parameter_id = 'PERIOD' AND code = 'FOR'
 | --- | --- | --- |
 | Query failure | Log error | Send interfacing error email |
 | File generation failed | Log error | Send interfacing error email |
+| **SLIFT encrypt failed** | Retry up to 3 times | Send interfacing error email, abort SFTP |
 | SFTP upload failed | Retry | Send interfacing error email |
 
 ---
@@ -1268,9 +1308,258 @@ WHERE offence_no IN (...)
 
 ---
 
-## 2.8 Edge Cases & Boundary Conditions
+## 2.8 vHub ACK Processing
 
-### 2.8.1 Data Edge Cases
+> **[NEW DEVELOPMENT REQUIRED]**
+> This feature does NOT exist in the current codebase and needs to be developed from scratch.
+
+### CRON Job Specification
+
+| Attribute | Value |
+| --- | --- |
+| CRON Name | vHub ACK Processing |
+| Trigger | Scheduled |
+| CRON Expression | `0 0 5 * * ?` (Daily at 05:00 AM) |
+| Frequency | Daily |
+| Purpose | Process ACK files received from vHub via SFTP |
+| Shedlock Name | `process_vhub_ack` |
+| Lock Duration | 1 hour (max) |
+| **Code Status** | **[NEW DEV REQUIRED]** |
+
+> **Note:** CRON timing to be confirmed with Operations team. Suggested 05:00 AM (after outbound SFTP completes).
+
+### Flow Description
+
+![vHub ACK Processing](./images/section2-vhub-ack.png)
+
+| Step | Description | Brief Description |
+| --- | --- | --- |
+| Start | CRON job triggers at scheduled time | Entry point of workflow |
+| Download ACK file | Download ACK file from vHub SFTP server | Inbound file transfer |
+| Download success? | Decision: Check download result | Verify SFTP download |
+| Retry 3x, send error email | Retry download then notify operations | Handle failures |
+| Upload to Azure | Store encrypted file in Azure Blob Storage | Backup storage |
+| Upload success? | Decision: Check upload result | Verify Azure upload |
+| **Call SLIFT Decrypt** | Send file to SLIFT service for decryption | **Mandatory decryption step** |
+| **Decrypt success?** | Decision: Check decryption result | **Verify SLIFT response** |
+| **Retry 3x, send error email** | Retry decryption then notify operations | **Handle SLIFT failures** |
+| Parse ACK file header | Parse and validate file header | Header validation |
+| Header valid? | Decision: Check header format | Verify header structure |
+| Log parse error, skip file | Log error and skip invalid file | Handle invalid files |
+| Record count match? | Decision: Verify record count in header | Data integrity check |
+| Count = 0? | Decision: Check if file is empty | Handle empty files |
+| Process each ACK record | Loop through all records in file | Record processing |
+| Update ocms_offence_avss_sftp | Update record_status based on ACK status | Database update |
+| End | Process completes | Exit point of workflow |
+
+#### SLIFT Decryption Specification
+
+| Attribute | Value |
+| --- | --- |
+| Service | SLIFT (Secure Large File Transfer) |
+| Direction | vHub SFTP → Azure → SLIFT → OCMS |
+| Operation | Decrypt |
+| Input | Encrypted ACK file from Azure Blob |
+| Output | Decrypted XML file for processing |
+| Retry | 3 times with exponential backoff |
+| Error Handling | Send alert email, skip file processing |
+
+#### ACK File Specification
+
+| Attribute | Value |
+| --- | --- |
+| Direction | vHub → OCMS |
+| Format | XML |
+| File Name | VHB_ACK_YYYYMMDD_HHMMSS.xml |
+| Content | Acknowledgement of received violation records |
+
+#### ACK Record Status Mapping
+
+| vHub ACK Status | OCMS record_status | Description |
+| --- | --- | --- |
+| 0 | A | Accepted - Record received successfully |
+| 1 | R | Rejected - Record has errors |
+
+---
+
+### 2.8.1 Data Mapping
+
+#### Database Tables
+
+| Zone | Database Table | Operation |
+| --- | --- | --- |
+| Intranet | ocms_offence_avss_sftp | UPDATE record_status |
+| External | Azure Blob Storage | Store encrypted/decrypted files |
+| External | vHub SFTP Server | Download ACK files |
+
+#### Update Statement
+
+```sql
+UPDATE ocms_offence_avss_sftp
+SET record_status = CASE
+      WHEN ack_status = '0' THEN 'A'  -- Accepted
+      ELSE 'R'  -- Rejected
+    END,
+    upd_date = CURRENT_TIMESTAMP,
+    upd_user_id = 'ocmsiz_app_conn'
+WHERE batch_id = <batch_id>
+  AND offence_no = <offence_no>
+```
+
+---
+
+### 2.8.2 Success Outcome
+
+- ACK file is successfully downloaded from vHub SFTP server.
+- File is uploaded to Azure Blob Storage for backup.
+- SLIFT successfully decrypts the file.
+- All ACK records are parsed and processed.
+- record_status in ocms_offence_avss_sftp is updated based on ACK status.
+- No error emails are sent.
+
+---
+
+### 2.8.3 Error Handling
+
+| Error Scenario | Action | Recovery |
+| --- | --- | --- |
+| SFTP download failed | Retry up to 3 times | Send interfacing error email |
+| Azure upload failed | Retry up to 3 times | Send interfacing error email |
+| **SLIFT decrypt failed** | Retry up to 3 times | Send interfacing error email, skip file |
+| **SLIFT timeout** | Retry up to 3 times | Send interfacing error email, skip file |
+| Header parse error | Log error | Skip file, continue with next |
+| Record count mismatch | Log warning | Process available records |
+| Database update failed | Log error | Retry once, continue with next record |
+
+---
+
+## 2.9 vHub NTL Processing
+
+> **[NEW DEVELOPMENT REQUIRED]**
+> This feature does NOT exist in the current codebase and needs to be developed from scratch.
+
+### CRON Job Specification
+
+| Attribute | Value |
+| --- | --- |
+| CRON Name | vHub NTL Processing |
+| Trigger | Scheduled |
+| CRON Expression | `0 30 5 * * ?` (Daily at 05:30 AM) |
+| Frequency | Daily |
+| Purpose | Process NTL (Notice to Leave) files received from vHub via SFTP |
+| Shedlock Name | `process_vhub_ntl` |
+| Lock Duration | 1 hour (max) |
+| **Code Status** | **[NEW DEV REQUIRED]** |
+
+> **Note:** CRON timing to be confirmed with Operations team. Suggested 05:30 AM (after ACK processing).
+
+### Flow Description
+
+![vHub NTL Processing](./images/section2-vhub-ntl.png)
+
+| Step | Description | Brief Description |
+| --- | --- | --- |
+| Start | CRON job triggers at scheduled time | Entry point of workflow |
+| Download NTL file | Download NTL file from vHub SFTP server | Inbound file transfer |
+| Download success? | Decision: Check download result | Verify SFTP download |
+| Retry 3x, send error email | Retry download then notify operations | Handle failures |
+| Upload to Azure | Store encrypted file in Azure Blob Storage | Backup storage |
+| Upload success? | Decision: Check upload result | Verify Azure upload |
+| **Call SLIFT Decrypt** | Send file to SLIFT service for decryption | **Mandatory decryption step** |
+| **Decrypt success?** | Decision: Check decryption result | **Verify SLIFT response** |
+| **Retry 3x, send error email** | Retry decryption then notify operations | **Handle SLIFT failures** |
+| Parse NTL file header | Parse and validate file header | Header validation |
+| Header valid? | Decision: Check header format | Verify header structure |
+| Log parse error, skip file | Log error and skip invalid file | Handle invalid files |
+| Record count match? | Decision: Verify record count in header | Data integrity check |
+| Count = 0? | Decision: Check if file is empty | Handle empty files |
+| Parse NTL records | Parse all records in the file | Record parsing |
+| Populate NTL email template | Fill email template with NTL data | Email preparation |
+| Generate NTL report | Create report from parsed data | Report generation |
+| Send NTL report email | Send report to Operations team | Email notification |
+| End | Process completes | Exit point of workflow |
+
+#### SLIFT Decryption Specification
+
+| Attribute | Value |
+| --- | --- |
+| Service | SLIFT (Secure Large File Transfer) |
+| Direction | vHub SFTP → Azure → SLIFT → OCMS |
+| Operation | Decrypt |
+| Input | Encrypted NTL file from Azure Blob |
+| Output | Decrypted XML file for processing |
+| Retry | 3 times with exponential backoff |
+| Error Handling | Send alert email, skip file processing |
+
+#### NTL File Specification
+
+| Attribute | Value |
+| --- | --- |
+| Direction | vHub → OCMS |
+| Format | XML |
+| File Name | VHB_NTL_YYYYMMDD_HHMMSS.xml |
+| Content | Notice to Leave records from vHub |
+
+#### Email Specification
+
+| Attribute | Value |
+| --- | --- |
+| To | Operations Team (configurable) |
+| Subject | vHub NTL Report - YYYYMMDD |
+| Content | Parsed NTL records in tabular format |
+| Attachment | NTL report file (optional) |
+
+---
+
+### 2.9.1 Data Mapping
+
+#### Database Tables
+
+| Zone | Database Table | Operation |
+| --- | --- | --- |
+| External | Azure Blob Storage | Store encrypted/decrypted files |
+| External | vHub SFTP Server | Download NTL files |
+
+#### NTL Report Fields
+
+| Field | Source | Description |
+| --- | --- | --- |
+| Vehicle No | NTL file | Vehicle registration number |
+| Offence No | NTL file | Original offence number |
+| NTL Date | NTL file | Date of Notice to Leave |
+| NTL Reason | NTL file | Reason for NTL |
+| Status | NTL file | Current status |
+
+---
+
+### 2.9.2 Success Outcome
+
+- NTL file is successfully downloaded from vHub SFTP server.
+- File is uploaded to Azure Blob Storage for backup.
+- SLIFT successfully decrypts the file.
+- All NTL records are parsed and processed.
+- NTL report email is sent to Operations team.
+- No error emails are sent (except the NTL report itself).
+
+---
+
+### 2.9.3 Error Handling
+
+| Error Scenario | Action | Recovery |
+| --- | --- | --- |
+| SFTP download failed | Retry up to 3 times | Send interfacing error email |
+| Azure upload failed | Retry up to 3 times | Send interfacing error email |
+| **SLIFT decrypt failed** | Retry up to 3 times | Send interfacing error email, skip file |
+| **SLIFT timeout** | Retry up to 3 times | Send interfacing error email, skip file |
+| Header parse error | Log error | Skip file, send error email |
+| Record count mismatch | Log warning | Process available records |
+| Email send failed | Retry up to 3 times | Log error, store report locally |
+
+---
+
+## 2.10 Edge Cases & Boundary Conditions
+
+### 2.10.1 Data Edge Cases
 
 | Edge Case | Scenario | Handling |
 | --- | --- | --- |
@@ -1282,7 +1571,7 @@ WHERE offence_no IN (...)
 | Payment on same day as send | Notice paid after Outstanding list prepared | Will be sent as Outstanding, then Settled next day |
 | TS applied same day | TS applied after Outstanding list prepared | Will be sent as Outstanding, then Cancelled next day |
 
-### 2.8.2 Date/Time Edge Cases
+### 2.10.2 Date/Time Edge Cases
 
 | Edge Case | Scenario | Handling |
 | --- | --- | --- |
@@ -1292,7 +1581,7 @@ WHERE offence_no IN (...)
 | Very old notice | Notice older than retention period | Include if still meets PS-FOR criteria |
 | Payment at 23:59 | Payment just before midnight | Include in Settled if within 24-hour window |
 
-### 2.8.3 API Edge Cases
+### 2.10.3 API Edge Cases
 
 | Edge Case | Scenario | Handling |
 | --- | --- | --- |
@@ -1303,7 +1592,7 @@ WHERE offence_no IN (...)
 | Rate limiting | vHub returns 429 Too Many Requests | Wait 60 seconds, retry batch |
 | vHub maintenance | vHub returns 503 Service Unavailable | Retry 3 times, then skip and alert |
 
-### 2.8.4 Concurrent Processing Edge Cases
+### 2.10.4 Concurrent Processing Edge Cases
 
 | Edge Case | Scenario | Handling |
 | --- | --- | --- |
@@ -1312,7 +1601,7 @@ WHERE offence_no IN (...)
 | Notice updated during processing | Notice data changes while in memory | Use snapshot from query time, next run catches updates |
 | Admin fee applied during processing | Admin fee CRON runs during vHub CRON | Both CRONs have separate schedules, no conflict |
 
-### 2.8.5 Numeric Boundary Conditions
+### 2.10.5 Numeric Boundary Conditions
 
 | Field | Min Value | Max Value | Handling |
 | --- | --- | --- | --- |
@@ -1324,7 +1613,7 @@ WHERE offence_no IN (...)
 | offence_no length | 1 | 10 | Truncate if exceeds (log warning) |
 | vehicle_no length | 1 | 14 | Truncate if exceeds (log warning) |
 
-### 2.8.6 Special Character Handling
+### 2.10.6 Special Character Handling
 
 | Field | Special Characters | Handling |
 | --- | --- | --- |
@@ -1346,6 +1635,7 @@ WHERE offence_no IN (...)
 | REPCCS | External | Car park enforcement |
 | CES EHT | External | Certis enforcement |
 | Azure Blob Storage | External | File storage |
+| **SLIFT Service** | External | **File encryption/decryption for SFTP transfers** |
 | SFTP Server | External | File transfer |
 
 ### Integration Methods
@@ -1353,10 +1643,12 @@ WHERE offence_no IN (...)
 | External System | Method | Direction |
 | --- | --- | --- |
 | vHub | REST API | OCMS → vHub |
-| vHub | SFTP | OCMS → vHub |
-| vHub | SFTP (ACK) | vHub → OCMS |
-| REPCCS | SFTP | OCMS → REPCCS |
-| CES EHT | SFTP | OCMS → CES EHT |
+| vHub | SFTP (Outbound) | OCMS → Azure → **SLIFT Encrypt** → vHub |
+| vHub | SFTP (ACK Inbound) | vHub → Azure → **SLIFT Decrypt** → OCMS |
+| vHub | SFTP (NTL Inbound) | vHub → Azure → **SLIFT Decrypt** → OCMS |
+| REPCCS | SFTP | OCMS → Azure → **SLIFT Encrypt** → REPCCS |
+| CES EHT | SFTP | OCMS → Azure → **SLIFT Encrypt** → CES EHT |
+| **SLIFT** | REST API | OCMS ↔ SLIFT (encrypt/decrypt) |
 
 ---
 
@@ -1390,10 +1682,22 @@ WHERE offence_no IN (...)
 | location | varchar(100) | Yes | NULL | Offence location |
 | vehicle_no | varchar(14) | No | - | Vehicle number |
 | vehicle_type | varchar(1) | No | - | Vehicle type code |
-| violation_status | varchar(1) | No | - | O/S/C |
+| record_status | varchar(1) | No | - | O/S/C |
 | vhub_api_status_code | varchar(1) | No | - | 0=Success, 1=Error |
 | vhub_api_error_code | varchar(20) | Yes | NULL | Error code from vHub |
 | vhub_api_error_description | varchar(200) | Yes | NULL | Error description |
+
+### Key Fields in ocms_offence_avss_sftp
+
+| Field | Type | Nullable | Default | Description |
+| --- | --- | --- | --- | --- |
+| batch_id | varchar(50) | No | - | Batch identifier |
+| offence_no | varchar(10) | No | - | Notice number |
+| record_status | varchar(1) | Yes | NULL | A=Accepted, R=Rejected, P=Pending |
+| sent_datetime | datetime2 | No | - | Timestamp file was sent |
+| ack_datetime | datetime2 | Yes | NULL | Timestamp ACK received |
+| upd_date | datetime2 | Yes | NULL | Record update date |
+| upd_user_id | varchar(50) | Yes | NULL | Updated by |
 
 ---
 

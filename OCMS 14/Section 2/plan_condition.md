@@ -5,11 +5,11 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Foreign Vehicle Notice Processing |
-| Version | v1.0 |
+| Version | v2.0 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 15/01/2026 |
-| Status | Draft |
+| Last Updated | 27/01/2026 |
+| Status | Revised |
 | FD Reference | OCMS 14 - Section 3 |
 | TD Reference | OCMS 14 - Section 2 |
 
@@ -281,15 +281,16 @@ AND (administration_fee IS NULL OR administration_fee = 0)
 | --- | --- |
 | Description | Apply AFO amount to notice composition |
 | Parameter | AFO (Admin Fee Amount) |
-| Update Fields | admin_fee, amount_payable, total_amount |
+| Update Fields | administration_fee, amount_payable (per Data Dictionary) |
 | Post-Action | Send updated notice to vHub as 'O' (Outstanding) |
 
 ```
--- Admin Fee Update
+-- Admin Fee Update (Field names per Data Dictionary)
 UPDATE ocms_valid_offence_notice
-SET admin_fee = @AFO_amount,
+SET administration_fee = @AFO_amount,
     amount_payable = composition_amount + @AFO_amount,
-    upd_date = GETDATE()
+    upd_date = GETDATE(),
+    upd_user_id = 'ocmsiz_app_conn'
 WHERE <C070 conditions>
 ```
 
@@ -317,6 +318,57 @@ CASE vehicle_category
     WHEN 'Y' THEN 'M'
     ELSE vehicle_category
 END AS vhub_vehicle_type
+```
+
+---
+
+### 2.8 SLIFT Integration Conditions
+
+**Description:** Conditions for SLIFT encryption/decryption service usage.
+
+**Reference:** FD Section 3.4.2 - vHub SFTP Interface, Functional Flowchart
+
+#### Condition Matrix
+
+| Condition ID | Condition Name | Direction | Logic | Action |
+| --- | --- | --- | --- | --- |
+| C090 | Encrypt Outbound File | OCMS → External | File generated for SFTP transfer | Call SLIFT encrypt before Azure upload |
+| C091 | Decrypt Inbound File | External → OCMS | File downloaded from SFTP | Call SLIFT decrypt before processing |
+| C092 | SLIFT Failure | Any | SLIFT returns error | Retry 3x, then log error and send email |
+
+#### SLIFT Usage Per Interface
+
+| Interface | Direction | SLIFT Operation | Timing |
+| --- | --- | --- | --- |
+| vHub SFTP | Outbound | Encrypt | After file generation, before Azure upload |
+| vHub ACK | Inbound | Decrypt | After Azure download, before parsing |
+| vHub NTL | Inbound | Decrypt | After Azure download, before parsing |
+| REPCCS Listed | Outbound | Encrypt | After file generation, before Azure upload |
+| CES EHT Tagged | Outbound | Encrypt | After file generation, before Azure upload |
+
+---
+
+### 2.9 Batching Conditions
+
+**Description:** Conditions for batch processing and record count thresholds.
+
+**Reference:** Functional Flowchart
+
+#### Condition Matrix
+
+| Condition ID | Condition Name | Threshold | Logic | Action |
+| --- | --- | --- | --- | --- |
+| C100 | API Batch Size | 50 | Record count per API call | Batch records into groups of 50 |
+| C101 | SFTP Batch Check | 200 | Total record count | If > 200 records, use SFTP instead of API |
+| C102 | Single File per Batch | 1 | Files per SFTP transfer | Generate single XML file per batch date |
+
+```
+-- Batch Size Decision (per Flowchart)
+IF @record_count > 200 THEN
+    USE SFTP METHOD
+ELSE
+    USE API METHOD (batch size 50)
+END IF
 ```
 
 ---
@@ -444,6 +496,10 @@ END
 | SEX002 | vHub API Timeout | API call exceeds timeout | Retry 2x, log error, continue with next batch |
 | SEX003 | SFTP Connection Failed | Cannot connect to SFTP | Retry 2x, log error, send email |
 | SEX004 | Database Query Timeout | Query exceeds timeout | Retry 1x, log error |
+| SEX005 | SLIFT Service Unavailable | Cannot connect to SLIFT | Retry 3x, log error, send email |
+| SEX006 | SLIFT Encryption Failed | Encryption operation failed | Log error, abort transfer, send email |
+| SEX007 | SLIFT Decryption Failed | Decryption operation failed | Log error, mark file as failed, send email |
+| SEX008 | Azure Blob Upload Failed | Cannot upload to Azure | Retry 2x, log error, send email |
 
 ### 5.2 Business Exceptions
 
@@ -538,3 +594,4 @@ END
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on FD Section 3 |
+| 2.0 | 27/01/2026 | Claude | Added SLIFT Integration Conditions (Section 2.8), Batching Conditions (Section 2.9), SLIFT exceptions (SEX005-008). Fixed field name: administration_fee per Data Dictionary. Aligned with Functional Flowchart. |

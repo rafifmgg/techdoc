@@ -5,10 +5,10 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Detecting Vehicle Registration Type |
-| Version | v2.0 |
+| Version | v2.1 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 19/01/2026 |
+| Last Updated | 27/01/2026 |
 | Status | Revised |
 | FD Reference | OCMS 14 - Section 2 |
 | TD Reference | OCMS 14 - Section 1 |
@@ -33,7 +33,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | Notice Creation Flow | Light Blue | #dae8fc | Parent flow that calls this function |
 | Backend API | Light Green | #d5e8d4 | OCMS Admin API processing |
 | External System (LTA) | Light Yellow | #fff2cc | LTA Checksum validation library |
-| External System (CAS) | Light Yellow | #fff2cc | CAS VIP Vehicle database |
+| OCMS Database (VIP) | Light Yellow | #fff2cc | OCMS ocms_vip_vehicle table |
 | Database (Intranet) | Light Yellow | #fff2cc | Intranet database operations |
 
 ---
@@ -48,7 +48,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | Section | 1.1 |
 | Trigger | Notice Creation process requests vehicle type identification |
 | Frequency | Real-time (per notice creation) |
-| Systems Involved | Backend API, LTA Library, CAS Database |
+| Systems Involved | Backend API, LTA Library, OCMS Database |
 | Expected Outcome | Return vehicle registration type code (F/S/D/I/V/X) |
 
 ### 3.2 High Level Flow Diagram (ASCII)
@@ -115,14 +115,14 @@ The Technical Flowchart will contain the following tabs/sections:
 | Section | 1.2 |
 | Trigger | checkVehregistration() method called |
 | Frequency | Real-time (per notice) |
-| Systems Involved | Backend API, LTA Library, CAS Database |
+| Systems Involved | Backend API, LTA Library, OCMS Database |
 | Expected Outcome | Return appropriate vehicle type code |
 
 ### 4.2 Detailed Flow Diagram (ASCII)
 
 ```
 ┌──────────────────┬────────────────────┬────────────────────┬──────────────┐
-│   Backend API    │   LTA Library      │   CAS Database     │   Result     │
+│   Backend API    │   LTA Library      │   OCMS Database     │   Result     │
 ├──────────────────┼────────────────────┼────────────────────┼──────────────┤
 │                  │                    │                    │              │
 │ ┌──────────────┐ │                    │                    │              │
@@ -174,7 +174,7 @@ The Technical Flowchart will contain the following tabs/sections:
 │                                               │            │            │
 │                                               ▼            ▼            │
 │                                         Return 'I'   ┌─────────────────┐│
-│                                          ────────►   │Query VIP_VEHICLE││
+│                                          ────────►   │Query ocms_vip_vehicle││
 │                                                      │                 ││
 │                                                      └────────┬────────┘│
 │                                                         Found/│\Not     │
@@ -182,21 +182,12 @@ The Technical Flowchart will contain the following tabs/sections:
 │                                                         ┌────┘  └────┐  │
 │                                                         │            │  │
 │                                                         ▼            ▼  │
-│                                                   Return 'V'  ┌─────────┐
-│                                                    ────────►  │Last char│
-│                                                               │letter?  │
-│                                                               └────┬────┘
-│                                                               Yes/ │ \No │
-│                                                                   │  │   │
-│                                                              ┌────┘  └───┐
-│                                                              │           │
-│                                                              ▼           ▼
-│                                                        Return 'S'  Return 'F'
-│                                                         ────────►   ────────►
-│                                                                            │
-│                                                                            │
-│ ┌──────────────┐                                                           │
-│ │     End      │◄──────────────────────────────────────────────────────────┘
+│                                                   Return 'V'   Return 'S'│
+│                                                    ────────►    ────────►│
+│                                                      (VIP)   (Local Def) │
+│                                                                          │
+│ ┌──────────────┐                                                         │
+│ │     End      │◄────────────────────────────────────────────────────────┘
 │ └──────────────┘
 │
 └───────────────────────────────────────────────────────────────────────────────
@@ -219,12 +210,10 @@ The Technical Flowchart will contain the following tabs/sections:
 | 11 | Process | Return 'D' | Return Diplomatic vehicle type | End |
 | 12 | Decision | Is Military format? | Check prefix/suffix MID or MINDEF | Yes→13, No→14 |
 | 13 | Process | Return 'I' | Return Military vehicle type | End |
-| 14 | Process | Query CAS VIP_VEHICLE | Query database for active VIP status | 15 |
+| 14 | Process | Query ocms_vip_vehicle | Query database for active VIP status | 15 |
 | 15 | Decision | Found in VIP DB? | Check if vehicle exists with status = 'A' | Yes→16, No→17 |
 | 16 | Process | Return 'V' | Return VIP vehicle type | End |
-| 17 | Decision | Last char is letter? | Check if last character is alphabet | Yes→18, No→19 |
-| 18 | Process | Return 'S' | Return Singapore/Local (fallback) | End |
-| 19 | Process | Return 'F' | Return Foreign (default) | End |
+| 17 | Process | Return 'S' | Return Singapore/Local (default per FD Step 8) | End |
 | E1a | Error | Return OCMS-1401 | Blank vehicle not allowed for Type O | End |
 | E1b | Error | Return OCMS-1402 | Blank vehicle not allowed for Type E | End |
 | End | End | End | Function returns result to caller | - |
@@ -240,14 +229,13 @@ The Technical Flowchart will contain the following tabs/sections:
 | D4 | LTA Valid? | LTA result | ValidateRegistrationNo.validate() == true | Return 'S' | Go to D5 |
 | D5 | Is Diplomatic? | vehicleNo | Matches ^S.*(CC\|CD\|TC\|TE)$ | Return 'D' | Go to D6 |
 | D6 | Is Military? | vehicleNo | Starts/Ends with MID or MINDEF | Return 'I' | Go to Step 14 |
-| D7 | Found in VIP DB? | Query result | EXISTS in VIP_VEHICLE with status='A' | Return 'V' | Go to D8 |
-| D8 | Last char letter? | vehicleNo | Last character is A-Z | Return 'S' | Return 'F' |
+| D7 | Found in VIP DB? | Query result | EXISTS in ocms_vip_vehicle with status='A' | Return 'V' | Return 'S' (Local Default) |
 
 ### 4.5 Database Operations
 
 | Step | Operation | Database | Table | Query/Action |
 | --- | --- | --- | --- | --- |
-| 14 | SELECT | CAS | VIP_VEHICLE | `SELECT vehicle_no FROM VIP_VEHICLE WHERE vehicle_no = ? AND status = 'A'` |
+| 14 | SELECT | OCMS (Intranet) | ocms_vip_vehicle | `SELECT vehicle_no FROM ocms_vip_vehicle WHERE vehicle_no = ? AND status = 'A'` |
 
 **Note:** Do NOT use `SELECT *`. Only select required fields.
 
@@ -284,7 +272,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | Error Point | Error Type | Condition | Handling | Recovery |
 | --- | --- | --- | --- | --- |
 | Step 7 | System Error | LTA library exception | Catch exception, log error, return false | Proceed to next check (Diplomatic) |
-| Step 14 | System Error | CAS DB unavailable | Catch exception, log error, return false | Proceed to next check (Last char) |
+| Step 14 | System Error | OCMS DB unavailable | Catch exception, log error, return false | Return 'S' (Local Default) |
 
 ---
 
@@ -400,8 +388,7 @@ Before creating the technical flowchart:
 | LTA Valid? | Yes (Valid) | No (Invalid) |
 | Is Diplomatic? | Yes (Diplomatic) | No |
 | Is Military? | Yes (Military) | No |
-| VIP found? | Yes (VIP) | No (Not found) |
-| Last char letter? | Yes (Letter) | No (Number) |
+| VIP found? | Yes (VIP) | No (Local Default) |
 
 ### 9.4 Error Box Content
 
@@ -418,3 +405,4 @@ Before creating the technical flowchart:
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on plan_api.md and plan_condition.md |
 | 2.0 | 19/01/2026 | Claude | Revised: Split error E1 into E1a/E1b with OCMS-XXXX codes, added audit user config, added database operations, added error response format |
+| 2.1 | 27/01/2026 | Claude | Aligned with FD: Removed steps 17-19 (last char letter check, foreign default). After VIP check fails, return 'S' (Local) per FD Step 8 |

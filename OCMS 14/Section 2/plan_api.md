@@ -5,11 +5,11 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Foreign Vehicle Notice Processing |
-| Version | v1.0 |
+| Version | v2.0 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 15/01/2026 |
-| Status | Draft |
+| Last Updated | 27/01/2026 |
+| Status | Revised |
 | FD Reference | OCMS 14 - Section 3 |
 | TD Reference | OCMS 14 - Section 2 |
 
@@ -35,6 +35,7 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | vHub | External | Border enforcement (ICA) |
 | REPCCS | External | Car park enforcement |
 | CES EHT | External | Certis enforcement |
+| SLIFT | External | File encryption/decryption service |
 | Azure Blob Storage | External | File storage |
 | SFTP Server | External | File transfer |
 
@@ -43,10 +44,12 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | External System | Method | Direction |
 | --- | --- | --- |
 | vHub | REST API | OCMS → vHub |
-| vHub | SFTP | OCMS → vHub |
-| vHub | SFTP (ACK) | vHub → OCMS |
-| REPCCS | SFTP | OCMS → REPCCS |
-| CES EHT | SFTP | OCMS → CES EHT |
+| vHub | SFTP | OCMS → SLIFT → Azure → SFTP → vHub |
+| vHub | SFTP (ACK) | vHub → SFTP → Azure → SLIFT → OCMS |
+| vHub | SFTP (NTL) | vHub → SFTP → Azure → SLIFT → OCMS |
+| REPCCS | SFTP | OCMS → SLIFT → Azure → SFTP → REPCCS |
+| CES EHT | SFTP | OCMS → SLIFT → Azure → SFTP → CES EHT |
+| SLIFT | Internal API | OCMS ↔ SLIFT (Encrypt/Decrypt) |
 
 ---
 
@@ -96,10 +99,11 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | 2 | Get FOR Parameter | Query `ocms_parameter` for FOR value |
 | 3 | Prepare Notice Lists | Same logic as API (Settled, Cancelled, Outstanding) |
 | 4 | Generate XML File | Create XML with violation records |
-| 5 | Upload to Azure | Store file in Azure Blob Storage |
-| 6 | Upload to SFTP | Transfer file to vHub SFTP server |
-| 7 | Store Results | Save to `ocms_offence_avss_sftp` |
-| 8 | Send Error Email | If any errors occurred |
+| 5 | Send to SLIFT | Encrypt file using SLIFT service |
+| 6 | Upload to Azure | Store encrypted file in Azure Blob Storage |
+| 7 | Upload to SFTP | Transfer encrypted file to vHub SFTP server |
+| 8 | Store Results | Save to `ocms_offence_avss_sftp` |
+| 9 | Send Error Email | If any errors occurred |
 
 ---
 
@@ -118,9 +122,11 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | --- | --- | --- |
 | 1 | Start CRON | Scheduled job triggers |
 | 2 | Download ACK File | Get ACK file from vHub SFTP |
-| 3 | Parse ACK File | Read success/error status per record |
-| 4 | Update Records | Update `ocms_offence_avss_sftp` with ACK status |
-| 5 | Send Error Email | If any errors in ACK file |
+| 3 | Upload to Azure | Store encrypted file in Azure Blob |
+| 4 | Send to SLIFT | Decrypt file using SLIFT service |
+| 5 | Parse ACK File | Read success/error status per record |
+| 6 | Update Records | Update `ocms_offence_avss_sftp` with ACK status |
+| 7 | Send Error Email | If any errors in ACK file |
 
 ---
 
@@ -132,6 +138,18 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | Trigger | Scheduled (TBD timing) |
 | Frequency | Daily |
 | Purpose | Process NTL responses from vHub |
+
+#### Process Flow
+
+| Step | Action | Description |
+| --- | --- | --- |
+| 1 | Start CRON | Scheduled job triggers |
+| 2 | Download NTL File | Get NTL file from vHub SFTP |
+| 3 | Upload to Azure | Store encrypted file in Azure Blob |
+| 4 | Send to SLIFT | Decrypt file using SLIFT service |
+| 5 | Parse NTL File | Read NTL records |
+| 6 | Update Records | Update notice records based on NTL data |
+| 7 | Send Error Email | If any errors occurred |
 
 ---
 
@@ -151,9 +169,10 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | 1 | Start CRON | Scheduled job triggers |
 | 2 | Get FOR Parameter | Query `ocms_parameter` for FOR value |
 | 3 | Generate Listed Vehicle File | Query qualifying notices |
-| 4 | Upload to Azure | Store file in Azure Blob Storage |
-| 5 | Upload to SFTP | Transfer file to REPCCS SFTP server |
-| 6 | Send Error Email | If any errors occurred |
+| 4 | Send to SLIFT | Encrypt file using SLIFT service |
+| 5 | Upload to Azure | Store encrypted file in Azure Blob Storage |
+| 6 | Upload to SFTP | Transfer encrypted file to REPCCS SFTP server |
+| 7 | Send Error Email | If any errors occurred |
 
 #### Query Conditions
 
@@ -182,9 +201,10 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | 1 | Start CRON | Scheduled job triggers |
 | 2 | Get FOR Parameter | Query `ocms_parameter` for FOR value |
 | 3 | Generate Tagged Vehicle File | Query qualifying notices |
-| 4 | Upload to Azure | Store file in Azure Blob Storage |
-| 5 | Upload to SFTP | Transfer file to CES EHT SFTP server |
-| 6 | Send Error Email | If any errors occurred |
+| 4 | Send to SLIFT | Encrypt file using SLIFT service |
+| 5 | Upload to Azure | Store encrypted file in Azure Blob Storage |
+| 6 | Upload to SFTP | Transfer encrypted file to CES EHT SFTP server |
+| 7 | Send Error Email | If any errors occurred |
 
 ---
 
@@ -222,23 +242,23 @@ This document outlines the APIs, CRON jobs, and external system integrations inv
 | Batch Size | 50 records per request |
 | Reference | vHub External Agency API Interface Requirement Specifications v1.0 |
 
-#### Request Payload
+#### Request Payload (per Data Dictionary)
 
-| vHub Field | OCMS Field | Source Table | Description |
-| --- | --- | --- | --- |
-| ViolationNo | offence_no | ocms_offence_avss | Notice number |
-| OffenceDateTime | offence_date + offence_time | ocms_offence_avss | Format: YYYYMMDDHHmmss |
-| OffenceCode | offence_code | ocms_offence_avss | Offence rule code |
-| Location | location | ocms_offence_avss | Offence location |
-| OffenceDescription | offence_description | ocms_offence_avss | Description of offence |
-| VehicleNo | vehicle_no | ocms_offence_avss | Vehicle registration |
-| VehicleType | vehicle_type | ocms_offence_avss | B=Bus, M=Motorcycle, C=Car |
-| VehicleMake | vehicle_make | ocms_offence_avss | Vehicle make |
-| VehicleColor | vehicle_color | ocms_offence_avss | Vehicle color |
-| CompositionAmount | composition_amount | ocms_offence_avss | Fine amount |
-| AdminFee | admin_fee | ocms_offence_avss | Admin fee amount |
-| TotalAmount | total_amount | ocms_offence_avss | Total payable |
-| ViolationStatus | violation_status | ocms_offence_avss | O/S/C |
+| vHub Field | OCMS Field | Data Type | Source Table | Description |
+| --- | --- | --- | --- | --- |
+| ViolationReportNo | offence_no | varchar(10) | ocms_offence_avss | Notice number |
+| OffenceDateTime | offence_date + offence_time | datetime2(7) | ocms_offence_avss | Format: YYYYMMDDHHmmss |
+| OffenceReferenceNo | offence_code | integer | ocms_offence_avss | Offence rule code |
+| OffenceLocation | location | varchar(100) | ocms_offence_avss | Offence location |
+| OffenceDescription | offence_description | varchar(210) | ocms_offence_avss | Description of offence |
+| VehicleRegistrationNumber | vehicle_no | varchar(14) | ocms_offence_avss | Vehicle registration |
+| VehicleType | vehicle_type | varchar(1) | ocms_offence_avss | B=Bus, M=Motorcycle, C=Car |
+| VehicleMake | vehicle_make | varchar(50) | ocms_offence_avss | Vehicle make |
+| VehicleColor | vehicle_color | varchar(15) | ocms_offence_avss | Vehicle color |
+| OffenceFineAmount | amount_payable | decimal(19,2) | ocms_offence_avss | Total amount payable |
+| Status | record_status | varchar(1) | ocms_offence_avss | O/S/C (Outstanding/Settled/Cancelled) |
+| PaymentDatetime | crs_date_of_suspension | datetime2(7) | ocms_offence_avss | Payment date (for settled notices) |
+| ReceiptNo | receipt_no | varchar(16) | ocms_offence_avss | Receipt number (for settled notices) |
 
 #### Violation Status Codes
 
@@ -380,24 +400,73 @@ URA_VHUB_VIOLATION_YYYYMMDD_HHMMSS.xml
 | ocms_offence_avss_sftp | Intranet | vHub SFTP records |
 | ocms_parameter | Intranet | System parameters |
 
-### 6.2 Key Fields in ocms_offence_avss
+### 6.2 ocms_offence_avss Table (per Data Dictionary)
 
-| Field | Type | Description |
-| --- | --- | --- |
-| batch_date | datetime2 | Date batch was generated |
-| offence_no | varchar(10) | Notice number |
-| offence_date | datetime2 | Date of offence |
-| offence_time | datetime2 | Time of offence |
-| offence_code | integer | Offence rule code |
-| location | varchar(100) | Offence location |
-| vehicle_no | varchar(14) | Vehicle number |
-| vehicle_type | varchar(1) | Vehicle type code |
-| violation_status | varchar(1) | O/S/C |
-| vhub_api_status_code | varchar(1) | 0=Success, 1=Error |
-| vhub_api_error_code | varchar(20) | Error code from vHub |
-| vhub_api_error_description | varchar(200) | Error description |
+| Field | Type | PK | Nullable | Description |
+| --- | --- | --- | --- | --- |
+| batch_date | datetime2(7) | Yes | No | Date the batch was generated |
+| offence_no | varchar(10) | No | No | Notice number |
+| offence_date | datetime2(7) | No | No | Date of offence |
+| offence_time | datetime2(7) | No | No | Time of offence |
+| offence_code | integer | No | No | Offence rule code |
+| location | varchar(100) | No | Yes | Location of offence |
+| offence_description | varchar(210) | No | Yes | Description of the offence |
+| vehicle_no | varchar(14) | No | No | Vehicle number |
+| vehicle_type | varchar(1) | No | Yes | Vehicle type |
+| vehicle_make | varchar(50) | No | Yes | Vehicle make |
+| vehicle_color | varchar(15) | No | Yes | Vehicle color |
+| amount_payable | decimal(19,2) | No | Yes | Amount payable for the offence |
+| record_status | varchar(1) | No | Yes | Record status (O/S/C) |
+| receipt_series | varchar(2) | No | Yes | Receipt series (for settled notices) |
+| receipt_no | varchar(16) | No | Yes | Receipt number (for settled notices) |
+| receipt_check_digit | varchar(1) | No | Yes | Receipt check digit (for settled notices) |
+| crs_date_of_suspension | datetime2(7) | No | Yes | CRS date of suspension |
+| sent_to_vhub | varchar(1) | No | Yes | Indicator if sent to vHub |
+| ack_from_vhub | varchar(1) | No | Yes | Indicator if acknowledgement received |
+| sent_vhub_datetime | datetime2(7) | No | No | Timestamp when sent to vHub |
+| ack_from_vhub_datetime | datetime2(7) | No | Yes | Timestamp when ACK received |
+| vhub_api_status_code | varchar(1) | No | Yes | API status code (0=Success, 1=Error) |
+| vhub_api_error_code | varchar(10) | No | Yes | API error code from vHub |
+| vhub_api_error_description | varchar(255) | No | Yes | API error description from vHub |
+| cre_date | datetime2(7) | No | No | Record creation timestamp |
+| cre_user_id | varchar(10) | No | No | ID of user/system that created record |
+| upd_date | datetime2(7) | No | Yes | Record last update timestamp |
+| upd_user_id | varchar(50) | No | Yes | ID of user/system that last updated |
 
-### 6.3 Parameter Table Values
+### 6.3 ocms_offence_avss_sftp Table (per Data Dictionary)
+
+| Field | Type | PK | Nullable | Description |
+| --- | --- | --- | --- | --- |
+| batch_date | datetime2(7) | Yes | No | Date the batch was generated |
+| offence_no | varchar(10) | No | No | Notice number |
+| offence_date | datetime2(7) | No | No | Date of offence |
+| offence_time | datetime2(7) | No | No | Time of offence |
+| offence_code | integer | No | No | Offence rule code |
+| location | varchar(100) | No | Yes | Location of offence |
+| offence_description | varchar(210) | No | Yes | Description of the offence |
+| vehicle_no | varchar(14) | No | No | Vehicle number |
+| vehicle_type | varchar(1) | No | Yes | Vehicle type |
+| vehicle_make | varchar(50) | No | Yes | Vehicle make |
+| vehicle_color | varchar(15) | No | Yes | Vehicle color |
+| amount_payable | decimal(19,2) | No | Yes | Total amount payable |
+| record_status | varchar(1) | No | Yes | Status of the offence record (O/S/C) |
+| receipt_series | varchar(2) | No | Yes | Receipt series (for settled notices) |
+| receipt_no | varchar(16) | No | Yes | Receipt number (for settled notices) |
+| receipt_check_digit | varchar(1) | No | Yes | Receipt check digit (for settled notices) |
+| crs_date_of_suspension | datetime2(7) | No | Yes | CRS date of suspension |
+| sent_to_vhub | varchar(1) | No | Yes | Indicator if sent to vHub |
+| ack_from_vhub | varchar(1) | No | Yes | Indicator if ACK received from vHub |
+| sent_vhub_datetime | datetime2(7) | No | No | Timestamp when sent to vHub via SFTP |
+| ack_from_vhub_datetime | datetime2(7) | No | Yes | Timestamp when ACK received via SFTP |
+| vhub_sftp_status_code | varchar(1) | No | Yes | Status code from vHub SFTP |
+| vhub_sftp_error_code | varchar(10) | No | Yes | Error code from vHub SFTP |
+| vhub_sftp_error_description | varchar(255) | No | Yes | Error description from vHub SFTP |
+| cre_date | datetime2(7) | No | No | Record creation timestamp |
+| cre_user_id | varchar(10) | No | No | ID of user/system that created record |
+| upd_date | datetime2(7) | No | Yes | Record last update timestamp |
+| upd_user_id | varchar(50) | No | Yes | ID of user/system that last updated |
+
+### 6.4 Parameter Table Values
 
 | Parameter ID | Code | Description |
 | --- | --- | --- |
@@ -407,9 +476,60 @@ URA_VHUB_VIOLATION_YYYYMMDD_HHMMSS.xml
 
 ---
 
-## 7. Error Handling
+## 7. SLIFT Integration
 
-### 7.1 API Error Handling
+### 7.1 Overview
+
+SLIFT (Secure Lift) is the encryption/decryption service used for all SFTP file transfers. All files sent to or received from external systems via SFTP must be encrypted/decrypted using SLIFT.
+
+| Attribute | Value |
+| --- | --- |
+| Service Type | Internal API |
+| Purpose | File encryption and decryption |
+| Protocol | HTTPS |
+| Integration | Azure-based |
+
+### 7.2 SLIFT Operations
+
+| Operation | Direction | Usage |
+| --- | --- | --- |
+| Encrypt | OCMS → SLIFT | Before uploading to Azure/SFTP |
+| Decrypt | SLIFT → OCMS | After downloading from Azure/SFTP |
+
+### 7.3 SLIFT Flow for Outbound Files (OCMS → External)
+
+| Step | Action | Description |
+| --- | --- | --- |
+| 1 | Generate File | OCMS generates XML/CSV file |
+| 2 | Call SLIFT Encrypt | Send file to SLIFT for encryption |
+| 3 | Receive Encrypted File | SLIFT returns encrypted file |
+| 4 | Upload to Azure Blob | Store encrypted file in Azure Blob Storage |
+| 5 | Upload to SFTP | Transfer encrypted file to external SFTP server |
+
+### 7.4 SLIFT Flow for Inbound Files (External → OCMS)
+
+| Step | Action | Description |
+| --- | --- | --- |
+| 1 | Download from SFTP | Get encrypted file from external SFTP |
+| 2 | Upload to Azure Blob | Store encrypted file in Azure Blob Storage |
+| 3 | Call SLIFT Decrypt | Send file to SLIFT for decryption |
+| 4 | Receive Decrypted File | SLIFT returns decrypted file |
+| 5 | Process File | OCMS processes the decrypted file |
+
+### 7.5 SLIFT Error Handling
+
+| Error Scenario | Action | Recovery |
+| --- | --- | --- |
+| SLIFT service unavailable | Retry up to 3 times | Log error, send interfacing error email |
+| Encryption failed | Log error | Send interfacing error email, abort transfer |
+| Decryption failed | Log error | Send interfacing error email, mark file as failed |
+| Invalid file format | Log error | Send interfacing error email |
+
+---
+
+## 8. Error Handling
+
+### 8.1 API Error Handling
 
 | Scenario | Action | Recovery |
 | --- | --- | --- |
@@ -417,7 +537,7 @@ URA_VHUB_VIOLATION_YYYYMMDD_HHMMSS.xml
 | API returns error | Log error code | Add to error report, send email |
 | Partial batch failure | Process successful records | Retry failed records in next run |
 
-### 7.2 SFTP Error Handling
+### 8.2 SFTP Error Handling
 
 | Scenario | Action | Recovery |
 | --- | --- | --- |
@@ -425,7 +545,7 @@ URA_VHUB_VIOLATION_YYYYMMDD_HHMMSS.xml
 | File upload failed | Retry up to 2 times | Send interfacing error email |
 | File generation failed | Log error | Send interfacing error email |
 
-### 7.3 Database Error Handling
+### 8.3 Database Error Handling
 
 | Scenario | Action | Recovery |
 | --- | --- | --- |
@@ -435,9 +555,9 @@ URA_VHUB_VIOLATION_YYYYMMDD_HHMMSS.xml
 
 ---
 
-## 8. Vehicle Type Mapping
+## 9. Vehicle Type Mapping
 
-### 8.1 OCMS to vHub Vehicle Type Mapping
+### 9.1 OCMS to vHub Vehicle Type Mapping
 
 | OCMS Vehicle Category | vHub Vehicle Type | Description |
 | --- | --- | --- |
@@ -451,20 +571,21 @@ URA_VHUB_VIOLATION_YYYYMMDD_HHMMSS.xml
 
 ---
 
-## 9. Dependencies
+## 10. Dependencies
 
 | Service/System | Type | Purpose |
 | --- | --- | --- |
 | OCMS Parameter Service | Internal | Get FOR, FOD, AFO values |
 | REPCCS Car Park API | External | Get car park codes |
 | vHub API | External | Send violation records |
+| SLIFT Service | Internal | File encryption/decryption |
 | Azure Blob Storage | External | File storage |
 | SFTP Server | External | File transfer |
 | Email Service | Internal | Send error notifications |
 
 ---
 
-## 10. Assumptions Log
+## 11. Assumptions Log
 
 | ID | Assumption | Rationale |
 | --- | --- | --- |
@@ -476,8 +597,10 @@ URA_VHUB_VIOLATION_YYYYMMDD_HHMMSS.xml
 
 ---
 
-## 11. Changelog
+## 12. Changelog
 
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on FD Section 3 |
+| 2.0 | 27/01/2026 | Claude | Added SLIFT integration to all SFTP flows, fixed field names per Data Dictionary |
+| 2.1 | 27/01/2026 | Claude | Added complete ocms_offence_avss and ocms_offence_avss_sftp table definitions per Data Dictionary (28 fields each). Fixed: record_status (not violation_status), vhub_api_error_code varchar(10) (not 20), vhub_api_error_description varchar(255) (not 200). Added SLIFT Integration section (Section 7). Fixed section numbering. |

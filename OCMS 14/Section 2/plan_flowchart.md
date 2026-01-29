@@ -5,11 +5,11 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Foreign Vehicle Notice Processing |
-| Version | v1.0 |
+| Version | v2.0 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 15/01/2026 |
-| Status | Draft |
+| Last Updated | 27/01/2026 |
+| Status | Revised |
 | FD Reference | OCMS 14 - Section 3 |
 | TD Reference | OCMS 14 - Section 2 |
 
@@ -44,6 +44,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | OCMS Backend / CRON | Light Blue | #dae8fc | Backend processing / CRON jobs |
 | OCMS Admin API | Light Green | #d5e8d4 | Intranet API services |
 | Database (Intranet) | Light Yellow | #fff2cc | Intranet database operations |
+| SLIFT Service | Light Pink | #f8cecc | Encryption/Decryption service |
 | External System (vHub) | Light Orange | #ffe6cc | vHub API/SFTP |
 | External System (REPCCS) | Light Orange | #ffe6cc | REPCCS SFTP |
 | External System (CES EHT) | Light Orange | #ffe6cc | CES EHT SFTP |
@@ -450,14 +451,17 @@ The Technical Flowchart will contain the following tabs/sections:
 | 6 | Process | Consolidate Lists | Merge all records | 7 |
 | 7 | Process | Generate XML | Create XML file | 8 |
 | 8 | Decision | Gen Success? | Check file generation | Yes→9, No→E1 |
-| 9 | Process | Upload Azure | Store in Azure Blob | 10 |
-| 10 | Decision | Upload Success? | Check Azure upload | Yes→11, No→E2 |
-| 11 | Process | Upload SFTP | Send to vHub SFTP | 12 |
-| 12 | Decision | SFTP Success? | Check SFTP upload | Yes→13, No→E3 |
-| 13 | Process | Save Results | Store in ocms_offence_avss_sftp | End |
+| 9 | External | **Call SLIFT Encrypt** | Encrypt file via SLIFT service | 10 |
+| 10 | Decision | **Encrypt Success?** | Check SLIFT response | Yes→11, No→E4 |
+| 11 | Process | Upload Azure | Store encrypted file in Azure Blob | 12 |
+| 12 | Decision | Azure Success? | Check Azure upload | Yes→13, No→E2 |
+| 13 | Process | Upload SFTP | Send encrypted file to vHub SFTP | 14 |
+| 14 | Decision | SFTP Success? | Check SFTP upload | Yes→15, No→E3 |
+| 15 | Process | Save Results | Store in ocms_offence_avss_sftp | End |
 | E1 | Error | Gen Error | Log error, send email | End |
 | E2 | Error | Azure Error | Log error, send email | End |
 | E3 | Error | SFTP Error | Log error, send email | End |
+| E4 | Error | **SLIFT Error** | Log error, send email, abort transfer | End |
 
 ---
 
@@ -509,14 +513,18 @@ Similar structure to Tab 3, with additional:
 | 1 | Start | CRON Start | Job triggers | 2 |
 | 2 | Process | Connect SFTP | Connect to vHub SFTP | 3 |
 | 3 | Decision | ACK File Exists? | Check for ACK file | Yes→4, No→End |
-| 4 | Process | Download ACK | Download ACK file | 5 |
-| 5 | Process | Parse ACK | Parse XML ACK file | 6 |
-| 6 | Process | Loop Records | Process each record | 7 |
-| 7 | Decision | Record Success? | Check ACK status | Yes→8, No→9 |
-| 8 | Process | Update Success | Update ocms_offence_avss_sftp | 10 |
-| 9 | Process | Log Error | Add to error log | 10 |
-| 10 | Decision | More Records? | Check remaining | Yes→6, No→11 |
-| 11 | Process | Send Error Email | If any errors | End |
+| 4 | Process | Download ACK | Download encrypted ACK file | 5 |
+| 5 | Process | Upload to Azure | Store encrypted file in Azure Blob | 6 |
+| 6 | External | **Call SLIFT Decrypt** | Decrypt file via SLIFT service | 7 |
+| 7 | Decision | **Decrypt Success?** | Check SLIFT response | Yes→8, No→E1 |
+| 8 | Process | Parse ACK | Parse XML ACK file | 9 |
+| 9 | Process | Loop Records | Process each record | 10 |
+| 10 | Decision | Record Success? | Check ACK status | Yes→11, No→12 |
+| 11 | Process | Update Success | Update ocms_offence_avss_sftp | 13 |
+| 12 | Process | Log Error | Add to error log | 13 |
+| 13 | Decision | More Records? | Check remaining | Yes→9, No→14 |
+| 14 | Process | Send Error Email | If any errors | End |
+| E1 | Error | **SLIFT Error** | Log error, mark file as failed | End |
 
 ---
 
@@ -554,10 +562,14 @@ Similar structure to Tab 3, with additional:
 | 1 | Start | CRON Start | Job triggers | 2 |
 | 2 | Process | Connect SFTP | Connect to vHub | 3 |
 | 3 | Decision | NTL File Exists? | Check for NTL file | Yes→4, No→End |
-| 4 | Process | Download NTL | Download NTL file | 5 |
-| 5 | Process | Parse NTL | Parse file content | 6 |
-| 6 | Process | Update Notices | Update affected notices | 7 |
-| 7 | Process | Log Results | Log processing results | End |
+| 4 | Process | Download NTL | Download encrypted NTL file | 5 |
+| 5 | Process | Upload to Azure | Store encrypted file in Azure Blob | 6 |
+| 6 | External | **Call SLIFT Decrypt** | Decrypt file via SLIFT service | 7 |
+| 7 | Decision | **Decrypt Success?** | Check SLIFT response | Yes→8, No→E1 |
+| 8 | Process | Parse NTL | Parse file content | 9 |
+| 9 | Process | Update Notices | Update affected notices | 10 |
+| 10 | Process | Log Results | Log processing results | End |
+| E1 | Error | **SLIFT Error** | Log error, mark file as failed | End |
 
 ---
 
@@ -648,12 +660,15 @@ Similar structure for NTL sub-flows.
 | 2 | Process | Get FOR Parameter | Query parameter | 3 |
 | 3 | Process | Query Listed Vehicles | Query qualifying notices | 4 |
 | 4 | Process | Generate File | Create listed vehicle file | 5 |
-| 5 | Process | Upload Azure | Store in Azure Blob | 6 |
-| 6 | Decision | Azure Success? | Check upload | Yes→7, No→E1 |
-| 7 | Process | Upload SFTP | Send to REPCCS SFTP | 8 |
-| 8 | Decision | SFTP Success? | Check upload | Yes→End, No→E2 |
+| 5 | External | **Call SLIFT Encrypt** | Encrypt file via SLIFT service | 6 |
+| 6 | Decision | **Encrypt Success?** | Check SLIFT response | Yes→7, No→E3 |
+| 7 | Process | Upload Azure | Store encrypted file in Azure Blob | 8 |
+| 8 | Decision | Azure Success? | Check upload | Yes→9, No→E1 |
+| 9 | Process | Upload SFTP | Send encrypted file to REPCCS SFTP | 10 |
+| 10 | Decision | SFTP Success? | Check upload | Yes→End, No→E2 |
 | E1 | Error | Azure Error | Log, send email | End |
 | E2 | Error | SFTP Error | Log, send email | End |
+| E3 | Error | **SLIFT Error** | Log error, send email, abort transfer | End |
 
 ### 12.4 Query Conditions
 
@@ -705,12 +720,15 @@ AND offence_date_and_time <= DATEADD(day, -@FOR_days, GETDATE())
 | 2 | Process | Get FOR Parameter | Query parameter | 3 |
 | 3 | Process | Query Tagged Vehicles | Query qualifying notices | 4 |
 | 4 | Process | Generate File | Create tagged vehicle file | 5 |
-| 5 | Process | Upload Azure | Store in Azure Blob | 6 |
-| 6 | Decision | Azure Success? | Check upload | Yes→7, No→E1 |
-| 7 | Process | Upload SFTP | Send to CES EHT SFTP | 8 |
-| 8 | Decision | SFTP Success? | Check upload | Yes→End, No→E2 |
+| 5 | External | **Call SLIFT Encrypt** | Encrypt file via SLIFT service | 6 |
+| 6 | Decision | **Encrypt Success?** | Check SLIFT response | Yes→7, No→E3 |
+| 7 | Process | Upload Azure | Store encrypted file in Azure Blob | 8 |
+| 8 | Decision | Azure Success? | Check upload | Yes→9, No→E1 |
+| 9 | Process | Upload SFTP | Send encrypted file to CES EHT SFTP | 10 |
+| 10 | Decision | SFTP Success? | Check upload | Yes→End, No→E2 |
 | E1 | Error | Azure Error | Log, send email | End |
 | E2 | Error | SFTP Error | Log, send email | End |
+| E3 | Error | **SLIFT Error** | Log error, send email, abort transfer | End |
 
 ---
 
@@ -853,9 +871,13 @@ AND (admin_fee IS NULL OR admin_fee = 0)
 | 2 | vHub API Call | API Timeout | Retry 2x | Log error, continue next batch |
 | 2 | vHub API Call | API Error | Log per record | Add to error report |
 | 4,5 | Generate XML | Gen Error | - | Log, send email |
+| 4,5 | **SLIFT Encrypt** | Encrypt Error | Retry 3x | Log, send email, abort transfer |
 | 4,5 | Azure Upload | Upload Error | Retry | Log, send email |
 | 4,5 | SFTP Upload | SFTP Error | Retry | Log, send email |
 | 6,7 | Download ACK | SFTP Error | Retry | Log, send email |
+| 6,7 | **SLIFT Decrypt** | Decrypt Error | Retry 3x | Log, send email, mark file failed |
+| 8,9 | **SLIFT Decrypt** | Decrypt Error | Retry 3x | Log, send email, mark file failed |
+| 10,12 | **SLIFT Encrypt** | Encrypt Error | Retry 3x | Log, send email, abort transfer |
 | 10,12 | Azure Upload | Upload Error | Retry | Log, send email |
 | 10,12 | SFTP Upload | SFTP Error | Retry | Log, send email |
 | 13 | Get FOD/AFO | Not Found | - | Log, stop processing |
@@ -909,6 +931,7 @@ Before creating the technical flowchart:
 | OCMS Backend/CRON | #dae8fc | #6c8ebf |
 | OCMS Admin API | #d5e8d4 | #82b366 |
 | Database | #fff2cc | #d6b656 |
+| **SLIFT Service** | **#f8cecc** | **#b85450** |
 | External System | #ffe6cc | #d79b00 |
 | Azure | #e1d5e7 | #9673a6 |
 
@@ -919,3 +942,4 @@ Before creating the technical flowchart:
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on plan_api.md and plan_condition.md |
+| 2.0 | 27/01/2026 | Claude | Added SLIFT swimlane and integration steps to all SFTP flows. Updated: vHub SFTP (encrypt), vHub ACK (decrypt), vHub NTL (decrypt), REPCCS (encrypt), CES EHT (encrypt). Added SLIFT error handling. Aligned with Functional Flowchart and Data Dictionary. |

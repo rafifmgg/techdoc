@@ -5,10 +5,10 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Notice Processing Flow for Military Vehicles |
-| Version | v1.0 |
+| Version | v1.1 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 15/01/2026 |
+| Last Updated | 27/01/2026 |
 | Status | Draft |
 | FD Reference | OCMS 14 - Section 5 |
 | TD Reference | OCMS 14 - Section 4 |
@@ -23,9 +23,10 @@ The Technical Flowchart will contain the following tabs/sections:
 | --- | --- | --- | --- |
 | 1 | Section_4_High_Level | High-level overview of Military Vehicle Notice Processing | High |
 | 2 | Section_4_MID_Type_O_E | Detailed flow for Type O & E processing | High |
-| 3 | Section_4_MID_AN_Subflow | Advisory Notice (AN) sub-flow for Military Vehicles | High |
-| 4 | Section_4_MID_Furnish_Subflow | Furnish Driver/Hirer sub-flow | Medium |
-| 5 | Section_4_MID_PS_Suspension | PS-MID Suspension flow at RD2/DN2 | High |
+| 3 | Section_4_MID_Type_U | Type U (UPL) processing with OIC compoundability decision | High |
+| 4 | Section_4_MID_AN_Subflow | Advisory Notice (AN) sub-flow for Military Vehicles | High |
+| 5 | Section_4_MID_Furnish_Subflow | Furnish Driver/Hirer sub-flow | Medium |
+| 6 | Section_4_MID_PS_Suspension | PS-MID Suspension flow at RD2/DN2 | High |
 
 ---
 
@@ -298,9 +299,174 @@ The Technical Flowchart will contain the following tabs/sections:
 
 ---
 
-## 5. Tab 3: Section_4_MID_AN_Subflow
+## 5. Tab 3: Section_4_MID_Type_U
 
 ### 5.1 Process Overview
+
+| Attribute | Value |
+| --- | --- |
+| Process Name | Military Vehicle Type U Processing |
+| Section | 4.3 |
+| Trigger | Notice created with Type U and vehicle_registration_type = 'I' |
+| Frequency | Real-time + Daily CRON |
+| Systems Involved | Backend API, Staff Portal, CRON, Database, TOPPAN SFTP |
+| Expected Outcome | OIC decides compoundability → DN1→DN2→PS-MID or immediate PS-MID |
+
+### 5.2 Detailed Flow Diagram (ASCII)
+
+```
+┌──────────────────┬─────────────────────┬──────────────────┬─────────────────┐
+│   Backend API    │    Staff Portal     │    Database      │  External       │
+├──────────────────┼─────────────────────┼──────────────────┼─────────────────┤
+│                  │                     │                  │                 │
+│ ┌──────────┐     │                     │                  │                 │
+│ │  Start   │     │                     │                  │                 │
+│ │ Type U   │     │                     │                  │                 │
+│ └────┬─────┘     │                     │                  │                 │
+│      │           │                     │                  │                 │
+│      ▼           │                     │                  │                 │
+│ ┌──────────────┐ │                     │ ┌──────────────┐ │                 │
+│ │Duplicate     │ │                     │ │   Query      │ │                 │
+│ │Notice Check  │─┼─────────────────────┼─│existing      │ │                 │
+│ └──────┬───────┘ │                     │ │notices       │ │                 │
+│        │         │                     │ └──────────────┘ │                 │
+│   No Dup         │                     │                  │                 │
+│        │         │                     │                  │                 │
+│        ▼         │                     │                  │                 │
+│ ┌──────────────┐ │                     │                  │                 │
+│ │Vehicle Type  │ │                     │                  │                 │
+│ │= 'I' (MID)   │ │                     │                  │                 │
+│ └──────┬───────┘ │                     │                  │                 │
+│        │         │                     │                  │                 │
+│        ▼         │                     │                  │                 │
+│ ┌──────────────┐ │                     │ ┌──────────────┐ │                 │
+│ │Create Notice │ │                     │ │ INSERT INTO  │ │                 │
+│ │at NPA with   │─┼─────────────────────┼─│ ocms_valid_  │ │                 │
+│ │MINDEF details│ │                     │ │ offence_     │ │                 │
+│ └──────┬───────┘ │                     │ │ notice       │ │                 │
+│        │         │                     │ └──────────────┘ │                 │
+│        ▼         │                     │                  │                 │
+│ ┌──────────────┐ │                     │                  │                 │
+│ │Check Double  │ │                     │                  │                 │
+│ │Booking (DBB) │ │                     │                  │                 │
+│ └──────┬───────┘ │                     │                  │                 │
+│    DBB?│         │                     │                  │                 │
+│   ┌────┴────┐    │                     │                  │                 │
+│   │Yes      │No  │                     │                  │                 │
+│   ▼         ▼    │                     │                  │                 │
+│ ┌──────┐ ┌──────────────┐              │                  │                 │
+│ │PS-DBB│ │Stay at NPA   │              │                  │                 │
+│ │ End  │ │pending OIC   │              │                  │                 │
+│ └──────┘ │decision      │              │                  │                 │
+│          └──────┬───────┘              │                  │                 │
+│                 │                      │                  │                 │
+│                 │        ┌──────────────────┐             │                 │
+│                 │        │ OIC Reviews      │             │                 │
+│                 └───────►│ Notice and       │             │                 │
+│                          │ decides          │             │                 │
+│                          │ compoundability  │             │                 │
+│                          └────────┬─────────┘             │                 │
+│                                   │                       │                 │
+│                          ┌────────┴────────┐              │                 │
+│                          │Is Compoundable? │              │                 │
+│                          └────────┬────────┘              │                 │
+│                          Yes/     │      \No              │                 │
+│                                  │                        │                 │
+│                          ┌───────┘        └───────┐       │                 │
+│                          ▼                        ▼       │                 │
+│                   ┌──────────────┐         ┌──────────────┐                 │
+│                   │Next Stage    │         │Apply PS-MID  │                 │
+│                   │= DN1         │         │immediately   │                 │
+│                   └──────┬───────┘         └──────┬───────┘                 │
+│                          │                        │                         │
+│                          ▼                        ▼                         │
+│                   ┌──────────────┐         ┌──────────────┐                 │
+│                   │CRON: Prepare │         │     End      │                 │
+│                   │for DN1       │         │              │                 │
+│                   └──────┬───────┘         └──────────────┘                 │
+│                          │                                                  │
+│                          ▼                                                  │
+│                   ┌──────────────┐                         ┌──────────────┐ │
+│                   │Notice at DN1 │                         │   TOPPAN     │ │
+│                   │stage         │─────────────────────────│   SFTP       │ │
+│                   └──────┬───────┘                         └──────────────┘ │
+│                          │                                                  │
+│                   ┌──────┴──────┐                                           │
+│                   │Payment Made?│                                           │
+│                   └──────┬──────┘                                           │
+│                   Yes/   │  \No                                             │
+│                         │    │                                              │
+│                   ┌─────┘    └─────┐                                        │
+│                   ▼                ▼                                        │
+│                 PS-FP      ┌──────────────┐                ┌──────────────┐ │
+│                 End        │CRON: Prepare │                │   TOPPAN     │ │
+│                            │for DN2       │────────────────│   SFTP       │ │
+│                            └──────┬───────┘                └──────────────┘ │
+│                                   │                                         │
+│                                   ▼                                         │
+│                            ┌──────────────┐                                 │
+│                            │Notice at DN2 │                                 │
+│                            │stage         │                                 │
+│                            └──────┬───────┘                                 │
+│                                   │                                         │
+│                            ┌──────┴──────┐                                  │
+│                            │Payment Made?│                                  │
+│                            └──────┬──────┘                                  │
+│                            Yes/   │  \No                                    │
+│                                  │    │                                     │
+│                            ┌─────┘    └─────┐                               │
+│                            ▼                ▼                               │
+│                          PS-FP       ┌──────────────┐                       │
+│                          End         │Apply PS-MID  │                       │
+│                                      │              │                       │
+│                                      └──────┬───────┘                       │
+│                                             │                               │
+│                                             ▼                               │
+│                                      ┌──────────────┐                       │
+│                                      │     End      │                       │
+│                                      └──────────────┘                       │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 5.3 Process Steps Table (Type U)
+
+| Step | Type | Definition | Brief Description | Next Step |
+| --- | --- | --- | --- | --- |
+| 1 | Start | Start Type U Flow | Process for UPL offence | 2 |
+| 2 | Process | Duplicate Notice Check | Compare against existing notices | 3 |
+| 3 | Process | Vehicle Type = 'I' | Confirm Military vehicle detected | 4 |
+| 4 | Process | Create Notice at NPA | Insert notice with MINDEF details | 5 |
+| 5 | Decision | Double Booking? | Check for DBB condition | Yes→6, No→7 |
+| 6 | Process | Apply PS-DBB | Suspend duplicate notice | End |
+| 7 | Process | Stay at NPA | Notice pending OIC review | 8 |
+| 8 | Process | OIC Reviews Notice | OIC determines compoundability | 9 |
+| 9 | Decision | Is Compoundable? | OIC decision | Yes→10, No→11 |
+| 10 | Process | Next Stage = DN1 | Set next_processing_stage | 12 |
+| 11 | Process | Apply PS-MID Immediately | Non-compoundable → suspend | End |
+| 12 | CRON | Prepare for DN1 | Generate DN1 letter, send to TOPPAN | 13 |
+| 13 | Process | Notice at DN1 | Update stage to DN1 | 14 |
+| 14 | Decision | Payment Made? | Check if payment received at DN1 | Yes→PS-FP, No→15 |
+| 15 | CRON | Prepare for DN2 | Generate DN2 letter, send to TOPPAN | 16 |
+| 16 | Process | Notice at DN2 | Update stage to DN2 | 17 |
+| 17 | Decision | Payment Made? | Check if payment received at DN2 | Yes→PS-FP, No→18 |
+| 18 | Process | Apply PS-MID | Permanent suspension | End |
+| End | End | End | Process complete | - |
+
+### 5.4 Decision Logic (Type U)
+
+| ID | Decision | Input | Condition | Yes Action | No Action |
+| --- | --- | --- | --- | --- | --- |
+| D1 | Double Booking? | Notice details | Matches 5 DBB criteria | Apply PS-DBB, End | Continue |
+| D2 | Is Compoundable? | OIC decision | OIC marks compoundable | Set next stage DN1 | Apply PS-MID |
+| D3 | Payment at DN1? | Notice status | payment_status = 'PAID' | Apply PS-FP, End | Prepare DN2 |
+| D4 | Payment at DN2? | Notice status | payment_status = 'PAID' | Apply PS-FP, End | Apply PS-MID |
+
+---
+
+## 6. Tab 4: Section_4_MID_AN_Subflow
+
+### 6.1 Process Overview
 
 | Attribute | Value |
 | --- | --- |
@@ -311,7 +477,7 @@ The Technical Flowchart will contain the following tabs/sections:
 | Systems Involved | CRON, Database, TOPPAN SFTP |
 | Expected Outcome | AN Letter generated, notice suspended with PS-ANS |
 
-### 5.2 AN Sub-flow Diagram (ASCII)
+### 6.2 AN Sub-flow Diagram (ASCII)
 
 ```
 ┌──────────────────┬─────────────────────┬──────────────────┬─────────────────┐
@@ -370,7 +536,7 @@ The Technical Flowchart will contain the following tabs/sections:
 └──────────────────┴─────────────────────┴──────────────────┴─────────────────┘
 ```
 
-### 5.3 AN Query Conditions
+### 6.3 AN Query Conditions
 
 ```sql
 SELECT * FROM ocms_valid_offence_notice
@@ -383,7 +549,7 @@ WHERE vehicle_registration_type = 'I'
   AND epr_reason_of_suspension IS NULL
 ```
 
-### 5.4 Process Steps Table (AN Sub-flow)
+### 6.4 Process Steps Table (AN Sub-flow)
 
 | Step | Type | Definition | Brief Description | Next Step |
 | --- | --- | --- | --- | --- |
@@ -398,9 +564,9 @@ WHERE vehicle_registration_type = 'I'
 
 ---
 
-## 6. Tab 4: Section_4_MID_Furnish_Subflow
+## 7. Tab 5: Section_4_MID_Furnish_Subflow
 
-### 6.1 Process Overview
+### 7.1 Process Overview
 
 | Attribute | Value |
 | --- | --- |
@@ -411,7 +577,7 @@ WHERE vehicle_registration_type = 'I'
 | Systems Involved | eService (Internet), Backend API, Database, MHA/DataHive |
 | Expected Outcome | Notice redirected to Driver (DN flow) or Hirer (RD flow) |
 
-### 6.2 Furnish Sub-flow Diagram (ASCII)
+### 7.2 Furnish Sub-flow Diagram (ASCII)
 
 ```
 ┌─────────────────┬──────────────────┬─────────────────┬──────────────────────┐
@@ -504,7 +670,7 @@ WHERE vehicle_registration_type = 'I'
 └─────────────────┴────────────────────────────────────┴──────────────────────┘
 ```
 
-### 6.3 Furnish Eligibility by Stage
+### 7.3 Furnish Eligibility by Stage
 
 | Stage | Furnish Allowed | Reason |
 | --- | --- | --- |
@@ -516,7 +682,7 @@ WHERE vehicle_registration_type = 'I'
 | DN2 | No | Already furnished |
 | PS-MID | No | Notice suspended |
 
-### 6.4 Process Steps Table (Furnish Sub-flow)
+### 7.4 Process Steps Table (Furnish Sub-flow)
 
 | Step | Type | Definition | Brief Description | Next Step |
 | --- | --- | --- | --- | --- |
@@ -531,15 +697,32 @@ WHERE vehicle_registration_type = 'I'
 | 9 | Process | Create Driver/Hirer Record | Add to owner_driver table | 11 |
 | 10 | Process | Remove Pending Status | Allow re-furnish | End |
 | 11 | Decision | Driver or Hirer? | Determine next stage | Driver→DN1, Hirer→RD1 |
-| 12 | Process | MHA/DataHive Check | Validate before RD2/DN2 | 13 |
-| 13 | Process | Continue to RD2/DN2→PS-MID | Normal flow | End |
+| 12 | CRON | MHA/DataHive Check | Validate Driver/Hirer before RD2/DN2 transition | 13 |
+| 13 | Process | Continue to RD2/DN2 | Progress to next stage | 14 |
+| 14 | Process | End of RD2/DN2 | If outstanding, apply PS-MID | End |
 | End | End | End | Furnish complete | - |
+
+### 7.5 MHA/DataHive Check Details
+
+| Attribute | Value |
+| --- | --- |
+| Type | CRON Job (Separate step) |
+| Trigger | Before RD2/DN2 letter generation |
+| Purpose | Validate furnished Driver/Hirer particulars |
+
+#### Process Steps
+
+1. Query notices with furnished Driver/Hirer at RD1/DN1
+2. Call MHA API to validate NRIC/FIN
+3. Call DataHive API to get latest address/particulars
+4. Update offender details if changed
+5. Continue to RD2/DN2 letter generation
 
 ---
 
-## 7. Tab 5: Section_4_MID_PS_Suspension
+## 8. Tab 6: Section_4_MID_PS_Suspension
 
-### 7.1 Process Overview
+### 8.1 Process Overview
 
 | Attribute | Value |
 | --- | --- |
@@ -550,7 +733,7 @@ WHERE vehicle_registration_type = 'I'
 | Systems Involved | CRON, Database (Intranet & Internet) |
 | Expected Outcome | Notice suspended with PS-MID, processing stops |
 
-### 7.2 PS-MID Suspension Flow Diagram (ASCII)
+### 8.2 PS-MID Suspension Flow Diagram (ASCII)
 
 ```
 ┌──────────────────┬─────────────────────┬──────────────────────────────────────┐
@@ -621,17 +804,20 @@ WHERE vehicle_registration_type = 'I'
 └──────────────────┴─────────────────────┴───────────────────────────────────────┘
 ```
 
-### 7.3 PS-MID Query Conditions
+### 8.3 PS-MID Query Conditions
+
+**Note:** Query uses `suspension_type IS NULL` per Data Dictionary alignment.
 
 ```sql
 SELECT * FROM ocms_valid_offence_notice
 WHERE vehicle_registration_type = 'I'
-  AND crs_reason_of_suspension IS NULL
+  AND suspension_type IS NULL           -- No existing PS/TS
   AND last_processing_stage IN ('RD2', 'DN2')
   AND next_processing_stage IN ('RR3', 'DR3')
+  AND next_processing_date <= DATEADD(day, 1, CURRENT_DATE)
 ```
 
-### 7.4 Process Steps Table (PS-MID Suspension)
+### 8.4 Process Steps Table (PS-MID Suspension)
 
 | Step | Type | Definition | Brief Description | Next Step |
 | --- | --- | --- | --- | --- |
@@ -644,7 +830,7 @@ WHERE vehicle_registration_type = 'I'
 | 7 | Process | Insert Suspended Notice | Create record in ocms_suspended_notice | End |
 | End | End | Processing Stops | Notice no longer progresses | - |
 
-### 7.5 Daily Re-check (DipMidForRecheckJob)
+### 8.5 Daily Re-check (DipMidForRecheckJob)
 
 | Attribute | Value |
 | --- | --- |
@@ -654,7 +840,7 @@ WHERE vehicle_registration_type = 'I'
 
 ---
 
-## 8. Error Handling
+## 9. Error Handling
 
 | Tab | Error Point | Error Type | Handling | Recovery |
 | --- | --- | --- | --- | --- |
@@ -667,7 +853,7 @@ WHERE vehicle_registration_type = 'I'
 
 ---
 
-## 9. Flowchart Checklist
+## 10. Flowchart Checklist
 
 Before creating the technical flowchart:
 
@@ -684,9 +870,9 @@ Before creating the technical flowchart:
 
 ---
 
-## 10. Notes for Technical Flowchart Creation
+## 11. Notes for Technical Flowchart Creation
 
-### 10.1 Shape Guidelines
+### 11.1 Shape Guidelines
 
 | Element | Shape | Style |
 | --- | --- | --- |
@@ -697,7 +883,7 @@ Before creating the technical flowchart:
 | Database | Cylinder | shape=cylinder |
 | CRON Job | Rectangle | fillColor=#d5e8d4 (green) |
 
-### 10.2 Connector Guidelines
+### 11.2 Connector Guidelines
 
 | Connection Type | Style |
 | --- | --- |
@@ -706,7 +892,7 @@ Before creating the technical flowchart:
 | External system call | Dashed line |
 | SFTP transfer | Dashed line with label |
 
-### 10.3 API Payload Box Format
+### 11.3 API Payload Box Format
 
 For API calls, use yellow box (#fff2cc) with dashed border:
 
@@ -723,8 +909,9 @@ For API calls, use yellow box (#fff2cc) with dashed border:
 
 ---
 
-## 11. Changelog
+## 12. Changelog
 
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on plan_api.md and plan_condition.md |
+| 1.1 | 27/01/2026 | Claude | Added Tab 3: Type U flow with OIC compoundability decision, updated section numbering, Data Dictionary alignment: Fixed PS-MID query to use suspension_type IS NULL, added next_processing_date condition, added process_indicator and suspension_source fields |

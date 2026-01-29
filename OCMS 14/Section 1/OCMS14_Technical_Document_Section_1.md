@@ -20,6 +20,7 @@ refer to FD instead of duplicating content.
 | v1.0 | Claude | 15/01/2026 | Document Initiation - Section 1 |
 | v2.0 | Claude | 19/01/2026 | Revised based on Yi Jie feedback - Added data types, audit user, error codes, processing path |
 | v2.1 | Claude | 19/01/2026 | Aligned data types with Data Dictionary - varchar(14) for vehicle_no, varchar(1) for type fields |
+| v2.2 | Claude | 27/01/2026 | Aligned with FD Step 8: Changed CAS to OCMS ocms_vip_vehicle, removed Last char check and Foreign default, after VIP check fails return 'S' (Local Default) |
 
 ---
 
@@ -49,10 +50,10 @@ refer to FD instead of duplicating content.
 | --- | --- |
 | **WHAT** | Vehicle Registration Type Detection - A function that determines the vehicle registration type based on vehicle number format and source-provided data |
 | **WHY** | Vehicle registration type determines the processing path for notice creation. Different vehicle types (Foreign, Local, Diplomatic, Military, VIP) have different validation rules, payment terms, and processing workflows. This detection ensures notices are routed to the correct processing path. |
-| **WHERE** | Internal function within Notice Creation flow. Integrates with LTA Checksum Library and CAS VIP_VEHICLE database. |
+| **WHERE** | Internal function within Notice Creation flow. Integrates with LTA Checksum Library and OCMS ocms_vip_vehicle table. |
 | **WHEN** | Triggered during Notice Creation when a new notice is received from any source system (SPPS, PLUS, AXS, REPCCS, CES-EHT, EEPS, Staff Portal) |
-| **WHO** | System Actors: Notice Creation Service, LTA Checksum Library, CAS Database. No direct user interaction - fully automated process. |
-| **HOW** | Sequential checks against vehicle number: source-provided type → blank check → LTA validation → format matching → VIP lookup → fallback logic |
+| **WHO** | System Actors: Notice Creation Service, LTA Checksum Library, OCMS Database. No direct user interaction - fully automated process. |
+| **HOW** | Sequential checks against vehicle number: source-provided type → blank check → LTA validation → format matching → VIP lookup → Local Default |
 
 ### 1.1.2 Use Case Description
 
@@ -118,11 +119,9 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Return D | If diplomatic format detected, return 'D' | Return Diplomatic type |
 | Check Military Format | Check if vehicle matches military format (MID/MINDEF) | Military format check |
 | Return I | If military format detected, return 'I' | Return Military type |
-| Query VIP Database | Query CAS VIP_VEHICLE table for active VIP status | VIP database lookup |
+| Query VIP Database | Query OCMS ocms_vip_vehicle table for active VIP status | VIP database lookup |
 | Return V | If found in VIP database with status 'A', return 'V' | Return VIP type |
-| Check Last Character | Check if last character of vehicle number is alphabet (A-Z) | Last character check |
-| Return S (Fallback) | If last character is letter, assume local vehicle | Return Singapore fallback |
-| Return F (Default) | If no other condition matches, default to foreign | Return Foreign default |
+| Return S (Local Default) | If not found in VIP database, return 'S' (per FD Step 8) | Return Local Default |
 | End | Vehicle registration type determined | Flow exit point |
 
 ### External System Integration
@@ -139,18 +138,18 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | Output | boolean (true = valid Singapore vehicle, false = not valid) |
 | Error Handling | On exception, log error and proceed to next check (Diplomatic format check) |
 
-#### CAS VIP Vehicle Query
+#### OCMS VIP Vehicle Query
 
 | Field | Value |
 | --- | --- |
 | Integration Type | Database Query |
-| Database | CAS Database |
-| Table | VIP_VEHICLE |
-| Query | `SELECT vehicle_no FROM VIP_VEHICLE WHERE vehicle_no = ? AND status = 'A'` |
+| Database | OCMS Database (Intranet) |
+| Table | ocms_vip_vehicle |
+| Query | `SELECT vehicle_no FROM ocms_vip_vehicle WHERE vehicle_no = ? AND status = 'A'` |
 | Purpose | Check if vehicle is registered as VIP |
 | Input | vehicleNo (String, uppercase) |
 | Output | Record found = VIP vehicle, No record = not VIP |
-| Error Handling | On connection failure, log error and proceed to fallback check (Last character check) |
+| Error Handling | On connection failure, log error and return 'S' (Local Default per FD Step 8) |
 
 ---
 
@@ -194,12 +193,12 @@ NOTE: Due to page size limit, the full-sized image is appended.
 | eocms_valid_offence_notice | offence_notice_type | varchar | 1 | No | Type of offence (O/E/U) | ocms_valid_offence_notice.offence_notice_type |
 | eocms_valid_offence_notice | is_sync | varchar | 1 | No | Sync flag (default: 'N') | System managed |
 
-**External System (CAS):** *(Per Data Dictionary: intranet.json - VIP_VEHICLE)*
+**VIP Vehicle Table (OCMS - intranet.json):**
 
 | Table | Field Name | Data Type | Max Length | Nullable | Description |
 | --- | --- | --- | --- | --- | --- |
-| VIP_VEHICLE | vehicle_no | varchar | 14 | No | VIP vehicle number (Primary Key) |
-| VIP_VEHICLE | status | varchar | 1 | No | VIP status: A=Active, D=Defunct |
+| ocms_vip_vehicle | vehicle_no | varchar | 14 | No | VIP vehicle number (Primary Key) |
+| ocms_vip_vehicle | status | varchar | 1 | No | VIP status: A=Active, D=Defunct |
 
 ---
 
@@ -310,7 +309,7 @@ After the vehicle registration type is determined, the Notice Creation flow rout
 | Blank Vehicle for Type O | OCMS-1401 | vehicleNo is blank/null and offenceType = 'O' | Return error response, notice creation fails |
 | Blank Vehicle for Type E | OCMS-1402 | vehicleNo is blank/null and offenceType = 'E' | Return error response, notice creation fails |
 | LTA Library Exception | - | LTA Checksum library throws exception | Log error, proceed to Diplomatic format check |
-| CAS Database Error | - | Unable to connect to CAS VIP_VEHICLE database | Log error, proceed to Last character check |
+| OCMS Database Error | - | Unable to connect to OCMS ocms_vip_vehicle table | Log error, return 'S' (Local Default per FD Step 8) |
 
 #### Condition-Based Error Handling
 
@@ -335,9 +334,8 @@ The detection follows a strict sequential order. Once a type is determined, the 
 | 4 | LTA Checksum | LTA validation returns true | Return 'S' (Singapore) |
 | 5 | Diplomatic format | vehicleNo starts with 'S' AND ends with CC/CD/TC/TE | Return 'D' (Diplomatic) |
 | 6 | Military format | vehicleNo starts/ends with MID or contains MINDEF | Return 'I' (Military) |
-| 7 | VIP database | Found in VIP_VEHICLE with status = 'A' | Return 'V' (VIP) |
-| 8 | Last character letter | Last character of vehicleNo is A-Z | Return 'S' (Local fallback) |
-| 9 | Default | No condition matched | Return 'F' (Foreign default) |
+| 7 | VIP database | Found in ocms_vip_vehicle with status = 'A' | Return 'V' (VIP) |
+| 8 | Local Default | Not found in VIP database (per FD Step 8) | Return 'S' (Local Default) |
 
 ### B. Diplomatic Vehicle Suffixes
 

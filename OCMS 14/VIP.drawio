@@ -1,0 +1,1879 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.9" pages="8">
+  <diagram name="High-Level-old" id="xuFvbohMf0iqABQjSnx4">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-44" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="80" y="240" width="2680" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1" source="AKQMRBN0Xq4LPboJXIkl-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-3" value="Raw offence data received from Source" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;strokeColor=#6c8ebf;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="400" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-4" value="&lt;div&gt;&lt;div&gt;&lt;b&gt;Source :&lt;/b&gt;&lt;/div&gt;&lt;div&gt;REPCCS&amp;nbsp;&lt;/div&gt;&lt;div&gt;Standalone EHT&amp;nbsp;&lt;/div&gt;&lt;div&gt;Certis EHT&amp;nbsp;&lt;/div&gt;&lt;div&gt;EEPS&amp;nbsp;&lt;/div&gt;&lt;div&gt;PLUS taff Portal&lt;/div&gt;&lt;div&gt;OCMS Staff Portal&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="120" y="490" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="440" as="sourcePoint" />
+            <mxPoint x="420" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-13" value="&lt;b&gt;Pre-condition&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="360" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-14" value="&lt;b&gt;Pre-condition&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="250" y="380" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-19" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;&lt;b&gt;High-Level VIP&amp;nbsp; Vehicle Notice Processing Flow&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="485" y="280" width="1580" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AKQMRBN0Xq4LPboJXIkl-23" target="AKQMRBN0Xq4LPboJXIkl-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-23" value="Notice is suspended with TS-CLV" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2480" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-24" value="Yes" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="AKQMRBN0Xq4LPboJXIkl-26" target="AKQMRBN0Xq4LPboJXIkl-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-25" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AKQMRBN0Xq4LPboJXIkl-26" target="AKQMRBN0Xq4LPboJXIkl-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-26" value="Notice is outstanding" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2320" y="400" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AKQMRBN0Xq4LPboJXIkl-30" target="AKQMRBN0Xq4LPboJXIkl-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-30" value="Suspend Notice with PS-FP" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2300" y="540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-31" value="Notice processing stops" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="2660" y="410" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-32" value="Notice processing stops" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="2330" y="650" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-50" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot; class=&quot;p1&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;Process:&lt;br&gt;Process offence data &amp;amp; detect veh reg type = V&lt;/font&gt;&lt;/p&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-54" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AKQMRBN0Xq4LPboJXIkl-51">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="560" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-51" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot; class=&quot;p1&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;Create Notice for VIP Vehicle&lt;/font&gt;&lt;/p&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;align=center;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="400" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-52" value="&lt;b&gt;Pre-condition&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="370" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-62" value="Suspend Notice with PS-FP" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oYTQ9KkLdH-L0GEvIOC4-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AKQMRBN0Xq4LPboJXIkl-72" target="oYTQ9KkLdH-L0GEvIOC4-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oYTQ9KkLdH-L0GEvIOC4-21" value="Payment made" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1990" y="560" as="geometry">
+            <mxPoint x="8" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-1" target="FSxZqU6jj40iRwuoPYAI-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-1" value="Suspend Notice with TS-OLD" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="900" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-2" value="Revive Notice (after 21 days/ manual revive)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1020" y="440" as="sourcePoint" />
+            <mxPoint x="1070" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-8" target="FSxZqU6jj40iRwuoPYAI-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-8" value="LTA vehicle ownership check" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AKQMRBN0Xq4LPboJXIkl-72" target="oYTQ9KkLdH-L0GEvIOC4-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1820" y="440" as="sourcePoint" />
+            <mxPoint x="1870" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oYTQ9KkLdH-L0GEvIOC4-4" target="FSxZqU6jj40iRwuoPYAI-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-40" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="oYTQ9KkLdH-L0GEvIOC4-4" target="AKQMRBN0Xq4LPboJXIkl-62">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="oYTQ9KkLdH-L0GEvIOC4-4" value="Notice at RD2 Stage" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1600" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AKQMRBN0Xq4LPboJXIkl-72" value="&lt;b&gt;CRON&lt;/b&gt;&lt;br&gt;Prepare for RD2" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="1430" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-22" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-16" target="FSxZqU6jj40iRwuoPYAI-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-16" value="&lt;b&gt;CRON&lt;/b&gt;&lt;br&gt;Prepare for RR3" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="1780" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-21" target="FSxZqU6jj40iRwuoPYAI-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-21" target="AKQMRBN0Xq4LPboJXIkl-62">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2040" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-21" value="Notice at RR3 Stage" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1960" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-43" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-23" target="AKQMRBN0Xq4LPboJXIkl-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-23" value="End the RR3 Stage" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="2140" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-37" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-25" target="FSxZqU6jj40iRwuoPYAI-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-25" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare for RD 1&lt;/div&gt;" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-27" value="Refer to OCMS7" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="515" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-32" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-30" target="AKQMRBN0Xq4LPboJXIkl-72">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FSxZqU6jj40iRwuoPYAI-30" target="AKQMRBN0Xq4LPboJXIkl-62">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1320" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-30" value="Notice at RD1 Stage" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1250" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-41" value="Payment made" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1710" y="500" as="geometry">
+            <mxPoint x="8" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="FSxZqU6jj40iRwuoPYAI-42" value="Payment made" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1370" y="560" as="geometry">
+            <mxPoint x="8" y="-5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="wiDs5qMLYWOSd9R8Z87A" name="Suspending-Cron">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="8dhc3gLtw_ZQJEcX0WlO-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontFamily=Helvetica;fontSize=12;" value="" vertex="1">
+          <mxGeometry height="510" width="1460" x="6060" y="2430" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-4" edge="1" parent="1" source="R1wQb5Da-0YnJLp1BAfL-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;" target="R1wQb5Da-0YnJLp1BAfL-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-1" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fontFamily=Helvetica;fontSize=12;" value="&lt;b&gt;CRON&amp;nbsp;&lt;/b&gt;&lt;div&gt;Suspend Notice&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="150" x="6200" y="2520.0000000000005" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-6" edge="1" parent="1" source="R1wQb5Da-0YnJLp1BAfL-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;" target="R1wQb5Da-0YnJLp1BAfL-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; text-align: start;&quot; class=&quot;p1&quot;&gt;&lt;font&gt;Query validoffencenotice table to fetch:&lt;br&gt;(a) vehicle_registration_type = ‘V’&lt;br&gt;(b)&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;last_processing_stage = RR3/DR3&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; text-align: start;&quot; class=&quot;p1&quot;&gt;&lt;font&gt;(c)&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;next_processing_stage = CPC&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; text-align: start;&quot; class=&quot;p1&quot;&gt;(d) next_processing_stage&amp;nbsp;= Next day or earlier&lt;/p&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; text-align: start;&quot; class=&quot;p1&quot;&gt;&lt;font&gt;(e)&amp;nbsp;suspension_type = null or TS&lt;br&gt;&lt;/font&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="100" width="270" x="6420" y="2500" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-10" edge="1" parent="1" source="R1wQb5Da-0YnJLp1BAfL-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;" target="R1wQb5Da-0YnJLp1BAfL-7" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-12" edge="1" parent="1" source="R1wQb5Da-0YnJLp1BAfL-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;" target="R1wQb5Da-0YnJLp1BAfL-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iqcE_xpCIOer-MzdZqOf-1" connectable="0" parent="R1wQb5Da-0YnJLp1BAfL-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Helvetica;fontSize=12;" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.0333" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-5" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;" value="Records found?" vertex="1">
+          <mxGeometry height="80" width="80" x="6760" y="2510" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-7" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=Helvetica;fontSize=12;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="6770" y="2650" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-9" edge="1" parent="1" source="R1wQb5Da-0YnJLp1BAfL-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;" target="R1wQb5Da-0YnJLp1BAfL-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-8" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=Helvetica;fontSize=12;" value="Start" vertex="1">
+          <mxGeometry height="60" width="60" x="6080" y="2520" as="geometry" />
+        </mxCell>
+        <mxCell id="9U2j4mb6Vcx48tHO9vc6-3" edge="1" parent="1" source="R1wQb5Da-0YnJLp1BAfL-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;" target="9U2j4mb6Vcx48tHO9vc6-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EXZeeBJXFJ301rUnp_C8-2" edge="1" parent="1" source="R1wQb5Da-0YnJLp1BAfL-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="8dhc3gLtw_ZQJEcX0WlO-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="R1wQb5Da-0YnJLp1BAfL-11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;" value="Move Notices to CPC stage and suspend with &#39;TS-CLV&#39;" vertex="1">
+          <mxGeometry height="60" width="120" x="6900" y="2520" as="geometry" />
+        </mxCell>
+        <mxCell id="iXDuFcyElgx0Zw9ZiXAL-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontFamily=Helvetica;fontSize=12;" value="Notice processing stops" vertex="1">
+          <mxGeometry height="70" width="70" x="7430" y="2515" as="geometry" />
+        </mxCell>
+        <mxCell id="CUHpTFGHwEBaWbPtgRHh-2" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Helvetica;fontSize=12;" value="Cron runs at the end of RR3/DR3 stage.&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;Name of cron to be confirmed&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="172.5" x="6188.75" y="2590" as="geometry" />
+        </mxCell>
+        <mxCell id="9U2j4mb6Vcx48tHO9vc6-1" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Helvetica;fontSize=12;" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; text-align: start;&quot; class=&quot;p1&quot;&gt;&lt;b&gt;&lt;span lang=&quot;EN-US&quot;&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;Suspending Outstanding VIP Notices at CPC stage&lt;/font&gt;&lt;/span&gt;&lt;/b&gt;&lt;font&gt;&lt;span&gt;&lt;/span&gt;&lt;/font&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="30" width="1460" x="6060" y="2440" as="geometry" />
+        </mxCell>
+        <mxCell id="9U2j4mb6Vcx48tHO9vc6-6" edge="1" parent="1" source="9U2j4mb6Vcx48tHO9vc6-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;" target="9U2j4mb6Vcx48tHO9vc6-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EXZeeBJXFJ301rUnp_C8-3" edge="1" parent="1" source="9U2j4mb6Vcx48tHO9vc6-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" target="8dhc3gLtw_ZQJEcX0WlO-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9U2j4mb6Vcx48tHO9vc6-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;" value="Patch new stage and suspension to VON DB" vertex="1">
+          <mxGeometry height="60" width="120" x="7080" y="2520" as="geometry" />
+        </mxCell>
+        <mxCell id="9U2j4mb6Vcx48tHO9vc6-7" edge="1" parent="1" source="9U2j4mb6Vcx48tHO9vc6-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Helvetica;fontSize=12;" target="iXDuFcyElgx0Zw9ZiXAL-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9U2j4mb6Vcx48tHO9vc6-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;" value="Create suspension record in&amp;nbsp; &amp;nbsp;suspended_notice DB" vertex="1">
+          <mxGeometry height="60" width="120" x="7250" y="2520" as="geometry" />
+        </mxCell>
+        <mxCell id="8dhc3gLtw_ZQJEcX0WlO-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;dashed=1;fillColor=#fff2cc;strokeColor=#d6b656;fontFamily=Helvetica;fontSize=12;" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 255), rgb(255, 255, 255));&quot;&gt;Patch Notice Suspension Details&lt;br&gt;&lt;/font&gt;&lt;br&gt;&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;b&gt;Intranet DB: ocms_valid_offence_notice&lt;/b&gt;&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot;&gt;last_processing_stage = CPC&lt;/p&gt;&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot;&gt;last_processing_date = Current date/time&lt;/p&gt;&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot;&gt;next_processing_stage = CSD&lt;/p&gt;&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot;&gt;next_processing_date = null&lt;/p&gt;&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot;&gt;prev_processing_stage = RR3 or DR3&lt;/p&gt;&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot;&gt;prev_processing_date = Date/time Notice entered RR3/DR3&lt;/p&gt;&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot;&gt;suspension_type = &#39;TS&#39;&lt;br&gt;epr_reason_suspension =&amp;nbsp;&amp;nbsp;&#39;CLV&#39;&lt;br&gt;epr_reason_suspension_date&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;Current date/time&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;b&gt;Internet DB: ocms_valid_offence_notice&lt;br&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; margin: 0px;&quot; class=&quot;p1&quot;&gt;Same data as Intranet DB&lt;/p&gt;&lt;span&gt;&lt;/span&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="240" width="280" x="6860" y="2670" as="geometry" />
+        </mxCell>
+        <mxCell id="8dhc3gLtw_ZQJEcX0WlO-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;dashed=1;fillColor=#fff2cc;strokeColor=#d6b656;fontFamily=Helvetica;fontSize=12;" value="&lt;div style=&quot;&quot;&gt;&lt;b&gt;&lt;font style=&quot;color: rgb(0, 0, 255);&quot;&gt;Create Suspension Record&lt;br&gt;&lt;/font&gt;&amp;nbsp;&lt;/b&gt;&lt;/div&gt;&lt;b&gt;Intranet DB:&amp;nbsp;ocms_suspended_notice&lt;/b&gt;&lt;br&gt;&lt;p class=&quot;p1&quot; style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot;&gt;Create a new suspended notice record&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="100" width="220" x="7180" y="2670" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="UU_d82_RWBuE_FKm7l8l" name="furnish-dirver">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="810" width="4160" x="240" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-3" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="TB13xY6iQtP9kr3sIJl3-6" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="590.75" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-4" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;div&gt;Vehicle Owner goes to eService to Furnish Driver&lt;/div&gt;" vertex="1">
+          <mxGeometry height="59" width="120" x="271.99" y="631" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-5" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="TB13xY6iQtP9kr3sIJl3-52" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="551.99" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Motorist furnishes Driver for VIP Notice and submit" vertex="1">
+          <mxGeometry height="60" width="120" x="391.99" y="560.75" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-7" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="TB13xY6iQtP9kr3sIJl3-13" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="671.9899999999998" y="590" as="sourcePoint" />
+            <mxPoint x="741.99" y="590.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-8" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="TB13xY6iQtP9kr3sIJl3-10" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="861.9899999999998" y="590.5" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-9" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="OCMS Intranet backend validates Driver particulars" vertex="1">
+          <mxGeometry height="60" width="120" x="880" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-11" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; font-family: Arial; text-align: start;&quot; class=&quot;p1&quot;&gt;&lt;span style=&quot;font-kerning: none;&quot; class=&quot;s1&quot;&gt;&lt;b&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;Furnish Driver For VIP Vehicle Notice Sub-Flow&lt;/font&gt;&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="30" width="4160" x="240" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-12" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Start" vertex="1">
+          <mxGeometry height="60" width="60" x="300" y="560.75" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-13" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&amp;nbsp;&lt;/b&gt;&lt;div&gt;Sync Driver particulars to Intranet&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="720" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-14" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-18" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-15" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-22" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-16" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Auto approve Driver?" vertex="1">
+          <mxGeometry height="80" width="80" x="1050" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-17" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-20" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Driver particulars for Notice created in Intranet DB" vertex="1">
+          <mxGeometry height="60" width="120" x="1210" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-19" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="TB13xY6iQtP9kr3sIJl3-34" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1560" y="590.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Change Next Processing Stage to DN1" vertex="1">
+          <mxGeometry height="60" width="120" x="1390" y="560.75" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-21" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-48" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="OIC reviews Driver Particulars" vertex="1">
+          <mxGeometry height="60" width="120" x="1030" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-45" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-46" connectable="0" parent="TB13xY6iQtP9kr3sIJl3-45" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.8533" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-47" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-50" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-48" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Particulars accepted?" vertex="1">
+          <mxGeometry height="80" width="80" x="1050" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-49" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-57" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-50" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Update Notice in Internet to remove flag for Notice pending approval" vertex="1">
+          <mxGeometry height="60" width="120" x="1030" y="931" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-51" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-53" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-52" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;PROCESS&lt;/b&gt;&lt;div&gt;Update Notice and Driver info in Internet DB&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="552" y="560.75" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-53" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="Refer to OCMS 41" vertex="1">
+          <mxGeometry height="60" width="120" x="552" y="660" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-54" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;i&gt;Notice will be flagged as furnish pending approval&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="118" x="552" y="730.5" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-55" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;i&gt;This is TBC, pending the approved implementation for OCMS 41.&lt;/i&gt;" vertex="1">
+          <mxGeometry height="50" width="118" x="900" y="936" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-56" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-58" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-57" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice becomes furnishable in eService" vertex="1">
+          <mxGeometry height="60" width="120" x="1030" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-58" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="1060" y="1130" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-59" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="TB13xY6iQtP9kr3sIJl3-60" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1510" y="591" as="sourcePoint" />
+            <mxPoint x="1721" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-60" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare for DN1&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1560" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-24" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-38" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-25" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare for DN2&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="2070" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-32" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="TB13xY6iQtP9kr3sIJl3-40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1781" y="710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-33" connectable="0" parent="TB13xY6iQtP9kr3sIJl3-32" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Payment made" vertex="1">
+          <mxGeometry relative="1" x="-0.685" y="-4" as="geometry">
+            <mxPoint x="4" y="-27" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nvzy_pwjRzlYoZNcic79-6" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Nvzy_pwjRzlYoZNcic79-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-34" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice at DN1 Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="1721" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="0FZ0Qdyxqeucb0sbnb83-12" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-40" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2270" y="711" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rRwwlEMb4Er6WCNjkfxa-2" connectable="0" parent="0FZ0Qdyxqeucb0sbnb83-12" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Payment made" vertex="1">
+          <mxGeometry relative="1" x="-0.1067" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nvzy_pwjRzlYoZNcic79-8" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Nvzy_pwjRzlYoZNcic79-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-38" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice at DN2 Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="2240" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-39" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-41" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-40" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;" value="Suspend Notice with PS-FP" vertex="1">
+          <mxGeometry height="60" width="120" x="2240" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="Notice processing stops" vertex="1">
+          <mxGeometry height="60" width="120" x="2240" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-42" edge="1" parent="1" source="TB13xY6iQtP9kr3sIJl3-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-43" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-43" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="2270" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="TB13xY6iQtP9kr3sIJl3-44" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;i&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Notice remains&lt;/font&gt;&lt;/i&gt;&lt;div&gt;&lt;i&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;&amp;nbsp;as payable&amp;nbsp;&amp;nbsp;&lt;/font&gt;&lt;/i&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="160" x="3030" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="Nvzy_pwjRzlYoZNcic79-10" edge="1" parent="1" source="0FZ0Qdyxqeucb0sbnb83-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="0FZ0Qdyxqeucb0sbnb83-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0FZ0Qdyxqeucb0sbnb83-9" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare for DR3&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="2590" y="560.75" as="geometry" />
+        </mxCell>
+        <mxCell id="0FZ0Qdyxqeucb0sbnb83-13" edge="1" parent="1" source="0FZ0Qdyxqeucb0sbnb83-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="TB13xY6iQtP9kr3sIJl3-40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2820" y="710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0Dh_YmjkJTHdNzncmGMU-2" edge="1" parent="1" source="0FZ0Qdyxqeucb0sbnb83-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="0Dh_YmjkJTHdNzncmGMU-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0FZ0Qdyxqeucb0sbnb83-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice at DR3 Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="2760" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="0FZ0Qdyxqeucb0sbnb83-14" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Payment made" vertex="1">
+          <mxGeometry x="2820" y="670" as="geometry">
+            <mxPoint x="-3" y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Nvzy_pwjRzlYoZNcic79-9" edge="1" parent="1" source="Nvzy_pwjRzlYoZNcic79-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="0FZ0Qdyxqeucb0sbnb83-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Nvzy_pwjRzlYoZNcic79-2" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare for DR3 MHA &amp;amp; DataHive check&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="2410" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="0Dh_YmjkJTHdNzncmGMU-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="End DR3 Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="2940" y="560.75" as="geometry" />
+        </mxCell>
+        <mxCell id="Nvzy_pwjRzlYoZNcic79-7" edge="1" parent="1" source="Nvzy_pwjRzlYoZNcic79-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TB13xY6iQtP9kr3sIJl3-25" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Nvzy_pwjRzlYoZNcic79-5" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare for DN2 MHA &amp;amp; DataHive check&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1890" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="cwoNe2hoRR_pq_29qC28-2" edge="1" parent="1" source="0Dh_YmjkJTHdNzncmGMU-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="cwoNe2hoRR_pq_29qC28-1" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="3060" y="591" as="sourcePoint" />
+            <mxPoint x="3530" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cwoNe2hoRR_pq_29qC28-6" edge="1" parent="1" source="cwoNe2hoRR_pq_29qC28-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="TiadkxLnbaeAh9R2k7cq-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cwoNe2hoRR_pq_29qC28-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="End DR3 Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="3200" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="TiadkxLnbaeAh9R2k7cq-1" edge="1" parent="1" source="TiadkxLnbaeAh9R2k7cq-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TiadkxLnbaeAh9R2k7cq-4" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiadkxLnbaeAh9R2k7cq-2" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Notice is outstanding" vertex="1">
+          <mxGeometry height="80" width="80" x="3400" y="550.5" as="geometry" />
+        </mxCell>
+        <mxCell id="TiadkxLnbaeAh9R2k7cq-3" edge="1" parent="1" source="TiadkxLnbaeAh9R2k7cq-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="TiadkxLnbaeAh9R2k7cq-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="TiadkxLnbaeAh9R2k7cq-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice is suspended with PS-FP" vertex="1">
+          <mxGeometry height="60" width="120" x="3380" y="680.5" as="geometry" />
+        </mxCell>
+        <mxCell id="TiadkxLnbaeAh9R2k7cq-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Notice processing stops" vertex="1">
+          <mxGeometry height="60" width="60" x="3410" y="780.5" as="geometry" />
+        </mxCell>
+        <mxCell id="TiadkxLnbaeAh9R2k7cq-6" edge="1" parent="1" source="TiadkxLnbaeAh9R2k7cq-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="UITLCTpczbdE7ZFNE2lj-4" value="Yes">
+          <mxGeometry relative="1" x="-0.2" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="3480" y="590.5" as="sourcePoint" />
+            <mxPoint x="3560" y="590.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice is suspended with TS-CLV (looping)" vertex="1">
+          <mxGeometry height="60" width="120" x="3730" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;" value="&lt;b&gt;Note: &lt;br&gt;&lt;/b&gt;TS-CLV is a looping TS. When the suspension expires, OCMS will auto re-apply the TS-CLV suspension until the OIC revives it manually from the OCMS Staff Portal.&amp;nbsp;" vertex="1">
+          <mxGeometry height="110" width="240" x="4120" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-3" edge="1" parent="1" source="UITLCTpczbdE7ZFNE2lj-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="UITLCTpczbdE7ZFNE2lj-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice enters Next Processing Stage CPC&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="3550" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-5" edge="1" parent="1" source="UITLCTpczbdE7ZFNE2lj-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="UITLCTpczbdE7ZFNE2lj-7" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="3850" y="590" as="sourcePoint" />
+            <mxPoint x="4240" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-6" edge="1" parent="1" source="UITLCTpczbdE7ZFNE2lj-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="UITLCTpczbdE7ZFNE2lj-13" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-7" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Did OIC manually revive Notice?" vertex="1">
+          <mxGeometry height="80" width="80" x="3938" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-8" edge="1" parent="1" source="UITLCTpczbdE7ZFNE2lj-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="UITLCTpczbdE7ZFNE2lj-9" value="No">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="4018" y="590" as="sourcePoint" />
+            <mxPoint x="4240" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="TS-CLV suspension expires" vertex="1">
+          <mxGeometry height="60" width="120" x="4090" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-10" edge="1" parent="1" source="UITLCTpczbdE7ZFNE2lj-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="UITLCTpczbdE7ZFNE2lj-12" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="4190" y="590" as="sourcePoint" />
+            <mxPoint x="4440" y="585" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-11" edge="1" parent="1" source="UITLCTpczbdE7ZFNE2lj-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="UITLCTpczbdE7ZFNE2lj-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="4310" y="520" />
+              <mxPoint x="3790" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Auto re-apply TS-CLV" vertex="1">
+          <mxGeometry height="60" width="120" x="4250" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="UITLCTpczbdE7ZFNE2lj-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="Notice continues along processing workflow&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="3918" y="690" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="D1oCC2bZlPxVbYi36jBU" name="Classified_Report">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="HjaotWq9Q5leVM_a57Ep-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="2870" width="1190" x="1000" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-1" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-2" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Start" vertex="1">
+          <mxGeometry height="60" width="60" x="1670" y="1420" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-3" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-4" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&amp;nbsp;&lt;/b&gt;&lt;div&gt;Report cron&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="1320" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-5" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-6" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="NHFVOK-Ec2S7ihs0ysUI-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="API query CAS to retrieve list of all VIP vehicles with active status" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="1520" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Query CAS DB&amp;nbsp;&lt;/b&gt;&lt;div&gt;DB:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;VIP_VEHICLE&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Query Param:&amp;nbsp;&lt;br&gt;(a)&amp;nbsp;STATUS = A&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="200" x="1800" y="1510" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-9" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-13" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-10" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-21" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-11" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Any record found?" vertex="1">
+          <mxGeometry height="80" width="80" x="1660" y="1625" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-12" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;No active VIP vehicles&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1460" y="1635" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-14" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Generate report with &quot;No VIP vehicle with active status found in CAS&quot;&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="1290" y="1635" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-16" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Send report via email" vertex="1">
+          <mxGeometry height="60" width="120" x="1130" y="1635" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-18" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="1030" y="1635" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-19" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="NHFVOK-Ec2S7ihs0ysUI-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-20" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NHFVOK-Ec2S7ihs0ysUI-30" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;List of VIP vehicles details returned by CAS&amp;nbsp;&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="1760" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Response - CAS returns the follow details for all vehicles with Status = &#39;A&#39;&lt;br&gt;&lt;/b&gt;&lt;div&gt;&lt;div&gt;VEHICLE_NO&lt;/div&gt;&lt;div&gt;DESCRIPTION&lt;/div&gt;&lt;div&gt;STATUS = A&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="85" width="250" x="1810" y="1747.5" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-23" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NHFVOK-Ec2S7ihs0ysUI-27" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1700" y="2050" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Extract vehicle numbers from list returned by CAS" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="1950" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-25" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-32" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-26" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="NHFVOK-Ec2S7ihs0ysUI-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-27" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Query OCMS VON DB to retrieve Notice details" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="2150" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-28" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-24" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-29" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="NHFVOK-Ec2S7ihs0ysUI-46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-30" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Store vehicle details returned by CAS in temp" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="1850" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-31" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-37" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-32" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;List of OCMS Notices details retrieved and record count&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="2250" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-33" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Query OCMS DB&amp;nbsp;&lt;/b&gt;&lt;div&gt;DB:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;ocms_valid_offence_notice&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Query Param:&amp;nbsp;&lt;br&gt;(a)&amp;nbsp;List of vehicle numbers extracted from CAS list&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="210" x="1810" y="2140" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-34" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Response - OCMS retrieves VON data&amp;nbsp;&lt;/b&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;for all vehicle numbers sent in query&lt;/b&gt;" vertex="1">
+          <mxGeometry height="71.25" width="210" x="1810" y="2244.38" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-35" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="NHFVOK-Ec2S7ihs0ysUI-34">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1760" y="2280" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-36" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-37" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Query OCMS OwnerDriver DB to retrieve current Offender details" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="2599" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-38" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="NHFVOK-Ec2S7ihs0ysUI-43">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-39" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-52" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-40" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;List of current offender details retrieved&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="2694.62" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-41" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="NHFVOK-Ec2S7ihs0ysUI-42">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1760" y="2629" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-42" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Query OCMS DB&amp;nbsp;&lt;/b&gt;&lt;div&gt;DB:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;ocms_offence_notice_owner_driver&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Query Param:&amp;nbsp;&lt;br&gt;(a) notice_no&lt;br&gt;(b)&amp;nbsp;offender_indicator = Y&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="210" x="1810" y="2589" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-43" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Response - OCMS retrieves current Offender data&amp;nbsp;&lt;/b&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;for all Notice numbers sent in query&lt;/b&gt;" vertex="1">
+          <mxGeometry height="71.25" width="210" x="1810" y="2689" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-44" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NHFVOK-Ec2S7ihs0ysUI-48" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1700" y="2310" as="sourcePoint" />
+            <mxPoint x="1700" y="2640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-45" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Extract Notice Numbers from list returned by VON query" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="2480" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-46" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;div&gt;&lt;b&gt;CAS Active V&lt;/b&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;IP Vehicle Details - Store in Temp&lt;/b&gt;&lt;/div&gt;&lt;div&gt;VEHICLE_NO&lt;/div&gt;&lt;div&gt;DESCRIPTION&lt;/div&gt;&lt;div&gt;STATUS = A&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="85" width="280" x="1310" y="1837.5" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-47" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;div&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;OCMS VIP Notices Details - Store in Temp&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;notice_no&lt;/div&gt;&lt;div&gt;vehicle_no&lt;/div&gt;&lt;div&gt;vehicle_registration_type&lt;/div&gt;&lt;div&gt;notice_date_and_time&lt;/div&gt;&lt;div&gt;offence_notice_type&lt;/div&gt;&lt;div&gt;computer_rule_code&lt;/div&gt;&lt;div&gt;pp_code&lt;/div&gt;&lt;div&gt;last_processing_stage&lt;/div&gt;&lt;div&gt;last_processing_date&lt;/div&gt;&lt;div&gt;next_processing_stage&lt;/div&gt;&lt;div&gt;next_processing_date&lt;/div&gt;&lt;div&gt;suspension_type&lt;/div&gt;&lt;div&gt;epr_date_of_suspension&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension&lt;/div&gt;&lt;div&gt;crs_date_of_suspension&lt;/div&gt;&lt;div&gt;crs_reason_of_suspension&lt;/div&gt;&lt;div&gt;due_date_of_revival&lt;/div&gt;&lt;div&gt;amount_payable&lt;/div&gt;&lt;div&gt;cre_date&lt;/div&gt;&lt;div&gt;cre_user_id&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="322.5" width="280" x="1300" y="2218.75" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-48" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Store Notice details returned by OCMS in temp" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="2350" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-49" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="NHFVOK-Ec2S7ihs0ysUI-47">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1640" y="2379.6800000000003" as="sourcePoint" />
+            <mxPoint x="1580" y="2379.6800000000003" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-50" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="NHFVOK-Ec2S7ihs0ysUI-55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-51" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-57" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-52" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Store Notice Number and Current Offender name returned by OCMS in temp" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="2890" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-53" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-54" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1700" y="2755" as="sourcePoint" />
+            <mxPoint x="1700" y="2910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-54" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Extract notice_no and name" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="2790" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-55" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;div&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;OCMS Current Offender Details - Store in Temp&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;notice_no&lt;/div&gt;&lt;div&gt;name&amp;nbsp;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="75" width="280" x="1300" y="2882.5" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-56" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="NHFVOK-Ec2S7ihs0ysUI-45" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1700" y="2410" as="sourcePoint" />
+            <mxPoint x="1700" y="2481.25" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-57" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Calculate number outstanding Notices" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3000" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-58" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-59" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1700" y="3059.75" as="sourcePoint" />
+            <mxPoint x="1700" y="3271.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-59" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Filter records by&amp;nbsp;&lt;span style=&quot;text-align: left; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;crs_reason field&lt;/span&gt;&lt;br&gt;&amp;nbsp;= null" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3098.75" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-60" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-62" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1700" y="3158.75" as="sourcePoint" />
+            <mxPoint x="1700" y="3358.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-61" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-66" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-62" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;List of oustanding Notices and record count&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3188.75" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-63" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="NHFVOK-Ec2S7ihs0ysUI-67">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-64" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-69" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-65" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="NHFVOK-Ec2S7ihs0ysUI-70">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-66" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Calculate number settled/paid Notices" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3290" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-67" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;" value="&lt;b&gt;Calculation:&amp;nbsp;&lt;/b&gt;&lt;br&gt;Total number of Notices retrieved in VON query minus ( - ) total number of&amp;nbsp;outstanding Notices&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="320" x="1810" y="3290" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-68" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-69" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-72" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-69" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Retrieve all data stored in Temp" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3390" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-70" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;div&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Paid and outstanding Notices count&amp;nbsp; - Store in Temp&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Total number of settled Notices&amp;nbsp;&lt;/div&gt;&lt;div&gt;Total number of outstanding Notices&lt;/div&gt;" vertex="1">
+          <mxGeometry height="77.5" width="310" x="1270" y="3281.25" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-71" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-74" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-72" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Format data" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3500" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-73" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-76" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-74" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Gen report - Populate data into report template (.xlsx)" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3600" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-75" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-78" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-76" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Attach report file to email" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3700" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-77" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-81" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-78" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Send email" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3800" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-79" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="1670" y="4000" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-80" edge="1" parent="1" source="NHFVOK-Ec2S7ihs0ysUI-81" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="NHFVOK-Ec2S7ihs0ysUI-79" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="NHFVOK-Ec2S7ihs0ysUI-81" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Update batch job table" vertex="1">
+          <mxGeometry height="60" width="120" x="1640" y="3900" as="geometry" />
+        </mxCell>
+        <mxCell id="FVLdTyJe1BcO7Viexg7o-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;b&gt;&lt;span style=&quot;line-height: 115%;&quot;&gt;&lt;font style=&quot;font-size: 20px;&quot;&gt;Generating Classified Vehicle Notices Report&lt;/font&gt;&lt;/span&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="1190" x="1000" y="1250" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="UMhCsq0Emb5IkjWICtD9" name="OLD-Classified_Report">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="1020" width="600" x="80" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-2" edge="1" parent="1" source="tJa-cE0BsMN8RUAvwIV5-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="285" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-3" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Start" vertex="1">
+          <mxGeometry height="70" width="70" x="250" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-4" edge="1" parent="1" source="tJa-cE0BsMN8RUAvwIV5-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="tJa-cE0BsMN8RUAvwIV5-13" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="1058" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Generate report" vertex="1">
+          <mxGeometry height="50" width="200" x="180" y="940" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-6" edge="1" parent="1" source="tJa-cE0BsMN8RUAvwIV5-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="tJa-cE0BsMN8RUAvwIV5-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=center;" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal;&quot; class=&quot;p1&quot;&gt;&lt;font style=&quot;font-size: 12px;&quot; face=&quot;Helvetica&quot;&gt;Query&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;VIP notices to generate daily report&lt;/span&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="200" x="180" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-8" edge="1" parent="1" source="tJa-cE0BsMN8RUAvwIV5-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="tJa-cE0BsMN8RUAvwIV5-18" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="410" y="585" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-9" connectable="0" parent="tJa-cE0BsMN8RUAvwIV5-8" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.1111" y="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-10" edge="1" parent="1" source="tJa-cE0BsMN8RUAvwIV5-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="tJa-cE0BsMN8RUAvwIV5-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-21" connectable="0" parent="tJa-cE0BsMN8RUAvwIV5-10" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Yes" vertex="1">
+          <mxGeometry relative="1" x="-0.0667" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-11" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Any records?" vertex="1">
+          <mxGeometry height="80" width="80" x="240" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-12" edge="1" parent="1" source="tJa-cE0BsMN8RUAvwIV5-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="tJa-cE0BsMN8RUAvwIV5-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Send email" vertex="1">
+          <mxGeometry height="50" width="200" x="180" y="1035" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-14" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="70" width="70" x="245" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;Query DB: VIP_Vehicle&lt;span style=&quot;&quot;&gt;&amp;nbsp;&lt;/span&gt;(from CAS DB)&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/b&gt;&lt;span style=&quot;font-family: Arial, sans-serif; white-space-collapse: preserve;&quot;&gt;notice_no = list of notice numbers&lt;br&gt;&lt;/span&gt;Filter by&amp;nbsp;&lt;b&gt;&lt;span style=&quot;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/b&gt;&lt;div&gt;&lt;div style=&quot;&quot;&gt;&lt;div&gt;status = &#39;A&#39;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;b&gt;Query DB:&amp;nbsp;&lt;/b&gt;&lt;b&gt;ocms_valid_offence_notice&amp;nbsp;(alias: &lt;code data-end=&quot;502&quot; data-start=&quot;497&quot;&gt;von&lt;/code&gt;)&lt;/b&gt;&lt;div&gt;&lt;div&gt;Filter by&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;div&gt;vehicle_registration_type= V / S&lt;br&gt;&lt;br&gt;&lt;b&gt;Query DB:&amp;nbsp;&lt;/b&gt;&lt;b&gt;ocms_suspended_notice&amp;nbsp;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;Use JOIN on notice_no to query the tables&amp;nbsp;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="240" width="253" x="400" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-16" edge="1" parent="1" source="tJa-cE0BsMN8RUAvwIV5-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="tJa-cE0BsMN8RUAvwIV5-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Format data&amp;nbsp;" vertex="1">
+          <mxGeometry height="50" width="200" x="180" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-18" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="70" width="70" x="410" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-19" edge="1" parent="1" source="tJa-cE0BsMN8RUAvwIV5-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="tJa-cE0BsMN8RUAvwIV5-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="tJa-cE0BsMN8RUAvwIV5-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;" value="&lt;br&gt;Result = List of notices&amp;nbsp; that meet these conditions:&lt;div&gt;&lt;div style=&quot;&quot;&gt;&lt;ul&gt;&lt;li&gt;Notices across all processing stages&lt;/li&gt;&lt;li&gt;Notices where the vehicle registration type has been amended from &lt;span data-end=&quot;1688&quot; data-start=&quot;1674&quot;&gt;‘V’ to ‘S’&lt;/span&gt;.&lt;/li&gt;&lt;li&gt;Notices under all suspension types and not under suspension&amp;nbsp;&lt;/li&gt;&lt;li&gt;Notices redirected to drivers or hirers after furnishing.&lt;br data-end=&quot;1692&quot; data-start=&quot;1689&quot;&gt;&lt;br&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="170" width="240" x="160" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-5" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Start" vertex="1">
+          <mxGeometry height="60" width="60" x="1370" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-3" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-2" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&amp;nbsp;&lt;/b&gt;&lt;div&gt;Report cron&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-8" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-21" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="pB2vmeaKD7I3zuTk_yrD-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="API query CAS to retrieve list of all VIP vehicles with active status" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Query CAS DB&amp;nbsp;&lt;/b&gt;&lt;div&gt;DB:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;VIP_VEHICLE&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Query Param:&amp;nbsp;&lt;br&gt;(a)&amp;nbsp;STATUS = A&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="200" x="1500" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-10" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-9" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-18" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-17" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-7" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Any record found?" vertex="1">
+          <mxGeometry height="80" width="80" x="1360" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-12" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;No active VIP vehicles&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1160" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-14" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Generate report with &quot;No VIP vehicle with active status found in CAS&quot;&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="990" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-16" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Send report via email" vertex="1">
+          <mxGeometry height="60" width="120" x="830" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-15" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="730" y="605" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-20" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="pB2vmeaKD7I3zuTk_yrD-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-23" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="pB2vmeaKD7I3zuTk_yrD-28" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;List of VIP vehicles details returned by CAS&amp;nbsp;&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Response - CAS returns the follow details for all vehicles with Status = &#39;A&#39;&lt;br&gt;&lt;/b&gt;&lt;div&gt;&lt;div&gt;VEHICLE_NO&lt;/div&gt;&lt;div&gt;DESCRIPTION&lt;/div&gt;&lt;div&gt;STATUS = A&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="85" width="250" x="1510" y="717.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-25" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="pB2vmeaKD7I3zuTk_yrD-26" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Extract vehicle numbers from list returned by CAS" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-31" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-30" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-33" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="pB2vmeaKD7I3zuTk_yrD-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-26" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Query OCMS VON DB to retrieve Notice details" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-29" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-22" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-48" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="pB2vmeaKD7I3zuTk_yrD-47">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-28" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Store vehicle details returned by CAS in temp" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-37" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-36" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-30" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;List of OCMS Notices details retrieved and record count&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-32" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Query OCMS DB&amp;nbsp;&lt;/b&gt;&lt;div&gt;DB:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;ocms_valid_offence_notice&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Query Param:&amp;nbsp;&lt;br&gt;(a)&amp;nbsp;List of vehicle numbers extracted from CAS list&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="210" x="1510" y="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-34" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Response - OCMS retrieves VON data&amp;nbsp;&lt;/b&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;for all vehicle numbers sent in query&lt;/b&gt;" vertex="1">
+          <mxGeometry height="71.25" width="210" x="1510" y="1214.38" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-35" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="pB2vmeaKD7I3zuTk_yrD-34">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1460" y="1250" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-39" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-38" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-36" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Query OCMS OwnerDriver DB to retrieve current Offender details" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="1569" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-43" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="pB2vmeaKD7I3zuTk_yrD-42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-57" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-56" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-38" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;List of current offender details retrieved&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="1664.62" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-40" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="pB2vmeaKD7I3zuTk_yrD-41">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1460" y="1599" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Query OCMS DB&amp;nbsp;&lt;/b&gt;&lt;div&gt;DB:&amp;nbsp;&lt;span style=&quot;background-color: transparent;&quot;&gt;ocms_offence_notice_owner_driver&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Query Param:&amp;nbsp;&lt;br&gt;(a) notice_no&lt;br&gt;(b)&amp;nbsp;offender_indicator = Y&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="210" x="1510" y="1559" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-42" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Response - OCMS retrieves current Offender data&amp;nbsp;&lt;/b&gt;&lt;b style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); background-color: transparent;&quot;&gt;for all Notice numbers sent in query&lt;/b&gt;" vertex="1">
+          <mxGeometry height="71.25" width="210" x="1510" y="1659" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-45" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="pB2vmeaKD7I3zuTk_yrD-53" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="1280" as="sourcePoint" />
+            <mxPoint x="1400" y="1610" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-44" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Extract Notice Numbers from list returned by VON query" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="1450" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-47" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;div&gt;&lt;b&gt;CAS Active V&lt;/b&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;IP Vehicle Details - Store in Temp&lt;/b&gt;&lt;/div&gt;&lt;div&gt;VEHICLE_NO&lt;/div&gt;&lt;div&gt;DESCRIPTION&lt;/div&gt;&lt;div&gt;STATUS = A&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="85" width="280" x="1010" y="807.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-51" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;div&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;OCMS VIP Notices Details - Store in Temp&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;notice_no&lt;/div&gt;&lt;div&gt;vehicle_no&lt;/div&gt;&lt;div&gt;vehicle_registration_type&lt;/div&gt;&lt;div&gt;notice_date_and_time&lt;/div&gt;&lt;div&gt;offence_notice_type&lt;/div&gt;&lt;div&gt;computer_rule_code&lt;/div&gt;&lt;div&gt;pp_code&lt;/div&gt;&lt;div&gt;last_processing_stage&lt;/div&gt;&lt;div&gt;last_processing_date&lt;/div&gt;&lt;div&gt;next_processing_stage&lt;/div&gt;&lt;div&gt;next_processing_date&lt;/div&gt;&lt;div&gt;suspension_type&lt;/div&gt;&lt;div&gt;epr_date_of_suspension&lt;/div&gt;&lt;div&gt;epr_reason_of_suspension&lt;/div&gt;&lt;div&gt;crs_date_of_suspension&lt;/div&gt;&lt;div&gt;crs_reason_of_suspension&lt;/div&gt;&lt;div&gt;due_date_of_revival&lt;/div&gt;&lt;div&gt;amount_payable&lt;/div&gt;&lt;div&gt;cre_date&lt;/div&gt;&lt;div&gt;cre_user_id&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="322.5" width="280" x="1000" y="1188.75" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-53" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Store Notice details returned by OCMS in temp" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="1320" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-55" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="pB2vmeaKD7I3zuTk_yrD-51">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1340" y="1349.68" as="sourcePoint" />
+            <mxPoint x="1280" y="1349.68" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-61" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="pB2vmeaKD7I3zuTk_yrD-60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-78" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-73" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-56" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Store Notice Number and Current Offender name returned by OCMS in temp" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="1860" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-59" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-58" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="1725" as="sourcePoint" />
+            <mxPoint x="1400" y="1880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-58" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Extract notice_no and name" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="1760" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-60" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;div&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;OCMS Current Offender Details - Store in Temp&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;notice_no&lt;/div&gt;&lt;div&gt;name&amp;nbsp;&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="75" width="280" x="1000" y="1852.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-63" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="pB2vmeaKD7I3zuTk_yrD-44" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="1380" as="sourcePoint" />
+            <mxPoint x="1400" y="1451.25" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-73" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Calculate number outstanding Notices" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="1970" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-74" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-75" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="2029.75" as="sourcePoint" />
+            <mxPoint x="1400" y="2241.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-75" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Filter records by&amp;nbsp;&lt;span style=&quot;text-align: left; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;crs_reason field&lt;/span&gt;&lt;br&gt;&amp;nbsp;= null" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="2068.75" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-76" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-77" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1400" y="2128.75" as="sourcePoint" />
+            <mxPoint x="1400" y="2328.75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-80" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-79" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-77" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;b&gt;Result&amp;nbsp;&lt;/b&gt;&lt;div&gt;List of oustanding Notices and record count&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="2158.75" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-82" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-79" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="pB2vmeaKD7I3zuTk_yrD-81">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-84" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-79" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-83" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-86" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-79" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" target="pB2vmeaKD7I3zuTk_yrD-85">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-79" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Calculate number settled/paid Notices" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="2260" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-81" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;" value="&lt;b&gt;Calculation:&amp;nbsp;&lt;/b&gt;&lt;br&gt;Total number of Notices retrieved in VON query minus ( - ) total number of&amp;nbsp;outstanding Notices&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="320" x="1510" y="2260" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-88" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-83" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-87" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-83" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Retrieve all data stored in Temp" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="2360" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-85" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;div&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Paid and outstanding Notices count&amp;nbsp; - Store in Temp&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Total number of settled Notices&amp;nbsp;&lt;/div&gt;&lt;div&gt;Total number of outstanding Notices&lt;/div&gt;" vertex="1">
+          <mxGeometry height="77.5" width="310" x="970" y="2251.25" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-90" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-89" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-87" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Format data" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="2470" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-92" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-89" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-91" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-89" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Gen report - Populate data into report template (.xlsx)" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="2570" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-94" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-91" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-93" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-91" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Attach report file to email" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="2670" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-98" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-93" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-97" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-93" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Send email" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="2770" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-96" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="1370" y="2970" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-99" edge="1" parent="1" source="pB2vmeaKD7I3zuTk_yrD-97" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="pB2vmeaKD7I3zuTk_yrD-96" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pB2vmeaKD7I3zuTk_yrD-97" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Update batch job table" vertex="1">
+          <mxGeometry height="60" width="120" x="1340" y="2870" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="orMwOULKpqICV0Eaoje_" name="VIP-ANS">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="8sARm08ElGiYQoE-wTnP-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="440" width="2370" x="230" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-2" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;p style=&quot;margin: 0px; text-indent: 36px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; font-family: Arial; text-align: start;&quot; class=&quot;p1&quot;&gt;&lt;span style=&quot;font-kerning: none;&quot; class=&quot;s1&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;VIP Vehicle Advisory Notice Sub-Flow (For Type O Notices Only)&lt;/b&gt;&lt;/font&gt;&lt;/span&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="30" width="1880" x="410" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="Zgq-XWQJLB2wS1pabpNR-2" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-22" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;Vehicle Registration Type = V&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="730" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-5" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="8sARm08ElGiYQoE-wTnP-20" value="">
+          <mxGeometry relative="1" x="-0.5918" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-6" connectable="0" parent="8sARm08ElGiYQoE-wTnP-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.101" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rc2tDWD_jGCeCy4khbi3-1" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-25" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-7" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Qualify for AN?" vertex="1">
+          <mxGeometry height="80" width="80" x="1430" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-8" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-9" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-10" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Process&lt;/b&gt;&lt;div&gt;AN Qualification check&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1250" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=none;fillColor=none;" value="&lt;b style=&quot;&quot;&gt;Pre-condition&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="120" x="700" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-12" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-13" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Start" vertex="1">
+          <mxGeometry height="60" width="60" x="260" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-14" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;i&gt;Start of Type O &amp;amp; Type E Workflow&amp;nbsp;&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="240" y="629" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-15" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="8sARm08ElGiYQoE-wTnP-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="571" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-16" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-17" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Process&lt;/b&gt;&lt;div&gt;Detect vehicle registration type&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="570" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="&lt;i&gt;Refer to Section 2.3&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="570" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="&lt;i&gt;Refer to OCMS 10 Functional Document&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1250" y="648.5" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-20" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Workflow&lt;/b&gt;&lt;div&gt;Non-AN Type O and Type E flow&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1410" y="664" as="geometry" />
+        </mxCell>
+        <mxCell id="Zgq-XWQJLB2wS1pabpNR-3" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="Zgq-XWQJLB2wS1pabpNR-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="I-ihHRZNku2w1GtjBpVC-2" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="I-ihHRZNku2w1GtjBpVC-1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-22" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" value="Notice created at NPA" vertex="1">
+          <mxGeometry height="80" width="80" x="920" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-24" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-27" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="AN Letter generation cron runs at end of day" vertex="1">
+          <mxGeometry height="60" width="120" x="1570" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-26" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-30">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-27" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Query for Notices that require AN Letter generation" vertex="1">
+          <mxGeometry height="60" width="120" x="1760" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-28" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;DB:&amp;nbsp;ocms_valid_offence_notice&lt;/b&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;vehicle_registration_type = V&lt;/span&gt;&lt;/div&gt;&lt;div&gt;an_flag = Y&lt;br&gt;last_processing_stage = NPA&lt;br&gt;next_processing_stage = ROV&lt;/div&gt;&lt;div&gt;next_processing_date = current_date or earlier&lt;/div&gt;&lt;div&gt;suspension_type = null&lt;br&gt;epr_reason_of_suspension = null&lt;/div&gt;" vertex="1">
+          <mxGeometry height="143" width="221" x="1720" y="627" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-29" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-32" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-30" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Generate ANS letter PDF" vertex="1">
+          <mxGeometry height="60" width="120" x="1960" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-31" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-34" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-32" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="ANS Letter files dropped into SFTP&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="2140" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-33" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-35" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-34" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Suspend Notice with PS-ANS" vertex="1">
+          <mxGeometry height="60" width="120" x="2340" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-35" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="2500" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-36" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-37" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="8sARm08ElGiYQoE-wTnP-44" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="450" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-38" connectable="0" parent="8sARm08ElGiYQoE-wTnP-37" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start; background-color: rgb(236, 236, 236);&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%26lt%3Bspan%20style%3D%26quot%3Btext-align%3A%20left%3B%26quot%3B%26gt%3BDuplicate%20offence%20details%26lt%3B%2Fspan%26gt%3B%22%20style%3D%22edgeLabel%3Bhtml%3D1%3Balign%3Dcenter%3BverticalAlign%3Dmiddle%3Bresizable%3D0%3Bpoints%3D%5B%5D%3B%22%20vertex%3D%221%22%20connectable%3D%220%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22318%22%20y%3D%22628%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3&lt;/span&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.08" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-39" connectable="0" parent="8sARm08ElGiYQoE-wTnP-37" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;text-align: left;&quot;&gt;Duplicate offence details&lt;/span&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.04" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-40" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="Process:&lt;br&gt;Check duplicate notice details" vertex="1">
+          <mxGeometry height="60" width="120" x="390" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-41" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="420" y="752" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-43" edge="1" parent="1" source="8sARm08ElGiYQoE-wTnP-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-41" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="8sARm08ElGiYQoE-wTnP-44" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Apply PS-DBB" vertex="1">
+          <mxGeometry height="50" width="120" x="390" y="664" as="geometry" />
+        </mxCell>
+        <mxCell id="Zgq-XWQJLB2wS1pabpNR-4" edge="1" parent="1" source="Zgq-XWQJLB2wS1pabpNR-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="8sARm08ElGiYQoE-wTnP-10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Zgq-XWQJLB2wS1pabpNR-1" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;PROCESS:&lt;/b&gt;&lt;br&gt;Check for Double Booking" vertex="1">
+          <mxGeometry height="60" width="120" x="1060" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="I-ihHRZNku2w1GtjBpVC-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fontColor=#3333FF;" value="&lt;font style=&quot;color: rgb(51, 0, 0);&quot;&gt;Refer to OCMS 21 Functional Document&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1060" y="640" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="b-p4ZNDJo_XsdJ0UCX9m" name="High-Level">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d_y1T15emSAmGfnaFssY-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="470" width="2820" x="300" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-2" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="70IoAXRHgMgRaS2eyhb_-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-3" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;dashed=1;" value="Raw offence data received from Source" vertex="1">
+          <mxGeometry height="80" width="80" x="340" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-4" parent="1" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;div&gt;&lt;div&gt;&lt;b&gt;Source :&lt;/b&gt;&lt;/div&gt;&lt;div&gt;REPCCS&amp;nbsp;&lt;/div&gt;&lt;div&gt;Standalone EHT&amp;nbsp;&lt;/div&gt;&lt;div&gt;Certis EHT&amp;nbsp;&lt;/div&gt;&lt;div&gt;EEPS&amp;nbsp;&lt;/div&gt;&lt;div&gt;PLUS taff Portal&lt;/div&gt;&lt;div&gt;OCMS Staff Portal&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="120" x="340" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-5" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="70IoAXRHgMgRaS2eyhb_-8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="Validate data" vertex="1">
+          <mxGeometry height="60" width="120" x="470" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-7" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;" target="70IoAXRHgMgRaS2eyhb_-11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="Check duplicate Notice Number" vertex="1">
+          <mxGeometry height="60" width="120" x="640" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-9" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="70IoAXRHgMgRaS2eyhb_-17">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="860" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-10" connectable="0" parent="70IoAXRHgMgRaS2eyhb_-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Offence Type = U" vertex="1">
+          <mxGeometry relative="1" x="-0.224" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="Identify Offence Types" vertex="1">
+          <mxGeometry height="60" width="120" x="830" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-12" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="70IoAXRHgMgRaS2eyhb_-19" value="Offence Type = O &amp;amp; E">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1000" y="650" as="sourcePoint" />
+            <mxPoint x="1090" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-13" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b&gt;Pre-condition&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="120" x="320" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-14" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b&gt;Pre-condition&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="120" x="470" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-15" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b&gt;Pre-condition&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="120" x="640" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-16" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b&gt;Pre-condition&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="120" x="800" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-17" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;dashed=1;" value="&lt;div&gt;&lt;b&gt;Workflow&amp;nbsp;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Type U Workflow&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="830" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-18" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="70IoAXRHgMgRaS2eyhb_-26" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1290" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-19" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;div&gt;&lt;b&gt;Workflow&amp;nbsp;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;Type O &amp;amp; Type E Workflow&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1067" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice is suspended with TS-CLV (looping)" vertex="1">
+          <mxGeometry height="60" width="120" x="2450" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-23" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="70IoAXRHgMgRaS2eyhb_-28" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-24" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Notice is outstanding" vertex="1">
+          <mxGeometry height="80" width="80" x="2110" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-25" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="70IoAXRHgMgRaS2eyhb_-24" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-26" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="End of RR3 or DR3 Processing Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="1920" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-27" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="70IoAXRHgMgRaS2eyhb_-30" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-28" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice is suspended with PS-FP" vertex="1">
+          <mxGeometry height="60" width="120" x="2090" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="70IoAXRHgMgRaS2eyhb_-30" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Notice processing stops" vertex="1">
+          <mxGeometry height="60" width="60" x="2120" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="YuMBkjS8tGT95opquza6-1" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;&lt;b&gt;High-Level VIP&amp;nbsp; Vehicle Notice Processing Flow&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="2820" x="300" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="Sz6BB2pSvnt7-LH3QGVN-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;" value="&lt;b&gt;Note: &lt;br&gt;&lt;/b&gt;TS-CLV is a looping TS. When the suspension expires, OCMS will auto re-apply the TS-CLV suspension until the OIC revives it manually from the OCMS Staff Portal.&amp;nbsp;" vertex="1">
+          <mxGeometry height="110" width="240" x="2840" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-2" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="0th7K4uRmWFbsbxb7X6n-1" value="Yes">
+          <mxGeometry relative="1" x="-0.2" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="2190" y="590" as="sourcePoint" />
+            <mxPoint x="2780" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-3" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="70IoAXRHgMgRaS2eyhb_-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice enters Next Processing Stage CPC&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="2270" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-5" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="0th7K4uRmWFbsbxb7X6n-4" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2570" y="590" as="sourcePoint" />
+            <mxPoint x="2960" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-12" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="0th7K4uRmWFbsbxb7X6n-11" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-4" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Did OIC manually revive Notice?" vertex="1">
+          <mxGeometry height="80" width="80" x="2658" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-7" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="0th7K4uRmWFbsbxb7X6n-6" value="No">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2738" y="590" as="sourcePoint" />
+            <mxPoint x="2960" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="TS-CLV suspension expires" vertex="1">
+          <mxGeometry height="60" width="120" x="2810" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-9" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="0th7K4uRmWFbsbxb7X6n-8" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="2910" y="590" as="sourcePoint" />
+            <mxPoint x="3160" y="585" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-10" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="70IoAXRHgMgRaS2eyhb_-21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3030" y="520" />
+              <mxPoint x="2510" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Auto re-apply TS-CLV" vertex="1">
+          <mxGeometry height="60" width="120" x="2970" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="Notice continues along processing workflow&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="2638" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-15" edge="1" parent="1" source="70IoAXRHgMgRaS2eyhb_-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="0th7K4uRmWFbsbxb7X6n-14" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1187" y="590" as="sourcePoint" />
+            <mxPoint x="1760" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-20" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="0th7K4uRmWFbsbxb7X6n-19" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-14" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Vehicle reg type detected as &quot;V&quot;?" vertex="1">
+          <mxGeometry height="80" width="80" x="1241" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-18" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="0th7K4uRmWFbsbxb7X6n-17" value="Yes">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1321" y="590" as="sourcePoint" />
+            <mxPoint x="1760" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-25" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="0th7K4uRmWFbsbxb7X6n-24" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Apply TS-OLD" vertex="1">
+          <mxGeometry height="60" width="120" x="1410" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="Continue along standard Type O or Type E workflows" vertex="1">
+          <mxGeometry height="60" width="120" x="1221" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;align=left;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;Note:&amp;nbsp;&lt;/b&gt;&lt;div&gt;TS-OLD suspension applied for OIC to conduct investigation&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="140" x="1400" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-23" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="0th7K4uRmWFbsbxb7X6n-22" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1530" y="590" as="sourcePoint" />
+            <mxPoint x="2010" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="OIC manually revives suspension after investigation" vertex="1">
+          <mxGeometry height="60" width="120" x="1580" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-28" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="0th7K4uRmWFbsbxb7X6n-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="TS-OLD suspension expires" vertex="1">
+          <mxGeometry height="60" width="120" x="1410" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-27" edge="1" parent="1" source="0th7K4uRmWFbsbxb7X6n-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="0th7K4uRmWFbsbxb7X6n-26" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1700" y="590" as="sourcePoint" />
+            <mxPoint x="2010" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0th7K4uRmWFbsbxb7X6n-26" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice continues along RD/DN reminders workflows&amp;nbsp;" vertex="1">
+          <mxGeometry height="60" width="120" x="1760" y="560" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="iENf-DAdE2xPz6I2Z_dZ" name="Offence_type_O&amp;E">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" value="" vertex="1">
+          <mxGeometry height="610" width="4140" x="-60" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-2" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="&lt;div&gt;Vehicle Registration Type = V&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="470" y="944" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-4" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-16" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-5" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="D25Xl3kRFwEe-pp0dgh7-3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-6" connectable="0" parent="VWMJgBUp0b3jZs6VSElK-5" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="No" vertex="1">
+          <mxGeometry relative="1" x="-0.0692" y="-3" as="geometry">
+            <mxPoint y="-4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-7" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Qualify for AN?" vertex="1">
+          <mxGeometry height="80" width="80" x="1120" y="935" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-9" parent="1" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" value="Notice created at NPA" vertex="1">
+          <mxGeometry height="80" width="80" x="650" y="934" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-10" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-11" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-26" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-12" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Process&lt;/b&gt;&lt;div&gt;AN Qualification check&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="950" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-13" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="VWMJgBUp0b3jZs6VSElK-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-14" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare for RD 1&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="2040" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-15" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-27" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-16" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;div&gt;&lt;b&gt;Workflow&amp;nbsp;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;VIP AN sub-flow&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1100" y="1071.5" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-17" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-stretch: normal; line-height: normal; font-family: Arial; text-align: start; font-size: 14px;&quot; class=&quot;p1&quot;&gt;&lt;span style=&quot;font-kerning: none; font-size: 18px;&quot; class=&quot;s1&quot;&gt;&lt;b&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;VIP Vehicle (Type O &amp;amp; E)&amp;nbsp;&lt;/span&gt;Process Flow&amp;nbsp;&lt;/b&gt;&lt;/span&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="30" width="4140" x="-60" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=none;fillColor=none;" value="&lt;b style=&quot;&quot;&gt;Pre-condition&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="120" x="470" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-19" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-29" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-20" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Start" vertex="1">
+          <mxGeometry height="60" width="60" x="-25" y="944" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-21" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;i&gt;Start of Type O &amp;amp; Type E Workflow&amp;nbsp;&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="110" x="-50" y="1014" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-22" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="VWMJgBUp0b3jZs6VSElK-3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="331" y="979" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-23" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-25" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-24" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Process&lt;/b&gt;&lt;div&gt;Detect vehicle registration type&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="290" y="944" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="&lt;i&gt;Refer to Section 2.3&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="290" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-26" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="&lt;i&gt;Refer to OCMS 10 Functional Document&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="950" y="1061" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-27" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="&lt;i&gt;Refer to Section 7.2.4&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1100" y="1181" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-28" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-24" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-29" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="Process:&lt;br&gt;Check duplicate notice details" vertex="1">
+          <mxGeometry height="60" width="120" x="104" y="944" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-30" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-31" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare RD1 for MHA &amp;amp; DataHive check&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="1860" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-32" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-59" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-33" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare RD2 for MHA &amp;amp; DataHive check&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="2460" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-34" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-38" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9BPFUTGApc7oEUOnFblv-2" connectable="0" parent="VWMJgBUp0b3jZs6VSElK-34" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Notice is&amp;nbsp;&lt;br&gt;outstanding" vertex="1">
+          <mxGeometry relative="1" x="0.02" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-35" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="End the RR3 Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="3580" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-36" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="3980" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-37" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-36" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-38" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Suspend with TS-CLV to prevent Notice from escalating to Court stage" vertex="1">
+          <mxGeometry height="60" width="120" x="3800" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-41" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-33" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="mJRbd83mEjZreVL7Wdmt-1" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="VWMJgBUp0b3jZs6VSElK-53">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2620" y="1101" />
+              <mxPoint x="2758" y="1101" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mJRbd83mEjZreVL7Wdmt-2" connectable="0" parent="mJRbd83mEjZreVL7Wdmt-1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; text-align: start; background-color: rgb(236, 236, 236);&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22Payment%20made%22%20style%3D%22edgeLabel%3Bhtml%3D1%3Balign%3Dcenter%3BverticalAlign%3Dmiddle%3Bresizable%3D0%3Bpoints%3D%5B%5D%3B%22%20connectable%3D%220%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%223212%22%20y%3D%221058%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;" vertex="1">
+          <mxGeometry relative="1" x="-0.7244" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="mJRbd83mEjZreVL7Wdmt-3" connectable="0" parent="mJRbd83mEjZreVL7Wdmt-1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Payment made" vertex="1">
+          <mxGeometry relative="1" x="-0.7115" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9BPFUTGApc7oEUOnFblv-6" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="VWMJgBUp0b3jZs6VSElK-49">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2300" y="850" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-44" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice at RD1 Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="2240" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="kD-wuiyld7pFrbbJJN3--2" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="kD-wuiyld7pFrbbJJN3--1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9BPFUTGApc7oEUOnFblv-3" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-53" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="yq0NqYsqyjhpaDmaTHfu-1" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="VWMJgBUp0b3jZs6VSElK-49">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2910" y="850" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-48" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice at RD2 Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="2850" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-49" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="Refer to&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;Section 7.2.5&lt;/span&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="2540" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-52" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-54" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-53" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;" value="Suspend Notice with PS-FP" vertex="1">
+          <mxGeometry height="60" width="120" x="2850" y="1070.5" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-54" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" value="Notice processing stops" vertex="1">
+          <mxGeometry height="60" width="120" x="2850" y="1169" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-55" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-56" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-56" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="End" vertex="1">
+          <mxGeometry height="60" width="60" x="2880" y="1270" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-57" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;i&gt;Notice remains as payable but is no longer furnishable&amp;nbsp;&lt;/i&gt;" vertex="1">
+          <mxGeometry height="30" width="160" x="3780" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-58" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-48" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-59" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare for RD 2&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="2641" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-60" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-63" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-61" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-31" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-62" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;Process&lt;br&gt;&lt;/b&gt;&lt;p style=&quot;margin: 0px; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-size-adjust: none; font-kerning: auto; font-optical-sizing: auto; font-feature-settings: normal; font-variation-settings: normal; font-variant-position: normal; font-variant-emoji: normal; font-stretch: normal; line-height: normal;&quot; class=&quot;p1&quot;&gt;&lt;font face=&quot;Helvetica&quot; style=&quot;&quot;&gt;Check VIP Vehicle type after LTA Vehicle Ownership Check&lt;/font&gt;&lt;/p&gt;&lt;b&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="150" x="1640" y="944.5" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-63" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#3333FF;" value="&lt;i&gt;Refer to &lt;/i&gt;&lt;span style=&quot;text-align: start; font-size: 10pt; line-height: 15.3333px; font-family: Arial, sans-serif;&quot; lang=&quot;EN-US&quot;&gt;Section 3.2.3&lt;/span&gt;&lt;span style=&quot;font-size: medium; text-align: start;&quot;&gt;&lt;/span&gt;&lt;i&gt;&amp;nbsp;in OCMS 7 Functional Document&lt;/i&gt;" vertex="1">
+          <mxGeometry height="60" width="160" x="1635" y="1060" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-64" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-65" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-67" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-66" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;PROCESS:&lt;/b&gt;&lt;br&gt;Check for Double Booking" vertex="1">
+          <mxGeometry height="60" width="120" x="780" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="VWMJgBUp0b3jZs6VSElK-67" parent="1" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fontColor=#3333FF;" value="&lt;font style=&quot;color: rgb(51, 0, 0);&quot;&gt;Refer to OCMS 21 Functional Document&lt;/font&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="780" y="1061" as="geometry" />
+        </mxCell>
+        <mxCell id="kD-wuiyld7pFrbbJJN3--4" edge="1" parent="1" source="kD-wuiyld7pFrbbJJN3--1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="kD-wuiyld7pFrbbJJN3--3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kD-wuiyld7pFrbbJJN3--1" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare RR3 for MHA &amp;amp; DataHive check&amp;nbsp;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="3040" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="kD-wuiyld7pFrbbJJN3--6" edge="1" parent="1" source="kD-wuiyld7pFrbbJJN3--3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="kD-wuiyld7pFrbbJJN3--5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kD-wuiyld7pFrbbJJN3--3" parent="1" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" value="&lt;b&gt;CRON&lt;/b&gt;&lt;div&gt;Prepare for RR 3&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="120" x="3229" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="kD-wuiyld7pFrbbJJN3--9" edge="1" parent="1" source="kD-wuiyld7pFrbbJJN3--5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3470" y="1100" />
+            </Array>
+            <mxPoint x="2970" y="1100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9BPFUTGApc7oEUOnFblv-1" edge="1" parent="1" source="kD-wuiyld7pFrbbJJN3--5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-35" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="kD-wuiyld7pFrbbJJN3--5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Notice at RR3 Stage" vertex="1">
+          <mxGeometry height="60" width="120" x="3410" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="9BPFUTGApc7oEUOnFblv-4" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Payment made" vertex="1">
+          <mxGeometry x="3460" y="1100.5" as="geometry" />
+        </mxCell>
+        <mxCell id="9BPFUTGApc7oEUOnFblv-7" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Driver furnished" vertex="1">
+          <mxGeometry x="2280" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="9BPFUTGApc7oEUOnFblv-9" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Driver furnished" vertex="1">
+          <mxGeometry x="2910" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="D25Xl3kRFwEe-pp0dgh7-2" edge="1" parent="1" source="VWMJgBUp0b3jZs6VSElK-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="974" as="sourcePoint" />
+            <mxPoint x="780" y="974" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="D25Xl3kRFwEe-pp0dgh7-6" edge="1" parent="1" source="D25Xl3kRFwEe-pp0dgh7-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="D25Xl3kRFwEe-pp0dgh7-5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="D25Xl3kRFwEe-pp0dgh7-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Apply TS-OLD for investigation" vertex="1">
+          <mxGeometry height="60" width="120" x="1280" y="945" as="geometry" />
+        </mxCell>
+        <mxCell id="D25Xl3kRFwEe-pp0dgh7-7" edge="1" parent="1" source="D25Xl3kRFwEe-pp0dgh7-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="VWMJgBUp0b3jZs6VSElK-62">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="D25Xl3kRFwEe-pp0dgh7-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="TS-OLD revived" vertex="1">
+          <mxGeometry height="60" width="120" x="1460" y="945" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

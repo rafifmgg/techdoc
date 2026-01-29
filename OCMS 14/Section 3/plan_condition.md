@@ -5,10 +5,10 @@
 | Attribute | Value |
 | --- | --- |
 | Feature Name | Notice Processing Flow for Deceased Offenders |
-| Version | v1.0 |
+| Version | v1.1 |
 | Author | Claude |
 | Created Date | 15/01/2026 |
-| Last Updated | 15/01/2026 |
+| Last Updated | 27/01/2026 |
 | Status | Draft |
 | FD Reference | OCMS 14 - Section 4 |
 | TD Reference | OCMS 14 - Section 3 |
@@ -197,24 +197,24 @@ THEN Apply PS-RP2
 
 **All Conditions Must Be True:**
 
-| # | Condition | Field | Value |
-| --- | --- | --- | --- |
-| 1 | PS-RP2 applied today | reason_suspension_date | = CURRENT_DATE |
-| 2 | Suspension type is PS | suspension_type | = 'PS' |
-| 3 | Reason is RP2 | reason_of_suspension | = 'RP2' |
-| 4 | Not yet revived | due_date_of_revival | IS NULL |
-| 5 | Current offender is Hirer or Driver | owner_driver_indicator | IN ('H', 'D') |
-| 6 | Is current offender | offender_indicator | = 'Y' |
-| 7 | Offender is deceased | life_status | = 'D' |
+| # | Condition | Table | Field | Value |
+| --- | --- | --- | --- | --- |
+| 1 | PS-RP2 applied today | ocms_suspended_notice | date_of_suspension | = CURRENT_DATE |
+| 2 | Suspension type is PS | ocms_suspended_notice | suspension_type | = 'PS' |
+| 3 | Reason is RP2 | ocms_suspended_notice | reason_of_suspension | = 'RP2' |
+| 4 | Not yet revived | ocms_suspended_notice | date_of_revival | IS NULL |
+| 5 | Current offender is Hirer or Driver | ocms_offence_notice_owner_driver | owner_driver_indicator | IN ('H', 'D') |
+| 6 | Is current offender | ocms_offence_notice_owner_driver | offender_indicator | = 'Y' |
+| 7 | Offender is deceased | ocms_offence_notice_owner_driver | life_status | = 'D' |
 
 ```
-IF suspension_type = 'PS'
-   AND reason_of_suspension = 'RP2'
-   AND reason_suspension_date = CURRENT_DATE
-   AND due_date_of_revival IS NULL
-   AND owner_driver_indicator IN ('H', 'D')
-   AND offender_indicator = 'Y'
-   AND life_status = 'D'
+IF ocms_suspended_notice.suspension_type = 'PS'
+   AND ocms_suspended_notice.reason_of_suspension = 'RP2'
+   AND CAST(ocms_suspended_notice.date_of_suspension AS DATE) = CURRENT_DATE
+   AND ocms_suspended_notice.date_of_revival IS NULL
+   AND ocms_offence_notice_owner_driver.owner_driver_indicator IN ('H', 'D')
+   AND ocms_offence_notice_owner_driver.offender_indicator = 'Y'
+   AND ocms_offence_notice_owner_driver.life_status = 'D'
 THEN Include notice in "RIP Hirer/Driver Furnished" report
 ELSE Exclude from report
 ```
@@ -493,3 +493,4 @@ THEN Display superscript "R" next to Notice Number
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
 | 1.0 | 15/01/2026 | Claude | Initial version based on FD Section 4 and backend code analysis |
+| 1.1 | 27/01/2026 | Claude | Data Dictionary alignment: Fixed field name `reason_suspension_date` → `date_of_suspension`, added table references to condition fields, fixed `due_date_of_revival` → `date_of_revival` for revival check |
